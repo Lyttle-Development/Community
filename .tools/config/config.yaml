@@ -1,0 +1,15 @@
+# Lyttle Tools Configuration
+tools:
+  autoUpdate: false
+  debug: false
+
+# Node Configuration
+node:
+  breakVersion: true
+  lockVersion: false
+  version: v0.0.0
+
+# Git Configuration
+git:
+  versioning: false
+  onlyFeatureBranches: true
