@@ -30,7 +30,6 @@ export function buildConfig({
     const regex = /\/\/ export:? ?(.*?)\nexport interface (.*) ({(.|\n)*?})/gm;
 
     let m;
-
     const result = [];
 
     while ((m = regex.exec(rawContent)) !== null) {
@@ -41,11 +40,6 @@ export function buildConfig({
 
       result.push(m[2]);
     }
-
-    // console.log(result);
-    console.log(JSON.stringify(result, null, 2));
-
-    // const [, create, name, data] = result;
 
     // Set variable to the main object
     files[fileName] = result;

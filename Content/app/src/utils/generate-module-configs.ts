@@ -5,8 +5,6 @@ import { buildConfig } from './module-configs';
 export function generateModuleConfigs() {
   const moduleMarkdown = spider('../content/modules', buildConfig);
 
-  console.log(moduleMarkdown);
-
   let content = '';
 
   const builder = (obj: any, path: string) => {
