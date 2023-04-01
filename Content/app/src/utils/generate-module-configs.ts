@@ -1,13 +1,14 @@
 import { spider } from './spider';
 import { saveFile } from './saveFile';
 import { buildConfig } from './module-configs';
+import { SpiderFile } from '../types/Spider';
 
 export function generateModuleConfigs() {
   const moduleMarkdown = spider('../content/modules', buildConfig);
 
   let content = '';
 
-  const builder = (obj: any, path: string) => {
+  const builder = (obj: SpiderFile, path: string) => {
     Object.keys(obj).forEach((key) => {
       if (typeof obj[key] === 'object') {
         builder(obj[key], `${path}/${key}`);
