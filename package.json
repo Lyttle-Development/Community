@@ -28,5 +28,11 @@
     "Client",
     "Dashboard",
     "Database"
-  ]
+  ],
+  "dependencies": {
+    "content": ">=3.0.7"
+  },
+  "devDependencies": {
+    "content": ">=3.0.7"
+  }
 }
