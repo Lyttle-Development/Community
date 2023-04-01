@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
+  "engines": {
+    "node": "18.15.0",
+    "npm": "9.6.3"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
