@@ -1,5 +1,7 @@
-export interface SpiderFile {
-  [key: string]: string | SpiderFile;
+export type SpiderFile = SpiderObject | string | undefined;
+
+export interface SpiderObject {
+  [key: string]: SpiderSpiderObject | string | undefined;
 }
 
 export interface SpiderResults {
