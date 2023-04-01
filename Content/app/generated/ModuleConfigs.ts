@@ -1,6 +1,1 @@
-export const moduleConfig = {
-  'module-1': {
-    content: 'module-1-content',
-    documentation: 'module-1-documentation',
-  },
-};
+export { Variables as __ACTIVITY_LEVELS_CMD_YOU_CONFIG_VARIABLES__ } from '../../content/modules/Activity/levels/cmd/you/config';
