@@ -6,6 +6,10 @@
   "scripts": {
     "start": "tsc && node dist/src/main.js"
   },
+  "engines": {
+    "node": "18.15.0",
+    "npm": "9.6.3"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
