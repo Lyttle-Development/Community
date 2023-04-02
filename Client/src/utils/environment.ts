@@ -5,9 +5,7 @@ config();
 const requiredEnvironmentVariables = [
   'BOT_TOKEN',
   'CLIENT_ID',
-  'CHANNEL_BOT_LOGS',
-  'CHANNEL_LOGIC_LOGS',
-  'CHANNEL_ACTION_LOGS',
+  'ALLOWED_ERROR_COUNT',
 ] as const;
 
 export type Environment =
@@ -26,4 +24,4 @@ if (missingEnvironmentVariables.length > 0) {
   process.exit(1);
 }
 
-export default process.env as Record<Environment, string>;
+export const environment = process.env as Record<Environment, string>;

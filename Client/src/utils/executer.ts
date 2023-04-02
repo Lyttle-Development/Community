@@ -1,52 +1,80 @@
 import * as fs from 'fs';
-
-// Todo: Make this an environment variable.
-const allowedErrors = 3;
-const modulesPath: string = __dirname + '/../../modules.json';
-let modules = {};
+import { environment } from './environment';
 
 export function executor(
   moduleName: string,
   moduleFunction: Function,
   ...args: any[]
 ): any {
-  if (!mayExecute(moduleName)) return;
+  // Check if the module may be executed
+  if (!mayExecute(moduleName)) return false;
+
+  // Try to execute the module
   try {
-    const r = moduleFunction(...args);
-    console.log('Success!');
-    return r;
+    // Initialize result
+    let result: any;
+
+    // Execute the module
+    result = moduleFunction(...args);
+
+    // Return result
+    return result;
   } catch (error) {
+    // If the module fails, increase the error count
     setModule(moduleName, 1);
-    console.log('Error!');
   }
 }
 
+// The path to the modules.json file
+const modulesPath: string = process.cwd() + '\\modules.json';
+// Cached modules
+let modules = {};
+
+// Check if a module may be executed
 function mayExecute(moduleName: string): boolean {
+  // Try to get the module status.
   try {
+    // Get enabled state
     const enabled = modules[moduleName].enabled === true;
-    const disabled = modules[moduleName].errors > 3;
+
+    // Check if the module has too many errors
+    const disabled =
+      modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT;
+
+    // Check if the module is enabled and not disabled
     return enabled && !disabled;
   } catch (error) {
+    // If not found, create it.
     setModule(moduleName);
   }
 }
 
+// Set a module's status, storaged & cached
 function setModule(moduleName: string, errors: number = 0): void {
   try {
-    const file = fs.readFileSync(modulesPath, 'utf8');
-    const _modules = (modules = JSON.parse(file));
+    // Read the modules.json file otherwise keep the cached version
+    try {
+      const file = fs.readFileSync(modulesPath, 'utf8');
+      modules = JSON.parse(file);
+    } catch (error) {
+      // Todo: Handle error: Send message to devs.
+    }
+
+    // Set the module's status
     try {
       modules[moduleName].errors += errors;
     } catch (error) {
       modules[moduleName] = { enabled: true, errors };
     }
 
-    if (modules[moduleName].errors >= allowedErrors) {
+    // Disable the module if it has too many errors
+    if (modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT) {
       modules[moduleName].enabled = false;
     }
 
+    // Write the modules.json file
     fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
   } catch (error) {
-    console.error(error);
+    // Todo: Handle error: Send message to devs.
   }
 }

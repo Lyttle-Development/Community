@@ -1,4 +1,4 @@
-import environment from './utils/environment';
+import { environment } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
 
