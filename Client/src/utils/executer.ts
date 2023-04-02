@@ -1,4 +1,4 @@
-import fs from 'fs';
+import * as fs from 'fs';
 
 // Todo: Make this an environment variable.
 const allowedErrors = 3;

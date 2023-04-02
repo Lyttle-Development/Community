@@ -1,6 +1,6 @@
 import environment from './utils/environment';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
-import fs from 'fs';
+import * as fs from 'fs';
 
 const client = new Client({
   allowedMentions: { parse: [] },
