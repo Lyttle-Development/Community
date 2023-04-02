@@ -1,0 +1,6 @@
+{
+  "onGuildMessageCreate.test": {
+    "enabled": false,
+    "errors": 4
+  }
+}
