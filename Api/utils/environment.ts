@@ -2,11 +2,7 @@ import { config } from 'dotenv';
 
 config();
 
-const requiredEnvironmentVariables = [
-  'BOT_TOKEN',
-  'CLIENT_ID',
-  'ALLOWED_ERROR_COUNT',
-] as const;
+const requiredEnvironmentVariables = ['PORT'] as const;
 
 export type Environment =
   | (typeof requiredEnvironmentVariables)[number]
