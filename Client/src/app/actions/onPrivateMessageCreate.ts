@@ -3,10 +3,10 @@ import { prefix as actionPrefix } from './index';
 import { Message } from 'discord.js';
 
 // This file's prefix
-const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
+const prefix: string = actionPrefix + 'onPrivateMessageCreate.';
 
 // The execute function
-export async function onGuildVoiceStateUpdate(
+export async function onPrivateMessageCreate(
   userId: string,
   message: Message
 ): Promise<void> {

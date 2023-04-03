@@ -2,6 +2,8 @@ import { environment, executor } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
 
+export { isReady } from './app/events/ready';
+
 export const client = new Client({
   allowedMentions: { parse: [] },
   partials: [
