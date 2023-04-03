@@ -34,7 +34,6 @@
     "@lyttledev/client": "file:Client",
     "@lyttledev/content": "file:Content/app",
     "@lyttledev/dashboard": "file:Dashboard",
-    "@lyttledev/database": "file:Database",
-    "dotenv": "^16.0.3"
+    "@lyttledev/database": "file:Database"
   }
 }
