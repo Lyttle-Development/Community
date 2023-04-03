@@ -1,1 +1,2 @@
-export const helper = 'helper';
+export * from './sortObject';
+export * from './test';

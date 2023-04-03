@@ -1,2 +1,2 @@
-export * from "./dice";
-export * from "./question-of-the-day";
+export * from './dice';
+export * from './question-of-the-day';
