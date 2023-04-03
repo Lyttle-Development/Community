@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
+import { MemberModule } from './member/member.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { GuildModule } from './guild/guild.module';
       synchronize: true,
     }),
     GuildModule,
+    MemberModule,
   ],
   controllers: [AppController],
   providers: [AppService],
