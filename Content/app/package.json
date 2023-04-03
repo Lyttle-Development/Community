@@ -1,5 +1,5 @@
 {
-  "name": "content",
+  "name": "@lyttledev/content",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",

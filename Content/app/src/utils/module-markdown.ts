@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs';
+import * as fs from 'fs';
 import { SpiderResults } from '../types/Spider';
 
 export function buildMarkdown({
