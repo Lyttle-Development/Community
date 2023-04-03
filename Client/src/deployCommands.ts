@@ -1,3 +1,4 @@
+// TODO: Uncomment this file and run it to deploy commands to your server.
 // import environment from './utils/environment';
 // import { REST } from '@discordjs/rest';
 // import { Routes } from 'discord-api-types/v9';

@@ -1,3 +1,4 @@
+// TODO: Uncomment this file and run it to deploy commands to your server.
 // import { Interaction } from 'discord.js';
 // import { ServerUser } from '../../types/events';
 // import createEvent from '../../utils/features/points/createEvent';
