@@ -11,13 +11,12 @@ import { GuildModule } from './guild/guild.module';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['./**/*.graphql'],
       playground: true,
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
-        outputAs: 'class',
-      },
+      introspection: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      buildSchemaOptions: {
+        dateScalarMode: 'timestamp',
+      },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
