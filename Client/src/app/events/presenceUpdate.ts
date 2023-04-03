@@ -1,4 +1,4 @@
-import {Presence} from 'discord.js';
+import { Presence } from "discord.js";
 
 // Emitted whenever a guild member's presence (e.g. status, activity) is changed.
 async function presenceUpdate(

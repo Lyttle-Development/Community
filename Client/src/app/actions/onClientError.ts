@@ -1,5 +1,5 @@
-import {executor, test} from '../../utils';
-import {actionPrefix} from './';
+import { executor, test } from "../../utils";
+import { actionPrefix } from "./";
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onClientError.';

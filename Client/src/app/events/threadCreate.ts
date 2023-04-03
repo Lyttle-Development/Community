@@ -1,5 +1,5 @@
-import {ThreadChannel} from 'discord.js';
-import {GuildMember} from '../../types/app/GuildMember';
+import { ThreadChannel } from "discord.js";
+import { GuildMember } from "../../types/app/GuildMember";
 
 // Emitted whenever a thread is created or when the client user is added to a thread.
 async function threadCreate(

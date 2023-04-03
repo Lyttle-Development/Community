@@ -1,6 +1,6 @@
-import {executor, test} from '../../utils';
-import {actionPrefix} from './index';
-import {Message} from 'discord.js';
+import { executor, test } from "../../utils";
+import { actionPrefix } from "./index";
+import { Message } from "discord.js";
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildPresenceUpdate.';

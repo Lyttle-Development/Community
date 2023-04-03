@@ -1,6 +1,6 @@
-import {Guild} from 'discord.js';
-import {onGuildCreate} from '../actions';
-import {GuildMember} from '../../types/app/GuildMember';
+import { Guild } from "discord.js";
+import { onGuildCreate } from "../actions";
+import { GuildMember } from "../../types/app/GuildMember";
 
 // Emitted whenever a guild is created
 async function guildCreate(guild: Guild): Promise<void> {

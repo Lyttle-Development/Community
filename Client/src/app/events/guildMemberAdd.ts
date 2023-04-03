@@ -1,6 +1,6 @@
-import {GuildMember} from 'discord.js';
-import {GuildMember as ClientGuildMember} from '../../types/app/GuildMember';
-import {onGuildMemberAdd} from '../actions';
+import { GuildMember } from "discord.js";
+import { GuildMember as ClientGuildMember } from "../../types/app/GuildMember";
+import { onGuildMemberAdd } from "../actions";
 
 // Emitted whenever a user subscribes to a guild scheduled event
 async function guildMemberAdd(member: GuildMember): Promise<void> {
