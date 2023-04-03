@@ -1,9 +1,8 @@
-import {GuildMember} from '../../types/app/GuildMember';
-import {executor, test} from '../../utils';
-import {actionPrefix} from './index';
-import {Message} from 'discord.js';
+import { GuildMember } from '../../types/app/GuildMember';
+import { executor, test } from '../../utils';
+import { actionPrefix } from './index';
+import { Message } from 'discord.js';
 
-// This file's prefix
 const prefix: string = actionPrefix + 'onGuildMessageCreate.';
 
 export async function onGuildMessageCreate(

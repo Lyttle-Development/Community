@@ -1,18 +1,1 @@
-{
-  "main.messageCreate": {
-    "enabled": true,
-    "errors": 0
-  },
-  "main.presenceUpdate": {
-    "enabled": true,
-    "errors": 0
-  },
-  "main.ready": {
-    "enabled": true,
-    "errors": 0
-  },
-  "undefinedonGuildMessageCreate.test": {
-    "enabled": false,
-    "errors": 3
-  }
-}
+{}
