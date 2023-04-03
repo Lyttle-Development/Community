@@ -18,4 +18,4 @@ export * from './onPrivatePresenceUpdate';
 export * from './onPrivateUserUpdate';
 
 // The prefix variable used in all actions
-export const prefix: string = 'action.';
+export const actionPrefix: string = 'action.';

@@ -1,6 +1,6 @@
 import {GuildMember} from '../../types/app/GuildMember';
 import {executor, test} from '../../utils';
-import {prefix as actionPrefix} from './';
+import {actionPrefix} from './index';
 import {Message} from 'discord.js';
 
 // This file's prefix
@@ -10,6 +10,7 @@ export async function onGuildMessageCreate(
   guildMember: GuildMember,
   message: Message
 ): Promise<void> {
+  console.log(prefix, actionPrefix);
   // All actions that should be executed
   const actions: Promise<any>[] = [
     executor(prefix + 'test', test, guildMember, message),

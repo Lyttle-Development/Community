@@ -23,7 +23,7 @@ async function messageCreate(message: Message): Promise<void> {
   };
 
   // Check if we have a valid guildMember
-  if (!guildMember.guildId || !guildMember.userId) return;
+  // if (!guildMember.guildId || !guildMember.userId) return;
 
   // Fire actions
   await onGuildMessageCreate(guildMember, message);

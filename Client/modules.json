@@ -12,7 +12,7 @@
     "errors": 0
   },
   "undefinedonGuildMessageCreate.test": {
-    "enabled": true,
-    "errors": 1
+    "enabled": false,
+    "errors": 3
   }
 }

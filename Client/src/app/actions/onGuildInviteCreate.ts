@@ -1,7 +1,7 @@
-import { executor, test } from '../../utils';
-import { prefix as actionPrefix } from './index';
-import { Invite } from 'discord.js';
-import { GuildMember } from '../../types/app/GuildMember';
+import {executor, test} from '../../utils';
+import {actionPrefix} from './index';
+import {Invite} from 'discord.js';
+import {GuildMember} from '../../types/app/GuildMember';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInviteCreate.';
