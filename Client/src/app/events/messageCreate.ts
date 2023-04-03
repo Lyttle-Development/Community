@@ -8,11 +8,12 @@ async function messageCreate(message: Message): Promise<void> {
 
   // Check if the message is a DM
   if (!message?.guild) {
+    const userId = message?.author?.id;
     // Check if we have a valid user
-    if (!message?.author?.id) return;
+    if (!userId) return;
 
     // Fire actions
-    await onPrivateMessageCreate(message.author.id, message);
+    await onPrivateMessageCreate(userId, message);
     return;
   }
 

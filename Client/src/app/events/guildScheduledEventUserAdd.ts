@@ -8,11 +8,11 @@ async function guildScheduledEventUserAdd(
   user: User
 ): Promise<void> {
   const guildMember: GuildMember = {
-    guildId: guildScheduledEvent.guild.id,
-    userId: user.id,
+    guildId: guildScheduledEvent?.guild?.id,
+    userId: user?.id,
   };
 
-  if (!guildMember.guildId || !guildMember.userId) return;
+  if (!guildMember?.guildId || !guildMember?.userId) return;
 
   await onGuildScheduledEventUserAdd(guildMember, guildScheduledEvent, user);
 }

@@ -1,6 +1,6 @@
 import type { Message } from "discord.js";
 import { GuildMember } from "../../types/app/GuildMember";
-import { onPrivateMessageUpdate } from "../actions";
+import { onGuildMessageUpdate, onPrivateMessageUpdate } from "../actions";
 
 // Emitted whenever a message is updated - e.g. embed or content change.
 async function messageUpdate(
@@ -8,25 +8,35 @@ async function messageUpdate(
   newMessage: Message
 ): Promise<void> {
   // If the message is from a bot, ignore it
-  if (oldMessage.author?.bot) return;
+  if (oldMessage?.author?.bot) return;
 
-  // If the content is the same, ignore it
-  if (oldMessage.content === newMessage.content) return;
+  // If the content is not the same, ignore it
+  if (oldMessage?.content === newMessage?.content) return;
 
-  if (oldMessage.author?.id !== oldMessage.author?.id) return;
+  // If the author is not the same, ignore it
+  if (oldMessage?.author?.id !== oldMessage?.author?.id) return;
+  const userId = oldMessage?.author?.id ?? newMessage?.author?.id;
 
-  if (!oldMessage.guild || !newMessage.guild) {
-    if (!oldMessage.author?.id || !newMessage.author?.id) return;
+  // If the message is a DM
+  if (!oldMessage?.guild || !newMessage?.guild) {
+    if (!userId) return;
 
-    await onPrivateMessageUpdate(oldMessage.author.id, oldMessage, newMessage);
-
+    // Fire actions
+    await onPrivateMessageUpdate(userId, oldMessage, newMessage);
     return;
   }
 
-  const serverUser: GuildMember = {
-    guildId: newMessage.guild?.id ?? oldMessage.guild?.id,
-    userId: newMessage.member?.id ?? oldMessage.member?.id,
+  // Build the guildMember
+  const guildMember: GuildMember = {
+    guildId: newMessage?.guild?.id ?? oldMessage?.guild?.id,
+    userId,
   };
+
+  // Check if we have a valid guildMember
+  if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  // Fire actions
+  await onGuildMessageUpdate(guildMember, oldMessage, newMessage);
 }
 
 export default messageUpdate;

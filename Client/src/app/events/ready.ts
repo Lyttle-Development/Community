@@ -1,10 +1,14 @@
 import { Client } from 'discord.js';
+import { onClientReady } from '../actions';
 
 export let isReady: boolean = false;
 
 // Emitted when the client becomes ready to start working.
-function ready(client: Client): void {
+async function ready(client: Client): Promise<void> {
   isReady = true;
+
+  // Fire actions
+  await onClientReady(client);
 }
 
 export default ready;

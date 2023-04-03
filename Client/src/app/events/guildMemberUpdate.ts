@@ -8,11 +8,11 @@ async function guildMemberUpdate(
   newMember: GuildMember
 ): Promise<void> {
   const guildMember: ClientGuildMember = {
-    guildId: newMember.guild.id,
-    userId: newMember.id,
+    guildId: newMember?.guild?.id,
+    userId: newMember?.id,
   };
 
-  if (!guildMember.guildId || !guildMember.userId) return;
+  if (!guildMember?.guildId || !guildMember?.userId) return;
 
   await onGuildMemberUpdate(guildMember, oldMember, newMember);
 }

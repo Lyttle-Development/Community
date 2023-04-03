@@ -1,19 +1,14 @@
 import { executor, test } from "../../utils";
 import { actionPrefix } from "./index";
-import { Message } from "discord.js";
+import { Client } from "discord.js";
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onClientReady.';
 
 // The execute function
-export async function onClientReady(
-  userId: string,
-  message: Message
-): Promise<void> {
+export async function onClientReady(client: Client): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
-    executor(prefix + 'test', test, userId, message),
-  ];
+  const actions: Promise<any>[] = [executor(prefix + 'test', test, client)];
 
   // Execute all actions
   await Promise.all(actions);

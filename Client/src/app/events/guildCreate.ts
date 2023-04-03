@@ -6,12 +6,12 @@ import { GuildMember } from "../../types/app/GuildMember";
 async function guildCreate(guild: Guild): Promise<void> {
   // Create a guildMember object
   const guildMember: GuildMember = {
-    guildId: guild.id,
-    userId: guild.ownerId,
+    guildId: guild?.id,
+    userId: guild?.ownerId,
   };
 
   // Check if we have a valid guildMember
-  if (!guildMember.guildId || !guildMember.userId) return;
+  if (!guildMember?.guildId || !guildMember?.userId) return;
 
   // Fire actions
   await onGuildCreate(guildMember, guild);
