@@ -1,6 +1,6 @@
 import { SpiderResults } from '../types/Spider';
 import path from 'path';
-import fs from 'fs';
+import * as fs from 'fs';
 
 export function buildConfig({
   files,
