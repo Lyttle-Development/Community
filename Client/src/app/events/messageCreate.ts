@@ -14,7 +14,7 @@ async function messageCreate(message: Message): Promise<void> {
     guildId: message.guild.id,
   };
 
-  execute(message, serverUser);
+  await execute(message, serverUser);
 }
 
 export default messageCreate;

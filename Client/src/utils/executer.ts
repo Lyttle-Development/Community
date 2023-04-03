@@ -1,28 +1,28 @@
 import * as fs from 'fs';
-import { environment } from './environment';
+import { environment, sortObject } from './';
 
-export function executor(
+export async function executor(
   moduleName: string,
-  moduleFunction: Function,
+  moduleFunction: (...args) => Promise<any>,
   ...args: any[]
-): any {
+): Promise<any> {
+  let result = null;
+
   // Check if the module may be executed
-  if (!mayExecute(moduleName)) return false;
+  if (!mayExecute(moduleName)) return result;
 
   // Try to execute the module
   try {
-    // Initialize result
-    let result: any;
-
     // Execute the module
-    result = moduleFunction(...args);
-
-    // Return result
-    return result;
+    if (args.length === 0) result = await moduleFunction();
+    else result = await moduleFunction(...args);
   } catch (error) {
     // If the module fails, increase the error count
     setModule(moduleName, 1);
+    // Todo: Handle error: Send message to devs.
   }
+
+  return result;
 }
 
 // The path to the modules.json file
@@ -38,14 +38,15 @@ function mayExecute(moduleName: string): boolean {
     const enabled = modules[moduleName].enabled === true;
 
     // Check if the module has too many errors
-    const disabled =
+    const tooManyErrors =
       modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT;
 
     // Check if the module is enabled and not disabled
-    return enabled && !disabled;
+    return enabled && !tooManyErrors;
   } catch (error) {
     // If not found, create it.
     setModule(moduleName);
+    return mayExecute(moduleName);
   }
 }
 
@@ -71,6 +72,8 @@ function setModule(moduleName: string, errors: number = 0): void {
     if (modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT) {
       modules[moduleName].enabled = false;
     }
+
+    modules = sortObject(modules);
 
     // Write the modules.json file
     fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
