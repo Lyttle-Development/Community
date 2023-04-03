@@ -1,0 +1,10 @@
+{
+  "main.presenceUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.ready": {
+    "enabled": true,
+    "errors": 0
+  }
+}
