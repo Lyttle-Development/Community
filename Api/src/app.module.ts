@@ -12,6 +12,7 @@ import { ProfileModule } from './profile/profile.module';
 import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 import { GuildMessageModule } from './guild-message/guild-message.module';
 import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
+import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.
     GuildTranslationModule,
     GuildMessageModule,
     GuildModuleLevelModule,
+    GuildModuleQotdModule,
   ],
   controllers: [AppController],
   providers: [AppService],
