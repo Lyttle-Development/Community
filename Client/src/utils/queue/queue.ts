@@ -17,6 +17,11 @@ export enum QueueBacklogType {
   BACKGROUND = 'background',
 }
 
+export enum QueueBacklogTimeType {
+  TIME = 'time',
+  TIMEOUT = 'timeout',
+}
+
 type QueueBacklogTypeItem = Function;
 
 interface QueueBacklogTimeItem {
@@ -91,23 +96,26 @@ async function queueActionItem(type: QueueBacklogType) {
   return false;
 }
 
+async function queueActionTimeItem(type: QueueBacklogTimeType) {
+  if (backlog[type].length > 0 && backlog[type][0].time < Date.now()) {
+    const { action } = backlog[type].shift();
+    await action();
+    return true;
+  }
+  return false;
+}
+
 async function queueAction() {
+  // Run critical first
   if (await queueActionItem(QueueBacklogType.CRITICAL)) return;
   if (await queueActionItem(QueueBacklogType.URGENT)) return;
   if (await queueActionItem(QueueBacklogType.IMPORTANT)) return;
 
-  if (backlog.time.length > 0 && backlog.time[0].time < Date.now()) {
-    const { action } = backlog.time.shift();
-    await action();
-    return;
-  }
+  // Run time based next
+  if (await queueActionTimeItem(QueueBacklogTimeType.TIME)) return;
+  if (await queueActionTimeItem(QueueBacklogTimeType.TIMEOUT)) return;
 
-  if (backlog.timeout.length > 0 && backlog.timeout[0].time < Date.now()) {
-    const { action } = backlog.timeout.shift();
-    await action();
-    return;
-  }
-
+  // Run normal last
   if (await queueActionItem(QueueBacklogType.NORMAL)) return;
   if (await queueActionItem(QueueBacklogType.LOW)) return;
   if (await queueActionItem(QueueBacklogType.BACKGROUND)) return;
