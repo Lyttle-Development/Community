@@ -9,6 +9,7 @@ import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
+import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ProfileModule } from './profile/profile.module';
     MemberModule,
     UserModule,
     ProfileModule,
+    GuildTranslationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
