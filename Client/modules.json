@@ -1,1 +1,18 @@
-{}
+{
+  "action.onClientReady.test": {
+    "enabled": true,
+    "errors": 1
+  },
+  "action.onGuildPresenceUpdate.test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.presenceUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.ready": {
+    "enabled": true,
+    "errors": 0
+  }
+}

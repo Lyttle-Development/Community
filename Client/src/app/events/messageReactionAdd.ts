@@ -1,5 +1,5 @@
 import { MessageReaction, User } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 import {
   onGuildMessageReactionAdd,
   onPrivateMessageReactionAdd

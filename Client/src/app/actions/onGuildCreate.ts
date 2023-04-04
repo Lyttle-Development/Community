@@ -1,7 +1,7 @@
 import { executor, test } from "../../utils";
 import { actionPrefix } from "./index";
 import { Guild } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildCreate.';

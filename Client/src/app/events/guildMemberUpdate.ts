@@ -1,4 +1,4 @@
-import { GuildMember as ClientGuildMember } from "../../types/app/GuildMember";
+import { GuildMember as ClientGuildMember } from "../../types";
 import { GuildMember } from "discord.js";
 import { onGuildMemberUpdate } from "../actions";
 

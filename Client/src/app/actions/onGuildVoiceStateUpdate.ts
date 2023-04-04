@@ -1,8 +1,7 @@
 import { executor, test } from "../../utils";
 import { actionPrefix } from "./index";
 import { VoiceState } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
-import { VoiceEvent } from "../../types/app/VoiceEvents";
+import { GuildMember, VoiceEvent } from "../../types";
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';

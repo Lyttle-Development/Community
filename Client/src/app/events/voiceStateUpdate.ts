@@ -1,6 +1,5 @@
 import { VoiceState } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
-import { VoiceEvent } from "../../types/app/VoiceEvents";
+import { GuildMember, VoiceEvent } from "../../types";
 import { onGuildVoiceStateUpdate } from "../actions";
 
 // Emitted whenever a member changes voice state - e.g. joins/leaves a channel, mutes/unmutes.

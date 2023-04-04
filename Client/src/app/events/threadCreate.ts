@@ -1,5 +1,5 @@
 import { ThreadChannel } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 import { onGuildThreadCreate } from "../actions";
 
 // Emitted whenever a thread is created or when the client user is added to a thread.

@@ -1,5 +1,5 @@
 import type { Message } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 import { onGuildMessageUpdate, onPrivateMessageUpdate } from "../actions";
 
 // Emitted whenever a message is updated - e.g. embed or content change.

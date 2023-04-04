@@ -1,6 +1,6 @@
 import { Presence } from "discord.js";
 import { onGuildPresenceUpdate, onPrivatePresenceUpdate } from "../actions";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 
 // Emitted whenever a guild member's presence (e.g. status, activity) is changed.
 async function presenceUpdate(

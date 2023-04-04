@@ -1,5 +1,5 @@
 import { GuildScheduledEvent, User } from "discord.js";
-import { GuildMember } from "../../types/app/GuildMember";
+import { GuildMember } from "../../types";
 import { onGuildScheduledEventUserAdd } from "../actions";
 
 // Emitted whenever a user subscribes to a guild scheduled event
