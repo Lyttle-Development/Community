@@ -20,10 +20,6 @@
     "node": "18.15.0",
     "npm": "9.6.3"
   },
-  "engines": {
-    "node": "18.15.0",
-    "npm": "9.6.3"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {

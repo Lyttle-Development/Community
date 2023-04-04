@@ -1,20 +1,19 @@
 import { executor, test } from "../../utils";
 import { actionPrefix } from "./index";
-import { GuildScheduledEvent, User } from "discord.js";
+import { CommandInteraction } from "discord.js";
 import { GuildMember } from "../../types";
 
 // This file's prefix
-const prefix: string = actionPrefix + 'onGuildScheduledEventUserAdd.';
+const prefix: string = actionPrefix + 'onGuildInteractionCommand.';
 
 // The execute function
-export async function onGuildScheduledEventUserAdd(
+export async function onGuildInteractionCommand(
   guildMember: GuildMember,
-  guildScheduledEvent: GuildScheduledEvent,
-  user: User
+  interaction: CommandInteraction
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<any>[] = [
-    executor(prefix + 'test', test, guildMember, guildScheduledEvent, user),
+    executor(prefix + 'test', test, guildMember, interaction),
   ];
 
   // Execute all actions
