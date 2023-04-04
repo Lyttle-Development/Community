@@ -8,14 +8,21 @@ import {
   MessageMentionOptions,
   TextChannel,
   ThreadChannel,
+  User,
 } from 'discord.js';
 import client from '../../main';
 import { queue as sendQueue, QueueBacklogType } from './queue';
 import { queueMessage } from './messagesQueue';
 
 export function sendMessage(
-  channel: string | TextChannel | AnyThreadChannel | ThreadChannel | Message,
-  content: string | any,
+  channel:
+    | string
+    | TextChannel
+    | AnyThreadChannel
+    | ThreadChannel
+    | Message
+    | User,
+  content: string,
   silent = true,
   embed = false,
   queue: QueueBacklogType | false = QueueBacklogType.NORMAL
@@ -34,9 +41,9 @@ export function sendMessage(
   if (typeof channel === 'string') return;
 
   // Retype the channel
-  const target: TextChannel | AnyThreadChannel | ThreadChannel = channel;
+  const target: TextChannel | AnyThreadChannel | ThreadChannel | User = channel;
 
-  const response = getResponse(content, silent, embed);
+  const response: BaseMessageOptions = getResponse(content, silent, embed);
 
   // Create the action
   const action = () => target.send(response);
@@ -52,12 +59,12 @@ export function sendMessage(
 
 export function sendReply(
   message: Message | CommandInteraction,
-  content: string | any,
+  content: string,
   silent = true,
   embed = false,
   queue: QueueBacklogType | false = QueueBacklogType.NORMAL
 ): Promise<Message | InteractionResponse | void> {
-  const response = getResponse(content, silent, embed);
+  const response: BaseMessageOptions = getResponse(content, silent, embed);
 
   // Create the action
   const action = () => message.reply(response);

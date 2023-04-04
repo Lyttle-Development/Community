@@ -1,11 +1,12 @@
 import { checkMessagesQueue } from './messagesQueue';
 import { environment } from '../environment';
+import { messageDevs } from '../helpers/messageDevs';
 
 let queueActive = false;
 let queueFree: boolean[] = [];
 let queueInterval: NodeJS.Timeout;
 const allowedRequestsPerSecond: number =
-  parseInt(environment.ALLOWED_REQUESTS_MINUTE) ?? 10;
+  parseInt(environment.ALLOWED_REQUESTS_SECOND) ?? 10;
 
 export enum QueueBacklogType {
   CRITICAL = 'critical',
@@ -66,7 +67,7 @@ function fireQueues() {
 
     // Run queue if free
     if (queueFree[i]) {
-      Queue(i);
+      void Queue(i);
     }
   }
 }
@@ -76,7 +77,7 @@ async function Queue(id) {
   try {
     await queueAction();
   } catch (error) {
-    // TODO: Let devs know.
+    messageDevs(error, 'The error was caught in the main queue');
   }
   queueFree[id] = true;
 }
@@ -100,20 +101,16 @@ async function queueAction() {
     return;
   }
 
-  if (backlog.time.length > 0) {
-    if (backlog.time[0].time < Date.now()) {
-      const { action } = backlog.time.shift();
-      await action();
-      return;
-    }
+  if (backlog.time.length > 0 && backlog.time[0].time < Date.now()) {
+    const { action } = backlog.time.shift();
+    await action();
+    return;
   }
 
-  if (backlog.timeout.length > 0) {
-    if (backlog.timeout[0].time < Date.now()) {
-      const { action } = backlog.timeout.shift();
-      await action();
-      return;
-    }
+  if (backlog.timeout.length > 0 && backlog.timeout[0].time < Date.now()) {
+    const { action } = backlog.timeout.shift();
+    await action();
+    return;
   }
 
   if (backlog[QueueBacklogType.NORMAL].length > 0) {

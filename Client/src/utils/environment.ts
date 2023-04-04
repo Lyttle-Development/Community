@@ -6,7 +6,7 @@ const requiredEnvironmentVariables = [
   'BOT_TOKEN',
   'CLIENT_ID',
   'ALLOWED_ERROR_COUNT',
-  'ALLOWED_REQUESTS_MINUTE',
+  'ALLOWED_REQUESTS_SECOND',
   'ALLOWED_MESSAGE_LENGTH',
 ] as const;
 
