@@ -13,6 +13,7 @@ import { GuildTranslationModule } from './guild-translation/guild-translation.mo
 import { GuildMessageModule } from './guild-message/guild-message.module';
 import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
 import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
+import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.mod
     GuildMessageModule,
     GuildModuleLevelModule,
     GuildModuleQotdModule,
+    MemberModuleLevelModule,
   ],
   controllers: [AppController],
   providers: [AppService],
