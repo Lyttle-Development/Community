@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { environment, sortObject } from './';
+import { messageDevs } from './helpers/messageDevs';
 
 export async function executor(
   moduleName: string,
@@ -19,7 +20,10 @@ export async function executor(
   } catch (error) {
     // If the module fails, increase the error count
     setModule(moduleName, 1);
-    // Todo: Handle error: Send message to devs.
+    messageDevs(
+      error,
+      `The error was caught in the executor, the following module crashed: ${moduleName}`
+    );
   }
 
   return result;
@@ -58,7 +62,10 @@ function setModule(moduleName: string, errors: number = 0): void {
       const file = fs.readFileSync(modulesPath, 'utf8');
       modules = JSON.parse(file);
     } catch (error) {
-      // Todo: Handle error: Send message to devs.
+      messageDevs(
+        error,
+        `This was executed in the "executor" i think it could not get the modules from json.`
+      );
     }
 
     // Set the module's status
@@ -78,6 +85,9 @@ function setModule(moduleName: string, errors: number = 0): void {
     // Write the modules.json file
     fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
   } catch (error) {
-    // Todo: Handle error: Send message to devs.
+    messageDevs(
+      error,
+      `This was executed in the "executor" i think it could not save the modules to json.`
+    );
   }
 }
