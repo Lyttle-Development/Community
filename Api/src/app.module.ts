@@ -9,6 +9,7 @@ import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
+import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 import { GuildMessageModule } from './guild-message/guild-message.module';
 
 @Module({
@@ -36,6 +37,7 @@ import { GuildMessageModule } from './guild-message/guild-message.module';
     MemberModule,
     UserModule,
     ProfileModule,
+    GuildTranslationModule,
     GuildMessageModule,
   ],
   controllers: [AppController],
