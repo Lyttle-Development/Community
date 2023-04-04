@@ -82,24 +82,19 @@ async function Queue(id) {
   queueFree[id] = true;
 }
 
+async function queueActionItem(type: QueueBacklogType) {
+  if (backlog[type].length > 0) {
+    const action = backlog[type].shift();
+    await action();
+    return true;
+  }
+  return false;
+}
+
 async function queueAction() {
-  if (backlog[QueueBacklogType.CRITICAL].length > 0) {
-    const action = backlog[QueueBacklogType.CRITICAL].shift();
-    await action();
-    return;
-  }
-
-  if (backlog[QueueBacklogType.URGENT].length > 0) {
-    const action = backlog[QueueBacklogType.URGENT].shift();
-    await action();
-    return;
-  }
-
-  if (backlog[QueueBacklogType.IMPORTANT].length > 0) {
-    const action = backlog[QueueBacklogType.IMPORTANT].shift();
-    await action();
-    return;
-  }
+  if (await queueActionItem(QueueBacklogType.CRITICAL)) return;
+  if (await queueActionItem(QueueBacklogType.URGENT)) return;
+  if (await queueActionItem(QueueBacklogType.IMPORTANT)) return;
 
   if (backlog.time.length > 0 && backlog.time[0].time < Date.now()) {
     const { action } = backlog.time.shift();
@@ -113,23 +108,9 @@ async function queueAction() {
     return;
   }
 
-  if (backlog[QueueBacklogType.NORMAL].length > 0) {
-    const action = backlog[QueueBacklogType.NORMAL].shift();
-    await action();
-    return;
-  }
-
-  if (backlog[QueueBacklogType.LOW].length > 0) {
-    const action = backlog[QueueBacklogType.LOW].shift();
-    await action();
-    return;
-  }
-
-  if (backlog[QueueBacklogType.BACKGROUND].length > 0) {
-    const action = backlog[QueueBacklogType.BACKGROUND].shift();
-    await action();
-    return;
-  }
+  if (await queueActionItem(QueueBacklogType.NORMAL)) return;
+  if (await queueActionItem(QueueBacklogType.LOW)) return;
+  if (await queueActionItem(QueueBacklogType.BACKGROUND)) return;
 }
 
 export function queue(importance: QueueBacklogType, action: Function) {
