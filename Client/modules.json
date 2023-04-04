@@ -1,7 +1,15 @@
 {
   "action.onClientReady.test": {
+    "enabled": false,
+    "errors": 3
+  },
+  "action.onGuildMessageCreate.queuetest": {
     "enabled": true,
-    "errors": 2
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.test": {
+    "enabled": false,
+    "errors": 3
   },
   "action.onGuildPresenceUpdate.test": {
     "enabled": false,
@@ -10,6 +18,10 @@
   "action.onGuildVoiceStateUpdate.test": {
     "enabled": false,
     "errors": 3
+  },
+  "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
   },
   "main.presenceUpdate": {
     "enabled": true,

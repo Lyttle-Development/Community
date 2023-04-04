@@ -1,6 +1,7 @@
 import { environment, executor } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
+import { initQueue } from './utils/queue/queue';
 
 export { isReady } from './app/events/ready';
 
@@ -73,5 +74,6 @@ eventFiles.forEach((file, i) => {
 client.login(environment.BOT_TOKEN).then(() => console.log('info', `running`));
 
 export const bootdate = new Date();
+initQueue();
 
 export default client;
