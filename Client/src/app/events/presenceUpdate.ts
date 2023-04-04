@@ -10,14 +10,8 @@ async function presenceUpdate(
   // Ignore bots
   if (oldPresence?.user?.bot) return;
 
-  // Ignore if the status is the same
-  if (oldPresence?.status === newPresence?.status) return;
-
-  // Ignore if the activity is the same
-  if (oldPresence?.activities === newPresence?.activities) return;
-
   // Ignore if the user isn't the same
-  if (!oldPresence?.user || !newPresence?.user) return;
+  if (!oldPresence?.user !== !newPresence?.user) return;
   const userId = oldPresence?.user?.id ?? newPresence?.user?.id;
 
   if (!oldPresence?.guild || !newPresence?.guild) {

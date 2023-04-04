@@ -7,13 +7,19 @@ async function guildScheduledEventUserAdd(
   guildScheduledEvent: GuildScheduledEvent,
   user: User
 ): Promise<void> {
+  // Ignore bots
+  if (user?.bot) return;
+
+  // Create a guildMember object
   const guildMember: GuildMember = {
     guildId: guildScheduledEvent?.guild?.id,
     userId: user?.id,
   };
 
+  // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
 
+  // Fire actions
   await onGuildScheduledEventUserAdd(guildMember, guildScheduledEvent, user);
 }
 

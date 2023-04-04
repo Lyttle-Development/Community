@@ -1,17 +1,25 @@
 {
   "action.onClientReady.test": {
     "enabled": true,
-    "errors": 1
+    "errors": 2
   },
   "action.onGuildPresenceUpdate.test": {
-    "enabled": true,
-    "errors": 0
+    "enabled": false,
+    "errors": 3
+  },
+  "action.onGuildVoiceStateUpdate.test": {
+    "enabled": false,
+    "errors": 3
   },
   "main.presenceUpdate": {
     "enabled": true,
     "errors": 0
   },
   "main.ready": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.voiceStateUpdate": {
     "enabled": true,
     "errors": 0
   }

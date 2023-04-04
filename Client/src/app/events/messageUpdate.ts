@@ -7,7 +7,7 @@ async function messageUpdate(
   oldMessage: Message,
   newMessage: Message
 ): Promise<void> {
-  // If the message is from a bot, ignore it
+  // Ignore bots
   if (oldMessage?.author?.bot) return;
 
   // If the content is not the same, ignore it
