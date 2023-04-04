@@ -33,6 +33,6 @@ Love,
 
   for (const dev of devs) {
     const channel = client.users.resolve(dev);
-    sendMessage(channel, message, false, false, QueueBacklogType.CRITICAL);
+    void sendMessage(channel, message, false, false, QueueBacklogType.CRITICAL);
   }
 }
