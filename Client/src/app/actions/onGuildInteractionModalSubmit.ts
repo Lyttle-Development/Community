@@ -1,0 +1,21 @@
+import { executor, test } from "../../utils";
+import { actionPrefix } from "./index";
+import { ModalSubmitInteraction } from "discord.js";
+import { GuildMember } from "../../types";
+
+// This file's prefix
+const prefix: string = actionPrefix + 'onGuildInviteCreate.';
+
+// The execute function
+export async function onGuildInteractionModalSubmit(
+  guildMember: GuildMember,
+  interaction: ModalSubmitInteraction
+): Promise<void> {
+  // All actions that should be executed
+  const actions: Promise<any>[] = [
+    executor(prefix + 'test', test, guildMember, interaction),
+  ];
+
+  // Execute all actions
+  await Promise.all(actions);
+}
