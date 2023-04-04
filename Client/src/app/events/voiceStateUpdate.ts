@@ -19,6 +19,7 @@ async function voiceStateUpdate(
     userId: newState?.member.id ?? oldState?.member.id,
   };
 
+  // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
 
   // Get the event
