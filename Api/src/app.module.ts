@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserModule } from './user/user.module';
     GuildModule,
     MemberModule,
     UserModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
