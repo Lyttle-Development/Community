@@ -4,7 +4,7 @@ import { ButtonInteraction } from "discord.js";
 import { GuildMember } from "../../types";
 
 // This file's prefix
-const prefix: string = actionPrefix + 'onGuildInviteCreate.';
+const prefix: string = actionPrefix + 'onGuildInteractionButton.';
 
 // The execute function
 export async function onGuildInteractionButton(

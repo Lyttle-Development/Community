@@ -3,7 +3,7 @@ import { actionPrefix } from "./index";
 import { CommandInteraction } from "discord.js";
 
 // This file's prefix
-const prefix: string = actionPrefix + 'onGuildInviteCreate.';
+const prefix: string = actionPrefix + 'onPrivateInteractionCommand.';
 
 // The execute function
 export async function onPrivateInteractionCommand(

@@ -1,4 +1,4 @@
-import { GuildMember } from '../../types/app/GuildMember';
+import { GuildMember } from '../../types';
 import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
