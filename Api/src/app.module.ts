@@ -7,6 +7,7 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MemberModule } from './member/member.module';
     }),
     GuildModule,
     MemberModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
