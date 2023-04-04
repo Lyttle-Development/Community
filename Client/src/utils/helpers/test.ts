@@ -7,7 +7,7 @@ export async function test(...args) {
   // randomly throw an error
   if (Math.random() < 0.3) {
     console.log('test error');
-    throw new SyntaxError();
+    throw new Error('test error');
   }
   console.log('test done');
 }
