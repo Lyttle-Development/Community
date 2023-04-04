@@ -3,20 +3,32 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('guild__module__level')
 @ObjectType()
-export class Profile {
-  @PrimaryGeneratedColumn()
+export class GuildModuleLevel {
+  @PrimaryColumn()
   @Field(() => Int)
   guild_id: number;
 
   @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
+
+  @Column()
   @Field(() => Int)
-  tokens: number;
+  announcement_channel_id: number;
+
+  @Column()
+  @Field(() => Int)
+  leaderboard_channel_id: number;
+
+  @Column()
+  @Field(() => Boolean)
+  nicknames: boolean;
 
   @CreateDateColumn()
   @Field(() => Date)

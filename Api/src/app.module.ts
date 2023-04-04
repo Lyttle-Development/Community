@@ -11,6 +11,7 @@ import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
 import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 import { GuildMessageModule } from './guild-message/guild-message.module';
+import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { GuildMessageModule } from './guild-message/guild-message.module';
     ProfileModule,
     GuildTranslationModule,
     GuildMessageModule,
+    GuildModuleLevelModule,
   ],
   controllers: [AppController],
   providers: [AppService],
