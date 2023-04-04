@@ -1,7 +1,11 @@
+import { checkMessagesQueue } from './messagesQueue';
+import { environment } from '../environment';
+
 let queueActive = false;
 let queueFree: boolean[] = [];
 let queueInterval: NodeJS.Timeout;
-const allowedRequestsPerSecond: number = 10;
+const allowedRequestsPerSecond: number =
+  parseInt(environment.ALLOWED_REQUESTS_MINUTE) ?? 10;
 
 export enum QueueBacklogType {
   CRITICAL = 'critical',
@@ -44,19 +48,27 @@ const backlog: QueueBacklog = {
 export function initQueue() {
   if (queueActive || queueInterval) return;
   queueInterval = setInterval(() => {
-    for (let i = 0; i < allowedRequestsPerSecond; i++) {
-      // Add to queue if not full
-      if (queueFree.length < allowedRequestsPerSecond) {
-        queueFree.push(true);
-      }
+    // Run queue
+    fireQueues();
 
-      // Run queue if free
-      if (queueFree[i]) {
-        Queue(i);
-      }
-    }
+    // Tasks that need to be done every second
+    checkMessagesQueue();
   }, 1000);
   queueActive = true;
+}
+
+function fireQueues() {
+  for (let i = 0; i < allowedRequestsPerSecond; i++) {
+    // Add to queue if not full
+    if (queueFree.length < allowedRequestsPerSecond) {
+      queueFree.push(true);
+    }
+
+    // Run queue if free
+    if (queueFree[i]) {
+      Queue(i);
+    }
+  }
 }
 
 async function Queue(id) {
