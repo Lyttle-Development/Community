@@ -3,9 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Guild } from '../../guild/entities/guild.entity';
 
 @Entity('guild__message')
 @ObjectType()
@@ -15,6 +17,7 @@ export class GuildMessage {
   id: number;
 
   @Column()
+  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
   @Field(() => Int)
   guild_id: number;
 
