@@ -53,6 +53,10 @@ export class GuildService {
     return this.guildMessageService.findOne(id);
   }
 
+  getGuildMessages(): Promise<GuildMessage[]> {
+    return this.guildMessageService.findAll();
+  }
+
   async update(
     id: number,
     updateGuildInput: UpdateGuildInput,

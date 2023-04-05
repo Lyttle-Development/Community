@@ -16,8 +16,8 @@ export class GuildMessageService {
     return 'This action adds a new guildMessage';
   }
 
-  findAll() {
-    return `This action returns all guildMessage`;
+  findAll(): Promise<GuildMessage[]> {
+    return this.guildMessageRepository.find();
   }
 
   findOne(id: number): Promise<GuildMessage> {
