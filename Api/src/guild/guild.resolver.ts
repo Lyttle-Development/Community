@@ -14,6 +14,7 @@ import { UpdateGuildInput } from './dto/update-guild.input';
 import { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
 import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
 import { GuildMessage } from 'src/guild-message/entities/guild-message.entity';
+import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -26,7 +27,7 @@ export class GuildResolver {
     return this.guildService.create(createGuildInput);
   }
 
-  @Query(() => [Guild], { name: 'guild' })
+  @Query(() => [Guild], { name: 'guilds' })
   findAll(): Promise<Guild[]> {
     return this.guildService.findAll();
   }
@@ -50,22 +51,32 @@ export class GuildResolver {
   }
 
   @ResolveField(() => GuildModuleLevel)
-  getModuleLevel(@Parent() guild: Guild): Promise<GuildModuleLevel> {
+  moduleLevel(@Parent() guild: Guild): Promise<GuildModuleLevel> {
     return this.guildService.getGuildModuleLevel(guild.guild_id);
   }
 
   @ResolveField(() => GuildModuleQotd)
-  getModuleQotd(@Parent() guild: Guild): Promise<GuildModuleQotd> {
+  moduleQotd(@Parent() guild: Guild): Promise<GuildModuleQotd> {
     return this.guildService.getGuildModuleQotd(guild.guild_id);
   }
 
   @ResolveField(() => GuildMessage)
-  getGuildMessage(@Parent() guild: Guild): Promise<GuildMessage> {
+  guildMessage(@Parent() guild: Guild): Promise<GuildMessage> {
     return this.guildService.getGuildMessage(guild.guild_id);
   }
 
   @ResolveField(() => [GuildMessage])
-  getGuildMessages(@Parent() guild: Guild): Promise<GuildMessage[]> {
+  guildMessages(@Parent() guild: Guild): Promise<GuildMessage[]> {
     return this.guildService.getGuildMessages();
+  }
+
+  @ResolveField(() => [GuildTranslation])
+  guildTranslations(@Parent() guild: Guild): Promise<GuildTranslation[]> {
+    return this.guildService.getGuildTranslations();
+  }
+
+  @ResolveField(() => GuildTranslation)
+  guildTranslation(@Parent() guild: Guild): Promise<GuildTranslation> {
+    return this.guildService.getGuildTranslation(guild.guild_id);
   }
 }
