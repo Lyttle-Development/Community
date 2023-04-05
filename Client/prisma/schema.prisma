@@ -180,11 +180,11 @@ model GuildModuleVoiceGrowth {
 model GuildModuleVoiceGrowthChild {
   // Primary key information
   channel_id BigInt
-  masterId   BigInt
+  master_id  BigInt
   guild_id   BigInt
 
   // Relations
-  master GuildModuleVoiceGrowth @relation(fields: [masterId, guild_id], references: [channel_id, guild_id])
+  master GuildModuleVoiceGrowth @relation(fields: [master_id, guild_id], references: [channel_id, guild_id])
 
   // Values
   name String @default("unknown")
