@@ -12,8 +12,8 @@ export class GuildService {
     private guildRepository: Repository<Guild>,
   ) {}
 
-  create(createGuildInput: CreateGuildInput) {
-    return 'This action adds a new guild';
+  create(createGuildInput: CreateGuildInput): Promise<Guild> {
+    return this.guildRepository.save(createGuildInput);
   }
 
   findAll(): Promise<Guild[]> {
@@ -33,7 +33,13 @@ export class GuildService {
     return `This action updates a #${id} guild`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guild`;
+  async remove(id: number): Promise<Guild> | null {
+    const guild: Guild = await this.guildRepository.findOne({
+      where: { guild_id: id },
+    });
+    if (guild) {
+      return this.guildRepository.remove(guild);
+    }
+    return null;
   }
 }
