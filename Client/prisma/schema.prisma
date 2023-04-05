@@ -296,7 +296,7 @@ model MemberModuleLevelDay {
   points_monday    Int @default(0)
   points_tuesday   Int @default(0)
   points_wednesday Int @default(0)
-  points_thuesday  Int @default(0)
+  points_thursday  Int @default(0)
   points_friday    Int @default(0)
   points_saturday  Int @default(0)
   points_sunday    Int @default(0)
