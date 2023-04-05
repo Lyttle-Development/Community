@@ -2,16 +2,22 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  OneToMany,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Member } from '../../member/entities/member.entity';
 
 @Entity()
 @ObjectType()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   @Field(() => Int)
   guild_id: number;
+
+  @OneToMany(() => Member, (member: Member) => member.guild_id)
+  @Field(() => [Member])
+  members: Member[];
 
   @CreateDateColumn()
   @Field(() => Date)
