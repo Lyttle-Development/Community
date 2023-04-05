@@ -13,12 +13,12 @@ import { Member } from '../../member/entities/member.entity';
 @ObjectType()
 export class MemberModuleLevel {
   @PrimaryColumn()
-  @OneToOne(() => Member, (member) => member.guild_id)
+  @OneToOne(() => Member, (member: Member) => member.guild_id)
   @Field(() => Int)
   guild_id: number;
 
   @PrimaryColumn()
-  @OneToOne(() => Member, (member) => member.user_id)
+  @OneToOne(() => Member, (member: Member) => member.user_id)
   @Field(() => Int)
   user_id: number;
 
