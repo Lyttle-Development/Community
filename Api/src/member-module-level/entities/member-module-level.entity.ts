@@ -46,7 +46,7 @@ export class MemberModuleLevel {
   )
   @Field(() => MemberModuleLevelDay)
   memberModuleLevelDay: MemberModuleLevelDay;
-
+  
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
