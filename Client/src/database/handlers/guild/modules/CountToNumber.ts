@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 import { getOrCreateGuild } from '../guild';
 
 // Guild Fun
-export async function createGuildCountToNumber(
+export async function createGuildModuleCountToNumber(
   guildId: string,
   channelId: string
 ): Promise<GuildModuleCountToNumber> {
@@ -16,7 +16,7 @@ export async function createGuildCountToNumber(
   });
 }
 
-export async function findSingleGuildCountToNumber(
+export async function findSingleGuildModuleCountToNumber(
   guildId: string,
   channelId: string
 ): Promise<GuildModuleCountToNumber> {
@@ -30,31 +30,31 @@ export async function findSingleGuildCountToNumber(
   });
 }
 
-export async function getOrCreateGuildCountToNumber(
+export async function getOrCreateGuildModuleCountToNumber(
   guildId: string,
   channelId: string
 ): Promise<GuildModuleCountToNumber> {
   await getOrCreateGuild(guildId);
   return (
-    (await findSingleGuildCountToNumber(guildId, channelId)) ??
-    (await createGuildCountToNumber(guildId, channelId))
+    (await findSingleGuildModuleCountToNumber(guildId, channelId)) ??
+    (await createGuildModuleCountToNumber(guildId, channelId))
   );
 }
 
-export async function getGuildCountToNumber(
+export async function getGuildModuleCountToNumber(
   guildId: string,
   channelId: string
 ): Promise<GuildModuleCountToNumber> {
   await getOrCreateGuild(guildId);
-  return findSingleGuildCountToNumber(guildId, channelId);
+  return findSingleGuildModuleCountToNumber(guildId, channelId);
 }
 
-export async function setGuildCountToNumber(
+export async function setGuildModuleCountToNumber(
   guildId: string,
   channelId: string,
   data: Prisma.GuildModuleCountToNumberUpdateInput
 ): Promise<GuildModuleCountToNumber> {
-  await getOrCreateGuildCountToNumber(guildId, channelId);
+  await getOrCreateGuildModuleCountToNumber(guildId, channelId);
 
   return prismaClient.guildModuleCountToNumber.update({
     where: {
@@ -67,13 +67,13 @@ export async function setGuildCountToNumber(
   });
 }
 
-export async function incrementCountToNumberNumber(
+export async function incrementGuildModuleCountToNumberNumber(
   guildId: string,
   channelId: string,
   column: keyof Prisma.GuildModuleCountToNumberUpdateInput,
   value: number
 ): Promise<GuildModuleCountToNumber> {
-  await getOrCreateGuildCountToNumber(guildId, channelId);
+  await getOrCreateGuildModuleCountToNumber(guildId, channelId);
 
   return prismaClient.guildModuleCountToNumber.update({
     where: {
