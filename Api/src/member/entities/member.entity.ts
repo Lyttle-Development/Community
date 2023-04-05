@@ -13,12 +13,12 @@ import { User } from '../../user/entities/user.entity';
 @ObjectType()
 export class Member {
   @PrimaryColumn()
-  @ManyToOne(() => Guild, (guild) => guild.guild_id)
+  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
   @Field(() => Int)
   guild_id: number;
 
   @PrimaryColumn()
-  @ManyToOne(() => User, (user) => user.guild_id)
+  @ManyToOne(() => User, (user: User) => user.guild_id)
   @Field(() => Int)
   user_id: number;
 

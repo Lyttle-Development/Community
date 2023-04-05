@@ -13,7 +13,7 @@ import { User } from '../../user/entities/user.entity';
 @ObjectType()
 export class Profile {
   @PrimaryColumn()
-  @OneToOne(() => User, (user) => user.guild_id)
+  @OneToOne(() => User, (user: User) => user.guild_id)
   @Field(() => Int)
   guild_id: number;
 
