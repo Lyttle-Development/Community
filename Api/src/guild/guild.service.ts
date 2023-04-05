@@ -10,6 +10,8 @@ import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd
 import { GuildModuleQotdService } from '../guild-module-qotd/guild-module-qotd.service';
 import { GuildMessage } from '../guild-message/entities/guild-message.entity';
 import { GuildMessageService } from '../guild-message/guild-message.service';
+import { GuildTranslationService } from '../guild-translation/guild-translation.service';
+import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 
 @Injectable()
 export class GuildService {
@@ -22,6 +24,8 @@ export class GuildService {
     private guildModuleQotdService: GuildModuleQotdService,
     @Inject(forwardRef(() => GuildMessageService))
     private guildMessageService: GuildMessageService,
+    @Inject(forwardRef(() => GuildTranslationService))
+    private guildTranslationService: GuildTranslationService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -55,6 +59,14 @@ export class GuildService {
 
   getGuildMessages(): Promise<GuildMessage[]> {
     return this.guildMessageService.findAll();
+  }
+
+  getGuildTranslation(id: number): Promise<GuildTranslation> {
+    return this.guildTranslationService.findOne(id);
+  }
+
+  getGuildTranslations(): Promise<GuildTranslation[]> {
+    return this.guildTranslationService.findAll();
   }
 
   async update(
