@@ -1,20 +1,33 @@
 import type { Message } from 'discord.js';
 import { GuildMember } from '../../types/app/GuildMember';
-import execute from '../actions/onGuildMessageCreate';
+import { onGuildMessageCreate, onPrivateMessageCreate } from '../actions';
 
 async function messageCreate(message: Message): Promise<void> {
-  if (message.author.bot) return;
+  // If the message is from a bot, ignore it
+  if (message?.author?.bot) return;
 
-  if (!message.guild) {
+  // Check if the message is a DM
+  if (!message?.guild) {
+    const userId = message?.author?.id;
+    // Check if we have a valid user
+    if (!userId) return;
+
+    // Fire actions
+    await onPrivateMessageCreate(userId, message);
     return;
   }
 
-  const serverUser: GuildMember = {
-    userId: message.author.id,
-    guildId: message.guild.id,
+  // Build the guildMember
+  const guildMember: GuildMember = {
+    userId: message?.author?.id,
+    guildId: message?.guild?.id,
   };
 
-  await execute(message, serverUser);
+  // Check if we have a valid guildMember
+  // if (!guildMember.guildId || !guildMember.userId) return;
+
+  // Fire actions
+  await onGuildMessageCreate(guildMember, message);
 }
 
 export default messageCreate;

@@ -1,0 +1,22 @@
+import { executor, test } from "../../utils";
+import { actionPrefix } from "./index";
+import { Message } from "discord.js";
+import { GuildMember } from "../../types";
+
+// This file's prefix
+const prefix: string = actionPrefix + 'onGuildMessageUpdate.';
+
+// The execute function
+export async function onGuildMessageUpdate(
+  guildMember: GuildMember,
+  oldMessage: Message,
+  newMessage: Message
+): Promise<void> {
+  // All actions that should be executed
+  const actions: Promise<any>[] = [
+    executor(prefix + 'test', test, guildMember, oldMessage, newMessage),
+  ];
+
+  // Execute all actions
+  await Promise.all(actions);
+}

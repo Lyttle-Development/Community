@@ -13,6 +13,12 @@ type Guild {
 """
 scalar Timestamp
 
+type User {
+  guild_id: Int!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
 type Member {
   guild_id: Int!
   user_id: Int!
@@ -20,9 +26,87 @@ type Member {
   updated_at: Timestamp!
 }
 
+type Profile {
+  guild_id: Int!
+  tokens: Int!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type GuildTranslation {
+  guild_id: Int!
+  key: String!
+  value: String!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type GuildMessage {
+  id: Int!
+  guild_id: Int!
+  channel_id: Int!
+  message_id: Int!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type GuildModuleLevel {
+  guild_id: Int!
+  enabled: Boolean!
+  announcement_channel_id: Int!
+  leaderboard_channel_id: Int!
+  nicknames: Boolean!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type GuildModuleQotd {
+  guild_id: Int!
+  enabled: Boolean!
+  channel_id: Int!
+  message_id: Int!
+  nicknames: Boolean!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type MemberModuleLevel {
+  guild_id: Int!
+  user_id: Int!
+  in_call: Boolean!
+  call_alone: Boolean!
+  call_start: Timestamp!
+  points: Float!
+  points_available: Float!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
+type MemberModuleLevelDay {
+  guild_id: Int!
+  user_id: Int!
+  points_mon: Int!
+  points_tue: Int!
+  points_wed: Int!
+  points_thu: Int!
+  points_fri: Int!
+  points_sat: Int!
+  points_sun: Int!
+  created_at: Timestamp!
+  updated_at: Timestamp!
+}
+
 type Query {
   guild(id: Int!): Guild!
   member(id: Int!): Member!
+  user(id: Int!): User!
+  profile(id: Int!): Profile!
+  guildTranslation(id: Int!): GuildTranslation!
+  guildMessage(id: Int!): GuildMessage!
+  guildModuleLevel(id: Int!): GuildModuleLevel!
+  guildModuleQotd(id: Int!): GuildModuleQotd!
+  memberModuleLevel(id: Int!): MemberModuleLevel!
+  memberModuleLevelDay(id: Int!): MemberModuleLevelDay!
 }
 
 type Mutation {
@@ -32,6 +116,30 @@ type Mutation {
   createMember(createMemberInput: CreateMemberInput!): Member!
   updateMember(updateMemberInput: UpdateMemberInput!): Member!
   removeMember(id: Int!): Member!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createProfile(createProfileInput: CreateProfileInput!): Profile!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
+  removeProfile(id: Int!): Profile!
+  createGuildTranslation(createGuildTranslationInput: CreateGuildTranslationInput!): GuildTranslation!
+  updateGuildTranslation(updateGuildTranslationInput: UpdateGuildTranslationInput!): GuildTranslation!
+  removeGuildTranslation(id: Int!): GuildTranslation!
+  createGuildMessage(createGuildMessageInput: CreateGuildMessageInput!): GuildMessage!
+  updateGuildMessage(updateGuildMessageInput: UpdateGuildMessageInput!): GuildMessage!
+  removeGuildMessage(id: Int!): GuildMessage!
+  createGuildModuleLevel(createGuildModuleLevelInput: CreateGuildModuleLevelInput!): GuildModuleLevel!
+  updateGuildModuleLevel(updateGuildModuleLevelInput: UpdateGuildModuleLevelInput!): GuildModuleLevel!
+  removeGuildModuleLevel(id: Int!): GuildModuleLevel!
+  createGuildModuleQotd(createGuildModuleQotdInput: CreateGuildModuleQotdInput!): GuildModuleQotd!
+  updateGuildModuleQotd(updateGuildModuleQotdInput: UpdateGuildModuleQotdInput!): GuildModuleQotd!
+  removeGuildModuleQotd(id: Int!): GuildModuleQotd!
+  createMemberModuleLevel(createMemberModuleLevelInput: CreateMemberModuleLevelInput!): MemberModuleLevel!
+  updateMemberModuleLevel(updateMemberModuleLevelInput: UpdateMemberModuleLevelInput!): MemberModuleLevel!
+  removeMemberModuleLevel(id: Int!): MemberModuleLevel!
+  createMemberModuleLevelDay(createMemberModuleLevelDayInput: CreateMemberModuleLevelDayInput!): MemberModuleLevelDay!
+  updateMemberModuleLevelDay(updateMemberModuleLevelDayInput: UpdateMemberModuleLevelDayInput!): MemberModuleLevelDay!
+  removeMemberModuleLevelDay(id: Int!): MemberModuleLevelDay!
 }
 
 input CreateGuildInput {
@@ -51,6 +159,94 @@ input CreateMemberInput {
 }
 
 input UpdateMemberInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateProfileInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateProfileInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildTranslationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildTranslationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildMessageInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildMessageInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildModuleLevelInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleLevelInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildModuleQotdInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleQotdInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateMemberModuleLevelInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMemberModuleLevelInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateMemberModuleLevelDayInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateMemberModuleLevelDayInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

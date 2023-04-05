@@ -1,6 +1,8 @@
-// Emitted whenever a user subscribes to a guild scheduled event
-async function error(err: Error): Promise<void> {
-    console.error('!!!!! Client Error', err);
+import { onClientError } from '../actions';
+
+async function error(error: Error): Promise<void> {
+  // Fire actions
+  await onClientError(error);
 }
 
 export default error;
