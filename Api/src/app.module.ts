@@ -14,6 +14,7 @@ import { GuildMessageModule } from './guild-message/guild-message.module';
 import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
 import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
 import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
+import { MemberModuleLevelDayModule } from './member-module-level-day/member-module-level-day.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { MemberModuleLevelModule } from './member-module-level/member-module-lev
     GuildModuleLevelModule,
     GuildModuleQotdModule,
     MemberModuleLevelModule,
+    MemberModuleLevelDayModule,
   ],
   controllers: [AppController],
   providers: [AppService],
