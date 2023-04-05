@@ -3,14 +3,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Guild } from '../../guild/entities/guild.entity';
 
 @Entity('guild__module__qotd')
 @ObjectType()
 export class GuildModuleQotd {
   @PrimaryColumn()
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
   @Field(() => Int)
   guild_id: number;
 

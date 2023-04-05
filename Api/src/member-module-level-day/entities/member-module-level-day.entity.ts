@@ -3,18 +3,28 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
 
 @Entity('member__module__level_day')
 @ObjectType()
 export class MemberModuleLevelDay {
   @PrimaryColumn()
+  @OneToOne(
+    () => MemberModuleLevel,
+    (memberModuleLevel: MemberModuleLevel) => memberModuleLevel.guild_id,
+  )
   @Field(() => Int)
   guild_id: number;
 
   @PrimaryColumn()
+  @OneToOne(
+    () => MemberModuleLevel,
+    (memberModuleLevel: MemberModuleLevel) => memberModuleLevel.user_id,
+  )
   @Field(() => Int)
   user_id: number;
 
