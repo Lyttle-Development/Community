@@ -1,4 +1,3 @@
-// Guild VoiceGrowthChild
 import { GuildModuleVoiceGrowthChild, Prisma } from '@prisma/client';
 import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../guild';

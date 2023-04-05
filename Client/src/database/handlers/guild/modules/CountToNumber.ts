@@ -3,7 +3,6 @@ import type { GuildModuleCountToNumber } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { getOrCreateGuild } from '../guild';
 
-// Guild Fun
 export async function createGuildModuleCountToNumber(
   guildId: string,
   channelId: string

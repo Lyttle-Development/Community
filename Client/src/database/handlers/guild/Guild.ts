@@ -1,7 +1,6 @@
 import { prismaClient } from '../../prisma';
 import type { Guild } from '@prisma/client';
 
-// Guild
 export function createGuild(guildId: string): Promise<Guild> {
   return prismaClient.guild.create({
     data: {

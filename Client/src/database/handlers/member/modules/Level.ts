@@ -2,7 +2,6 @@ import { prismaClient } from '../../../prisma';
 import { getOrCreateMember } from '../Member';
 import type { MemberModuleLevel, Prisma } from '@prisma/client';
 
-// Levels
 export function createMemberModuleLevel(
   guildId: string,
   userId: string

@@ -3,7 +3,6 @@ import type { GuildModuleEasterEgg } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { getOrCreateGuild } from '../Guild';
 
-// Guild EasterEgg
 export async function createGuildModuleEasterEgg(
   guildId: string
 ): Promise<GuildModuleEasterEgg> {
