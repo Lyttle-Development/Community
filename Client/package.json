@@ -2,10 +2,10 @@
   "name": "@lyttledev/client",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run prisma:migrate && npm run build && node dist/main.js",
+    "start": "node dist/src/main.js",
     "update-commands": "node dist/src/deployCommands.js",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
@@ -13,12 +13,9 @@
     "prisma:migrate": "prisma migrate dev --name merge-upstream",
     "prisma:deploy": "prisma migrate deploy",
     "dev": "tsc -w",
-    "dev:start": "node dist/main.js",
-    "dev:test": "jest -i"
-  },
-  "engines": {
-    "node": "18.15.0",
-    "npm": "9.6.3"
+    "dev:start": "node dist/src/main.js",
+    "dev:test": "jest -i",
+    "setup": "npm run prisma:generate && npm run prisma:migrate && npm run build && npm run update-commands && npm run dev:start"
   },
   "engines": {
     "node": "18.15.0",
