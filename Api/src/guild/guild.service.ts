@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateGuildInput } from './dto/create-guild.input';
 import { UpdateGuildInput } from './dto/update-guild.input';
 import { Guild } from './entities/guild.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GuildModuleLevelService } from '../guild-module-level/guild-module-level.service';
+import { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
 
 @Injectable()
 export class GuildService {
   constructor(
     @InjectRepository(Guild)
     private guildRepository: Repository<Guild>,
+    @Inject(forwardRef(() => GuildModuleLevelService))
+    private guildModuleLevelService: GuildModuleLevelService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -27,6 +31,10 @@ export class GuildService {
       where: { guild_id: id },
       relations: ['guildMessages', 'members'],
     });
+  }
+
+  getGuildModuleLevel(id: number): Promise<GuildModuleLevel> {
+    return this.guildModuleLevelService.findOne(id);
   }
 
   async update(
