@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGuildInput } from './dto/create-guild.input';
 import { UpdateGuildInput } from './dto/update-guild.input';
+import { Guild } from './entities/guild.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GuildService {
-  create(createGuildInput: CreateGuildInput) {
-    return 'This action adds a new guild';
+  constructor(
+    @InjectRepository(Guild)
+    private guildRepository: Repository<Guild>,
+  ) {}
+
+  create(createGuildInput: CreateGuildInput): Promise<Guild> {
+    return this.guildRepository.save(createGuildInput);
   }
 
-  findAll() {
-    return `This action returns all guild`;
+  findAll(): Promise<Guild[]> {
+    return this.guildRepository.find({
+      relations: ['guildMessages', 'members'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guild`;
+  findOne(id: number): Promise<Guild> {
+    return this.guildRepository.findOne({
+      where: { guild_id: id },
+      relations: ['guildMessages', 'members'],
+    });
   }
 
   update(id: number, updateGuildInput: UpdateGuildInput) {
     return `This action updates a #${id} guild`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guild`;
+  async remove(id: number): Promise<Guild> | null {
+    const guild: Guild = await this.guildRepository.findOne({
+      where: { guild_id: id },
+    });
+    if (guild) {
+      return this.guildRepository.remove(guild);
+    }
+    return null;
   }
 }
