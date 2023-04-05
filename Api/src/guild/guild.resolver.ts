@@ -63,4 +63,9 @@ export class GuildResolver {
   getGuildMessage(@Parent() guild: Guild): Promise<GuildMessage> {
     return this.guildService.getGuildMessage(guild.guild_id);
   }
+
+  @ResolveField(() => [GuildMessage])
+  getGuildMessages(@Parent() guild: Guild): Promise<GuildMessage[]> {
+    return this.guildService.getGuildMessages();
+  }
 }
