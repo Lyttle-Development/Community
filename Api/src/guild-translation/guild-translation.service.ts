@@ -20,8 +20,14 @@ export class GuildTranslationService {
     return this.guildTranslationRepository.find();
   }
 
-  findOne(id: number): Promise<GuildTranslation> {
-    return this.guildTranslationRepository.findOne({ where: { guild_id: id } });
+  findAllByGuild(id: number): Promise<GuildTranslation[]> {
+    return this.guildTranslationRepository.find({ where: { guild_id: id } });
+  }
+
+  findOne(id: number, key: string): Promise<GuildTranslation> {
+    return this.guildTranslationRepository.findOne({
+      where: { guild_id: id, key: key },
+    });
   }
 
   update(id: number, updateGuildTranslationInput: UpdateGuildTranslationInput) {
