@@ -38,10 +38,6 @@ export class MemberModuleLevel {
   @Field(() => Float)
   points: number;
 
-  @Column()
-  @Field(() => Float)
-  points_available: number;
-
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
