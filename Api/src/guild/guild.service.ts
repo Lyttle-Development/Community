@@ -12,6 +12,7 @@ import { GuildMessage } from '../guild-message/entities/guild-message.entity';
 import { GuildMessageService } from '../guild-message/guild-message.service';
 import { GuildTranslationService } from '../guild-translation/guild-translation.service';
 import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
+import { MemberService } from 'src/member/member.service';
 
 @Injectable()
 export class GuildService {
@@ -26,6 +27,8 @@ export class GuildService {
     private guildMessageService: GuildMessageService,
     @Inject(forwardRef(() => GuildTranslationService))
     private guildTranslationService: GuildTranslationService,
+    @Inject(forwardRef(() => MemberService))
+    private memberService: MemberService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
