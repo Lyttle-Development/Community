@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Member } from '../../member/entities/member.entity';
+import { MemberModuleLevelDay } from '../../member-module-level-day/entities/member-module-level-day.entity';
 
 @Entity('member__module__level')
 @ObjectType()
@@ -38,9 +39,13 @@ export class MemberModuleLevel {
   @Field(() => Float)
   points: number;
 
-  @Column()
-  @Field(() => Float)
-  points_available: number;
+  @OneToOne(
+    () => MemberModuleLevelDay,
+    (memberModuleLevelDay: MemberModuleLevelDay) =>
+      memberModuleLevelDay.guild_id,
+  )
+  @Field(() => MemberModuleLevelDay)
+  memberModuleLevelDay: MemberModuleLevelDay;
 
   @CreateDateColumn()
   @Field(() => Date)
