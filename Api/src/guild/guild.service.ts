@@ -29,8 +29,20 @@ export class GuildService {
     });
   }
 
-  update(id: number, updateGuildInput: UpdateGuildInput) {
-    return `This action updates a #${id} guild`;
+  async update(
+    id: number,
+    updateGuildInput: UpdateGuildInput,
+  ): Promise<Guild> | null {
+    const guild: Guild = await this.guildRepository.findOne({
+      where: { guild_id: id },
+    });
+    if (guild) {
+      return this.guildRepository.save({
+        ...guild,
+        ...updateGuildInput,
+      });
+    }
+    throw new Error('Guild not found');
   }
 
   async remove(id: number): Promise<Guild> | null {
@@ -40,6 +52,6 @@ export class GuildService {
     if (guild) {
       return this.guildRepository.remove(guild);
     }
-    return null;
+    throw new Error('Guild not found');
   }
 }

@@ -1,4 +1,9 @@
-import { InputType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
-export class CreateGuildInput {}
+export class CreateGuildInput {
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
+}
