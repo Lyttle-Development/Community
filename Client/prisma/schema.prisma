@@ -11,28 +11,31 @@ datasource db {
 // Client Section
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model user {
+model User {
   // Primary key information
   user_id BigInt @id
 
   // Relations
-  user__profile user__profile?
+  user__profile UserProfile?
 
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("user")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Client Relations - Modules
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model user__profile {
+model UserProfile {
   // Primary key information
   user_id BigInt @id
 
   // Relations
-  user user @relation(fields: [user_id], references: [user_id])
+  user User @relation(fields: [user_id], references: [user_id])
 
   // Values
   tokens        Float     @default(0)
@@ -42,26 +45,29 @@ model user__profile {
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("user__profile")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Guild Section
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model guild {
+model Guild {
   // Primary key information
   guild_id BigInt @id
 
   // Relations
   // - Members
-  members member[]
+  members Member[]
 
   // - Modules
-  guild__module__level           guild__module__level?
-  guild__module__easter_egg      guild__module__easter_egg?
-  guild__module__count_to_number guild__module__count_to_number[]
-  guild__module__voice_growth    guild__module__voice_growth[]
-  guild__module__birthday        guild__module__birthday[]
+  guild__module__level           GuildModuleLevel?
+  guild__module__easter_egg      GuildModuleEasterEgg?
+  guild__module__count_to_number GuildModuleCountToNumber[]
+  guild__module__voice_growth    GuildModuleVoiceGrowth[]
+  guild__module__birthday        GuildModuleBirthday[]
 
   // - Cache
   // Todo add cache
@@ -72,18 +78,21 @@ model guild {
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Guild Relations - Modules
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model guild__module__level {
+model GuildModuleLevel {
   // Primary key information
   guild_id BigInt @id
 
   // Relations
-  guild guild @relation(fields: [guild_id], references: [guild_id])
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
 
   // Values
   enabled                 Boolean  @default(false)
@@ -96,14 +105,17 @@ model guild__module__level {
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild__module__level")
 }
 
-model guild__module__easter_egg {
+model GuildModuleEasterEgg {
   // Primary key information
   guild_id BigInt @id
 
   // Relations
-  guild guild @relation(fields: [guild_id], references: [guild_id])
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
 
   // Values
   enabled    Boolean  @default(false)
@@ -112,14 +124,18 @@ model guild__module__easter_egg {
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild__module__easter_egg")
 }
 
-model guild__module__count_to_number {
+model GuildModuleCountToNumber {
+  // Primary key information
   channel_id BigInt
   guild_id   BigInt
 
   // Relations
-  guild guild @relation(fields: [guild_id], references: [guild_id])
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
 
   // Values
   enabled        Boolean  @default(false)
@@ -132,17 +148,19 @@ model guild__module__count_to_number {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, channel_id])
+  @@map("guild__module__count_to_number")
 }
 
-model guild__module__voice_growth {
+model GuildModuleVoiceGrowth {
+  // Primary key information
   channel_id BigInt
   guild_id   BigInt
 
   // relations
-  childs guild__module__voice_growth__child[]
-  guild  guild                                @relation(fields: [guild_id], references: [guild_id])
+  childs GuildModuleVoiceGrowthChild[]
+  guild  Guild                         @relation(fields: [guild_id], references: [guild_id])
 
   // Values
   enabled Boolean @default(false)
@@ -154,17 +172,19 @@ model guild__module__voice_growth {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, channel_id])
+  @@map("guild__module__voice_growth")
 }
 
-model guild__module__voice_growth__child {
+model GuildModuleVoiceGrowthChild {
+  // Primary key information
   channel_id BigInt
   masterId   BigInt
   guild_id   BigInt
 
   // Relations
-  master guild__module__voice_growth @relation(fields: [masterId, guild_id], references: [channel_id, guild_id])
+  master GuildModuleVoiceGrowth @relation(fields: [masterId, guild_id], references: [channel_id, guild_id])
 
   // Values
   name String @default("unknown")
@@ -173,16 +193,17 @@ model guild__module__voice_growth__child {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, channel_id])
+  @@map("guild__module__voice_growth__child")
 }
 
-model guild__module__birthday {
+model GuildModuleBirthday {
   // Primary key information
   guild_id BigInt @id
 
   // Relations
-  guild guild @relation(fields: [guild_id], references: [guild_id])
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
 
   // Values
   enabled             Boolean @default(false)
@@ -191,6 +212,9 @@ model guild__module__birthday {
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild__module__birthday")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -201,14 +225,15 @@ model guild__module__birthday {
 // Member Section
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model member {
+model Member {
+  // Primary key information
   user_id  BigInt
   guild_id BigInt
 
   // Relations
-  guild                      guild                       @relation(fields: [guild_id], references: [guild_id])
-  member_level               member__module__level[]
-  member__module__level__day member__module__level__day?
+  guild                      Guild                 @relation(fields: [guild_id], references: [guild_id])
+  member_level               MemberModuleLevel[]
+  member__module__level__day MemberModuleLevelDay?
 
   // Values
   birthday_date DateTime?
@@ -218,21 +243,23 @@ model member {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, user_id])
+  @@map("member")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Member Relations - Modules
 ////////////////////////////////////////////////////////////////////////////////////////
 
-model member__module__level {
+model MemberModuleLevel {
+  // Primary key information
   user_id  BigInt
   guild_id BigInt
 
   // Relations
-  member                     member                       @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
-  member__module__level__day member__module__level__day[]
+  member                     Member                 @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
+  member__module__level__day MemberModuleLevelDay[]
 
   // Checks
   spam_check     Int      @default(0)
@@ -249,16 +276,18 @@ model member__module__level {
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, user_id])
+  @@map("member__module__level")
 }
 
-model member__module__level__day {
+model MemberModuleLevelDay {
+  // Primary key information
   user_id  BigInt
   guild_id BigInt
 
   // Relations
-  member member @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
+  member Member @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
 
   // Values
   points_monday    Int @default(0)
@@ -271,13 +300,14 @@ model member__module__level__day {
   points           Int @default(0) // Todo: Check if needed
 
   // Date information
-  created_at                    DateTime               @default(now())
-  updated_at                    DateTime               @default(now()) @updatedAt
-  member__module__level         member__module__level? @relation(fields: [member__module__levelGuild_id, member__module__levelUser_id], references: [guild_id, user_id])
+  created_at                    DateTime           @default(now())
+  updated_at                    DateTime           @default(now()) @updatedAt
+  member__module__level         MemberModuleLevel? @relation(fields: [member__module__levelGuild_id, member__module__levelUser_id], references: [guild_id, user_id])
   member__module__levelGuild_id BigInt?
   member__module__levelUser_id  BigInt?
 
-  // Primary key information
+  // Refactors
   @@id([guild_id, user_id])
   @@unique([user_id, guild_id])
+  @@map("member__module__level__day")
 }
