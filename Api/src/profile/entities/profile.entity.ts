@@ -3,14 +3,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  OneToOne,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 @ObjectType()
 export class Profile {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
+  @OneToOne(() => User, { cascade: true })
   @Field(() => Int)
   guild_id: number;
 
