@@ -20,8 +20,16 @@ export class MemberService {
     return this.memberRepository.find();
   }
 
-  findOne(id: number): Promise<Member> {
-    return this.memberRepository.findOne({ where: { user_id: id } });
+  findAllByGuild(guild_id: number): Promise<Member[]> {
+    return this.memberRepository.find({
+      where: { guild_id: guild_id },
+    });
+  }
+
+  findOne(user_id: number, guild_id: number): Promise<Member> {
+    return this.memberRepository.findOne({
+      where: { user_id: user_id, guild_id: guild_id },
+    });
   }
 
   update(id: number, updateMemberInput: UpdateMemberInput) {

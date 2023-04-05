@@ -13,6 +13,7 @@ import { GuildMessageService } from '../guild-message/guild-message.service';
 import { GuildTranslationService } from '../guild-translation/guild-translation.service';
 import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 import { MemberService } from 'src/member/member.service';
+import { Member } from '../member/entities/member.entity';
 
 @Injectable()
 export class GuildService {
@@ -73,6 +74,14 @@ export class GuildService {
 
   getGuildTranslations(guild_id: number): Promise<GuildTranslation[]> {
     return this.guildTranslationService.findAllByGuild(guild_id);
+  }
+
+  getMembers(guild_id: number): Promise<Member[]> {
+    return this.memberService.findAllByGuild(guild_id);
+  }
+
+  getMember(guild_id: number, user_id: number): Promise<Member> {
+    return this.memberService.findOne(user_id, guild_id);
   }
 
   async update(
