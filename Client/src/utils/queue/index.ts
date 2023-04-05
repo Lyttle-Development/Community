@@ -1,1 +1,1 @@
-export const queue = 'queue';
+export * from './queue';

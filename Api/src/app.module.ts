@@ -7,6 +7,14 @@ import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
+import { UserModule } from './user/user.module';
+import { ProfileModule } from './profile/profile.module';
+import { GuildTranslationModule } from './guild-translation/guild-translation.module';
+import { GuildMessageModule } from './guild-message/guild-message.module';
+import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
+import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
+import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
+import { MemberModuleLevelDayModule } from './member-module-level-day/member-module-level-day.module';
 
 @Module({
   imports: [
@@ -31,6 +39,14 @@ import { MemberModule } from './member/member.module';
     }),
     GuildModule,
     MemberModule,
+    UserModule,
+    ProfileModule,
+    GuildTranslationModule,
+    GuildMessageModule,
+    GuildModuleLevelModule,
+    GuildModuleQotdModule,
+    MemberModuleLevelModule,
+    MemberModuleLevelDayModule,
   ],
   controllers: [AppController],
   providers: [AppService],
