@@ -15,6 +15,7 @@ import { GuildModuleLevel } from '../guild-module-level/entities/guild-module-le
 import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
 import { GuildMessage } from 'src/guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
+import { Member } from '../member/entities/member.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -73,6 +74,16 @@ export class GuildResolver {
   @ResolveField(() => [GuildTranslation])
   guildTranslations(@Parent() guild: Guild): Promise<GuildTranslation[]> {
     return this.guildService.getGuildTranslations(guild.guild_id);
+  }
+
+  @ResolveField(() => Member)
+  member(@Parent() guild: Guild, id: number): Promise<Member> {
+    return this.guildService.getMember(guild.guild_id, id);
+  }
+
+  @ResolveField(() => [Member])
+  members(@Parent() guild: Guild): Promise<Member[]> {
+    return this.guildService.getMembers(guild.guild_id);
   }
 
   @ResolveField(() => GuildTranslation)
