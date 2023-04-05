@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   OneToMany,
@@ -21,6 +22,10 @@ export class Guild {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   guild_id: number;
+
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
   @Field(() => guildModuleLevel)
