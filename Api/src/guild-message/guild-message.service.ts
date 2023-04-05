@@ -20,9 +20,24 @@ export class GuildMessageService {
     return this.guildMessageRepository.find();
   }
 
+  findAllByGuild(id: number): Promise<GuildMessage[]> {
+    return this.guildMessageRepository.find({
+      where: { guild_id: id },
+    });
+  }
+
   findOne(id: number): Promise<GuildMessage> {
     return this.guildMessageRepository.findOne({
       where: { guild_id: id },
+    });
+  }
+
+  findOneByGuildAndMessageId(
+    guildId: number,
+    messageId: number,
+  ): Promise<GuildMessage> {
+    return this.guildMessageRepository.findOne({
+      where: { guild_id: guildId, message_id: messageId },
     });
   }
 
