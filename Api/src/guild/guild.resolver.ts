@@ -12,6 +12,7 @@ import { Guild } from './entities/guild.entity';
 import { CreateGuildInput } from './dto/create-guild.input';
 import { UpdateGuildInput } from './dto/update-guild.input';
 import { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
+import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -50,5 +51,10 @@ export class GuildResolver {
   @ResolveField(() => GuildModuleLevel)
   getModuleLevel(@Parent() guild: Guild): Promise<GuildModuleLevel> {
     return this.guildService.getGuildModuleLevel(guild.guild_id);
+  }
+
+  @ResolveField(() => GuildModuleQotd)
+  getModuleQotd(@Parent() guild: Guild): Promise<GuildModuleQotd> {
+    return this.guildService.getGuildModuleQotd(guild.guild_id);
   }
 }
