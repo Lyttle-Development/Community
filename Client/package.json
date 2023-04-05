@@ -5,7 +5,7 @@
   "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run prisma:migrate && npm run build && node dist/src/main.js",
+    "start": "node dist/src/main.js",
     "update-commands": "node dist/src/deployCommands.js",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
@@ -14,7 +14,8 @@
     "prisma:deploy": "prisma migrate deploy",
     "dev": "tsc -w",
     "dev:start": "node dist/src/main.js",
-    "dev:test": "jest -i"
+    "dev:test": "jest -i",
+    "setup": "npm run prisma:generate && npm run prisma:migrate && npm run build && npm run update-commands && npm run dev:start"
   },
   "engines": {
     "node": "18.15.0",
