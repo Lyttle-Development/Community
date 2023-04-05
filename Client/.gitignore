@@ -11,8 +11,6 @@ cogs/.DS_Store
 *.env
 prisma/migrations
 prisma/migrations/*
-client/prisma/migrations
-client/prisma/migrations/*
 
 # Logs
 logs
@@ -120,4 +118,3 @@ dist
 # TernJS port file
 .tern-port
 /prisma/migrations/
-/client/prisma/migrations/
