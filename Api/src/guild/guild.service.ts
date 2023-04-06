@@ -82,23 +82,6 @@ export class GuildService {
 
   getMember(guild_id: number, user_id: number): Promise<Member> {
     return this.memberService.findOne(user_id, guild_id);
-  ) {}
-
-  create(createGuildInput: CreateGuildInput) {
-    return 'This action adds a new guild';
-  }
-
-  findAll(): Promise<Guild[]> {
-    return this.guildRepository.find({
-      relations: ['guildMessages', 'members'],
-    });
-  }
-
-  findOne(id: number): Promise<Guild> {
-    return this.guildRepository.findOne({
-      where: { guild_id: id },
-      relations: ['guildMessages', 'members'],
-    });
   }
 
   async update(
