@@ -4,7 +4,7 @@ import client from '../../main';
 import { DEV_IDS } from '../../../constants';
 import { environment } from '../environment';
 
-const maxMessageLength = parseInt(environment.ALLOWED_MESSAGE_LENGTH);
+const maxMessageLength = parseInt(environment.ALLOWED_MESSAGE_LENGTH) ?? 2000;
 
 const cache = {
   time: 0,
@@ -17,8 +17,7 @@ export function messageDevs(error: Error, note?: string) {
 You **overdone** yourself again, didn't you?
 Soo, the **reason** I'm **messaging** you...
 
-I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let you **know.**
-** **`;
+I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let you **know.**`;
 
   let message2 = `
 \`\`\`ts
@@ -27,7 +26,9 @@ ${error.stack}
 
   // cut the message if it's too long
   if (message2.length > maxMessageLength) {
-    message2 = message2.slice(0, maxMessageLength - 10) + '```';
+    message2 =
+      message2.slice(0, maxMessageLength - 40) +
+      '\nNOTE: It was cut off here\n```';
   }
 
   let message3 = '';
@@ -40,12 +41,20 @@ ${note}
 \`\`\``;
   }
 
+  const devs = DEV_IDS.map((id) => `<@${id}>`).join(', ');
+
   message3 += `** **
 Well, have **fun** with that!
 I'll be **working** just as hard as always and trying to **break** your code!
 
 Love,
-*Community Bot*
+~*Community Bot*
+
+*PS: The following dev's were contacted:* ${devs}
+\`\`\`
+This was an automated message, and was caused by an error in the bot.
+It's recommended to fix the problem and remove it from happening again.
+\`\`\`
 `;
 
   if (cache.time > Date.now() && cache.message === error.stack) return;
@@ -56,26 +65,8 @@ Love,
 
   for (const dev of DEV_IDS) {
     const channel = client.users.resolve(dev);
-    void sendMessage(
-      channel,
-      message1,
-      false,
-      false,
-      QueueBacklogType.CRITICAL,
-    );
-    void sendMessage(
-      channel,
-      message2,
-      false,
-      false,
-      QueueBacklogType.CRITICAL,
-    );
-    void sendMessage(
-      channel,
-      message3,
-      false,
-      false,
-      QueueBacklogType.CRITICAL,
-    );
+    void sendMessage(channel, message1, true, false, QueueBacklogType.CRITICAL);
+    void sendMessage(channel, message2, true, false, QueueBacklogType.CRITICAL);
+    void sendMessage(channel, message3, true, false, QueueBacklogType.CRITICAL);
   }
 }
