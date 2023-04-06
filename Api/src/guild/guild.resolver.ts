@@ -62,22 +62,22 @@ export class GuildResolver {
   }
 
   @ResolveField(() => GuildMessage)
-  Message(@Parent() guild: Guild, id: number): Promise<GuildMessage> {
+  message(@Parent() guild: Guild, id: number): Promise<GuildMessage> {
     return this.guildService.getGuildMessage(guild.guild_id, id);
   }
 
   @ResolveField(() => [GuildMessage])
-  Messages(@Parent() guild: Guild): Promise<GuildMessage[]> {
+  messages(@Parent() guild: Guild): Promise<GuildMessage[]> {
     return this.guildService.getGuildMessages(guild.guild_id);
   }
 
   @ResolveField(() => GuildTranslation)
-  Translation(@Parent() guild: Guild, key: string): Promise<GuildTranslation> {
+  translation(@Parent() guild: Guild, key: string): Promise<GuildTranslation> {
     return this.guildService.getGuildTranslation(guild.guild_id, key);
   }
 
   @ResolveField(() => [GuildTranslation])
-  Translations(@Parent() guild: Guild): Promise<GuildTranslation[]> {
+  translations(@Parent() guild: Guild): Promise<GuildTranslation[]> {
     return this.guildService.getGuildTranslations(guild.guild_id);
   }
 
