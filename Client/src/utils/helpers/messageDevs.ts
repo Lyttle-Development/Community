@@ -21,7 +21,7 @@ I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let 
 ** **`;
 
   let message2 = `
-\`\`\`bash
+\`\`\`ts
 ${error.stack}
 \`\`\``;
 
