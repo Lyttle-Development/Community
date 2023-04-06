@@ -14,7 +14,7 @@ export async function onGuildMessageCreate(
   // All actions that should be executed
   const actions: Promise<any>[] = [
     executor(prefix + 'test', test, guildMember, message),
-    executor(prefix + 'test', async () => {
+    executor(prefix + 'tokens-test', async () => {
       const points = 100;
       const guildId = message.guild.id;
 

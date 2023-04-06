@@ -37,7 +37,7 @@ Oh, you really never give me a reason to break this don't you?
 I just got the **notification** that we have a note **linked** to **this error**!
 \`\`\`
 ${note}
-\`\`\`\``;
+\`\`\``;
   }
 
   message3 += `** **
