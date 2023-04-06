@@ -1,8 +1,10 @@
 import { CreateGuildInput } from './create-guild.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class UpdateGuildInput extends PartialType(CreateGuildInput) {
-  @Field(() => Int)
-  id: number;
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 }
