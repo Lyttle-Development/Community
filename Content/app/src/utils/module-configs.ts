@@ -11,7 +11,8 @@ export function buildInterfaceConfig(spiderResults: SpiderResults): void {
 
 export function buildConstConfig(spiderResults: SpiderResults): void {
   // get the selected groups back from regex
-  const regexConst = /\/\/ export:? ?(.*?)\nexport const (.*) = ({(.|\n)*?})/gm;
+  const regexConst =
+    /\/\/ export:? ?(.*?)\nexport const (.*):?.*? = ({(.|\n)*?})/gm;
 
   buildConfig(spiderResults, regexConst);
 }
@@ -53,6 +54,6 @@ function buildConfig(
     }
 
     // Set variable to the main object
-    files[fileName] = result;
+    files[fileName] = result.length > 0;
   }
 }
