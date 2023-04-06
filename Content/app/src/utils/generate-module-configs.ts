@@ -1,10 +1,14 @@
 import { spider } from './spider';
 import { saveFile } from './saveFile';
-import { buildConfig } from './module-configs';
+import { buildConstConfig, buildInterfaceConfig } from './module-configs';
 import { SpiderFile } from '../types/Spider';
 
 export function generateModuleConfigs() {
-  const moduleMarkdown = spider('../content/modules', buildConfig);
+  const moduleInterfaceConfig = spider(
+    '../content/modules',
+    buildInterfaceConfig,
+  );
+  const moduleConstConfig = spider('../content/modules', buildConstConfig);
 
   let content = '';
 
@@ -29,9 +33,13 @@ export function generateModuleConfigs() {
     content += '\n';
   };
 
-  builder(moduleMarkdown, '../../content/modules');
+  builder(moduleInterfaceConfig, '../../content/modules');
+  builder(moduleConstConfig, '../../content/modules');
 
   content = content.trim();
+
+  // remove all empty lines
+  content = content.replaceAll('\n\n', '');
 
   saveFile('generated/ModuleConfigs.ts', content);
 }
