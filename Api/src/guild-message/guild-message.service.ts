@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGuildMessageInput } from './dto/create-guild-message.input';
-import { UpdateGuildMessageInput } from './dto/update-guild-message.input';
+import type { CreateGuildMessageInput } from './dto/create-guild-message.input';
+import type { UpdateGuildMessageInput } from './dto/update-guild-message.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GuildMessage } from './entities/guild-message.entity';
 import { Repository } from 'typeorm';

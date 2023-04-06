@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMemberInput } from './dto/create-member.input';
-import { UpdateMemberInput } from './dto/update-member.input';
+import type { CreateMemberInput } from './dto/create-member.input';
+import type { UpdateMemberInput } from './dto/update-member.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Member } from './entities/member.entity';
 import { Repository } from 'typeorm';

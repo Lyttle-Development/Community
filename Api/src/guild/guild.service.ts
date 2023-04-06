@@ -1,19 +1,19 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { CreateGuildInput } from './dto/create-guild.input';
-import { UpdateGuildInput } from './dto/update-guild.input';
+import type { CreateGuildInput } from './dto/create-guild.input';
+import type { UpdateGuildInput } from './dto/update-guild.input';
 import { Guild } from './entities/guild.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GuildModuleLevelService } from '../guild-module-level/guild-module-level.service';
-import { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
-import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
+import type { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
+import type { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
 import { GuildModuleQotdService } from '../guild-module-qotd/guild-module-qotd.service';
-import { GuildMessage } from '../guild-message/entities/guild-message.entity';
+import type { GuildMessage } from '../guild-message/entities/guild-message.entity';
 import { GuildMessageService } from '../guild-message/guild-message.service';
 import { GuildTranslationService } from '../guild-translation/guild-translation.service';
-import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
-import { MemberService } from 'src/member/member.service';
-import { Member } from '../member/entities/member.entity';
+import type { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
+import { MemberService } from '../member/member.service';
+import type { Member } from '../member/entities/member.entity';
 
 @Injectable()
 export class GuildService {

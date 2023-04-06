@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGuildTranslationInput } from './dto/create-guild-translation.input';
-import { UpdateGuildTranslationInput } from './dto/update-guild-translation.input';
+import type { CreateGuildTranslationInput } from './dto/create-guild-translation.input';
+import type { UpdateGuildTranslationInput } from './dto/update-guild-translation.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GuildTranslation } from './entities/guild-translation.entity';
 import { Repository } from 'typeorm';

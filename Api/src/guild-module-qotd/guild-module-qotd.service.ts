@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGuildModuleQotdInput } from './dto/create-guild-module-qotd.input';
-import { UpdateGuildModuleQotdInput } from './dto/update-guild-module-qotd.input';
+import type { CreateGuildModuleQotdInput } from './dto/create-guild-module-qotd.input';
+import type { UpdateGuildModuleQotdInput } from './dto/update-guild-module-qotd.input';
 import { GuildModuleQotd } from './entities/guild-module-qotd.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

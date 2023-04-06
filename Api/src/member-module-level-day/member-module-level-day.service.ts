@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMemberModuleLevelDayInput } from './dto/create-member-module-level-day.input';
-import { UpdateMemberModuleLevelDayInput } from './dto/update-member-module-level-day.input';
+import type { CreateMemberModuleLevelDayInput } from './dto/create-member-module-level-day.input';
+import type { UpdateMemberModuleLevelDayInput } from './dto/update-member-module-level-day.input';
 
 @Injectable()
 export class MemberModuleLevelDayService {
