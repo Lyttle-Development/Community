@@ -17,7 +17,9 @@ export function messageDevs(error: Error, note?: string) {
 You **overdone** yourself again, didn't you?
 Soo, the **reason** I'm **messaging** you...
 
-I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let you **know.**`;
+I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let you **know.**
+
+This is what we have to work with: (the error)`;
 
   let message2 = `
 \`\`\`ts
@@ -36,6 +38,8 @@ ${error.stack}
     message3 = `** **
 Oh, you really never give me a reason to break this don't you?
 I just got the **notification** that we have a note **linked** to **this error**!
+
+This is what you told me to tell you: (the note)
 \`\`\`
 ${note}
 \`\`\``;
