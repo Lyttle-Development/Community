@@ -93,16 +93,8 @@
         "maxBOF": 0
       }
     ],
-    "no-shadow": [
-      "error",
-      {
-        "allow": [
-          "err",
-          "resolve",
-          "reject"
-        ]
-      }
-    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
     "no-trailing-spaces": [
       "off"
     ],
