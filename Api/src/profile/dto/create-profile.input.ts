@@ -1,7 +1,13 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class CreateProfileInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Column()
+  @Field(() => Int)
+  guild_id: number;
+
+  @Column()
+  @Field(() => Int)
+  tokens: number;
 }
