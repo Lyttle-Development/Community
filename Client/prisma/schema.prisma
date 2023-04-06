@@ -96,6 +96,7 @@ model GuildModuleLevel {
 
   // Values
   enabled                 Boolean  @default(false)
+  leveling_multiplier     Int      @default(8)
   announcement_channel_id BigInt?
   leaderboard_channel_id  BigInt?
   leaderboard_last_week   Int?

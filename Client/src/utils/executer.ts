@@ -15,14 +15,18 @@ export async function executor(
   // Try to execute the module
   try {
     // Execute the module
-    if (args.length === 0) result = await moduleFunction();
-    else result = await moduleFunction(...args);
+    if (args.length === 0) {
+      result = await moduleFunction();
+    } else {
+      result = await moduleFunction(...args);
+    }
   } catch (error) {
     // If the module fails, increase the error count
     setModule(moduleName, 1);
+    console.error(error);
     messageDevs(
       error,
-      `The error was caught in the executor, the following module crashed: ${moduleName}`
+      `The error was caught in the executor, the following module crashed: ${moduleName}`,
     );
   }
 
@@ -55,7 +59,7 @@ function mayExecute(moduleName: string): boolean {
 }
 
 // Set a module's status, storaged & cached
-function setModule(moduleName: string, errors: number = 0): void {
+function setModule(moduleName: string, errors = 0): void {
   try {
     // Read the modules.json file otherwise keep the cached version
     try {
@@ -64,7 +68,7 @@ function setModule(moduleName: string, errors: number = 0): void {
     } catch (error) {
       messageDevs(
         error,
-        `This was executed in the "executor" i think it could not get the modules from json.`
+        'This was executed in the "executor" i think it could not get the modules from json.',
       );
     }
 
@@ -87,7 +91,7 @@ function setModule(moduleName: string, errors: number = 0): void {
   } catch (error) {
     messageDevs(
       error,
-      `This was executed in the "executor" i think it could not save the modules to json.`
+      'This was executed in the "executor" i think it could not save the modules to json.',
     );
   }
 }

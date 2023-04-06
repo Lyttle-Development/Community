@@ -2,27 +2,45 @@ import { sendMessage } from '../queue/messages';
 import { QueueBacklogType } from '../queue';
 import client from '../../main';
 import { DEV_IDS } from '../../../constants';
+import { environment } from '../environment';
+
+const maxMessageLength = parseInt(environment.ALLOWED_MESSAGE_LENGTH);
+
+const cache = {
+  time: 0,
+  message: '',
+};
 
 export function messageDevs(error: Error, note?: string) {
-  let message = `Heye there my **favorite dev**!
+  const message1 = `Heye there my **favorite dev**!
 
 You **overdone** yourself again, didn't you?
 Soo, the **reason** I'm **messaging** you...
 
 I did a tiny oopsy, **BUT!!** No worries I **caught** it and just wanted to let you **know.**
+** **`;
+
+  let message2 = `
 \`\`\`bash
 ${error.stack}
 \`\`\``;
 
-  if (note)
-    message += `
+  // cut the message if it's too long
+  if (message2.length > maxMessageLength) {
+    message2 = message2.slice(0, maxMessageLength - 10) + '```';
+  }
+
+  let message3 = '';
+  if (note) {
+    message3 = `** **
 Oh, you really never give me a reason to break this don't you?
 I just got the **notification** that we have a note **linked** to **this error**!
 \`\`\`
 ${note}
-\`\`\``;
+\`\`\`\``;
+  }
 
-  message += `
+  message3 += `** **
 Well, have **fun** with that!
 I'll be **working** just as hard as always and trying to **break** your code!
 
@@ -30,8 +48,34 @@ Love,
 *Community Bot*
 `;
 
+  if (cache.time > Date.now() && cache.message === error.stack) return;
+  // add 5 seconds to the cache time
+  cache.time = Date.now() + 5000;
+  // set the cache message
+  cache.message = error.stack;
+
   for (const dev of DEV_IDS) {
     const channel = client.users.resolve(dev);
-    void sendMessage(channel, message, false, false, QueueBacklogType.CRITICAL);
+    void sendMessage(
+      channel,
+      message1,
+      false,
+      false,
+      QueueBacklogType.CRITICAL,
+    );
+    void sendMessage(
+      channel,
+      message2,
+      false,
+      false,
+      QueueBacklogType.CRITICAL,
+    );
+    void sendMessage(
+      channel,
+      message3,
+      false,
+      false,
+      QueueBacklogType.CRITICAL,
+    );
   }
 }
