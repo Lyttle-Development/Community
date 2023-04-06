@@ -10,24 +10,20 @@ export function generateModuleConfigs() {
   );
   const moduleConstConfig = spider('../content/modules', buildConstConfig);
 
-  let content = '';
+  let content = "// This file is auto generated, don't edit it manually.\n";
 
   const builder = (obj: SpiderFile, path: string) => {
     Object.keys(obj).forEach((key) => {
       if (typeof obj[key] === 'object') {
         builder(obj[key], `${path}/${key}`);
       } else {
-        const variable = (
-          obj[key][0].toUpperCase() + obj[key].slice(1)
-        ).replaceAll('.', '');
-        const globalVariable = (
-          path.replaceAll('../../content/modules/', '').split('/').join('_') +
-          '_' +
-          variable
-        )
-          .replaceAll('.', '')
-          .toUpperCase();
-        content += `export { ${variable} as __${globalVariable}__ } from '${path}';\n`;
+        if (!obj[key]) return;
+        const globalVariable = path
+          .replaceAll('../../content/modules/', '')
+          .split('/')
+          .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+          .join('');
+        content += `export * as ModuleConfig${globalVariable} from '${path}/config';\n`;
       }
     });
     content += '\n';
