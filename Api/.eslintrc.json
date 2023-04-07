@@ -34,7 +34,8 @@
       }
     ],
     "indent": [
-      "off"
+      "error",
+      2
     ],
     "arrow-spacing": [
       "warn",
@@ -44,11 +45,7 @@
       }
     ],
     "brace-style": [
-      "error",
-      "stroustrup",
-      {
-        "allowSingleLine": true
-      }
+      "off"
     ],
     "comma-dangle": [
       "error",
@@ -80,7 +77,7 @@
       }
     ],
     "no-console": "off",
-    "no-empty-function": "off",
+    "no-empty-function": "error",
     "no-floating-decimal": "error",
     "no-inline-comments": "error",
     "no-lonely-if": "error",

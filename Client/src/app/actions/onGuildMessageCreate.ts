@@ -1,9 +1,8 @@
-import { GuildMember } from '../../types';
-import { executor, test } from '../../utils';
+import { GuildMember, LevelEvent } from '../../types';
+import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
-import { getPointsFromLevels } from '../../modules/Activity/levels/utils/get-points-from-levels';
-import { getLevelsFromPoints } from '../../modules/Activity/levels/utils/get-levels-from-points';
+import { createEvent } from '../../modules/Activity/levels/create-event';
 
 const prefix: string = actionPrefix + 'onGuildMessageCreate.';
 
@@ -12,22 +11,13 @@ export async function onGuildMessageCreate(
   message: Message,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
-    executor(prefix + 'test', test, guildMember, message),
-    executor(prefix + 'tokens-test', async () => {
-      const points = 100;
-      const guildId = message.guild.id;
-
-      console.log('Doing it!');
-
-      const levels = await getLevelsFromPoints(guildId, points);
-      console.log(levels);
-
-      const pointsFromLevels = await getPointsFromLevels(guildId, levels);
-      console.log(pointsFromLevels);
-
-      console.log('Finished it!');
-    }),
+  const actions: Promise<() => void>[] = [
+    executor(
+      prefix + 'level-event',
+      createEvent,
+      LevelEvent.message,
+      guildMember,
+    ),
   ];
 
   // Execute all actions

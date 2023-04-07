@@ -4,8 +4,8 @@ import { messageDevs } from './helpers/messageDevs';
 
 export async function executor(
   moduleName: string,
-  moduleFunction: (...args) => Promise<any>,
-  ...args: any[]
+  moduleFunction: ((...args) => Promise<() => void>) | ((...args) => void),
+  ...args: unknown[]
 ): Promise<any> {
   let result = null;
 
