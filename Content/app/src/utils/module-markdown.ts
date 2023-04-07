@@ -18,7 +18,9 @@ export function buildMarkdown({
       // Get contents
       .readFileSync(file, 'utf8')
       // Remove all Zero Width No-Break Space characters ( https://www.compart.com/en/unicode/U+FEFF )
-      .replaceAll('﻿', '');
+      .replaceAll('﻿', '')
+      // Fix lf and crlf
+      .replace(/\r\n/g, '\n');
 
     // Set variable to the main object
     files[fileName] = fileContents.endsWith('\n')
