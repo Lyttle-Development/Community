@@ -1,5 +1,5 @@
 // export
-export const NUMBER_STYLES = {
+export const NUMBER_STYLES: NumberStyles = {
   superscript: ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'],
   subscript: ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'],
   caps: ['𝟶', '𝟷', '𝟸', '𝟹', '𝟺', '𝟻', '𝟼', '𝟽', '𝟾', '𝟿'],
@@ -10,7 +10,8 @@ export const NUMBER_STYLES = {
   lite: ['０', '１', '２', '３', '４', '５', '６', '７', '８', '９'],
 };
 
-interface NumberStyles {
+// export
+export interface NumberStyles {
   [key: string]: [
     string,
     string,

@@ -9,38 +9,12 @@ export const ModuleMarkdown = {
         },
       },
       txt: {
-        level: {},
         nickname: {
           content: '',
           documentation: '',
         },
       },
     },
-  },
-  Administration: {
-    guidelines: {},
-    permissions: {},
-    roles: {},
-    'staff-mode': {},
-  },
-  Communication: {
-    automation: {},
-    messages: {},
-  },
-  Competition: {
-    battle: {},
-    'community-says': {},
-    'give-away': {},
-    'guess-the-word': {},
-    'rock-paper-scissors': {},
-    tournament: {},
-  },
-  Economy: {
-    points: {},
-  },
-  Fun: {
-    dice: {},
-    'question-of-the-day': {},
   },
 };
 
