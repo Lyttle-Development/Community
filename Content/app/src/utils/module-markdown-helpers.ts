@@ -4,8 +4,12 @@ import markdown from '../../generated/ModuleMarkdown';
 
 function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
   const res = path.split('.').reduce((acc, cur) => acc[cur], markdown);
-  if (!res || typeof res !== 'object') throw new Error('No object found.');
+  if (!res || typeof res !== 'object') {
+    console.error(path);
+    throw new Error('No object found.');
+  }
   if (isVoid(res.content) || isVoid(res.documentation)) {
+    console.error(path);
     throw new Error('No content or documentation found.');
   }
   return {

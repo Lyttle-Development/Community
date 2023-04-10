@@ -1,6 +1,6 @@
 import { GuildMember } from '../../../types';
 import { checkActivity } from './check-activity';
-import { givePoints } from '../../Economy/points/give-points';
+import { givePoints } from './give-points';
 
 export async function triggerEvent(price: number, guildMember: GuildMember) {
   // Check and reset activity when needed.

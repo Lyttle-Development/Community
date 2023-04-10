@@ -8,6 +8,7 @@ import type { MemberModuleLevel, MemberModuleLevelDay } from '@prisma/client';
 import { WEEK_DAYS } from './utils/constants';
 import type { LevelWeekDay } from '../../../types';
 import { GuildMember } from '../../../types';
+import { triggerPointsChange } from './trigger-points-change';
 
 export async function givePoints(amount: number, guildMember: GuildMember) {
   const { guildId, userId } = guildMember;
@@ -23,7 +24,7 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   await getAndGivePoints(guildId, guildId, amount);
 
   // Todo: Give nickname
-  // Todo: Trigger point change
+  void triggerPointsChange(guildMember, oldLevels, newLevels);
   // Todo: Trigger leaderboard
 }
 

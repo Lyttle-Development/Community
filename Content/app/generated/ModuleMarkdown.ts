@@ -2,18 +2,32 @@
 export const ModuleMarkdown = {
   Activity: {
     levels: {
-      cmd: {
-        you: {
-          content: 'Heye ',
+      event: {
+        'level-up': {
+          content: '{user} just advanced to {level} {unit}!',
           documentation: '',
         },
       },
-      txt: {
-        nickname: {
-          content: '',
+      unit: {
+        level: {
+          content: 'level',
+          documentation: '',
+        },
+        levels: {
+          content: 'levels',
           documentation: '',
         },
       },
+    },
+  },
+  Global: {
+    prefix: {
+      content: '> ',
+      documentation: '',
+    },
+    variables: {
+      content: '',
+      documentation: '',
     },
   },
 };

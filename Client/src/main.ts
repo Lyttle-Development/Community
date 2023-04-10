@@ -1,7 +1,9 @@
-import { environment, executor } from './utils';
+import { environment, executor, initQueue } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
-import { initQueue } from './utils/queue/queue';
+import { createExtensions } from './utils/extensions';
+
+createExtensions();
 
 export { isReady } from './app/events/ready';
 
