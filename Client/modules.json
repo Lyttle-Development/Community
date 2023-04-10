@@ -1,1 +1,50 @@
-{}
+{
+  "action.onClientReady.test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.level-event": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.levelEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.tokens-test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildPresenceUpdate.test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onPrivateUserUpdate.test": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.presenceUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.ready": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.userUpdate": {
+    "enabled": true,
+    "errors": 0
+  }
+}

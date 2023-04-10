@@ -13,7 +13,7 @@ export async function onGuildMessageCreate(
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(
-      prefix + 'level-event',
+      prefix + 'levelEvent',
       createEvent,
       LevelEvent.message,
       guildMember,

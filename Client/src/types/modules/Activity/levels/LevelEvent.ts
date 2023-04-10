@@ -11,3 +11,7 @@ export enum LevelEvent {
   threadCreate = 'threadCreate',
   eventInterest = 'eventInterest',
 }
+
+export type LevelEventPrices = {
+  [key in LevelEvent]: number;
+};
