@@ -14,25 +14,16 @@ import { triggerEvent } from './trigger-event';
  */
 export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   // Check if user is spamming.
-  const preventSpamResult = await preventSpam(guildMember);
-  if (preventSpamResult.isSpamming) return;
-
-  // Create a copy of the db_MemberModuleLevel. (So we use it and update it later)
-  let db_MemberModuleLevel = preventSpamResult.db_MemberModuleLevel;
+  const { isSpamming, db_MemberModuleLevel } = await preventSpam(guildMember);
+  if (isSpamming) return;
 
   // Check if the user is in cooldown.
-  const checkCooldownResult = await checkCooldown(
-    guildMember,
-    db_MemberModuleLevel,
-  );
-  if (checkCooldownResult.inCooldown) return;
-
-  // Update the db_MemberModuleLevel.
-  db_MemberModuleLevel = checkCooldownResult.db_MemberModuleLevel;
+  const { inCooldown } = await checkCooldown(guildMember, db_MemberModuleLevel);
+  if (inCooldown) return;
 
   // Create the event.
   const price = TOKENS_EVENT_PRICES[event];
 
   // Trigger the event actions.
-  void triggerEvent(price, guildMember, db_MemberModuleLevel);
+  void triggerEvent(price, guildMember);
 }

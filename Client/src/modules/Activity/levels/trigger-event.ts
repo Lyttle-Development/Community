@@ -1,10 +1,11 @@
-import { MemberModuleLevel } from '@prisma/client';
 import { GuildMember } from '../../../types';
+import { checkActivity } from './check-activity';
+import { givePoints } from '../../Economy/points/give-points';
 
-export async function triggerEvent(
-  price: number,
-  guildMember: GuildMember,
-  db_MemberModuleLevel: MemberModuleLevel,
-) {
-  console.log(price, guildMember, db_MemberModuleLevel);
+export async function triggerEvent(price: number, guildMember: GuildMember) {
+  // Check and reset activity when needed.
+  await checkActivity(guildMember);
+
+  // Give the user the tokens.
+  await givePoints(price, guildMember);
 }

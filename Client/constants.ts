@@ -27,3 +27,5 @@ export const TOKENS_EVENT_PRICES: LevelEventPrices = {
   threadCreate: 33,
   eventInterest: 45,
 };
+
+export const ALMOST_7_DAYS = 600900000;
