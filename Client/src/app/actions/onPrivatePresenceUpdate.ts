@@ -1,6 +1,6 @@
-import { executor, test } from "../../utils";
-import { actionPrefix } from "./index";
-import { Presence } from "discord.js";
+import { executor, test } from '../../utils';
+import { actionPrefix } from './index';
+import { Presence } from 'discord.js';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onPrivatePresenceUpdate.';
@@ -9,10 +9,10 @@ const prefix: string = actionPrefix + 'onPrivatePresenceUpdate.';
 export async function onPrivatePresenceUpdate(
   userId: string,
   oldPresence: Presence,
-  newPresence: Presence
+  newPresence: Presence,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
+  const actions: Promise<() => void>[] = [
     executor(prefix + 'test', test, userId, oldPresence, newPresence),
   ];
 

@@ -1,7 +1,8 @@
-import { executor, test } from "../../utils";
-import { actionPrefix } from "./index";
-import { CommandInteraction } from "discord.js";
-import { GuildMember } from "../../types";
+import { executor } from '../../utils';
+import { actionPrefix } from './index';
+import { CommandInteraction } from 'discord.js';
+import { GuildMember, LevelEvent } from '../../types';
+import { createEvent } from '../../modules/Activity/levels/create-event';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionCommand.';
@@ -9,11 +10,16 @@ const prefix: string = actionPrefix + 'onGuildInteractionCommand.';
 // The execute function
 export async function onGuildInteractionCommand(
   guildMember: GuildMember,
-  interaction: CommandInteraction
+  interaction: CommandInteraction,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
-    executor(prefix + 'test', test, guildMember, interaction),
+  const actions: Promise<() => void>[] = [
+    executor(
+      prefix + 'levelEvent',
+      createEvent,
+      LevelEvent.command,
+      guildMember,
+    ),
   ];
 
   // Execute all actions
