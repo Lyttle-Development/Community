@@ -33,10 +33,9 @@ export class UserResolver {
   // currently not implemented
   @Mutation(() => User)
   updateUser(
-    @Args('updateUserInput id') updateUserInput: UpdateUserInput,
-    id: number,
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ): Promise<String> {
-    return this.userService.update(id, updateUserInput);
+    return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
