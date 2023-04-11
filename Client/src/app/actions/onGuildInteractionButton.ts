@@ -1,7 +1,7 @@
-import { executor, test } from "../../utils";
-import { actionPrefix } from "./index";
-import { ButtonInteraction } from "discord.js";
-import { GuildMember } from "../../types";
+import { executor, test } from '../../utils';
+import { actionPrefix } from './index';
+import { ButtonInteraction } from 'discord.js';
+import { GuildMember } from '../../types';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionButton.';
@@ -9,10 +9,10 @@ const prefix: string = actionPrefix + 'onGuildInteractionButton.';
 // The execute function
 export async function onGuildInteractionButton(
   guildMember: GuildMember,
-  interaction: ButtonInteraction
+  interaction: ButtonInteraction,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
+  const actions: Promise<() => void>[] = [
     executor(prefix + 'test', test, guildMember, interaction),
   ];
 

@@ -20,7 +20,7 @@ export function generateModuleConfigs() {
         if (!obj[key]) return;
         const globalVariable = path
           .replaceAll('../../content/modules/', '')
-          .split('/')
+          .split(/[/_-]/gm)
           .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
           .join('');
         content += `export * as ModuleConfig${globalVariable} from '${path}/config';\n`;

@@ -2,11 +2,11 @@
 import { LevelWeekDay } from '../../../../types';
 
 export const WEEK_DAYS: LevelWeekDay[] = [
+  LevelWeekDay.sunday,
   LevelWeekDay.monday,
   LevelWeekDay.tuesday,
   LevelWeekDay.wednesday,
   LevelWeekDay.thursday,
   LevelWeekDay.friday,
   LevelWeekDay.saturday,
-  LevelWeekDay.sunday,
 ];
