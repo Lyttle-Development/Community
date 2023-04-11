@@ -1,7 +1,9 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class CreateGuildInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 }

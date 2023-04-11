@@ -4,7 +4,10 @@
   "description": "",
   "main": "dist/src/main.js",
   "scripts": {
-    "start": "tsc && node dist/src/main.js"
+    "start": "npm run build && npm run generate && npm run format:generated",
+    "build": "tsc",
+    "generate": "node dist/src/main.js",
+    "format:generated": "prettier --write \"generated/**/*.ts\""
   },
   "engines": {
     "node": "18.15.0",

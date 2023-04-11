@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMemberModuleLevelInput } from './dto/create-member-module-level.input';
-import { UpdateMemberModuleLevelInput } from './dto/update-member-module-level.input';
+import type { CreateMemberModuleLevelInput } from './dto/create-member-module-level.input';
+import type { UpdateMemberModuleLevelInput } from './dto/update-member-module-level.input';
 
 @Injectable()
 export class MemberModuleLevelService {

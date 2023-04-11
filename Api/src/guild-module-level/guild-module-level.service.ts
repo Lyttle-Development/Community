@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGuildModuleLevelInput } from './dto/create-guild-module-level.input';
-import { UpdateGuildModuleLevelInput } from './dto/update-guild-module-level.input';
+import type { CreateGuildModuleLevelInput } from './dto/create-guild-module-level.input';
+import type { UpdateGuildModuleLevelInput } from './dto/update-guild-module-level.input';
+import type { GuildModuleLevel } from './entities/guild-module-level.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Guild } from '../guild/entities/guild.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GuildModuleLevelService {
+  constructor(
+    @InjectRepository(Guild)
+    private guildModuleLevelRepository: Repository<GuildModuleLevel>,
+  ) {}
+
   create(createGuildModuleLevelInput: CreateGuildModuleLevelInput) {
     return 'This action adds a new guildModuleLevel';
   }
@@ -12,8 +21,10 @@ export class GuildModuleLevelService {
     return `This action returns all guildModuleLevel`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guildModuleLevel`;
+  findOne(id: number): Promise<GuildModuleLevel> {
+    return this.guildModuleLevelRepository.findOne({
+      where: { guild_id: id },
+    });
   }
 
   update(id: number, updateGuildModuleLevelInput: UpdateGuildModuleLevelInput) {

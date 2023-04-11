@@ -3,7 +3,7 @@ import { environment } from '../environment';
 import { messageDevs } from '../helpers/messageDevs';
 
 let queueActive = false;
-let queueFree: boolean[] = [];
+const queueFree: boolean[] = [];
 let queueInterval: NodeJS.Timeout;
 const allowedRequestsPerSecond: number =
   parseInt(environment.ALLOWED_REQUESTS_SECOND) ?? 10;
@@ -82,6 +82,7 @@ async function Queue(id) {
   try {
     await queueAction();
   } catch (error) {
+    console.log(error);
     messageDevs(error, 'The error was caught in the main queue');
   }
   queueFree[id] = true;

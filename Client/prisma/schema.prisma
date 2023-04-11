@@ -68,6 +68,7 @@ model Guild {
   guild__module__count_to_number GuildModuleCountToNumber[]
   guild__module__voice_growth    GuildModuleVoiceGrowth[]
   guild__module__birthday        GuildModuleBirthday[]
+  guild__translations            GuildTranslation[]
 
   // - Cache
   // Todo add cache
@@ -96,6 +97,7 @@ model GuildModuleLevel {
 
   // Values
   enabled                 Boolean  @default(false)
+  leveling_multiplier     Int      @default(8)
   announcement_channel_id BigInt?
   leaderboard_channel_id  BigInt?
   leaderboard_last_week   Int?
@@ -215,6 +217,26 @@ model GuildModuleBirthday {
 
   // Refactors
   @@map("guild__module__birthday")
+}
+
+model GuildTranslation {
+  // Primary key information
+  guild_id BigInt
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  key   String
+  value String
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@id([guild_id, key])
+  @@map("guild__translation")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

@@ -6,9 +6,9 @@ export function generateModuleMarkdown() {
   const moduleMarkdown = spider('../content/modules', buildMarkdown);
 
   const content = `// This file is auto generated, don't edit it manually.
-export const moduleMarkdown = ${JSON.stringify(moduleMarkdown, null, 2)};
+export const ModuleMarkdown = ${JSON.stringify(moduleMarkdown, null, 2)};
 
-export default moduleMarkdown;`;
+export default ModuleMarkdown;`;
 
   saveFile('generated/ModuleMarkdown.ts', content);
 }
