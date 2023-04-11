@@ -42,7 +42,12 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
+  getProfile(id: number): Promise<Profile> {
+    return this.profileService.findOne(id);
+  }
+
+  // currently not implemented
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<String> {
     return `This action updates a #${id} user`;
   }
 

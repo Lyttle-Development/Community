@@ -17,12 +17,14 @@ export class ProfileService {
     return this.profileRepository.save(createProfileInput);
   }
 
-  findAll() {
-    return `This action returns all profile`;
+  findAll(): Promise<Profile[]> {
+    return this.profileRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  findOne(id: number): Promise<Profile> {
+    return this.profileRepository.findOne({
+      where: { guild_id: id },
+    });
   }
 
   update(id: number, updateProfileInput: UpdateProfileInput) {
