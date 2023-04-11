@@ -38,9 +38,8 @@ model UserProfile {
   user User @relation(fields: [user_id], references: [user_id])
 
   // Values
-  tokens        Float     @default(0)
-  birthday_date DateTime?
-  birthday      Int?
+  tokens      Float @default(0)
+  tokens_used Float @default(0)
 
   // Date information
   created_at DateTime @default(now())
