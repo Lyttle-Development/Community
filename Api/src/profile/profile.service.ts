@@ -2,18 +2,29 @@ import { Injectable } from '@nestjs/common';
 import type { CreateProfileInput } from './dto/create-profile.input';
 import type { UpdateProfileInput } from './dto/update-profile.input';
 
+import { InjectRepository } from '@nestjs/typeorm';
+import { Profile } from './entities/profile.entity';
+import type { Repository } from 'typeorm';
+
 @Injectable()
 export class ProfileService {
-  create(createProfileInput: CreateProfileInput) {
-    return 'This action adds a new profile';
+  constructor(
+    @InjectRepository(Profile)
+    private profileRepository: Repository<Profile>,
+  ) {}
+
+  create(createProfileInput: CreateProfileInput): Promise<Profile> {
+    return this.profileRepository.save(createProfileInput);
   }
 
-  findAll() {
-    return `This action returns all profile`;
+  findAll(): Promise<Profile[]> {
+    return this.profileRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profile`;
+  findOne(id: number): Promise<Profile> {
+    return this.profileRepository.findOne({
+      where: { guild_id: id },
+    });
   }
 
   update(id: number, updateProfileInput: UpdateProfileInput) {

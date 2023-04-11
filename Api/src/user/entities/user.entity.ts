@@ -17,7 +17,9 @@ export class User {
   @Field(() => Int)
   guild_id: number;
 
-  @OneToMany(() => Member, (member: Member) => member.guild_id)
+  @OneToMany(() => Member, (member: Member) => member.guild_id, {
+    nullable: true,
+  })
   @Field(() => [Member])
   members: Member[];
 

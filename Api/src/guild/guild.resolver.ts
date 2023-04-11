@@ -40,10 +40,9 @@ export class GuildResolver {
 
   @Mutation(() => Guild)
   updateGuild(
-    @Args('updateGuildInput, id') updateGuildInput: UpdateGuildInput,
-    id: number,
+    @Args('updateGuildInput') updateGuildInput: UpdateGuildInput,
   ): Promise<Guild> {
-    return this.guildService.update(id, updateGuildInput);
+    return this.guildService.update(updateGuildInput.id, updateGuildInput);
   }
 
   @Mutation(() => Guild)
