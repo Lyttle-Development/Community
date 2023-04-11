@@ -4,9 +4,16 @@ import markdown from '../../generated/ModuleMarkdown';
 
 function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
   const res = path.split('.').reduce((acc, cur) => acc[cur], markdown);
-  if (!res || typeof res !== 'object') throw new Error('No object found.');
-  if (isVoid(res.content) || isVoid(res.documentation))
-    throw new Error('No content or documentation found.');
+  if (!res || typeof res !== 'object') {
+    throw new Error(
+      `Was looking for content: "${path}", but no object was found!`,
+    );
+  }
+  if (isVoid(res.content) || isVoid(res.documentation)) {
+    throw new Error(
+      `Was looking for content: "${path}", But no content or documentation was found.`,
+    );
+  }
   return {
     content: res.content as string,
     documentation: res.documentation as string,
@@ -14,11 +21,11 @@ function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
 }
 
 export function getModuleMarkdownContent(path: string): string {
-  const markdown = getModuleMarkdownItem(path);
-  return markdown.content;
+  const _markdown = getModuleMarkdownItem(path);
+  return _markdown.content;
 }
 
 export function getModuleMarkdownDocumentation(path: string): string {
-  const markdown = getModuleMarkdownItem(path);
-  return markdown.documentation;
+  const _markdown = getModuleMarkdownItem(path);
+  return _markdown.documentation;
 }

@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   OneToMany,
@@ -22,17 +23,22 @@ export class Guild {
   @Field(() => Int)
   guild_id: number;
 
-  @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE' })
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
+
+  @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
   @Field(() => guildModuleLevel)
   guildModuleLevel: GuildModuleLevel;
 
-  @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE' })
+  @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
   @Field(() => GuildModuleQotd)
   guildModuleQotd: GuildModuleQotd;
 
   @OneToMany(
     () => GuildMessage,
     (guildMessage: GuildMessage) => guildMessage.guild_id,
+    { nullable: true },
   )
   @Field(() => [GuildMessage])
   guildMessages: GuildMessage[];
@@ -40,11 +46,14 @@ export class Guild {
   @OneToMany(
     () => GuildTranslation,
     (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
+    { nullable: true },
   )
   @Field(() => [GuildTranslation])
   guildTranslations: GuildTranslation[];
 
-  @OneToMany(() => Member, (member: Member) => member.guild_id)
+  @OneToMany(() => Member, (member: Member) => member.guild_id, {
+    nullable: true,
+  })
   @Field(() => [Member])
   members: Member[];
 

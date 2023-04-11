@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildTranslationService } from './guild-translation.service';
 import { GuildTranslation } from './entities/guild-translation.entity';
 import { CreateGuildTranslationInput } from './dto/create-guild-translation.input';
@@ -6,10 +6,15 @@ import { UpdateGuildTranslationInput } from './dto/update-guild-translation.inpu
 
 @Resolver(() => GuildTranslation)
 export class GuildTranslationResolver {
-  constructor(private readonly guildTranslationService: GuildTranslationService) {}
+  constructor(
+    private readonly guildTranslationService: GuildTranslationService,
+  ) {}
 
   @Mutation(() => GuildTranslation)
-  createGuildTranslation(@Args('createGuildTranslationInput') createGuildTranslationInput: CreateGuildTranslationInput) {
+  createGuildTranslation(
+    @Args('createGuildTranslationInput')
+    createGuildTranslationInput: CreateGuildTranslationInput,
+  ) {
     return this.guildTranslationService.create(createGuildTranslationInput);
   }
 
@@ -19,13 +24,22 @@ export class GuildTranslationResolver {
   }
 
   @Query(() => GuildTranslation, { name: 'guildTranslation' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.guildTranslationService.findOne(id);
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('key', { type: () => String }) key: string,
+  ) {
+    return this.guildTranslationService.findOne(id, key);
   }
 
   @Mutation(() => GuildTranslation)
-  updateGuildTranslation(@Args('updateGuildTranslationInput') updateGuildTranslationInput: UpdateGuildTranslationInput) {
-    return this.guildTranslationService.update(updateGuildTranslationInput.id, updateGuildTranslationInput);
+  updateGuildTranslation(
+    @Args('updateGuildTranslationInput')
+    updateGuildTranslationInput: UpdateGuildTranslationInput,
+  ) {
+    return this.guildTranslationService.update(
+      updateGuildTranslationInput.id,
+      updateGuildTranslationInput,
+    );
   }
 
   @Mutation(() => GuildTranslation)

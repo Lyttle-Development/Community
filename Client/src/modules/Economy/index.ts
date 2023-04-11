@@ -1,1 +1,1 @@
-export * from './points';
+export const _tokens = null;

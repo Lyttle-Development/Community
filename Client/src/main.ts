@@ -1,7 +1,9 @@
-import { environment, executor } from './utils';
+import { environment, executor, initQueue } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
-import { initQueue } from './utils/queue/queue';
+import { createExtensions } from './utils/extensions';
+
+createExtensions();
 
 export { isReady } from './app/events/ready';
 
@@ -41,7 +43,7 @@ const eventFiles = fs
   .map((file) => file.replace('.ts', ''));
 
 console.log('info', `Found event files:\n - ${eventFiles.join('\n - ')}`);
-console.log('info', `Loading events...`);
+console.log('info', 'Loading events...');
 
 eventFiles.forEach((file, i) => {
   import(`./app/events/${file}`)
@@ -51,13 +53,13 @@ eventFiles.forEach((file, i) => {
           client.once(eventFiles[i], (...args) =>
             // Use executor to execute the event, catching any errors that creep up,
             // and thus preventing the bot from crashing. and auto disabling that event.
-            executor('main.' + file, event, ...args)
+            executor('main.' + file, event, ...args),
           );
         } else {
           client.on(eventFiles[i], (...args) =>
             // Use executor to execute the event, catching any errors that creep up,
             // and thus preventing the bot from crashing. and auto disabling that event.
-            executor('main.' + file, event, ...args)
+            executor('main.' + file, event, ...args),
           );
         }
         console.log('info', `Loaded event ${eventFiles[i]}`);
@@ -71,7 +73,7 @@ eventFiles.forEach((file, i) => {
 });
 
 // Login to Discord with your client's token
-client.login(environment.BOT_TOKEN).then(() => console.log('info', `running`));
+client.login(environment.BOT_TOKEN).then(() => console.log('info', 'running'));
 
 export const bootdate = new Date();
 initQueue();

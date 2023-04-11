@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { MemberService } from './member.service';
 import { Member } from './entities/member.entity';
 import { CreateMemberInput } from './dto/create-member.input';
@@ -9,7 +9,9 @@ export class MemberResolver {
   constructor(private readonly memberService: MemberService) {}
 
   @Mutation(() => Member)
-  createMember(@Args('createMemberInput') createMemberInput: CreateMemberInput) {
+  createMember(
+    @Args('createMemberInput') createMemberInput: CreateMemberInput,
+  ) {
     return this.memberService.create(createMemberInput);
   }
 
@@ -19,12 +21,17 @@ export class MemberResolver {
   }
 
   @Query(() => Member, { name: 'member' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.memberService.findOne(id);
+  findOne(
+    @Args('userId', { type: () => Int }) userId: number,
+    @Args('guildId', { type: () => Int }) guildId: number,
+  ) {
+    return this.memberService.findOne(userId, guildId);
   }
 
   @Mutation(() => Member)
-  updateMember(@Args('updateMemberInput') updateMemberInput: UpdateMemberInput) {
+  updateMember(
+    @Args('updateMemberInput') updateMemberInput: UpdateMemberInput,
+  ) {
     return this.memberService.update(updateMemberInput.id, updateMemberInput);
   }
 

@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Guild } from 'src/guild/entities/guild.entity';
+import { Guild } from '../../guild/entities/guild.entity';
 import {
   Column,
   CreateDateColumn,

@@ -1,43 +1,35 @@
 // This file is auto generated, don't edit it manually.
-export const moduleMarkdown = {
-  "Activity": {
-    "levels": {
-      "cmd": {
-        "you": {
-          "content": "Heye ",
-          "documentation": ""
-        }
+export const ModuleMarkdown = {
+  Activity: {
+    levels: {
+      event: {
+        'level-up': {
+          content: '{user} just advanced to {level} {unit}!',
+          documentation: '',
+        },
       },
-      "txt": {
-        "level": {}
-      }
-    }
+      unit: {
+        level: {
+          content: 'level',
+          documentation: '',
+        },
+        levels: {
+          content: 'levels',
+          documentation: '',
+        },
+      },
+    },
   },
-  "Administration": {
-    "guidelines": {},
-    "permissions": {},
-    "roles": {},
-    "staff-mode": {}
+  Global: {
+    prefix: {
+      content: '> ',
+      documentation: '',
+    },
+    variables: {
+      content: '',
+      documentation: '',
+    },
   },
-  "Communication": {
-    "automation": {},
-    "messages": {}
-  },
-  "Competition": {
-    "battle": {},
-    "community-says": {},
-    "give-away": {},
-    "guess-the-word": {},
-    "rock-paper-scissors": {},
-    "tournament": {}
-  },
-  "Economy": {
-    "points": {}
-  },
-  "Fun": {
-    "dice": {},
-    "question-of-the-day": {}
-  }
 };
 
-export default moduleMarkdown;
+export default ModuleMarkdown;
