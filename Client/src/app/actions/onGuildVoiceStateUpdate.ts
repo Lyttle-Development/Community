@@ -3,6 +3,7 @@ import { actionPrefix } from './index';
 import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
 import { createEvent } from '../../modules/Activity/levels/create-event';
+import { triggerCallEvent } from '../../modules/Activity/levels/trigger-call-event';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -21,6 +22,14 @@ export async function onGuildVoiceStateUpdate(
       createEvent,
       LevelEvent.voiceUpdate,
       guildMember,
+    ),
+    executor(
+      prefix + 'levelCallEvent',
+      triggerCallEvent,
+      guildMember,
+      oldState,
+      newState,
+      voiceEvent,
     ),
   ];
 

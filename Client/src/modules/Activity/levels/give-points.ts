@@ -11,17 +11,24 @@ import { GuildMember } from '../../../types';
 import { triggerPointsChange } from './trigger-points-change';
 
 export async function givePoints(amount: number, guildMember: GuildMember) {
+  // Get guild and user id
   const { guildId, userId } = guildMember;
+
+  // Round the amount
+  const roundedAmount = Math.round(amount);
+
+  // Check if the amount is valid
+  if (roundedAmount <= 0) return;
 
   // Give points to user
   const [oldLevels, newLevels, dayLevels] = await getAndGivePoints(
     userId,
     guildId,
-    amount,
+    roundedAmount,
   );
 
   // Give points to guild
-  await getAndGivePoints(guildId, guildId, amount);
+  await getAndGivePoints(guildId, guildId, roundedAmount);
 
   // Todo: Give nickname
   await triggerPointsChange(guildMember, oldLevels, newLevels);
