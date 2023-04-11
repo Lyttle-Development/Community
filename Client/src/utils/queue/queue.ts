@@ -1,12 +1,11 @@
 import { checkMessagesQueue } from './messagesQueue';
-import { environment } from '../environment';
 import { messageDevs } from '../helpers/messageDevs';
+import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
 
 let queueActive = false;
 const queueFree: boolean[] = [];
 let queueInterval: NodeJS.Timeout;
-const allowedRequestsPerSecond: number =
-  parseInt(environment.ALLOWED_REQUESTS_SECOND) ?? 10;
+const allowedRequestsPerSecond: number = ALLOWED_REQUESTS_SECOND ?? 10;
 
 export enum QueueBacklogType {
   CRITICAL = 'critical',
@@ -22,11 +21,11 @@ export enum QueueBacklogTimeType {
   TIMEOUT = 'timeout',
 }
 
-type QueueBacklogTypeItem = Function;
+type QueueBacklogTypeItem = () => Promise<unknown> | unknown;
 
 interface QueueBacklogTimeItem {
   time: number;
-  action: Function;
+  action: () => Promise<unknown> | unknown;
 }
 
 interface QueueBacklog {
@@ -122,14 +121,23 @@ async function queueAction() {
   if (await queueActionItem(QueueBacklogType.BACKGROUND)) return;
 }
 
-export function queue(importance: QueueBacklogType, action: Function) {
+export function queue(
+  importance: QueueBacklogType,
+  action: () => Promise<unknown> | unknown,
+): void {
   backlog[importance].push(action);
 }
 
-export function queueAt(date: Date, action: Function) {
+export function queueAt(
+  date: Date,
+  action: () => Promise<unknown> | unknown,
+): void {
   backlog.time.push({ time: date.getTime(), action: action });
 }
 
-export function queueIn(ms: number, action: Function) {
+export function queueIn(
+  ms: number,
+  action: () => Promise<unknown> | unknown,
+): void {
   backlog.timeout.push({ time: Date.now() + ms, action: action });
 }

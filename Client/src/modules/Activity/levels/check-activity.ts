@@ -4,8 +4,7 @@ import {
   resetMemberModuleLevelDayValues,
   setMemberModuleLevelDayValue,
 } from '../../../database/handlers';
-import { ALMOST_7_DAYS } from '../../../../constants';
-import { WEEK_DAYS } from './utils/constants';
+import { ALMOST_7_DAYS, WEEK_DAYS } from './constants';
 
 export async function checkActivity(guildMember: GuildMember) {
   // Trigger activity for the member.

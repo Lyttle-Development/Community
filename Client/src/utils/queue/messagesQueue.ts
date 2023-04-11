@@ -1,8 +1,8 @@
 import { AnyThreadChannel, TextChannel, ThreadChannel } from 'discord.js';
 import { queue, QueueBacklogType } from './queue';
-import { environment } from '../environment';
+import { ALLOWED_MESSAGE_LENGTH } from '../../../constants';
 
-const maxMessageLength = parseInt(environment.ALLOWED_MESSAGE_LENGTH) ?? 2000;
+const maxMessageLength = ALLOWED_MESSAGE_LENGTH ?? 2000;
 
 interface ChannelsQueueItem {
   channel: TextChannel | AnyThreadChannel | ThreadChannel;
@@ -54,7 +54,7 @@ export function checkMessagesQueue() {
     const channelQueue = channels[channel];
 
     // Create a new array for the messages
-    let messages: string[] = [];
+    const messages: string[] = [];
 
     // If the queue isn't empty, start grouping the messages.
     if (channelQueue.length > 0) {
@@ -79,9 +79,9 @@ export function checkMessagesQueue() {
 
         // If it passed, remove it from the queue and add it to the list.
         channelQueue.shift();
-        totalLength += item.content.length; // count characters
-        messages.push(item.content); // add to list
-        if (!target) target = item?.channel; // set target
+        totalLength += item.content.length;
+        messages.push(item.content);
+        if (!target) target = item?.channel;
       }
     }
 

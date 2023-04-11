@@ -3,11 +3,10 @@ import { config } from 'dotenv';
 config();
 
 const requiredEnvironmentVariables = [
-  'BOT_TOKEN',
+  'NODE_ENV',
   'CLIENT_ID',
-  'ALLOWED_ERROR_COUNT',
-  'ALLOWED_REQUESTS_SECOND',
-  'ALLOWED_MESSAGE_LENGTH',
+  'BOT_TOKEN',
+  'DATABASE_URL',
 ] as const;
 
 export type Environment =
@@ -15,13 +14,13 @@ export type Environment =
   | string;
 
 const missingEnvironmentVariables = requiredEnvironmentVariables.filter(
-  (k) => !Object.keys(process.env).includes(k)
+  (k) => !Object.keys(process.env).includes(k),
 );
 
 if (missingEnvironmentVariables.length > 0) {
   console.error(
-    "We're missing the following environment variables:",
-    missingEnvironmentVariables
+    'We are missing the following environment variables:',
+    missingEnvironmentVariables,
   );
   process.exit(1);
 }

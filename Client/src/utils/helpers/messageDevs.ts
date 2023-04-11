@@ -1,10 +1,10 @@
 import { sendMessage } from '../queue/messages';
 import { QueueBacklogType } from '../queue';
 import client from '../../main';
-import { DEV_IDS } from '../../../constants';
+import { ALLOWED_MESSAGE_LENGTH, DEV_IDS } from '../../../constants';
 import { environment } from '../environment';
 
-const maxMessageLength = parseInt(environment.ALLOWED_MESSAGE_LENGTH) ?? 2000;
+const maxMessageLength = ALLOWED_MESSAGE_LENGTH ?? 2000;
 
 const cache = {
   time: 0,
@@ -12,7 +12,9 @@ const cache = {
 };
 
 export function messageDevs(error: Error, note?: string) {
-  return;
+  // Don't message the devs if we're in development
+  if (environment.NODE_ENV === 'development') return;
+
   const message1 = `Heye there my **favorite dev**!
 
 You **overdone** yourself again, didn't you?

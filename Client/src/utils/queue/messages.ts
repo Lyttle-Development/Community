@@ -1,6 +1,5 @@
 import {
   AnyThreadChannel,
-  APIEmbed,
   BaseMessageOptions,
   CommandInteraction,
   InteractionResponse,
@@ -25,7 +24,7 @@ export function sendMessage(
   content: string,
   silent = true,
   embed = false,
-  queue: QueueBacklogType | false = QueueBacklogType.NORMAL
+  queue: QueueBacklogType | false = QueueBacklogType.NORMAL,
 ): Promise<Message> {
   // Resolve the channel if it's a string
   if (typeof channel === 'string') {
@@ -62,7 +61,7 @@ export function sendReply(
   content: string,
   silent = true,
   embed = false,
-  queue: QueueBacklogType | false = QueueBacklogType.NORMAL
+  queue: QueueBacklogType | false = QueueBacklogType.NORMAL,
 ): Promise<Message | InteractionResponse | void> {
   const response: BaseMessageOptions = getResponse(content, silent, embed);
 

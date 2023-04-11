@@ -5,10 +5,10 @@ import {
   setMemberModuleLevelDayValue,
 } from '../../../database/handlers';
 import type { MemberModuleLevel, MemberModuleLevelDay } from '@prisma/client';
-import { WEEK_DAYS } from './utils/constants';
 import type { LevelWeekDay } from '../../../types';
 import { GuildMember } from '../../../types';
 import { triggerPointsChange } from './trigger-points-change';
+import { WEEK_DAYS } from './constants';
 
 export async function givePoints(amount: number, guildMember: GuildMember) {
   // Get guild and user id
@@ -21,7 +21,7 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   if (roundedAmount <= 0) return;
 
   // Give points to user
-  const [oldLevels, newLevels, dayLevels] = await getAndGivePoints(
+  const [oldLevels, newLevels] = await getAndGivePoints(
     userId,
     guildId,
     roundedAmount,

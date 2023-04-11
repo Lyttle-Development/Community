@@ -5,7 +5,7 @@ import {
   getOrCreateMemberModuleLevel,
   setMemberModuleLevelValue,
 } from '../../../database/handlers';
-import { TOKENS_EVENT_PRICES } from '../../../../constants';
+import { EVENT_PRICES } from './constants';
 import { givePoints } from './give-points';
 
 const CallTimeLimit = 24 * 60 * 60 * 1000;
@@ -141,8 +141,7 @@ async function give(guildMember: GuildMember): Promise<boolean> {
   const timeBetween =
     new Date().getTime() - db_MemberModuleLevel.call_start.getTime();
   // Calculate the points reward.
-  const rawPointsReward =
-    (timeBetween / 60000) * TOKENS_EVENT_PRICES.inCallTime;
+  const rawPointsReward = (timeBetween / 60000) * EVENT_PRICES.inCallTime;
   // Round to 4 decimal places.
   const pointsReward = Math.round(rawPointsReward * 10000) / 10000;
 
