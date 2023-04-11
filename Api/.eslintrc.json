@@ -34,8 +34,7 @@
       }
     ],
     "indent": [
-      "error",
-      2
+      "off"
     ],
     "arrow-spacing": [
       "warn",
