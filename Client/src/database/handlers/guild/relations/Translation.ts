@@ -22,7 +22,7 @@ export async function findSingleGuildTranslation(
 ): Promise<GuildTranslation> {
   return prismaClient.guildTranslation.findUnique({
     where: {
-      key_guild_id: {
+      guild_id_key: {
         guild_id: BigInt(guildId),
         key,
       },
@@ -59,7 +59,7 @@ export async function setGuildTranslation(
 
   return prismaClient.guildTranslation.update({
     where: {
-      key_guild_id: {
+      guild_id_key: {
         guild_id: BigInt(guildId),
         key,
       },

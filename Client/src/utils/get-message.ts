@@ -1,4 +1,4 @@
-import { getGuildTranslation } from '../database/handlers/guild/relations/Translation';
+import { getGuildTranslation } from '../database/handlers';
 import {
   getModuleMarkdownContent,
   ModuleConfigGlobalVariables,

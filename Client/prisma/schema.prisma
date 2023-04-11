@@ -235,7 +235,7 @@ model GuildTranslation {
   updated_at DateTime @default(now()) @updatedAt
 
   // Refactors
-  @@id([key, guild_id])
+  @@id([guild_id, key])
   @@map("guild__translation")
 }
 
