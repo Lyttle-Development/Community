@@ -1,12 +1,13 @@
 import * as fs from 'fs';
-import { environment, sortObject } from './';
+import { sortObject } from './';
 import { messageDevs } from './helpers/messageDevs';
+import { ALLOWED_ERROR_COUNT } from '../../constants';
 
 export async function executor(
   moduleName: string,
   moduleFunction: ((...args) => Promise<() => void>) | ((...args) => void),
   ...args: unknown[]
-): Promise<any> {
+) {
   let result = null;
 
   // Check if the module may be executed
@@ -46,8 +47,7 @@ function mayExecute(moduleName: string): boolean {
     const enabled = modules[moduleName].enabled === true;
 
     // Check if the module has too many errors
-    const tooManyErrors =
-      modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT;
+    const tooManyErrors = modules[moduleName].errors >= ALLOWED_ERROR_COUNT;
 
     // Check if the module is enabled and not disabled
     return enabled && !tooManyErrors;
@@ -80,7 +80,7 @@ function setModule(moduleName: string, errors = 0): void {
     }
 
     // Disable the module if it has too many errors
-    if (modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT) {
+    if (modules[moduleName].errors >= ALLOWED_ERROR_COUNT) {
       modules[moduleName].enabled = false;
     }
 

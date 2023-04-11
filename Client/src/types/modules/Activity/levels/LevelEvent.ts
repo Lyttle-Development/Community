@@ -1,13 +1,13 @@
 export enum LevelEvent {
-  default = 'default',
   invite = 'invite',
+  default = 'default',
   message = 'message',
+  command = 'command',
   reaction = 'reaction',
+  easterEgg = 'easterEgg',
   inCallTime = 'inCallTime',
   voiceUpdate = 'voiceUpdate',
   messageEdit = 'messageEdit',
-  easterEgg = 'easterEgg',
-  command = 'command',
   threadCreate = 'threadCreate',
   eventInterest = 'eventInterest',
 }

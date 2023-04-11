@@ -1,8 +1,8 @@
 import { GuildMember, LevelEvent } from '../../../types';
 import { preventSpam } from './prevent-spam';
 import { checkCooldown } from './check-cooldown';
-import { TOKENS_EVENT_PRICES } from '../../../../constants';
 import { triggerEvent } from './trigger-event';
+import { EVENT_PRICES } from './constants';
 
 /**
  * Create an event.
@@ -22,7 +22,7 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   if (inCooldown) return;
 
   // Create the event.
-  const price = TOKENS_EVENT_PRICES[event];
+  const price = EVENT_PRICES[event];
 
   // Trigger the event actions.
   await triggerEvent(price, guildMember);
