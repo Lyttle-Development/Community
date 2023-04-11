@@ -14,7 +14,7 @@ export function createMember(guildId: string, userId: string): Promise<Member> {
 
 export function findSingleMember(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<Member> {
   return prismaClient.member.findUnique({
     where: {
@@ -28,7 +28,7 @@ export function findSingleMember(
 
 export async function getOrCreateMember(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<Member> {
   await getOrCreateGuild(guildId);
   return (
@@ -40,7 +40,7 @@ export async function getOrCreateMember(
 export async function setMemberValue(
   guildId: string,
   userId: string,
-  data: Prisma.MemberUpdateInput
+  data: Prisma.MemberUpdateInput,
 ): Promise<Member> {
   await getOrCreateMember(guildId, userId);
 
@@ -57,7 +57,7 @@ export async function setMemberValue(
 
 export async function findEveryMember(
   guildId: string,
-  data: Prisma.MemberWhereInput
+  data: Prisma.MemberWhereInput,
 ): Promise<Member[]> {
   return prismaClient.member.findMany({
     where: {

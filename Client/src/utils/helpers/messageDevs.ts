@@ -12,6 +12,7 @@ const cache = {
 };
 
 export function messageDevs(error: Error, note?: string) {
+  return;
   const message1 = `Heye there my **favorite dev**!
 
 You **overdone** yourself again, didn't you?
