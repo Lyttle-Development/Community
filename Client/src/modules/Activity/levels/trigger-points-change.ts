@@ -38,7 +38,7 @@ export async function triggerPointsChange(
       const message =
         await getMessage<ModuleConfigActivityLevelsEventLevelUp.Variables>(
           guildId,
-          'Activity.levels.event.level-up',
+          'Activity.levels.event.level-upz',
           messageVars,
         );
       await sendMessage(announcementChannelId.toString(), message, false);

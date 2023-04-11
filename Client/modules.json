@@ -9,7 +9,7 @@
   },
   "action.onGuildMessageCreate.levelEvent": {
     "enabled": true,
-    "errors": 0
+    "errors": 1
   },
   "action.onGuildMessageCreate.test": {
     "enabled": true,

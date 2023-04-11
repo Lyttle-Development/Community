@@ -25,5 +25,5 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   const price = TOKENS_EVENT_PRICES[event];
 
   // Trigger the event actions.
-  void triggerEvent(price, guildMember);
+  await triggerEvent(price, guildMember);
 }

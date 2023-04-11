@@ -24,7 +24,7 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   await getAndGivePoints(guildId, guildId, amount);
 
   // Todo: Give nickname
-  void triggerPointsChange(guildMember, oldLevels, newLevels);
+  await triggerPointsChange(guildMember, oldLevels, newLevels);
   // Todo: Trigger leaderboard
 }
 
