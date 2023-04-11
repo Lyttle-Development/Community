@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from './entities/profile.entity';
 import { Repository } from 'typeorm';
 import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class ProfileService {
@@ -29,7 +30,7 @@ export class ProfileService {
     });
   }
 
-  getUser(id: number): Promise<Profile> {
+  getUser(id: number): Promise<User> {
     return this.userService.findOne(id);
   }
 

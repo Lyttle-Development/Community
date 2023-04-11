@@ -7,4 +7,7 @@ export class CreateProfileInput {
 
   @Field(() => Int)
   tokens: number;
+
+  @Field(() => Int)
+  tokens_used: number;
 }

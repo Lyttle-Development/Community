@@ -8,4 +8,7 @@ export class UpdateProfileInput extends PartialType(CreateProfileInput) {
 
   @Field(() => Int)
   tokens: number;
+
+  @Field(() => Int)
+  tokens_used: number;
 }

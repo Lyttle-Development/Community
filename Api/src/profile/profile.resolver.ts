@@ -3,6 +3,7 @@ import { ProfileService } from './profile.service';
 import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
+import { User } from '../user/entities/user.entity';
 
 @Resolver(() => Profile)
 export class ProfileResolver {
@@ -21,14 +22,19 @@ export class ProfileResolver {
   }
 
   @Query(() => Profile, { name: 'profile' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profileService.findOne(id);
+  }
+
+  @Query(() => Profile)
+  user(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return this.profileService.getUser(id);
   }
 
   @Mutation(() => Profile)
   updateProfile(
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
-  ) {
+  ): Promise<Profile> | null {
     return this.profileService.update(
       updateProfileInput.id,
       updateProfileInput,

@@ -21,6 +21,10 @@ export class Profile {
   @Field(() => Int)
   tokens: number;
 
+  @Column()
+  @Field(() => Int)
+  tokens_used: number;
+
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
