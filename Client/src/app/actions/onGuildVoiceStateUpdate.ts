@@ -1,7 +1,8 @@
-import { executor, test } from "../../utils";
-import { actionPrefix } from "./index";
-import { VoiceState } from "discord.js";
-import { GuildMember, VoiceEvent } from "../../types";
+import { executor } from '../../utils';
+import { actionPrefix } from './index';
+import { VoiceState } from 'discord.js';
+import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
+import { createEvent } from '../../modules/Activity/levels/create-event';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -11,17 +12,15 @@ export async function onGuildVoiceStateUpdate(
   guildMember: GuildMember,
   oldState: VoiceState,
   newState: VoiceState,
-  voiceEvent: VoiceEvent
+  voiceEvent: VoiceEvent,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
+  const actions: Promise<() => void>[] = [
     executor(
-      prefix + 'test',
-      test,
+      prefix + 'levelEvent',
+      createEvent,
+      LevelEvent.voiceUpdate,
       guildMember,
-      oldState,
-      newState,
-      voiceEvent
     ),
   ];
 

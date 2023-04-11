@@ -1,6 +1,6 @@
-import { executor, test } from "../../utils";
-import { actionPrefix } from "./index";
-import { ModalSubmitInteraction } from "discord.js";
+import { executor, test } from '../../utils';
+import { actionPrefix } from './index';
+import { ModalSubmitInteraction } from 'discord.js';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onPrivateInteractionModalSubmit.';
@@ -8,10 +8,10 @@ const prefix: string = actionPrefix + 'onPrivateInteractionModalSubmit.';
 // The execute function
 export async function onPrivateInteractionModalSubmit(
   userId: string,
-  interaction: ModalSubmitInteraction
+  interaction: ModalSubmitInteraction,
 ): Promise<void> {
   // All actions that should be executed
-  const actions: Promise<any>[] = [
+  const actions: Promise<() => void>[] = [
     executor(prefix + 'test', test, userId, interaction),
   ];
 
