@@ -13,7 +13,8 @@ import { getLevelsFromPoints } from './utils/get-levels-from-points';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import { ModuleConfigActivityLevelsTxtNickname } from '../../../../../Content';
 import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
-import { sleep } from '../../../utils';
+import { queue, QueueBacklogType, sleep } from '../../../utils';
+import { NUMBER_TYPES, Numbers } from './constants';
 
 const nicknamesBeingSet: { [key: string]: string } = {};
 
@@ -101,12 +102,12 @@ async function setNickname(
   const { guildId, userId } = guildMember;
 
   // Get points & levels
-  const { points } = db_MemberModuleLevel;
-  const levels = await getLevelsFromPoints(guildId, points);
+  const { points: pointsNr } = db_MemberModuleLevel;
+  const levelsNr = await getLevelsFromPoints(guildId, pointsNr);
 
   // Get points & levels for the week
-  const { points: pointsWeek } = db_MemberModuleLevelDay;
-  const levelsWeek = await getLevelsFromPoints(guildId, pointsWeek);
+  const { points: pointsWeekNr } = db_MemberModuleLevelDay;
+  const levelsWeekNr = await getLevelsFromPoints(guildId, pointsWeekNr);
 
   // Get nickname
   const db_Member = await getOrCreateMember(guildId, userId);
@@ -119,14 +120,35 @@ async function setNickname(
     await setMemberValue(guildId, userId, { nickname });
   }
 
+  const recentLevels = await getSpecialNumbers(
+    guildId,
+    levelsWeekNr,
+    'Activity.levels.txt.nickname-numbers.recent-levels',
+  );
+  const levels = await getSpecialNumbers(
+    guildId,
+    levelsNr,
+    'Activity.levels.txt.nickname-numbers.levels',
+  );
+  const recentExp = await getSpecialNumbers(
+    guildId,
+    pointsWeekNr,
+    'Activity.levels.txt.nickname-numbers.recent-exp',
+  );
+  const exp = await getSpecialNumbers(
+    guildId,
+    pointsNr,
+    'Activity.levels.txt.nickname-numbers.exp',
+  );
+
   // Build nickname
   const defaultVariables = await getMessageVariables(guildMember);
   const messageVars: ModuleConfigActivityLevelsTxtNickname.Variables = {
     ...defaultVariables,
-    recentLevels: levelsWeek.toString(),
-    levels: levels.toString(),
-    recentExp: pointsWeek.toString(),
-    exp: points.toString(),
+    recentLevels,
+    levels,
+    recentExp,
+    exp,
     name: nickname,
   };
   let newNickname =
@@ -158,16 +180,33 @@ async function setNickname(
   if (newNickname === member.nickname) return;
   if (!member.manageable) return;
 
-  // Set nickname as being set
-  const id = guildMember.guildId + guildMember.userId;
-  nicknamesBeingSet[id] = newNickname;
+  const action = async () => {
+    // Set nickname as being set
+    const id = guildMember.guildId + guildMember.userId;
+    nicknamesBeingSet[id] = newNickname;
 
-  // Set nickname
-  await member.setNickname(newNickname);
+    // Set nickname
+    await member.setNickname(newNickname);
 
-  // Wait 10 seconds
-  await sleep(10 * 1000);
+    // Wait 10 seconds
+    await sleep(10 * 1000);
 
-  // Delete nickname from being set
-  delete nicknamesBeingSet[id];
+    // Delete nickname from being set
+    delete nicknamesBeingSet[id];
+  };
+
+  queue(QueueBacklogType.BACKGROUND, action);
+}
+
+async function getSpecialNumbers(guildId, number, key): Promise<string> {
+  const numbers = number
+    .toString()
+    .split('')
+    .map((n) => parseInt(n));
+
+  const characterSetName = await getMessage(guildId, key, {}, false);
+  const characterSet: Numbers = NUMBER_TYPES[characterSetName];
+  if (characterSet.length !== 10) return number.toString();
+
+  return numbers.map((n) => characterSet[n]).join('');
 }
