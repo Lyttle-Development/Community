@@ -8,6 +8,12 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      txt: {
+        nickname: {
+          content: '{name} • {recentLevels}{levels}',
+          documentation: '',
+        },
+      },
       unit: {
         level: {
           content: 'level',

@@ -259,6 +259,7 @@ model Member {
   // Values
   birthday_date DateTime?
   birthday      Int?
+  nickname      String?
 
   // Date information
   created_at DateTime @default(now())

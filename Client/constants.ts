@@ -2,7 +2,7 @@
  * The developer's ids.
  * This is used to message the devs when an error occurs.
  */
-export const DEV_IDS = ['132487290835435521', '548240698869284884'];
+export const DEV_IDS: string[] = ['132487290835435521', '548240698869284884'];
 
 /**
  * The maximum allowed errors.
@@ -21,3 +21,8 @@ export const ALLOWED_REQUESTS_SECOND = 10;
  * This is used to cut off messages that are too long.
  */
 export const ALLOWED_MESSAGE_LENGTH = 2000;
+
+/**
+ * The maximum allowed characters in a nickname.
+ */
+export const ALLOWED_NICKNAME_LENGTH = 32;
