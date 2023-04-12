@@ -6,6 +6,10 @@ import {
 } from '../../../database/handlers';
 import { ALMOST_7_DAYS, WEEK_DAYS } from './constants';
 
+/**
+ * Check the activity for a guild member.
+ * @param guildMember
+ */
 export async function checkActivity(guildMember: GuildMember) {
   // Trigger activity for the member.
   const db_MemberModuleLevelDay = await _checkActivity(guildMember);
@@ -74,5 +78,6 @@ async function _checkActivity(guildMember: GuildMember) {
     }
   }
 
+  // Return state.
   return db_MemberModuleLevelDay;
 }

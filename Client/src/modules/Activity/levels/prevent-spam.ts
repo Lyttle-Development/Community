@@ -7,7 +7,12 @@ import {
 import { SPAM_ALLOWED, SPAM_PREVENTION_TIME } from './constants';
 import { sleep } from '../../../utils';
 
+/**
+ * Prevents spam by checking if the user spammed.
+ * @param guildMember
+ */
 export async function preventSpam(guildMember: GuildMember) {
+  // Get guild and user id
   const { guildId, userId } = guildMember;
 
   // Get current spamCount.

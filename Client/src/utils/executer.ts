@@ -3,6 +3,12 @@ import { sortObject } from './';
 import { messageDevs } from './helpers';
 import { ALLOWED_ERROR_COUNT } from '../../constants';
 
+/**
+ * The main module executor, it prevents the bot from hard crashing.
+ * @param moduleName
+ * @param moduleFunction
+ * @param args
+ */
 export async function executor(
   moduleName: string,
   moduleFunction: ((...args) => Promise<() => void>) | ((...args) => void),
@@ -17,20 +23,27 @@ export async function executor(
   try {
     // Execute the module
     if (args.length === 0) {
+      // If no arguments are given, execute the module without arguments
       result = await moduleFunction();
     } else {
+      // If arguments are given, execute the module with arguments
       result = await moduleFunction(...args);
     }
   } catch (error) {
     // If the module fails, increase the error count
     setModule(moduleName, 1);
+
+    // Log the error
     console.error(error);
+
+    // Send the error to the devs
     messageDevs(
       error,
       `The error was caught in the executor, the following module crashed: ${moduleName}`,
     );
   }
 
+  // Return the result
   return result;
 }
 
@@ -54,6 +67,8 @@ function mayExecute(moduleName: string): boolean {
   } catch (error) {
     // If not found, create it.
     setModule(moduleName);
+
+    // Retry the function
     return mayExecute(moduleName);
   }
 }
@@ -66,6 +81,10 @@ function setModule(moduleName: string, errors = 0): void {
       const file = fs.readFileSync(modulesPath, 'utf8');
       modules = JSON.parse(file);
     } catch (error) {
+      // If the file could not be read, log the error
+      console.error(error);
+
+      // Send the error to the devs
       messageDevs(
         error,
         'This was executed in the "executor" i think it could not get the modules from json.',
@@ -74,21 +93,29 @@ function setModule(moduleName: string, errors = 0): void {
 
     // Set the module's status
     try {
+      // If the module exists, add the errors
       modules[moduleName].errors += errors;
     } catch (error) {
+      // / If the module does not exist, create it
       modules[moduleName] = { enabled: true, errors };
     }
 
     // Disable the module if it has too many errors
     if (modules[moduleName].errors >= ALLOWED_ERROR_COUNT) {
+      // Disable the module
       modules[moduleName].enabled = false;
     }
 
+    // Sort the modules
     modules = sortObject(modules);
 
     // Write the modules.json file
     fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
   } catch (error) {
+    // If the module could not be set, log the error
+    console.error(error);
+
+    // Send the error to the devs
     messageDevs(
       error,
       'This was executed in the "executor" i think it could not save the modules to json.',

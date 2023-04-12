@@ -58,6 +58,10 @@ export const WEEK_DAYS: LevelWeekDay[] = [
   LevelWeekDay.saturday,
 ];
 
+/**
+ * Number styles.
+ * All based on index to number ratio.
+ */
 export const NUMBER_TYPES: NumberStyles = {
   superscript: ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹'],
   subscript: ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'],
@@ -69,6 +73,9 @@ export const NUMBER_TYPES: NumberStyles = {
   lite: ['０', '１', '２', '３', '４', '５', '６', '７', '８', '９'],
 };
 
+/**
+ * Number styles.
+ */
 export enum NumberStyle {
   'superscript' = 'superscript',
   'subscript' = 'subscript',
@@ -80,6 +87,9 @@ export enum NumberStyle {
   'lite' = 'lite',
 }
 
+/**
+ * Number styles list of numbers.
+ */
 export type Numbers = [
   string,
   string,
@@ -93,6 +103,9 @@ export type Numbers = [
   string,
 ];
 
+/**
+ * Number styles object: list of numbers.
+ */
 export type NumberStyles = {
   [key in NumberStyle]: Numbers;
 };

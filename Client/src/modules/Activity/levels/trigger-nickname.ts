@@ -9,50 +9,24 @@ import {
 } from '../../../database/handlers';
 import { MemberModuleLevel, MemberModuleLevelDay } from '@prisma/client';
 import client from '../../../main';
-import { getLevelsFromPoints } from './utils/get-levels-from-points';
+import { getLevelsFromPoints } from './utils';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import { ModuleConfigActivityLevelsTxtNickname } from '../../../../../Content';
 import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
 import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { NUMBER_TYPES, Numbers } from './constants';
 
-const nicknamesBeingSet: { [key: string]: string } = {};
+// Little fallback cache to prevent spamming the database
+export const nicknamesBeingSet: { [key: string]: string } = {};
 
-export async function checkNickname(
-  guildMember: ClientGuildMember,
-  oldMember: GuildMember,
-  newMember: GuildMember,
-) {
-  const nickname =
-    newMember.nickname || newMember.displayName || newMember.user.username;
-
-  // Ignore if it was the bot
-  const id = guildMember.guildId + guildMember.userId;
-  if (nicknamesBeingSet[id] === nickname) return;
-
-  // Get guild and user id
-  const { guildId, userId } = guildMember;
-
-  // Check if level nicknames are enabled
-  const nicknameChanged = oldMember.nickname !== newMember.nickname;
-  const displayNameChanged = oldMember.displayName !== newMember.displayName;
-  const usernameChanged = oldMember.user.username !== newMember.user.username;
-
-  // Check if any name changed
-  const anyNameChanged =
-    nicknameChanged || displayNameChanged || usernameChanged;
-
-  // If nothing changed, break.
-  if (!anyNameChanged) return;
-
-  // Set nickname in database
-  await setMemberValue(guildId, userId, { nickname });
-
-  // Give nickname
-  await giveNickname(guildMember, newMember);
-}
-
-export async function giveNickname(
+/**
+ * Triggers the nickname update.
+ * @param guildMember
+ * @param member
+ * @param db_MemberModuleLevel
+ * @param db_MemberModuleLevelDay
+ */
+export async function triggerNickname(
   guildMember: ClientGuildMember,
   member: GuildMember | null = null,
   db_MemberModuleLevel: MemberModuleLevel | null = null,
@@ -93,12 +67,20 @@ export async function giveNickname(
   );
 }
 
+/**
+ * Set the nickname of a guild member.
+ * @param guildMember
+ * @param member
+ * @param db_MemberModuleLevel
+ * @param db_MemberModuleLevelDay
+ */
 async function setNickname(
   guildMember: ClientGuildMember,
   member: GuildMember,
   db_MemberModuleLevel: MemberModuleLevel,
   db_MemberModuleLevelDay: MemberModuleLevelDay,
 ) {
+  // Get guild and user id
   const { guildId, userId } = guildMember;
 
   // Get points & levels
@@ -120,6 +102,7 @@ async function setNickname(
     await setMemberValue(guildId, userId, { nickname });
   }
 
+  // Get special numbers
   const recentLevels = await getSpecialNumbers(
     guildId,
     levelsWeekNr,
@@ -141,7 +124,7 @@ async function setNickname(
     'Activity.levels.txt.nickname-numbers.exp',
   );
 
-  // Build nickname
+  // Get message variables
   const defaultVariables = await getMessageVariables(guildMember);
   const messageVars: ModuleConfigActivityLevelsTxtNickname.Variables = {
     ...defaultVariables,
@@ -151,6 +134,7 @@ async function setNickname(
     exp,
     name: nickname,
   };
+  // Get new nickname
   let newNickname =
     await getMessage<ModuleConfigActivityLevelsTxtNickname.Variables>(
       guildId,
@@ -159,12 +143,17 @@ async function setNickname(
       false,
     );
 
+  // Check if nickname is too long
   let charactersToMuch = newNickname.length - ALLOWED_NICKNAME_LENGTH;
 
+  // If nickname is too long, remove the last characters
   if (charactersToMuch > 0) {
+    // Remove the last characters
     nickname = nickname.slice(0, nickname.length - charactersToMuch);
+    // Update message variables
     messageVars.name = nickname;
 
+    // Get new nickname
     newNickname =
       await getMessage<ModuleConfigActivityLevelsTxtNickname.Variables>(
         guildId,
@@ -173,13 +162,20 @@ async function setNickname(
         false,
       );
   }
+
+  // Check if nickname is too long
   charactersToMuch = newNickname.length - ALLOWED_NICKNAME_LENGTH;
+
+  // If nickname is still too long, return
   if (charactersToMuch > 0) return;
 
   // Check if nickname is already set
   if (newNickname === member.nickname) return;
+
+  // Check if the member is manageable
   if (!member.manageable) return;
 
+  // Create the action for the queue
   const action = async () => {
     // Set nickname as being set
     const id = guildMember.guildId + guildMember.userId;
@@ -195,18 +191,32 @@ async function setNickname(
     delete nicknamesBeingSet[id];
   };
 
+  // Add action to queue
   queue(QueueBacklogType.BACKGROUND, action);
 }
 
+/**
+ * Get special numbers.
+ * @param guildId
+ * @param number
+ * @param key
+ */
 async function getSpecialNumbers(guildId, number, key): Promise<string> {
+  // get each number
   const numbers = number
     .toString()
     .split('')
     .map((n) => parseInt(n));
 
+  // Get character set's name
   const characterSetName = await getMessage(guildId, key, {}, false);
+
+  // Get character set
   const characterSet: Numbers = NUMBER_TYPES[characterSetName];
+
+  // Check if character set exists, if not, return number
   if (characterSet.length !== 10) return number.toString();
 
+  // Return numbers, replaced with characters
   return numbers.map((n) => characterSet[n]).join('');
 }

@@ -8,9 +8,20 @@ import {
 } from '../../../database/handlers';
 import { EVENT_PRICES } from './constants';
 import { givePoints } from './give-points';
+import { bootdate } from '../../../main';
 
 const CallTimeLimit = 24 * 60 * 60 * 1000;
 
+/**
+ * Trigger a call event.
+ * - Calculate the time the user was in the call.
+ * - Give points to the user.
+ * - Reset if the user was in the call for too long.
+ * @param guildMember
+ * @param oldState
+ * @param newState
+ * @param voiceEvent
+ */
 export async function triggerCallEvent(
   guildMember: GuildMember,
   oldState: VoiceState,
@@ -32,7 +43,11 @@ export async function triggerCallEvent(
 
   // Check if the user was or is muted.
   const memberCheckPassed = await memberCheck(oldState, newState);
-  if (!memberCheckPassed) return;
+  if (!memberCheckPassed) {
+    // Reset the user.
+    await reset(guildMember);
+    return;
+  }
 
   // Check if the user joined, left or switched.
   switch (voiceEvent) {
@@ -48,6 +63,10 @@ export async function triggerCallEvent(
       // Give points for the switch.
       await give(guildMember);
       break;
+    case VoiceEvent.UPDATE:
+      // Give points for the update.
+      await give(guildMember);
+      break;
     default:
       // Reset if all failed.
       await reset(guildMember);
@@ -55,6 +74,14 @@ export async function triggerCallEvent(
   }
 }
 
+/**
+ * - Check if the user was alone, and now isn't
+ * - Check if the user now is alone, and wasn't before
+ * - Give points, or reset the user.
+ * @param guildMember
+ * @param oldState
+ * @param newState
+ */
 async function groupCheck(
   guildMember: GuildMember,
   oldState: VoiceState,
@@ -109,6 +136,11 @@ async function groupCheck(
   return false;
 }
 
+/**
+ * Check if the user was muted, and now isn't.
+ * @param oldState
+ * @param newState
+ */
 const memberCheck = async (
   oldState: VoiceState,
   newState: VoiceState,
@@ -140,6 +172,15 @@ async function give(guildMember: GuildMember): Promise<boolean> {
 
   // If the user has no call_start, reset and return false.
   if (!db_MemberModuleLevel.call_start) {
+    // Reset the user.
+    await reset(guildMember);
+
+    // Return break.
+    return false;
+  }
+
+  // If the call_start is before the boot date, reset and return false.
+  if (db_MemberModuleLevel.call_start.getTime() < bootdate.getTime()) {
     // Reset the user.
     await reset(guildMember);
 

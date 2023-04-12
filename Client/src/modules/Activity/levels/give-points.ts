@@ -9,8 +9,13 @@ import type { LevelWeekDay } from '../../../types';
 import { GuildMember } from '../../../types';
 import { triggerPointsChange } from './trigger-points-change';
 import { WEEK_DAYS } from './constants';
-import { giveNickname } from './nickname';
+import { triggerNickname } from './trigger-nickname';
 
+/**
+ * Give points to a guild member.
+ * @param amount
+ * @param guildMember
+ */
 export async function givePoints(amount: number, guildMember: GuildMember) {
   // Get guild and user id
   const { guildId, userId } = guildMember;
@@ -31,12 +36,14 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   // Give points to guild
   await getAndGivePoints(guildId, guildId, roundedAmount);
 
-  await giveNickname(
+  // Check if the nickname should be updated
+  await triggerNickname(
     guildMember,
     null,
     db_MemberModuleLevel,
     db_MemberModuleLevelDay,
   );
+  // Check if the points change should trigger an event
   await triggerPointsChange(
     guildMember,
     db_MemberModuleLevel_old,
@@ -44,6 +51,12 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   );
 }
 
+/**
+ * Get the old levels and give points to a guild member.
+ * @param userId
+ * @param guildId
+ * @param amount
+ */
 async function getAndGivePoints(
   userId: string,
   guildId: string,
@@ -73,6 +86,7 @@ async function getAndGivePoints(
     userId,
   );
 
+  // Return state
   return {
     db_MemberModuleLevel_old,
     db_MemberModuleLevel,
@@ -80,6 +94,12 @@ async function getAndGivePoints(
   };
 }
 
+/**
+ * Set the total weekly value.
+ * @param record
+ * @param guildId
+ * @param userId
+ */
 async function setTotalWeeklyValue(
   record: MemberModuleLevelDay,
   guildId: string,

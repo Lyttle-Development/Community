@@ -2,7 +2,7 @@ import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { GuildScheduledEvent, User } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
-import { createEvent } from '../../modules/Activity/levels/create-event';
+import { createEvent } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildScheduledEventUserAdd.';
