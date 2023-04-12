@@ -2,7 +2,7 @@ import { GuildMember, LevelEvent } from '../../types';
 import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
-import { createEvent } from '../../modules/Activity/levels/create-event';
+import { createEvent } from '../../modules';
 
 const prefix: string = actionPrefix + 'onGuildMessageCreate.';
 
