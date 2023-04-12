@@ -1,11 +1,12 @@
-import { Presence } from "discord.js";
-import { onGuildPresenceUpdate, onPrivatePresenceUpdate } from "../actions";
-import { GuildMember } from "../../types";
+import { Presence } from 'discord.js';
+import { onGuildPresenceUpdate, onPrivatePresenceUpdate } from '../actions';
+import { GuildMember } from '../../types';
+import { checkGuildEnabled } from '../../utils';
 
 // Emitted whenever a guild member's presence (e.g. status, activity) is changed.
 async function presenceUpdate(
   oldPresence: Presence,
-  newPresence: Presence
+  newPresence: Presence,
 ): Promise<void> {
   // Ignore bots
   if (oldPresence?.user?.bot) return;
@@ -31,6 +32,9 @@ async function presenceUpdate(
 
   // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Fire actions
   await onGuildPresenceUpdate(guildMember, oldPresence, newPresence);

@@ -1,11 +1,12 @@
-import type { Message } from "discord.js";
-import { GuildMember } from "../../types";
-import { onGuildMessageUpdate, onPrivateMessageUpdate } from "../actions";
+import type { Message } from 'discord.js';
+import { GuildMember } from '../../types';
+import { onGuildMessageUpdate, onPrivateMessageUpdate } from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 // Emitted whenever a message is updated - e.g. embed or content change.
 async function messageUpdate(
   oldMessage: Message,
-  newMessage: Message
+  newMessage: Message,
 ): Promise<void> {
   // Ignore bots
   if (oldMessage?.author?.bot) return;
@@ -34,6 +35,9 @@ async function messageUpdate(
 
   // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Fire actions
   await onGuildMessageUpdate(guildMember, oldMessage, newMessage);

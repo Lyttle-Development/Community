@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { sortObject } from './';
-import { messageDevs } from './helpers/messageDevs';
+import { messageDevs } from './helpers';
 import { ALLOWED_ERROR_COUNT } from '../../constants';
 
 export async function executor(

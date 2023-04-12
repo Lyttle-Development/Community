@@ -3,6 +3,7 @@ import { preventSpam } from './prevent-spam';
 import { checkCooldown } from './check-cooldown';
 import { triggerEvent } from './trigger-event';
 import { EVENT_PRICES } from './constants';
+import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
 
 /**
  * Create an event.
@@ -13,6 +14,15 @@ import { EVENT_PRICES } from './constants';
  * @param guildMember
  */
 export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
+  // Destructure guildMember
+  const { guildId } = guildMember;
+
+  // Get guild module level settings.
+  const db_GuildModuleLevel = await getOrCreateGuildModuleLevel(guildId);
+
+  // If the levels module is not enabled, stop here.
+  if (!db_GuildModuleLevel.enabled) return;
+
   // Check if user is spamming.
   const { isSpamming, db_MemberModuleLevel } = await preventSpam(guildMember);
   if (isSpamming) return;

@@ -9,6 +9,7 @@ import type { LevelWeekDay } from '../../../types';
 import { GuildMember } from '../../../types';
 import { triggerPointsChange } from './trigger-points-change';
 import { WEEK_DAYS } from './constants';
+import { giveNickname } from './nickname';
 
 export async function givePoints(amount: number, guildMember: GuildMember) {
   // Get guild and user id
@@ -21,56 +22,62 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
   if (roundedAmount <= 0) return;
 
   // Give points to user
-  const [oldLevels, newLevels] = await getAndGivePoints(
-    userId,
-    guildId,
-    roundedAmount,
-  );
+  const {
+    db_MemberModuleLevel_old,
+    db_MemberModuleLevel,
+    db_MemberModuleLevelDay,
+  } = await getAndGivePoints(userId, guildId, roundedAmount);
 
   // Give points to guild
   await getAndGivePoints(guildId, guildId, roundedAmount);
 
-  // Todo: Give nickname
-  await triggerPointsChange(guildMember, oldLevels, newLevels);
-  // Todo: Trigger leaderboard
+  await giveNickname(
+    guildMember,
+    null,
+    db_MemberModuleLevel,
+    db_MemberModuleLevelDay,
+  );
+  await triggerPointsChange(
+    guildMember,
+    db_MemberModuleLevel_old,
+    db_MemberModuleLevel,
+  );
 }
 
 async function getAndGivePoints(
   userId: string,
   guildId: string,
   amount: number,
-): Promise<[MemberModuleLevel, MemberModuleLevel, MemberModuleLevelDay]> {
+) {
   // Get old levels
-  const oldLevels: MemberModuleLevel = await getOrCreateMemberModuleLevel(
-    guildId,
-    userId,
-  );
+  const db_MemberModuleLevel_old: MemberModuleLevel =
+    await getOrCreateMemberModuleLevel(guildId, userId);
 
   // Give points to user
-  const newLevels: MemberModuleLevel = await incrementMemberModuleLevelNumber(
-    guildId,
-    userId,
-    'points',
-    amount,
-  );
+  const db_MemberModuleLevel: MemberModuleLevel =
+    await incrementMemberModuleLevelNumber(guildId, userId, 'points', amount);
 
   // Get current day
   const day: number = new Date().getDay();
   const dayKey: LevelWeekDay = WEEK_DAYS[day];
 
-  let levelDay: MemberModuleLevelDay = await incrementMemberModuleLevelDayValue(
-    guildId,
-    userId,
-    dayKey,
-    amount,
-  );
+  let db_MemberModuleLevelDay: MemberModuleLevelDay =
+    await incrementMemberModuleLevelDayValue(guildId, userId, dayKey, amount);
 
   // Give points to the current day
 
   // Set the total
-  levelDay = await setTotalWeeklyValue(levelDay, guildId, userId);
+  db_MemberModuleLevelDay = await setTotalWeeklyValue(
+    db_MemberModuleLevelDay,
+    guildId,
+    userId,
+  );
 
-  return [oldLevels, newLevels, levelDay];
+  return {
+    db_MemberModuleLevel_old,
+    db_MemberModuleLevel,
+    db_MemberModuleLevelDay,
+  };
 }
 
 async function setTotalWeeklyValue(

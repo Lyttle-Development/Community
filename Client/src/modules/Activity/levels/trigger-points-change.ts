@@ -3,25 +3,28 @@ import { GuildMember } from '../../../types';
 import { MemberModuleLevel } from '@prisma/client';
 import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
-import { sendMessage } from '../../../utils/queue/messages';
+import { sendMessage } from '../../../utils';
 import { ModuleConfigActivityLevelsEventLevelUp } from '../../../../../Content';
 
 export async function triggerPointsChange(
   guildMember: GuildMember,
-  oldLevels: MemberModuleLevel,
-  newLevels: MemberModuleLevel,
+  db_MemberModuleLevel_old: MemberModuleLevel,
+  db_MemberModuleLevel: MemberModuleLevel,
 ) {
   // Destructure activityEvent
   const { guildId } = guildMember;
 
-  const oldLevel = await getLevelsFromPoints(guildId, oldLevels.points);
-  const newLevel = await getLevelsFromPoints(guildId, newLevels.points);
-  if (oldLevel !== newLevel) {
+  const oldLevel = await getLevelsFromPoints(
+    guildId,
+    db_MemberModuleLevel_old.points,
+  );
+  const level = await getLevelsFromPoints(guildId, db_MemberModuleLevel.points);
+  if (oldLevel !== level) {
     const { announcement_channel_id: announcementChannelId } =
       await getOrCreateGuildModuleLevel(guildId);
     if (announcementChannelId) {
       const defaultVariables = await getMessageVariables(guildMember);
-      const unitKey = newLevel > 1 ? 'levels' : 'level';
+      const unitKey = level > 1 ? 'levels' : 'level';
       const unit = await getMessage(
         guildId,
         `Activity.levels.unit.${unitKey}`,
@@ -31,8 +34,8 @@ export async function triggerPointsChange(
       const messageVars: ModuleConfigActivityLevelsEventLevelUp.Variables = {
         ...defaultVariables,
         lastLevel: oldLevel.toString(),
-        level: newLevel.toString(),
-        exp: newLevels.points.toString(),
+        level: level.toString(),
+        exp: db_MemberModuleLevel.points.toString(),
         unit,
       };
       const message =

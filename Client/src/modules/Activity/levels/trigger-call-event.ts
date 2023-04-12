@@ -2,6 +2,7 @@ import { VoiceState } from 'discord.js';
 
 import { GuildMember, VoiceEvent } from '../../../types';
 import {
+  getOrCreateGuildModuleLevel,
   getOrCreateMemberModuleLevel,
   setMemberModuleLevelValue,
 } from '../../../database/handlers';
@@ -16,6 +17,15 @@ export async function triggerCallEvent(
   newState: VoiceState,
   voiceEvent: VoiceEvent,
 ): Promise<void> {
+  // Destructure guildMember
+  const { guildId } = guildMember;
+
+  // Get guild module level settings.
+  const db_GuildModuleLevel = await getOrCreateGuildModuleLevel(guildId);
+
+  // If the levels module is not enabled, stop here.
+  if (!db_GuildModuleLevel.enabled) return;
+
   // Check if the user is in a group, alone?
   const groupCheckPassed = await groupCheck(guildMember, oldState, newState);
   if (!groupCheckPassed) return;

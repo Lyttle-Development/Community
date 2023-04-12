@@ -1,5 +1,5 @@
-import { checkMessagesQueue } from './messagesQueue';
-import { messageDevs } from '../helpers/messageDevs';
+import { checkMessagesQueue } from './messages-queue';
+import { messageDevs } from '../helpers';
 import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
 
 let queueActive = false;
