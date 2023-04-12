@@ -1,26 +1,34 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ProfileService } from './profile.service';
 import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
+import { User } from '../user/entities/user.entity';
 
 @Resolver(() => Profile)
 export class ProfileResolver {
   constructor(private readonly profileService: ProfileService) {}
 
   @Mutation(() => Profile)
-  createProfile(@Args('createProfileInput') createProfileInput: CreateProfileInput) {
+  createProfile(
+    @Args('createProfileInput') createProfileInput: CreateProfileInput,
+  ): Promise<Profile> {
     return this.profileService.create(createProfileInput);
   }
 
   @Query(() => [Profile], { name: 'profile' })
-  findAll() {
+  findAll(): Promise<Profile[]> {
     return this.profileService.findAll();
   }
 
   @Query(() => Profile, { name: 'profile' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profileService.findOne(id);
+  }
+
+  @Query(() => Profile)
+  user(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return this.profileService.getUser(id);
   }
 
   @Mutation(() => Profile)
@@ -29,7 +37,9 @@ export class ProfileResolver {
   }
 
   @Mutation(() => Profile)
-  removeProfile(@Args('id', { type: () => Int }) id: number) {
+  removeProfile(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<Profile> | null {
     return this.profileService.remove(id);
   }
 }

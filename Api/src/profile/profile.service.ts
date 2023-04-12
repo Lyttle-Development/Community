@@ -1,16 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { CreateProfileInput } from './dto/create-profile.input';
 import type { UpdateProfileInput } from './dto/update-profile.input';
-
 import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from './entities/profile.entity';
-import type { Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class ProfileService {
   constructor(
     @InjectRepository(Profile)
     private profileRepository: Repository<Profile>,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) {}
 
   create(createProfileInput: CreateProfileInput): Promise<Profile> {
@@ -27,11 +30,30 @@ export class ProfileService {
     });
   }
 
-  update(id: number, updateProfileInput: UpdateProfileInput) {
-    return `This action updates a #${id} profile`;
+  getUser(id: number): Promise<User> {
+    return this.userService.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} profile`;
+  async update(id: number, updateProfileInput: UpdateProfileInput) {
+    const profile: Profile = await this.profileRepository.findOne({
+      where: { guild_id: id },
+    });
+    if (profile) {
+      return this.profileRepository.save({
+        ...profile,
+        ...updateProfileInput,
+      });
+    }
+    throw new Error('Profile not found');
+  }
+
+  async remove(id: number): Promise<Profile> | null {
+    const profile: Profile = await this.profileRepository.findOne({
+      where: { guild_id: id },
+    });
+    if (profile) {
+      return this.profileRepository.remove(profile);
+    }
+    throw new Error('Profile not found');
   }
 }

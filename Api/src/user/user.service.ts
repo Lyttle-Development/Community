@@ -21,6 +21,7 @@ export class UserService {
     const createProfileInput: CreateProfileInput = {
       guild_id: createUserInput.guild_id,
       tokens: 0,
+      tokens_used: 0,
     };
     const profile: Profile = await this.profileService.create(
       createProfileInput,
