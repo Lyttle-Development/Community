@@ -8,6 +8,7 @@ import {
   onPrivateInteractionCommand,
   onPrivateInteractionModalSubmit,
 } from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 async function interactionCreate(interaction: Interaction): Promise<void> {
   // Ignore bots
@@ -45,6 +46,9 @@ async function interactionCreate(interaction: Interaction): Promise<void> {
       guildId: interaction?.guild?.id,
       userId,
     };
+
+    const guildEnabled = await checkGuildEnabled(guildMember);
+    if (!guildEnabled) return;
 
     // Check if we have a valid guildMember
     if (!guildMember?.guildId || !guildMember?.userId) return;

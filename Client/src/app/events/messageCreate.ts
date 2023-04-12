@@ -1,6 +1,7 @@
 import type { Message } from 'discord.js';
 import { GuildMember } from '../../types/app/GuildMember';
 import { onGuildMessageCreate, onPrivateMessageCreate } from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 async function messageCreate(message: Message): Promise<void> {
   // If the message is from a bot, ignore it
@@ -24,7 +25,10 @@ async function messageCreate(message: Message): Promise<void> {
   };
 
   // Check if we have a valid guildMember
-  // if (!guildMember.guildId || !guildMember.userId) return;
+  if (!guildMember.guildId || !guildMember.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Fire actions
   await onGuildMessageCreate(guildMember, message);
