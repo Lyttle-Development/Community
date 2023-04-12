@@ -28,12 +28,12 @@ export enum QueueBacklogTimeType {
 }
 
 // The queue backlog item type
-type QueueBacklogTypeItem = () => Promise<unknown> | unknown;
+type QueueBacklogTypeItem = (jobId: number) => Promise<unknown> | unknown;
 
 // The queue backlog time item type
 interface QueueBacklogTimeItem {
   time: number;
-  action: () => Promise<unknown> | unknown;
+  action: (jobId: number) => Promise<unknown> | unknown;
 }
 
 // The queue backlog type
@@ -99,14 +99,14 @@ function fireJobs() {
 
 /**
  * Fire a job
- * @param id
+ * @param jobId
  */
-async function fireJob(id) {
+async function fireJob(jobId: number) {
   // Set the queue to busy
-  queueFree[id] = false;
+  queueFree[jobId] = false;
   try {
     // Run the job
-    await job();
+    await job(jobId);
 
     // Catch any errors
   } catch (error) {
@@ -118,40 +118,41 @@ async function fireJob(id) {
   }
 
   // Set the queue to free
-  queueFree[id] = true;
+  queueFree[jobId] = true;
 }
 
 /**
  * The job, to be executed.
  */
-async function job() {
+async function job(jobId: number) {
   // Run critical first
-  if (await fireAction(QueueBacklogType.CRITICAL)) return;
-  if (await fireAction(QueueBacklogType.URGENT)) return;
-  if (await fireAction(QueueBacklogType.IMPORTANT)) return;
+  if (await fireAction(jobId, QueueBacklogType.CRITICAL)) return;
+  if (await fireAction(jobId, QueueBacklogType.URGENT)) return;
+  if (await fireAction(jobId, QueueBacklogType.IMPORTANT)) return;
 
   // Run time based next
-  if (await fireTimeAction(QueueBacklogTimeType.TIME)) return;
-  if (await fireTimeAction(QueueBacklogTimeType.TIMEOUT)) return;
+  if (await fireTimeAction(jobId, QueueBacklogTimeType.TIME)) return;
+  if (await fireTimeAction(jobId, QueueBacklogTimeType.TIMEOUT)) return;
 
   // Run normal last
-  if (await fireAction(QueueBacklogType.NORMAL)) return;
-  if (await fireAction(QueueBacklogType.LOW)) return;
-  if (await fireAction(QueueBacklogType.BACKGROUND)) return;
+  if (await fireAction(jobId, QueueBacklogType.NORMAL)) return;
+  if (await fireAction(jobId, QueueBacklogType.LOW)) return;
+  if (await fireAction(jobId, QueueBacklogType.BACKGROUND)) return;
 }
 
 /**
  * Fire an action
+ * @param jobId
  * @param type
  */
-async function fireAction(type: QueueBacklogType) {
+async function fireAction(jobId: number, type: QueueBacklogType) {
   // Check if there is an action to run
   if (backlog[type].length > 0) {
     // Get the action, and remove it from the queue
     const action = backlog[type].shift();
 
     // Run the action
-    await action();
+    await action(jobId);
 
     // Return true, thus stopping this job.
     return true;
@@ -163,16 +164,17 @@ async function fireAction(type: QueueBacklogType) {
 
 /**
  * Fire a time based action
+ * @param jobId
  * @param type
  */
-async function fireTimeAction(type: QueueBacklogTimeType) {
+async function fireTimeAction(jobId: number, type: QueueBacklogTimeType) {
   // Check if there is an action to run
   if (backlog[type].length > 0 && backlog[type][0].time < Date.now()) {
     // Get the action, and remove it from the queue
     const { action } = backlog[type].shift();
 
     // Run the action
-    await action();
+    await action(jobId);
 
     // Return true, thus stopping this job.
     return true;
@@ -189,7 +191,7 @@ async function fireTimeAction(type: QueueBacklogTimeType) {
  */
 export function queue(
   importance: QueueBacklogType,
-  action: () => Promise<unknown> | unknown,
+  action: (jobId: number) => Promise<unknown> | unknown,
 ): void {
   // Add to the queue
   backlog[importance].push(action);
@@ -202,7 +204,7 @@ export function queue(
  */
 export function queueAt(
   date: Date,
-  action: () => Promise<unknown> | unknown,
+  action: (jobId: number) => Promise<unknown> | unknown,
 ): void {
   // Add to the queue
   backlog.time.push({ time: date.getTime(), action: action });
@@ -218,7 +220,7 @@ export function queueAt(
  */
 export function queueIn(
   ms: number,
-  action: () => Promise<unknown> | unknown,
+  action: (jobId: number) => Promise<unknown> | unknown,
 ): void {
   // Add to the queue
   backlog.timeout.push({ time: Date.now() + ms, action: action });
