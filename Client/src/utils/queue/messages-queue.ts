@@ -2,8 +2,6 @@ import { AnyThreadChannel, TextChannel, ThreadChannel } from 'discord.js';
 import { queue, QueueBacklogType } from './queue';
 import { ALLOWED_MESSAGE_LENGTH } from '../../../constants';
 
-const maxMessageLength = ALLOWED_MESSAGE_LENGTH ?? 2000;
-
 interface ChannelsQueueItem {
   channel: TextChannel | AnyThreadChannel | ThreadChannel;
   content: string;
@@ -13,19 +11,25 @@ interface ChannelsQueue {
   [key: string]: ChannelsQueueItem[];
 }
 
+// The message queue
 const channels: ChannelsQueue = {};
 
+/**
+ * Add a message to the queue.
+ * @param channel
+ * @param content
+ */
 export function queueMessage(channel, content) {
   // If the channel doesn't exist, create it
   if (!channels[channel]) channels[channel] = [];
 
   // If the message is too long, return
-  if (content.length > maxMessageLength) {
+  if (content.length > ALLOWED_MESSAGE_LENGTH) {
     // Split the message on every new line.
     const splitContent = content.split('\n');
 
     // Check if every line is less than the max length
-    if (splitContent.every((line) => line.length < maxMessageLength)) {
+    if (splitContent.every((line) => line.length < ALLOWED_MESSAGE_LENGTH)) {
       // If it is, add each line to the queue
       splitContent.forEach((line) => queueMessage(channel, line));
     }
@@ -44,6 +48,9 @@ export function queueMessage(channel, content) {
   channels[channel].push(item);
 }
 
+/**
+ * Check the message queue and send the messages.
+ */
 export function checkMessagesQueue() {
   // Go through each channel
   for (const channel in channels) {
@@ -62,18 +69,18 @@ export function checkMessagesQueue() {
       let totalLength = 0;
 
       // Go through each item in the queue
-      while (channelQueue.length > 0 && totalLength < maxMessageLength) {
+      while (channelQueue.length > 0 && totalLength < ALLOWED_MESSAGE_LENGTH) {
         // Get the first item
         const item = channelQueue[0];
 
         // Check if the item would be too long to add to the current list.
         if (
           item.content.length + totalLength >=
-          maxMessageLength - messages.length
+          ALLOWED_MESSAGE_LENGTH - messages.length
         ) {
           // Force set the total length to the max length
           // This to prevent the loop from running forever.
-          totalLength = maxMessageLength;
+          totalLength = ALLOWED_MESSAGE_LENGTH;
           break;
         }
 
@@ -90,7 +97,7 @@ export function checkMessagesQueue() {
       // Join the messages
       const content = messages.join('\n');
 
-      if (content.length > maxMessageLength) return;
+      if (content.length > ALLOWED_MESSAGE_LENGTH) return;
 
       // Send the message to queue
       queue(QueueBacklogType.NORMAL, () => {

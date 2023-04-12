@@ -6,6 +6,11 @@ import {
 } from '../../../database/handlers';
 import { COOLDOWN_ALLOWED, COOLDOWN_TIME } from './constants';
 
+/**
+ * Check the cooldown for a guild member.
+ * @param guildMember
+ * @param db_MemberModuleLevel
+ */
 export async function checkCooldown(
   guildMember: GuildMember,
   db_MemberModuleLevel: MemberModuleLevel,

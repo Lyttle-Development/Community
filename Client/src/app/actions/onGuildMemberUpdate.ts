@@ -2,7 +2,8 @@ import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { GuildMember } from 'discord.js';
 import { GuildMember as ClientGuildMember } from '../../types';
-import { checkNickname } from '../../modules/Activity/levels/nickname';
+
+import { checkNickname } from '../../modules/Activity/levels/check-nickname';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildMemberUpdate.';

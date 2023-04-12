@@ -13,6 +13,14 @@ import client from '../../main';
 import { queue as sendQueue, QueueBacklogType } from './queue';
 import { queueMessage } from './messages-queue';
 
+/**
+ * Send a message to a target.
+ * @param channel
+ * @param content
+ * @param silent
+ * @param embed
+ * @param queue
+ */
 export function sendMessage(
   channel:
     | string
@@ -50,12 +58,23 @@ export function sendMessage(
   // Send the message
   if (!queue) return action();
   if (silent && !embed && queue === QueueBacklogType.NORMAL) {
+    // Add the message to the message queue
     queueMessage(target, content);
     return;
   }
+
+  // Add the message to the queue
   sendQueue(queue, action);
 }
 
+/**
+ * Send a reply to a message.
+ * @param message
+ * @param content
+ * @param silent
+ * @param embed
+ * @param queue
+ */
 export function sendReply(
   message: Message | CommandInteraction,
   content: string,
@@ -70,9 +89,17 @@ export function sendReply(
 
   // Send the message
   if (!queue) return action();
+
+  // Add the message to the queue
   sendQueue(queue, action);
 }
 
+/**
+ * Get variables needed to send the message.
+ * @param content
+ * @param silent
+ * @param embed
+ */
 function getResponse(content, silent, embed) {
   // Set the allowed mentions
   const allowedMentions: MessageMentionOptions = silent
@@ -87,5 +114,6 @@ function getResponse(content, silent, embed) {
       }
     : { allowedMentions, content };
 
+  // Return the response
   return response;
 }

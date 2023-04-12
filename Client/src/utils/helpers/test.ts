@@ -1,5 +1,9 @@
 import { sleep } from './sleep';
 
+/**
+ * Test function
+ * @param args
+ */
 export async function test(...args) {
   // console.log('test');
   await sleep(100);
