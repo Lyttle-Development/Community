@@ -5,7 +5,7 @@ import { Column } from 'typeorm';
 export class CreateProfileInput {
   @Column()
   @Field(() => Int)
-  guild_id: number;
+  user_id: number;
 
   @Column()
   @Field(() => Int)

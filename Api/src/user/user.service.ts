@@ -19,7 +19,7 @@ export class UserService {
 
   async create(createUserInput: CreateUserInput): Promise<User> {
     const createProfileInput: CreateProfileInput = {
-      guild_id: createUserInput.guild_id,
+      user_id: createUserInput.user_id,
       tokens: 0,
     };
     const profile: Profile = await this.profileService.create(
@@ -38,7 +38,7 @@ export class UserService {
 
   findOne(id: number): Promise<User> {
     return this.userRepository.findOne({
-      where: { guild_id: id },
+      where: { user_id: id },
     });
   }
 
@@ -53,7 +53,7 @@ export class UserService {
 
   async remove(id: number): Promise<User> | null {
     const user: User = await this.userRepository.findOne({
-      where: { guild_id: id },
+      where: { user_id: id },
     });
     if (user) {
       return this.userRepository.remove(user);

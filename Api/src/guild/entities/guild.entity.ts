@@ -13,6 +13,7 @@ import { GuildModuleQotd } from '../../guild-module-qotd/entities/guild-module-q
 import { GuildMessage } from '../../guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../../guild-translation/entities/guild-translation.entity';
 import { Member } from '../../member/entities/member.entity';
+import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
 let guildModuleLevel;
 
@@ -34,6 +35,13 @@ export class Guild {
   @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
   @Field(() => GuildModuleQotd)
   guildModuleQotd: GuildModuleQotd;
+
+  @OneToOne(() => GuildModuleVoiceGrowth, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @Field(() => GuildModuleVoiceGrowth)
+  guildModuleVoiceGrowth: GuildModuleVoiceGrowth;
 
   @OneToMany(
     () => GuildMessage,

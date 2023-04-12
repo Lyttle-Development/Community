@@ -14,6 +14,8 @@ import { GuildTranslationService } from '../guild-translation/guild-translation.
 import type { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 import { MemberService } from '../member/member.service';
 import type { Member } from '../member/entities/member.entity';
+import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
+import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guild-module-voice-growth.service';
 
 @Injectable()
 export class GuildService {
@@ -30,6 +32,8 @@ export class GuildService {
     private guildTranslationService: GuildTranslationService,
     @Inject(forwardRef(() => MemberService))
     private memberService: MemberService,
+    @Inject(forwardRef(() => GuildModuleVoiceGrowthService))
+    private guildModuleVoiceGrowthService: GuildModuleVoiceGrowthService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -63,6 +67,10 @@ export class GuildService {
 
   getGuildMessages(guild_id: number): Promise<GuildMessage[]> {
     return this.guildMessageService.findAllByGuild(guild_id);
+  }
+
+  getGuildModuleVoiceGrowth(guild_id: number): Promise<GuildModuleVoiceGrowth> {
+    return this.guildModuleVoiceGrowthService.findOne(guild_id);
   }
 
   getGuildTranslation(
