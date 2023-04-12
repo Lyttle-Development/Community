@@ -1,5 +1,4 @@
-import { sendMessage } from '../queue/messages';
-import { QueueBacklogType } from '../queue';
+import { QueueBacklogType, sendMessage } from '../queue';
 import client from '../../main';
 import { ALLOWED_MESSAGE_LENGTH, DEV_IDS } from '../../../constants';
 import { environment } from '../environment';

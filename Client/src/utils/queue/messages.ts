@@ -11,7 +11,7 @@ import {
 } from 'discord.js';
 import client from '../../main';
 import { queue as sendQueue, QueueBacklogType } from './queue';
-import { queueMessage } from './messagesQueue';
+import { queueMessage } from './messages-queue';
 
 export function sendMessage(
   channel:

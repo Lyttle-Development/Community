@@ -3,7 +3,7 @@ import { GuildMember } from '../../../types';
 import { MemberModuleLevel } from '@prisma/client';
 import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
-import { sendMessage } from '../../../utils/queue/messages';
+import { sendMessage } from '../../../utils';
 import { ModuleConfigActivityLevelsEventLevelUp } from '../../../../../Content';
 
 export async function triggerPointsChange(
