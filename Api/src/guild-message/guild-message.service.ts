@@ -12,8 +12,10 @@ export class GuildMessageService {
     private guildMessageRepository: Repository<GuildMessage>,
   ) {}
 
-  create(createGuildMessageInput: CreateGuildMessageInput) {
-    return 'This action adds a new guildMessage';
+  create(
+    createGuildMessageInput: CreateGuildMessageInput,
+  ): Promise<GuildMessage> {
+    return this.guildMessageRepository.save(createGuildMessageInput);
   }
 
   findAll(): Promise<GuildMessage[]> {
@@ -41,11 +43,33 @@ export class GuildMessageService {
     });
   }
 
-  update(id: number, updateGuildMessageInput: UpdateGuildMessageInput) {
-    return `This action updates a #${id} guildMessage`;
+  async update(
+    id: number,
+    updateGuildMessageInput: UpdateGuildMessageInput,
+  ): Promise<GuildMessage> | null {
+    const guildMessage: GuildMessage =
+      await this.guildMessageRepository.findOne({
+        where: { guild_id: id },
+      });
+
+    if (guildMessage) {
+      return this.guildMessageRepository.save({
+        ...guildMessage,
+        ...updateGuildMessageInput,
+      });
+    }
+    throw new Error('GuildMessage not found');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildMessage`;
+  async remove(id: number): Promise<GuildMessage> | null {
+    const guildMessage: GuildMessage =
+      await this.guildMessageRepository.findOne({
+        where: { guild_id: id },
+      });
+
+    if (guildMessage) {
+      return this.guildMessageRepository.remove(guildMessage);
+    }
+    throw new Error('GuildMessage not found');
   }
 }
