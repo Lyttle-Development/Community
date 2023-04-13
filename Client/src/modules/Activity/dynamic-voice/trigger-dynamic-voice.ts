@@ -15,6 +15,9 @@ import { queue, QueueBacklogType } from '../../../utils';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
 
+// Little channel cache to prevent spamming & multiple checks
+export const channelsBeingChecked: { [key: string]: boolean } = {};
+
 /**
  * Trigger all the check to fire a dynamic voice event
  * @param guildMember
@@ -34,6 +37,9 @@ export async function triggerDynamicVoice(
 
 async function checkChannel(guildId, channelId) {
   if (!channelId) return;
+
+  if (channelsBeingChecked[channelId]) return;
+  channelsBeingChecked[channelId] = true;
 
   const db_GuildModuleVoiceGrowthChild =
     await findSingleGuildModuleVoiceGrowthChild(guildId, channelId);
@@ -61,6 +67,9 @@ async function checkChannel(guildId, channelId) {
     db_GuildModuleVoiceGrowth,
     db_GuildModuleVoiceGrowth.childs,
   );
+
+  // Remove from being checked
+  delete channelsBeingChecked[channelId];
 }
 
 /**
