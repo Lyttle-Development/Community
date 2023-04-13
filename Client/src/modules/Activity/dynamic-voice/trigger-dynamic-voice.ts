@@ -16,7 +16,7 @@ import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
 
 // Little channel cache to prevent spamming & multiple checks
-export const channelsBeingChecked: { [key: string]: boolean } = {};
+export const channelsBeingChecked: { channel: string; guild: string }[] = [];
 
 /**
  * Trigger all the check to fire a dynamic voice event
@@ -38,9 +38,6 @@ export async function triggerDynamicVoice(
 async function checkChannel(guildId, channelId) {
   if (!channelId) return;
 
-  if (channelsBeingChecked[channelId]) return;
-  channelsBeingChecked[channelId] = true;
-
   const db_GuildModuleVoiceGrowthChild =
     await findSingleGuildModuleVoiceGrowthChild(guildId, channelId);
 
@@ -61,6 +58,12 @@ async function checkChannel(guildId, channelId) {
   if (!db_GuildModuleVoiceGrowth?.enabled) return;
   if (db_GuildModuleVoiceGrowth.manual) return;
 
+  // Get the master id
+  const masterId = db_GuildModuleVoiceGrowth.channel_id.toString();
+
+  if (channelsBeingChecked[masterId]) return;
+  channelsBeingChecked[masterId] = true;
+
   // Trigger the event
   await triggerDynamicVoiceEvent(
     guildId,
@@ -69,7 +72,7 @@ async function checkChannel(guildId, channelId) {
   );
 
   // Remove from being checked
-  delete channelsBeingChecked[channelId];
+  delete channelsBeingChecked[masterId];
 }
 
 /**
