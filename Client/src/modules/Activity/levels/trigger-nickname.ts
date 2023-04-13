@@ -15,9 +15,9 @@ import { ModuleConfigActivityLevelsTxtNickname } from '../../../../../Content';
 import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
 import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { NUMBER_TYPES, Numbers } from './constants';
+import { nicknamesBeingSet } from './check-nickname';
 
 // Little fallback cache to prevent spamming the database
-export const nicknamesBeingSet: { [key: string]: string } = {};
 
 /**
  * Triggers the nickname update.
@@ -150,6 +150,8 @@ async function setNickname(
   if (charactersToMuch > 0) {
     // Remove the last characters
     nickname = nickname.slice(0, nickname.length - charactersToMuch);
+    // Trim nickname
+    nickname = nickname.trim();
     // Update message variables
     messageVars.name = nickname;
 
@@ -175,20 +177,32 @@ async function setNickname(
   // Check if the member is manageable
   if (!member.manageable) return;
 
+  // Trim nickname
+  newNickname = newNickname.trim();
+
+  // Check if nickname is already being set
+  const id = guildMember.guildId + guildMember.userId;
+  if (nicknamesBeingSet[id] === newNickname) {
+    // Wait 5 seconds
+    await sleep(5 * 1000);
+
+    // Remove nickname from being set
+    delete nicknamesBeingSet[id];
+
+    // Stop here
+    return;
+  }
+
   // Create the action for the queue
   const action = async () => {
     // Set nickname as being set
-    const id = guildMember.guildId + guildMember.userId;
     nicknamesBeingSet[id] = newNickname;
+
+    // Wait 5 seconds
+    await sleep(5 * 1000);
 
     // Set nickname
     await member.setNickname(newNickname);
-
-    // Wait 10 seconds
-    await sleep(10 * 1000);
-
-    // Delete nickname from being set
-    delete nicknamesBeingSet[id];
   };
 
   // Add action to queue
