@@ -35,14 +35,16 @@ export async function onGuildVoiceStateUpdate(
       voiceEvent,
     ),
     executor(
-      prefix + 'levelCallEvent',
+      prefix + 'dynamicVoiceEvent',
       triggerDynamicVoice,
       guildMember,
       oldState,
       newState,
-      voiceEvent,
     ),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

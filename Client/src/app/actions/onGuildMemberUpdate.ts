@@ -1,4 +1,4 @@
-import { executor, test } from '../../utils';
+import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { GuildMember } from 'discord.js';
 import { GuildMember as ClientGuildMember } from '../../types';
@@ -15,7 +15,6 @@ export async function onGuildMemberUpdate(
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, guildMember, oldMember, newMember),
     executor(
       prefix + 'levelNickname',
       checkNickname,
@@ -24,6 +23,9 @@ export async function onGuildMemberUpdate(
       newMember,
     ),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);
