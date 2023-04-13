@@ -1,8 +1,17 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GuildMessageService } from './guild-message.service';
 import { GuildMessage } from './entities/guild-message.entity';
 import { CreateGuildMessageInput } from './dto/create-guild-message.input';
 import { UpdateGuildMessageInput } from './dto/update-guild-message.input';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Resolver(() => GuildMessage)
 export class GuildMessageResolver {
@@ -24,6 +33,11 @@ export class GuildMessageResolver {
   @Query(() => GuildMessage, { name: 'guildMessage' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
+  }
+
+  @ResolveField(() => Guild)
+  getGuild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
+    return this.guildMessageService.getGuild(guildMessage.guild_id);
   }
 
   @Mutation(() => GuildMessage)
