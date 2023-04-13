@@ -24,12 +24,16 @@ export class MemberModuleLevel {
   user_id: number;
 
   @Column()
-  @Field(() => Boolean)
-  in_call: boolean;
+  @Field(() => Int)
+  spam_check: number;
 
   @Column()
-  @Field(() => Boolean)
-  call_alone: boolean;
+  @Field(() => Int)
+  cooldown_count: number;
+
+  @Column()
+  @Field(() => Date)
+  cooldown_time: Date;
 
   @Column()
   @Field(() => Date)
@@ -46,7 +50,7 @@ export class MemberModuleLevel {
   )
   @Field(() => MemberModuleLevelDay)
   memberModuleLevelDay: MemberModuleLevelDay;
-  
+
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

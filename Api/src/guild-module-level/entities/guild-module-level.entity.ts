@@ -23,6 +23,10 @@ export class GuildModuleLevel {
 
   @Column()
   @Field(() => Int)
+  leveling_multiplier: number;
+
+  @Column()
+  @Field(() => Int)
   announcement_channel_id: number;
 
   @Column()
@@ -30,8 +34,16 @@ export class GuildModuleLevel {
   leaderboard_channel_id: number;
 
   @Column()
+  @Field(() => Int)
+  leaderboard_last_week: number;
+
+  @Column()
   @Field(() => Boolean)
   nicknames: boolean;
+
+  @Column()
+  @Field(() => Date)
+  last_leaderboard: Date;
 
   @CreateDateColumn()
   @Field(() => Date)

@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -20,7 +21,7 @@ export class Member {
   guild_id: number;
 
   @PrimaryColumn()
-  @ManyToOne(() => User, (user: User) => user.guild_id)
+  @ManyToOne(() => User, (user: User) => user.user_id)
   @Field(() => Int)
   user_id: number;
 
@@ -30,6 +31,18 @@ export class Member {
   )
   @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
+
+  @Column()
+  @Field(() => Date)
+  birthday_date: Date;
+
+  @Column()
+  @Field(() => Int)
+  birthday: number;
+
+  @Column()
+  @Field(() => String)
+  nickname: string;
 
   @CreateDateColumn()
   @Field(() => Date)
