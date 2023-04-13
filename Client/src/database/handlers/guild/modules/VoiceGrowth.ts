@@ -1,11 +1,18 @@
-import { GuildModuleVoiceGrowth, Prisma } from '@prisma/client';
+import {
+  GuildModuleVoiceGrowth,
+  GuildModuleVoiceGrowthChild,
+  Prisma,
+} from '@prisma/client';
 import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../guild';
 import { delGuildModuleVoiceGrowthChilds } from './VoiceGrowthChild';
 
+interface GuildModuleVoiceGrowthWithChilds extends GuildModuleVoiceGrowth {
+  childs?: GuildModuleVoiceGrowthChild[];
+}
 export async function createGuildModuleVoiceGrowth(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowth> {
   return prismaClient.guildModuleVoiceGrowth.create({
     data: {
@@ -17,8 +24,8 @@ export async function createGuildModuleVoiceGrowth(
 
 export async function findSingleGuildModuleVoiceGrowth(
   guildId: string,
-  channelId: string
-): Promise<GuildModuleVoiceGrowth> {
+  channelId: string,
+): Promise<GuildModuleVoiceGrowthWithChilds> {
   return prismaClient.guildModuleVoiceGrowth.findUnique({
     where: {
       guild_id_channel_id: {
@@ -34,7 +41,7 @@ export async function findSingleGuildModuleVoiceGrowth(
 
 export async function getOrCreateGuildModuleVoiceGrowth(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowth> {
   await getOrCreateGuild(guildId);
   return (
@@ -45,15 +52,15 @@ export async function getOrCreateGuildModuleVoiceGrowth(
 
 export async function getGuildModuleVoiceGrowth(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowth> {
   await getOrCreateGuild(guildId);
   return findSingleGuildModuleVoiceGrowth(guildId, channelId);
 }
 
 export async function findAllGuildModuleVoiceGrowth(
-  guildId: string
-): Promise<GuildModuleVoiceGrowth[]> {
+  guildId: string,
+): Promise<GuildModuleVoiceGrowthWithChilds[]> {
   await getOrCreateGuild(guildId);
   return prismaClient.guildModuleVoiceGrowth.findMany({
     where: {
@@ -68,7 +75,7 @@ export async function findAllGuildModuleVoiceGrowth(
 export async function setGuildModuleVoiceGrowth(
   guildId: string,
   channelId: string,
-  data: Prisma.GuildModuleVoiceGrowthUpdateInput
+  data: Prisma.GuildModuleVoiceGrowthUpdateInput,
 ): Promise<GuildModuleVoiceGrowth> {
   await getOrCreateGuildModuleVoiceGrowth(guildId, channelId);
 
@@ -85,7 +92,7 @@ export async function setGuildModuleVoiceGrowth(
 
 export async function delGuildModuleVoiceGrowth(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowth> {
   await delGuildModuleVoiceGrowthChilds(guildId, channelId);
 
