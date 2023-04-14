@@ -1,4 +1,3 @@
-import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { GuildMember } from 'discord.js';
 import { GuildMember as ClientGuildMember } from '../../types';
@@ -13,8 +12,11 @@ export async function onGuildMemberAdd(
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, guildMember, member),
+    // executor(prefix + 'test', test, guildMember, member),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

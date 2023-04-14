@@ -2,7 +2,11 @@ import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
-import { createEvent, triggerCallEvent } from '../../modules';
+import {
+  checkDynamicChannels,
+  createEvent,
+  triggerCallEvent,
+} from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -30,7 +34,17 @@ export async function onGuildVoiceStateUpdate(
       newState,
       voiceEvent,
     ),
+    executor(
+      prefix + 'dynamicVoiceEvent',
+      checkDynamicChannels,
+      guildMember,
+      oldState,
+      newState,
+    ),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

@@ -10,7 +10,7 @@ export function generateModuleConfigs() {
   );
   const moduleConstConfig = spider('../content/modules', buildConstConfig);
 
-  let content = "// This file is auto generated, don't edit it manually.\n";
+  let content = '// This file is auto generated, do not edit it manually.\n';
 
   const builder = (obj: SpiderFile, path: string) => {
     Object.keys(obj).forEach((key) => {
@@ -23,7 +23,7 @@ export function generateModuleConfigs() {
           .split(/[/_-]/gm)
           .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
           .join('');
-        content += `export * as ModuleConfig${globalVariable} from '${path}/config';\n`;
+        content += `\nexport * as ModuleConfig${globalVariable} from '${path}/config';\n`;
       }
     });
     content += '\n';

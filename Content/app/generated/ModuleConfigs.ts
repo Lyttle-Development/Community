@@ -1,4 +1,4 @@
-// This file is auto generated, don't edit it manually.
+// This file is auto generated, do not edit it manually.
 export * as ModuleConfigActivityLevelsEventLevelUp from '../../content/modules/Activity/levels/event/level-up/config';
 export * as ModuleConfigActivityLevelsTxtNickname from '../../content/modules/Activity/levels/txt/nickname/config';
 export * as ModuleConfigActivityLevelsUnitLevel from '../../content/modules/Activity/levels/unit/level/config';

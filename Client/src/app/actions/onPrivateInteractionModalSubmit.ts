@@ -1,4 +1,3 @@
-import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { ModalSubmitInteraction } from 'discord.js';
 
@@ -12,8 +11,11 @@ export async function onPrivateInteractionModalSubmit(
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, userId, interaction),
+    // executor(prefix + 'test', test, userId, interaction),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

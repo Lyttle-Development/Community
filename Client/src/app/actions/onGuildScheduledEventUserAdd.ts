@@ -23,6 +23,9 @@ export async function onGuildScheduledEventUserAdd(
     ),
   ];
 
+  // If no actions, return
+  if (actions.length < 1) return;
+
   // Execute all actions
   await Promise.all(actions);
 }

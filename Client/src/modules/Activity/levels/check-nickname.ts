@@ -2,7 +2,9 @@
 import { GuildMember as ClientGuildMember } from '../../../types';
 import { GuildMember } from 'discord.js';
 import { setMemberValue } from '../../../database/handlers';
-import { nicknamesBeingSet, triggerNickname } from './trigger-nickname';
+import { triggerNickname } from './trigger-nickname';
+
+export const nicknamesBeingSet: { [key: string]: string } = {};
 
 export async function checkNickname(
   guildMember: ClientGuildMember,

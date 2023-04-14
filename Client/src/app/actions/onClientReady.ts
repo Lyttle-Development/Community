@@ -1,4 +1,3 @@
-import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { Client } from 'discord.js';
 
@@ -9,8 +8,11 @@ const prefix: string = actionPrefix + 'onClientReady.';
 export async function onClientReady(client: Client): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, client),
+    // executor(prefix + 'test', test, client),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

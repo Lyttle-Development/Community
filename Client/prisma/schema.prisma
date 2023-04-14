@@ -66,10 +66,10 @@ model Guild {
 
   // - Modules
   guild__module__level           GuildModuleLevel?
+  guild__module__birthday        GuildModuleBirthday?
   guild__module__easter_egg      GuildModuleEasterEgg?
   guild__module__count_to_number GuildModuleCountToNumber[]
   guild__module__voice_growth    GuildModuleVoiceGrowth[]
-  guild__module__birthday        GuildModuleBirthday[]
 
   // Values
   enabled Boolean @default(true)
