@@ -1,68 +1,35 @@
-import { GuildMember } from '../../../types';
-import { ChannelType, VoiceChannel, VoiceState } from 'discord.js';
+import { ChannelType, VoiceChannel } from 'discord.js';
 import {
   createGuildModuleVoiceGrowthChild,
   delGuildModuleVoiceGrowthChild,
   findSingleGuildModuleVoiceGrowth,
-  findSingleGuildModuleVoiceGrowthChild,
 } from '../../../database/handlers';
 import client from '../../../main';
 import { queue, QueueBacklogType, sleep } from '../../../utils';
-import { getMessage, getMessageVariables } from '../../../utils/get-message';
-import { ALLOWED_NICKNAME_LENGTH } from '../../../../constants';
+import { getChannelName } from './get-channel-name';
 
 // Little channel cache to prevent spamming & multiple checks
-export const channelsBeingChecked: { [key: string]: boolean } = {};
+const channelsBeingChecked: { [key: string]: boolean } = {};
 
-/**
- * Trigger all the check to fire a dynamic voice event
- * @param guildMember
- * @param oldState
- * @param newState
- */
-export async function triggerDynamicVoice(
-  guildMember: GuildMember,
-  oldState: VoiceState,
-  newState: VoiceState,
+export async function triggerDynamicVoiceEvent(
+  guildId: string,
+  channelId: string,
 ) {
-  const { guildId } = guildMember;
-
-  await checkChannel(guildId, oldState.channelId);
-  await checkChannel(guildId, newState.channelId);
-}
-
-async function checkChannel(guildId, channelId) {
-  if (!channelId) return;
-
-  const db_GuildModuleVoiceGrowthChild =
-    await findSingleGuildModuleVoiceGrowthChild(guildId, channelId);
-
-  if (
-    db_GuildModuleVoiceGrowthChild &&
-    db_GuildModuleVoiceGrowthChild.master_id
-  ) {
-    channelId = db_GuildModuleVoiceGrowthChild.master_id.toString();
-  }
-
-  await check(guildId, channelId);
-}
-
-async function check(guildId: string, channelId: string) {
   if (channelsBeingChecked[channelId]) {
     await sleep(1000);
-    return check(guildId, channelId);
+    return triggerDynamicVoiceEvent(guildId, channelId);
   }
   channelsBeingChecked[channelId] = true;
 
   // Trigger the event
-  const actionWasNeeded = await triggerDynamicVoiceEvent(guildId, channelId);
+  const actionWasNeeded = await fireDynamicVoiceEvent(guildId, channelId);
   if (!actionWasNeeded) return;
 
   // Wait for 5 seconds
   await sleep(5 * 1000);
 
   // Check again.
-  await check(guildId, channelId);
+  await triggerDynamicVoiceEvent(guildId, channelId);
 }
 
 /**
@@ -70,7 +37,7 @@ async function check(guildId: string, channelId: string) {
  * @param guildId
  * @param channelId
  */
-async function triggerDynamicVoiceEvent(
+async function fireDynamicVoiceEvent(
   guildId: string,
   channelId: string,
 ): Promise<boolean> {
@@ -171,60 +138,4 @@ async function triggerDynamicVoiceEvent(
   // Remove the channel from the being checked cache
   delete channelsBeingChecked[masterId];
   return false;
-}
-
-/**
- * Get a random channel name
- * @param guildId
- * @param currentNames
- */
-async function getChannelName(
-  guildId: string,
-  currentNames: string[],
-): Promise<string | null> {
-  // Get the default message variables
-  const defaultVariables = await getMessageVariables({
-    guildId,
-    userId: guildId,
-  });
-
-  // Get the message
-  const message = await getMessage(
-    guildId,
-    'Activity.dynamic-voice.txt.channel-names',
-    defaultVariables,
-    false,
-  );
-
-  // get the names
-  const names =
-    message
-      // Remove all empty lines
-      .replaceAll('\n\n', '')
-      // Trim the string
-      .trim()
-      // Split the string into an array
-      .split('\n') ||
-    // If the array is empty, return an empty array
-    [];
-
-  // Filter out the names that are already in use
-  const namesFree = names?.filter((x) => !currentNames.includes(x)) || [];
-  // If there are no free names, return null
-  if (namesFree.length < 1) return null;
-
-  // Get a random name
-  const randomIndex = Math.floor(Math.random() * namesFree.length);
-  // Get the name
-  let name = namesFree[randomIndex] || '';
-
-  // Clean name
-  name = name?.trim();
-  // If the name is empty, return null
-  if (name.length < 1) return null;
-  // limit name to max nickname length
-  name = name.slice(0, ALLOWED_NICKNAME_LENGTH);
-
-  // Return the name
-  return name || null;
 }

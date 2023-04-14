@@ -3,9 +3,9 @@ import { actionPrefix } from './index';
 import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
 import {
+  checkDynamicChannels,
   createEvent,
   triggerCallEvent,
-  triggerDynamicVoice,
 } from '../../modules';
 
 // This file's prefix
@@ -36,7 +36,7 @@ export async function onGuildVoiceStateUpdate(
     ),
     executor(
       prefix + 'dynamicVoiceEvent',
-      triggerDynamicVoice,
+      checkDynamicChannels,
       guildMember,
       oldState,
       newState,
