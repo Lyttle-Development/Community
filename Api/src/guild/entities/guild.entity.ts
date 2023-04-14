@@ -15,8 +15,6 @@ import { GuildTranslation } from '../../guild-translation/entities/guild-transla
 import { Member } from '../../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
-let guildModuleLevel;
-
 @Entity()
 @ObjectType()
 export class Guild {
@@ -29,7 +27,7 @@ export class Guild {
   enabled: boolean;
 
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => guildModuleLevel)
+  @Field(() => GuildModuleLevel)
   guildModuleLevel: GuildModuleLevel;
 
   @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })

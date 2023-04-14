@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity('guild__module__level')
+// @Entity()
 @ObjectType()
 export class GuildModuleLevel {
   @PrimaryColumn()
