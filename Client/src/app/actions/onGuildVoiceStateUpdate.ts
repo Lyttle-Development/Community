@@ -1,4 +1,4 @@
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
@@ -18,6 +18,8 @@ export async function onGuildVoiceStateUpdate(
   newState: VoiceState,
   voiceEvent: VoiceEvent,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(

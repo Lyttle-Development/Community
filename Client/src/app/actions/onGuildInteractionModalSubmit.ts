@@ -1,6 +1,7 @@
 import { actionPrefix } from './index';
 import { ModalSubmitInteraction } from 'discord.js';
 import { GuildMember } from '../../types';
+import { limit } from '../../utils';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionModalSubmit.';
@@ -10,6 +11,8 @@ export async function onGuildInteractionModalSubmit(
   guildMember: GuildMember,
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     // executor(prefix + 'test', test, guildMember, interaction),

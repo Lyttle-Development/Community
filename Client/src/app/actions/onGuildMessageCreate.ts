@@ -1,5 +1,5 @@
 import { GuildMember, LevelEvent } from '../../types';
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
 import { createEvent } from '../../modules';
@@ -10,6 +10,8 @@ export async function onGuildMessageCreate(
   guildMember: GuildMember,
   message: Message,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(

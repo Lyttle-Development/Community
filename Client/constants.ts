@@ -26,3 +26,13 @@ export const ALLOWED_MESSAGE_LENGTH = 2000;
  * The maximum allowed characters in a nickname.
  */
 export const ALLOWED_NICKNAME_LENGTH = 32;
+
+/**
+ * The amount of time in milliseconds that a rate limit is allowed to last.
+ */
+export const ALLOWED_RATE_LIMIT_TIME = 1500;
+
+/**
+ * The maximum allowed rate limit amount.
+ */
+export const ALLOWED_RATE_LIMIT_AMOUNT = 3;

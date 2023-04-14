@@ -1,4 +1,4 @@
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { CommandInteraction } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
@@ -12,6 +12,8 @@ export async function onGuildInteractionCommand(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(
