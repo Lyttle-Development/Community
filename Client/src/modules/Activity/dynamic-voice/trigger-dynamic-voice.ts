@@ -6,10 +6,6 @@ import {
   findSingleGuildModuleVoiceGrowth,
   findSingleGuildModuleVoiceGrowthChild,
 } from '../../../database/handlers';
-import {
-  GuildModuleVoiceGrowth,
-  GuildModuleVoiceGrowthChild,
-} from '@prisma/client';
 import client from '../../../main';
 import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
@@ -48,67 +44,67 @@ async function checkChannel(guildId, channelId) {
     channelId = db_GuildModuleVoiceGrowthChild.master_id.toString();
   }
 
-  // Check if module enabled
+  await check(guildId, channelId);
+}
+
+async function check(guildId: string, channelId: string) {
+  if (channelsBeingChecked[channelId]) {
+    await sleep(1000);
+    return check(guildId, channelId);
+  }
+  channelsBeingChecked[channelId] = true;
+
+  // Trigger the event
+  const actionWasNeeded = await triggerDynamicVoiceEvent(guildId, channelId);
+  if (!actionWasNeeded) return;
+
+  // Wait for 5 seconds
+  await sleep(5 * 1000);
+
+  // Check again.
+  await check(guildId, channelId);
+}
+
+/**
+ * Trigger the dynamic voice event
+ * @param guildId
+ * @param channelId
+ */
+async function triggerDynamicVoiceEvent(
+  guildId: string,
+  channelId: string,
+): Promise<boolean> {
   const db_GuildModuleVoiceGrowth = await findSingleGuildModuleVoiceGrowth(
     guildId,
     channelId,
   );
 
   // If not enabled, return
-  if (!db_GuildModuleVoiceGrowth?.enabled) return;
-  if (db_GuildModuleVoiceGrowth.manual) return;
-
-  await check(
-    guildId,
-    db_GuildModuleVoiceGrowth,
-    db_GuildModuleVoiceGrowth.childs,
-  );
-}
-
-async function check(
-  guildId: string,
-  master: GuildModuleVoiceGrowth,
-  childs: GuildModuleVoiceGrowthChild[],
-) {
-  console.log('check', channelsBeingChecked);
-  const masterId = master.channel_id.toString();
-
-  if (channelsBeingChecked[masterId]) {
-    await sleep(1 * 1000);
-    return check(guildId, master, childs);
+  if (!db_GuildModuleVoiceGrowth?.enabled || db_GuildModuleVoiceGrowth.manual) {
+    // Remove the channel from the being checked cache
+    delete channelsBeingChecked[channelId];
+    return false;
   }
-  channelsBeingChecked[masterId] = true;
 
-  // Trigger the event
-  await triggerDynamicVoiceEvent(guildId, master, childs);
-}
+  const master = db_GuildModuleVoiceGrowth;
+  const childs = db_GuildModuleVoiceGrowth.childs;
 
-/**
- * Trigger the dynamic voice event
- * @param guildId
- * @param master
- * @param childs
- */
-async function triggerDynamicVoiceEvent(
-  guildId: string,
-  master: GuildModuleVoiceGrowth,
-  childs: GuildModuleVoiceGrowthChild[],
-) {
   const masterId = master.channel_id.toString();
   const childIds = childs.map((x) => x.channel_id.toString());
   // Get all channel ids, including the master channel
   const channelIds = [masterId, ...childIds];
 
-  const channels = channelIds.map((x) => client.channels.cache.get(x));
-  const voiceChannels = channels
-    .filter((x) => x.type === ChannelType.GuildVoice)
-    .map((x) => x as VoiceChannel);
+  const channels = channelIds.map((x) => client.channels.cache.get(x)) || [];
+  const voiceChannels =
+    channels
+      .filter((x) => x.type === ChannelType.GuildVoice)
+      .map((x) => x as VoiceChannel) || [];
 
-  const emptyChannels = voiceChannels.filter((x) => x.members.size < 1);
+  const emptyChannels = voiceChannels?.filter((x) => x.members.size < 1) || [];
 
   // If there are too many empty channels, delete all but one
   if (emptyChannels.length > 1) {
-    // Get all channels except the first one
+    // Get all channels, except the first one
     const channelsToDelete = emptyChannels.slice(1);
 
     // Delete all channels, in the queue.
@@ -122,7 +118,7 @@ async function triggerDynamicVoiceEvent(
           // Delete the channel from the database
           await delGuildModuleVoiceGrowthChild(guildId, x.id);
           // Remove the channel from the being checked cache
-          channelsBeingChecked[masterId] = false;
+          delete channelsBeingChecked[masterId];
         });
       } else {
         // Remove the channel from the being checked cache
@@ -131,7 +127,7 @@ async function triggerDynamicVoiceEvent(
     });
 
     // Stop the function
-    return;
+    return true;
   }
 
   // If there are no empty channels, create a new one
@@ -165,12 +161,16 @@ async function triggerDynamicVoiceEvent(
         childName,
       );
       // Remove the channel from the being checked cache
-      channelsBeingChecked[masterId] = false;
+      delete channelsBeingChecked[masterId];
     });
 
     // Stop the function
-    return;
+    return true;
   }
+
+  // Remove the channel from the being checked cache
+  delete channelsBeingChecked[masterId];
+  return false;
 }
 
 /**
