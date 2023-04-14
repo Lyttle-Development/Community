@@ -14,8 +14,8 @@ import { GuildTranslationService } from '../guild-translation/guild-translation.
 import type { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 import { MemberService } from '../member/member.service';
 import type { Member } from '../member/entities/member.entity';
-import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guild-module-voice-growth.service';
+import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
 @Injectable()
 export class GuildService {
