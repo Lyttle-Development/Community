@@ -1,9 +1,13 @@
 import { LogType } from '../types';
 import { setNumberLength } from './helpers/set-number-length';
+import { sendMessage } from './queue';
+import { BOT_LOG_CHANNEL_ID } from '../../constants';
 
 export function log(type: LogType, ...messages) {
   // Get variables
   const date = new Date();
+  const time = date.getTime();
+  const discordTime = parseInt((time / 1000).toString(), 10);
   const yyyy = date.getFullYear();
   const mm = setNumberLength(date.getMonth() + 1, 2);
   const dd = setNumberLength(date.getDate(), 2);
@@ -35,7 +39,15 @@ export function log(type: LogType, ...messages) {
 
   // Build message
   const message = `${typeStr} [${dateStr} @ ${timeStr}]: ${contentStr}`;
-
   // Log to console
   console[type](message);
+
+  // Build discord message
+  const discordMessage = `**${type.toUpperCase()}** @ <t:${discordTime}:F>: \n\`\`\`\n${contentStr}\n\`\`\``;
+
+  // send discord message with timeout.
+  setTimeout(() => {
+    // Send message to discord
+    void sendMessage(BOT_LOG_CHANNEL_ID, discordMessage);
+  }, 10 * 1000);
 }

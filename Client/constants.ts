@@ -5,6 +5,11 @@
 export const DEV_IDS: string[] = ['132487290835435521', '548240698869284884'];
 
 /**
+ * The channel to send the bot logs to.
+ */
+export const BOT_LOG_CHANNEL_ID = '1096487719603028019';
+
+/**
  * The maximum allowed errors.
  * If the "module" has this number, it will be disabled.
  */
