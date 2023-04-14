@@ -56,6 +56,10 @@ export class MemberModuleLevelDay {
   @Field(() => Int)
   points_sun: number;
 
+  @Column()
+  @Field(() => Int)
+  points: number;
+
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

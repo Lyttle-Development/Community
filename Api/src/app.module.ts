@@ -15,6 +15,7 @@ import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.
 import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
 import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
 import { MemberModuleLevelDayModule } from './member-module-level-day/member-module-level-day.module';
+import { GuildModuleVoiceGrowthModule } from './guild-module-voice-growth/guild-module-voice-growth.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { MemberModuleLevelDayModule } from './member-module-level-day/member-mod
     GuildModuleQotdModule,
     MemberModuleLevelModule,
     MemberModuleLevelDayModule,
+    GuildModuleVoiceGrowthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

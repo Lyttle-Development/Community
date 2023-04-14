@@ -13,8 +13,7 @@ import { GuildModuleQotd } from '../../guild-module-qotd/entities/guild-module-q
 import { GuildMessage } from '../../guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../../guild-translation/entities/guild-translation.entity';
 import { Member } from '../../member/entities/member.entity';
-
-let guildModuleLevel;
+import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
 @Entity()
 @ObjectType()
@@ -28,12 +27,19 @@ export class Guild {
   enabled: boolean;
 
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => guildModuleLevel)
+  @Field(() => GuildModuleLevel)
   guildModuleLevel: GuildModuleLevel;
 
   @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
   @Field(() => GuildModuleQotd)
   guildModuleQotd: GuildModuleQotd;
+
+  @OneToOne(() => GuildModuleVoiceGrowth, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @Field(() => GuildModuleVoiceGrowth)
+  guildModuleVoiceGrowth: GuildModuleVoiceGrowth;
 
   @OneToMany(
     () => GuildMessage,

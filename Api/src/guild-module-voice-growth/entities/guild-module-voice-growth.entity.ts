@@ -1,19 +1,17 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Guild } from '../../guild/entities/guild.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToOne,
-  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Guild } from '../../guild/entities/guild.entity';
 
-@Entity('guild__module__level')
-// @Entity()
+@Entity('guild__module__voice_growth')
 @ObjectType()
-export class GuildModuleLevel {
-  @PrimaryColumn()
+export class GuildModuleVoiceGrowth {
+  @Column()
   @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
   @Field(() => Int)
   guild_id: number;
@@ -24,27 +22,15 @@ export class GuildModuleLevel {
 
   @Column()
   @Field(() => Int)
-  leveling_multiplier: number;
-
-  @Column()
-  @Field(() => Int)
-  announcement_channel_id: number;
+  announce_channel_id: number;
 
   @Column()
   @Field(() => Int)
   leaderboard_channel_id: number;
 
   @Column()
-  @Field(() => Int)
-  leaderboard_last_week: number;
-
-  @Column()
   @Field(() => Boolean)
   nicknames: boolean;
-
-  @Column()
-  @Field(() => Date)
-  last_leaderboard: Date;
 
   @CreateDateColumn()
   @Field(() => Date)

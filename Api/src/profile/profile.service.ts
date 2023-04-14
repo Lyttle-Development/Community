@@ -26,7 +26,7 @@ export class ProfileService {
 
   findOne(id: number): Promise<Profile> {
     return this.profileRepository.findOne({
-      where: { guild_id: id },
+      where: { user_id: id },
     });
   }
 

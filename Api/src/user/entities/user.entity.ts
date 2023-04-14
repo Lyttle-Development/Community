@@ -15,7 +15,7 @@ import { Profile } from '../../profile/entities/profile.entity';
 export class User {
   @PrimaryColumn()
   @Field(() => Int)
-  guild_id: number;
+  user_id: number;
 
   @OneToMany(() => Member, (member: Member) => member.guild_id, {
     nullable: true,
