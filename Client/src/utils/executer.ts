@@ -1,7 +1,8 @@
 import * as fs from 'fs';
-import { sortObject } from './';
+import { log, sortObject } from './';
 import { messageDevs } from './helpers';
 import { ALLOWED_ERROR_COUNT } from '../../constants';
+import { LogType } from '../types';
 
 /**
  * The main module executor, it prevents the bot from hard crashing.
@@ -34,7 +35,7 @@ export async function executor(
     setModule(moduleName, 1);
 
     // Log the error
-    console.error(error);
+    log(LogType.ERROR, error);
 
     // Send the error to the devs
     messageDevs(
@@ -82,7 +83,7 @@ function setModule(moduleName: string, errors = 0): void {
       modules = JSON.parse(file);
     } catch (error) {
       // If the file could not be read, log the error
-      console.error(error);
+      log(LogType.ERROR, error);
 
       // Send the error to the devs
       messageDevs(
@@ -113,7 +114,7 @@ function setModule(moduleName: string, errors = 0): void {
     fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
   } catch (error) {
     // If the module could not be set, log the error
-    console.error(error);
+    log(LogType.ERROR, error);
 
     // Send the error to the devs
     messageDevs(

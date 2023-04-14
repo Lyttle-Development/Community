@@ -1,6 +1,8 @@
 import { checkMessagesQueue } from './messages-queue';
 import { messageDevs } from '../helpers';
 import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
+import { LogType } from '../../types';
+import { log } from '../log';
 
 // Weather the queue is active or not
 let queueActive = false;
@@ -111,7 +113,7 @@ async function fireJob(jobId: number) {
     // Catch any errors
   } catch (error) {
     // Log the error
-    console.log(error);
+    log(LogType.ERROR, error);
 
     // Send the error to the devs
     messageDevs(error, 'The error was caught in the main queue');
