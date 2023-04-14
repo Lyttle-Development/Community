@@ -3,7 +3,6 @@ import { GuildMember as ClientGuildMember } from '../../../types';
 import { GuildMember } from 'discord.js';
 import { setMemberValue } from '../../../database/handlers';
 import { triggerNickname } from './trigger-nickname';
-import { sleep } from '../../../utils';
 
 export const nicknamesBeingSet: { [key: string]: string } = {};
 
@@ -17,16 +16,7 @@ export async function checkNickname(
 
   // Ignore if it was the bot
   const id = guildMember.guildId + guildMember.userId;
-  if (nicknamesBeingSet[id] === nickname) {
-    // Wait 5 seconds
-    await sleep(5 * 1000);
-
-    // Remove nickname from being set
-    delete nicknamesBeingSet[id];
-
-    // Stop here
-    return;
-  }
+  if (nicknamesBeingSet[id] === nickname) return;
 
   // Get guild and user id
   const { guildId, userId } = guildMember;

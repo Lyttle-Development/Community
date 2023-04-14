@@ -182,27 +182,21 @@ async function setNickname(
 
   // Check if nickname is already being set
   const id = guildMember.guildId + guildMember.userId;
-  if (nicknamesBeingSet[id] === newNickname) {
+  if (nicknamesBeingSet[id] === newNickname) return;
+
+  // Set nickname as being set
+  nicknamesBeingSet[id] = newNickname;
+
+  // Create the action for the queue
+  const action = async () => {
+    // Set nickname
+    await member.setNickname(newNickname);
+
     // Wait 5 seconds
     await sleep(5 * 1000);
 
     // Remove nickname from being set
     delete nicknamesBeingSet[id];
-
-    // Stop here
-    return;
-  }
-
-  // Create the action for the queue
-  const action = async () => {
-    // Set nickname as being set
-    nicknamesBeingSet[id] = newNickname;
-
-    // Wait 5 seconds
-    await sleep(5 * 1000);
-
-    // Set nickname
-    await member.setNickname(newNickname);
   };
 
   // Add action to queue
