@@ -36,7 +36,7 @@ export class ProfileService {
 
   async update(id: number, updateProfileInput: UpdateProfileInput) {
     const profile: Profile = await this.profileRepository.findOne({
-      where: { guild_id: id },
+      where: { user_id: id },
     });
     if (profile) {
       return this.profileRepository.save({
@@ -49,7 +49,7 @@ export class ProfileService {
 
   async remove(id: number): Promise<Profile> | null {
     const profile: Profile = await this.profileRepository.findOne({
-      where: { guild_id: id },
+      where: { user_id: id },
     });
     if (profile) {
       return this.profileRepository.remove(profile);
