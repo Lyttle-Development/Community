@@ -9,9 +9,10 @@ import {
   ThreadChannel,
   User,
 } from 'discord.js';
-import client from '../../main';
+import client, { isReady } from '../../main';
 import { queue as sendQueue, QueueBacklogType } from './queue';
 import { queueMessage } from './messages-queue';
+import { sleep } from '../helpers';
 
 /**
  * Send a message to a target.
@@ -21,7 +22,7 @@ import { queueMessage } from './messages-queue';
  * @param embed
  * @param queue
  */
-export function sendMessage(
+export async function sendMessage(
   channel:
     | string
     | TextChannel
@@ -34,6 +35,14 @@ export function sendMessage(
   embed = false,
   queue: QueueBacklogType | false = QueueBacklogType.NORMAL,
 ): Promise<Message> {
+  // If the client isn't ready, wait a second and try again
+  if (!isReady) {
+    // Wait a second
+    await sleep(1000);
+    // Try again
+    return sendMessage(channel, content, silent, embed, queue);
+  }
+
   // Resolve the channel if it's a string
   if (typeof channel === 'string') {
     channel = client.channels.resolve(channel) as TextChannel;

@@ -1,9 +1,10 @@
-import { GuildMember } from '../types';
+import { GuildMember, LogType } from '../types';
 import {
   ALLOWED_RATE_LIMIT_AMOUNT,
   ALLOWED_RATE_LIMIT_TIME,
 } from '../../constants';
 import { sleep } from './helpers';
+import { log } from './log';
 
 const cache: { [key: string]: number } = {};
 const limited: { [key: string]: boolean } = {};
@@ -31,7 +32,7 @@ export async function limit(guildMember: GuildMember): Promise<boolean> {
   // If the user is rate limited, set the limited to true
   if (isRateLimited) {
     limited[id] = true;
-    console.log('Rate limit hit for:', guildMember.userId); // Todo: Remove on deploy
+    log(LogType.LOG, 'Rate limit hit for:', guildMember.userId); // Todo: Remove on deploy
   }
 
   // If the user is not spamming, delete the cache

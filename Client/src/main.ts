@@ -1,7 +1,8 @@
-import { environment, executor, initQueue } from './utils';
+import { environment, executor, initQueue, log } from './utils';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
 import { createExtensions } from './utils/extensions';
+import { LogType } from './types';
 
 createExtensions();
 
@@ -35,15 +36,15 @@ export const client = new Client({
   ],
 });
 
-console.log('info', 'Caching events...');
+log(LogType.INFO, 'Caching events...');
 
 const eventFiles = fs
   .readdirSync('./src/app/events')
   .filter((file) => file.endsWith('.ts'))
   .map((file) => file.replace('.ts', ''));
 
-console.log('info', `Found event files:\n - ${eventFiles.join('\n - ')}`);
-console.log('info', 'Loading events...');
+log(LogType.INFO, `Found event files:\n - ${eventFiles.join('\n - ')}`);
+log(LogType.INFO, 'Loading events...');
 
 eventFiles.forEach((file, i) => {
   import(`./app/events/${file}`)
@@ -62,18 +63,18 @@ eventFiles.forEach((file, i) => {
             executor('main.' + file, event, ...args),
           );
         }
-        console.log('info', `Loaded event ${eventFiles[i]}`);
+        log(LogType.INFO, `Loaded event ${eventFiles[i]}`);
       } else {
-        console.log('warn', `Event ${eventFiles[i]} is not a function/event`);
+        log(LogType.WARN, `Event ${eventFiles[i]} is not a function/event`);
       }
     })
     .catch((err) => {
-      console.log('error', `Could not load event ${eventFiles[i]}: ${err}`);
+      log(LogType.ERROR, `Could not load event ${eventFiles[i]}: ${err}`);
     });
 });
 
 // Login to Discord with your client's token
-client.login(environment.BOT_TOKEN).then(() => console.log('info', 'running'));
+client.login(environment.BOT_TOKEN).then(() => log(LogType.INFO, 'running'));
 
 export const bootdate = new Date();
 initQueue();
