@@ -1,0 +1,1 @@
+Channel has been created successfully!\n{prefix}We will delete this channel <t:{time}:R> if you don't go into it.

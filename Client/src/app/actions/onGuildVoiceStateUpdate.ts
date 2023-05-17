@@ -7,7 +7,7 @@ import {
   createEvent,
   triggerCallEvent,
 } from '../../modules';
-import { checkVoiceTopicChannels } from '../../modules/Activity/voice-topics/check-channels';
+import { checkVoiceTopicChannels } from '../../modules/Communication/voice-topics/check-channels';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';

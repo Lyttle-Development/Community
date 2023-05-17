@@ -17,6 +17,13 @@ export function buildConstConfig(spiderResults: SpiderResults): void {
   buildConfig(spiderResults, regexConst);
 }
 
+export function buildTypeConfig(spiderResults: SpiderResults): void {
+  // get the selected groups back from regex
+  const regexType = /\/\/ export:? ?(.*?)\nexport type (.*) = (.*)/gm;
+
+  buildConfig(spiderResults, regexType);
+}
+
 function buildConfig(
   { files, filePath, fileName, rawFilePath }: SpiderResults,
   regex,

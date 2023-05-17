@@ -1,12 +1,12 @@
 import { GuildMember } from '../../../../types';
-import { ButtonInteraction } from 'discord.js';
-import { openVoiceTopicModal } from '../../../Communication/voice-topics';
+import { ModalSubmitInteraction } from 'discord.js';
+import { createVoiceTopicChild } from '../../../Communication/voice-topics';
 
 // All routes for button presses interface
-interface ButtonRoutes {
+interface ModalRoutes {
   [key: string]: (
     guildMember: GuildMember,
-    interaction: ButtonInteraction,
+    interaction: ModalSubmitInteraction,
   ) => void;
 }
 
@@ -14,21 +14,21 @@ interface ButtonRoutes {
  * All routes for button presses
  * customId: Function
  */
-const buttonRoutes: ButtonRoutes = {
-  openVoiceTopicModal: openVoiceTopicModal,
+const modalRoutes: ModalRoutes = {
+  createVoiceTopicChild: createVoiceTopicChild,
 };
 
 // Get all available routes
-const availableRoutes = Object.keys(buttonRoutes);
+const availableRoutes = Object.keys(modalRoutes);
 
 /**
  * Route button presses
  * @param guildMember
  * @param interaction
  */
-export async function routeButtonPress(
+export async function routeModalSubmit(
   guildMember: GuildMember,
-  interaction: ButtonInteraction,
+  interaction: ModalSubmitInteraction,
 ) {
   // Check if the route is available
   if (!availableRoutes.includes(interaction.customId)) {
@@ -37,5 +37,5 @@ export async function routeButtonPress(
   }
 
   // Execute the route
-  return buttonRoutes[interaction.customId](guildMember, interaction);
+  return modalRoutes[interaction.customId](guildMember, interaction);
 }

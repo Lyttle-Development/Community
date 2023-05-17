@@ -53,6 +53,29 @@ export const ModuleMarkdown = {
       },
     },
   },
+  Communication: {
+    'voice-topic': {
+      txt: {
+        'dialog-limit': {
+          content: 'With how many people? (1-99)',
+          documentation: '',
+        },
+        'dialog-title': {
+          content: 'Create a voice topic channel',
+          documentation: '',
+        },
+        'dialog-topic': {
+          content: 'Whats the topic?',
+          documentation: '',
+        },
+        success: {
+          content:
+            "Channel has been created successfully!\\n{prefix}We will delete this channel <t:{time}:R> if you don't go into it.",
+          documentation: '',
+        },
+      },
+    },
+  },
   Global: {
     prefix: {
       content: '> ',

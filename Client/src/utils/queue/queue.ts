@@ -192,6 +192,15 @@ async function fireTimeAction(jobId: number, type: QueueBacklogTimeType) {
 
 /**
  * Add an action to the queue
+ *
+ * ### Order of importance:
+ * - CRITICAL
+ * - URGENT
+ * - IMPORTANT
+ * - NORMAL
+ * - LOW
+ * - BACKGROUND
+ *
  * @param importance
  * @param action
  */
