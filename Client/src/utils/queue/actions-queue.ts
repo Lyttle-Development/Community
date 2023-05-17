@@ -85,7 +85,19 @@ async function executeActionsQueue() {
   waitingForActions = false;
 }
 
+const lastActionIds: number[] = [];
+
 function addActionToQueue(action, id, guildId, valuesString) {
+  // Check if the action id is already in the queue
+  if (lastActionIds.includes(id)) return;
+  // Add to last action ids
+  lastActionIds.push(id);
+
+  // prevent list from getting too big
+  while (lastActionIds.length > 100) {
+    lastActionIds.splice(0, 1);
+  }
+
   try {
     // Parse the values
     const values = JSON.parse(valuesString);
