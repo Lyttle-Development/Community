@@ -8,24 +8,37 @@ import { log } from '../log';
 import { LogType } from '../../types';
 import { createVoiceTopicChannel } from '../../modules';
 
-const currentlyBeingExecuted: number[] = [];
-
+// Action type interface
 interface ActionQueueTypes {
   [key: string]: (...args: any[]) => Promise<any> | any;
 }
 
+/**
+ * All action types.
+ * Name: Function
+ */
 const actionTypes: ActionQueueTypes = {
   createVoiceTopicChannel: createVoiceTopicChannel,
 };
 
+// Local variable to get all action types (list)
 const currentActionTypes = Object.keys(actionTypes);
 
+// Local variable to check if waiting for actions
 let waitingForActions = false;
 
+// Local variable to check which actions are currently being executed
+const currentlyBeingExecuted: number[] = [];
+
+/**
+ * Checks if there are any actions in the queue.
+ */
 export function checkActionsQueue() {
-  if (!waitingForActions) {
-    void executeActionsQueue();
-  }
+  // Check if waiting for actions
+  if (waitingForActions) return;
+
+  // Execute actions queue
+  void executeActionsQueue();
 }
 
 async function executeActionsQueue() {
