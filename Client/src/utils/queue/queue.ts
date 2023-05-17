@@ -3,6 +3,7 @@ import { messageDevs } from '../helpers';
 import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
 import { LogType } from '../../types';
 import { log } from '../log';
+import { checkActionsQueue } from './actions-queue';
 
 // Weather the queue is active or not
 let queueActive = false;
@@ -76,6 +77,9 @@ export function initQueue() {
 
     // Tasks that need to be done every second
     checkMessagesQueue();
+
+    // Check for actions, queued by the bot
+    checkActionsQueue();
   }, 1000);
 
   // Set the queue to active
