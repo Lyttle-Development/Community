@@ -1,25 +1,9 @@
 import { GuildMember } from '../../../../types';
 import { ModalSubmitInteraction } from 'discord.js';
-import { createVoiceTopicChild } from '../../../Communication/voice-topics';
-
-// All routes for button presses interface
-interface ModalRoutes {
-  [key: string]: (
-    guildMember: GuildMember,
-    interaction: ModalSubmitInteraction,
-  ) => void;
-}
-
-/**
- * All routes for button presses
- * customId: Function
- */
-const modalRoutes: ModalRoutes = {
-  createVoiceTopicChild: createVoiceTopicChild,
-};
+import { modalRoutes } from './routes';
 
 // Get all available routes
-const availableRoutes = Object.keys(modalRoutes);
+const availableRoutes: string[] = Object.keys(modalRoutes);
 
 /**
  * Route button presses
@@ -29,7 +13,7 @@ const availableRoutes = Object.keys(modalRoutes);
 export async function routeModalSubmit(
   guildMember: GuildMember,
   interaction: ModalSubmitInteraction,
-) {
+): Promise<void> {
   // Check if the route is available
   if (!availableRoutes.includes(interaction.customId)) {
     await interaction.deferUpdate();
