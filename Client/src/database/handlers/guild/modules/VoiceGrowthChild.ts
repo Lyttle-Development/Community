@@ -6,7 +6,7 @@ export async function createGuildModuleVoiceGrowthChild(
   guildId: string,
   channelId: string,
   masterId: string,
-  name: string
+  name: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
   return prismaClient.guildModuleVoiceGrowthChild.create({
     data: {
@@ -20,7 +20,7 @@ export async function createGuildModuleVoiceGrowthChild(
 
 export async function findSingleGuildModuleVoiceGrowthChild(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
   return prismaClient.guildModuleVoiceGrowthChild.findUnique({
     where: {
@@ -34,7 +34,7 @@ export async function findSingleGuildModuleVoiceGrowthChild(
 
 export async function getAllGuildModuleVoiceGrowthChilds(
   guildId: string,
-  masterId: string
+  masterId: string,
 ): Promise<GuildModuleVoiceGrowthChild[]> {
   return prismaClient.guildModuleVoiceGrowthChild.findMany({
     where: {
@@ -47,7 +47,7 @@ export async function getAllGuildModuleVoiceGrowthChilds(
 export async function getOrCreateGuildModuleVoiceGrowthChild(
   guildId: string,
   channelId: string,
-  masterId: string
+  masterId: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
   await getOrCreateGuild(guildId);
   return (
@@ -56,14 +56,14 @@ export async function getOrCreateGuildModuleVoiceGrowthChild(
       guildId,
       channelId,
       masterId,
-      'unknown'
+      'unknown',
     ))
   );
 }
 
 export async function getGuildModuleVoiceGrowthChild(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
   await getOrCreateGuild(guildId);
   return findSingleGuildModuleVoiceGrowthChild(guildId, channelId);
@@ -73,7 +73,7 @@ export async function setGuildModuleVoiceGrowthChild(
   guildId: string,
   channelId: string,
   masterId: string,
-  data: Prisma.GuildModuleVoiceGrowthChildUpdateInput
+  data: Prisma.GuildModuleVoiceGrowthChildUpdateInput,
 ): Promise<GuildModuleVoiceGrowthChild> {
   await getOrCreateGuildModuleVoiceGrowthChild(guildId, channelId, masterId);
 
@@ -90,7 +90,7 @@ export async function setGuildModuleVoiceGrowthChild(
 
 export async function delGuildModuleVoiceGrowthChild(
   guildId: string,
-  channelId: string
+  channelId: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
   const result = findSingleGuildModuleVoiceGrowthChild(guildId, channelId);
   if (!result) return null;
@@ -108,7 +108,7 @@ export async function delGuildModuleVoiceGrowthChild(
 
 export async function delGuildModuleVoiceGrowthChilds(
   guildId: string,
-  masterId: string
+  masterId: string,
 ): Promise<Prisma.BatchPayload> {
   return prismaClient.guildModuleVoiceGrowthChild.deleteMany({
     where: {

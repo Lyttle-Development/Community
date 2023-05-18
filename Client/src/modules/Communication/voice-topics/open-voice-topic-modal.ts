@@ -73,7 +73,7 @@ export async function openVoiceTopicModal(
     );
 
   const limitInput = new TextInputBuilder()
-    .setCustomId('count')
+    .setCustomId('limit')
     .setLabel(msgLimit)
     .setStyle(TextInputStyle.Short);
   const limitRow =
