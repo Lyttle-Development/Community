@@ -19,7 +19,7 @@ import {
   findSingleGuildModuleVoiceGrowth,
   GuildModuleVoiceGrowthWithChilds,
 } from '../../../database/handlers';
-import client from '../../../main';
+import { cleanChannelName, getHighestPosition } from './utils';
 
 interface LocalCache {
   [key: string]: VoiceChannel;
@@ -27,25 +27,41 @@ interface LocalCache {
 
 const localCache: LocalCache = {};
 
+/**
+ * Create a voice topic child channel.
+ * This function handles the full stack of this event.
+ * @param guildMember
+ * @param interaction
+ */
 export async function createVoiceTopicChild(
   guildMember: GuildMember,
   interaction: ModalSubmitInteraction,
 ) {
+  // Get interaction id, to use in local cache.
   const { id } = interaction;
+
+  // Get modal values
   const modalTopic = interaction.fields.getTextInputValue('topic');
   const modalLimit =
     parseInt(interaction.fields.getTextInputValue('limit')) || 0;
+
+  // Check if modal values are valid.
   if (modalLimit < 1 || modalLimit > 99) return;
+
+  // Get interaction channel.
   const interactionChannel = interaction.channel as TextChannel;
 
+  // Defer reply. (thinking response)
   await interaction.deferReply({ ephemeral: true });
 
+  // Get the db entry.
   const db_VoiceGrowth: GuildModuleVoiceGrowthWithChilds =
     await findSingleGuildModuleVoiceGrowth(
       interactionChannel.guild.id,
       interactionChannel.id,
     );
 
+  // Check if db entry exists.
   if (!db_VoiceGrowth) return;
 
   // Create channel
@@ -78,44 +94,15 @@ export async function createVoiceTopicChild(
   delete localCache[id];
 }
 
-async function getHighestPosition(
-  masterChannel: GuildModuleVoiceGrowthWithChilds,
-): Promise<number> {
-  let highestChannelPosition = 0;
-  const childIds = masterChannel?.childs.map((x) => x.channel_id.toString());
-  if (childIds.length < 1) return;
-  for (const childId of childIds) {
-    const channel = (await client.channels.cache.get(childId)) as VoiceChannel;
-    if (channel) {
-      highestChannelPosition =
-        channel.position > highestChannelPosition
-          ? channel.position
-          : highestChannelPosition;
-    }
-  }
-  return highestChannelPosition;
-}
-
-async function cleanChannelName(
-  masterChannel: GuildModuleVoiceGrowthWithChilds,
-  topic: string,
-): Promise<string> {
-  if (topic.length < 1) return 'Unknown';
-
-  let name = topic
-    .toLowerCase()
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
-    .join(' ');
-  if (name.length < 1) return 'Unknown';
-
-  if (masterChannel.prefix && masterChannel.prefix.length > 0) {
-    name = masterChannel.prefix + name;
-  }
-
-  if (name.length > 100) return name.slice(0, 100);
-  return name;
-}
+/**
+ * Creates the channel. (in db & discord)
+ * @param id
+ * @param interaction
+ * @param interactionChannel
+ * @param db_VoiceGrowth
+ * @param topic
+ * @param limit
+ */
 async function createChannel(
   id: string,
   interaction: ModalSubmitInteraction,
@@ -123,14 +110,18 @@ async function createChannel(
   db_VoiceGrowth: GuildModuleVoiceGrowthWithChilds,
   topic: string,
   limit: number,
-) {
+): Promise<void> {
+  // Get the highest position of all child channels.
   const highestChannelPosition = await getHighestPosition(db_VoiceGrowth);
+  // Get the position to add the new channel.
   const addPosition = highestChannelPosition + 1;
 
+  // Clean & get the channel name.
   const channelName = await cleanChannelName(db_VoiceGrowth, topic);
 
   // Create the channel
   const channelAction = async () => {
+    // Create the channel, hidden from everyone.
     const channel = await interaction.guild.channels.create({
       name: channelName,
       type: ChannelType.GuildVoice,
@@ -143,37 +134,55 @@ async function createChannel(
         },
       ],
     });
+
+    // Add the channel to the local cache.
+    localCache[id] = channel;
+
+    // Move the channel to the correct position.
     await channel.setPosition(addPosition);
+    // Reset/Lock the permissions.
     await channel.lockPermissions();
 
+    // Add the channel to the db.
     await createGuildModuleVoiceGrowthChild(
       interactionChannel.guildId,
       channel.id,
       interactionChannel.id,
       channelName,
     );
-
-    localCache[id] = channel;
   };
+
+  // Queue the channel creation.
   queue(QueueBacklogType.URGENT, channelAction);
 }
 
+/**
+ * Sends a response to the user.
+ * @param interaction
+ * @param guildMember
+ * @param defaultVariables
+ */
 async function sendResponse(
   interaction: ModalSubmitInteraction,
   guildMember: GuildMember,
   defaultVariables: ModuleConfigGlobalVariables.DefaultVariables,
 ) {
+  // Get the guild id.
   const { guildId } = guildMember;
 
+  // set the timeout
   const timeout = 10; // Seconds
+  // Calculate the delete time.
   const deleteTime = Math.round(new Date().getTime() / 1000) + timeout;
 
+  // Create the variables.
   const createdVariables: ModuleConfigCommunicationVoiceTopicTxtSuccess.Variables =
     {
       ...defaultVariables,
       time: deleteTime,
     };
 
+  // Get the message.
   const msgCreated =
     await getMessage<ModuleConfigCommunicationVoiceTopicTxtSuccess.Variables>(
       guildId,
@@ -181,8 +190,9 @@ async function sendResponse(
       createdVariables,
     );
 
-  // Send response
+  // Create queue action.
   const createAction = async () => {
+    // Update the reply.
     await interaction.editReply({
       content: msgCreated,
     });
@@ -192,41 +202,69 @@ async function sendResponse(
   queue(QueueBacklogType.URGENT, createAction);
 }
 
+/**
+ * Deletes the channel, when needed.
+ * @param id
+ */
 function deleteChannel(id: string) {
+  // Get the channel. (out of cache)
   const channel = localCache[id];
+  // Check if channel exists and has no members.
   if (!channel || channel.members.size > 0) return;
 
+  // Create the delete action.
   const deleteAction = async () => {
+    // Check if channel still exists.
+    if (!channel) return;
+    // Get the channel id and guild id.
     const { id: channelId, guildId } = channel;
+    // Delete the channel.
     await channel.delete();
+    // Delete the channel from the database.
     await delGuildModuleVoiceGrowthChild(guildId, channelId);
   };
+  // Queue the delete action.
   queue(QueueBacklogType.URGENT, deleteAction);
 }
 
+/**
+ * Updates the response, when needed.
+ * @param id
+ * @param interaction
+ * @param guildMember
+ * @param defaultVariables
+ */
 async function updateResponse(
   id: string,
   interaction: ModalSubmitInteraction,
   guildMember: GuildMember,
   defaultVariables: ModuleConfigGlobalVariables.DefaultVariables,
 ) {
+  // Get the guild id.
   const { guildId } = guildMember;
+  // Get the channel. (out of cache)
   const channel = localCache[id];
-  const deleted = !(!channel || channel.members.size > 0);
-  const msgJoined =
-    await getMessage<ModuleConfigCommunicationVoiceTopicTxtJoined.Variables>(
-      guildId,
-      'Communication.voice-topic.txt.joined',
-      defaultVariables,
-    );
+  // Check if channel exists & has members.
+  const deleted = !channel || channel?.members?.size < 0;
 
-  const msgDeleted =
-    await getMessage<ModuleConfigCommunicationVoiceTopicTxtDeleted.Variables>(
-      guildId,
-      'Communication.voice-topic.txt.deleted',
-      defaultVariables,
-    );
+  // Get the message.
+  const content = deleted
+    ? await getMessage<ModuleConfigCommunicationVoiceTopicTxtDeleted.Variables>(
+        guildId,
+        'Communication.voice-topic.txt.deleted',
+        defaultVariables,
+      )
+    : await getMessage<ModuleConfigCommunicationVoiceTopicTxtJoined.Variables>(
+        guildId,
+        'Communication.voice-topic.txt.joined',
+        defaultVariables,
+      );
 
-  const content = deleted ? msgDeleted : msgJoined;
-  await interaction.editReply({ content });
+  // Create the edit action.
+  const editAction = async () => {
+    // Update the reply.
+    await interaction.editReply({ content });
+  };
+  // Queue the edit action.
+  queue(QueueBacklogType.URGENT, editAction);
 }
