@@ -3,7 +3,8 @@ import { CommandInteraction } from 'discord.js';
 import { commandRoutes } from './routes';
 
 // Get all available routes
-const availableRoutes: string[] = Object.keys(commandRoutes);
+export const registeredCommandInteractions: string[] =
+  Object.keys(commandRoutes);
 
 /**
  * Route button presses
@@ -15,7 +16,7 @@ export async function routeCommand(
   interaction: CommandInteraction,
 ): Promise<void> {
   // Check if the route is available
-  if (!availableRoutes.includes(interaction.commandName)) {
+  if (!registeredCommandInteractions.includes(interaction.commandName)) {
     // Todo: Send error message
     return;
   }

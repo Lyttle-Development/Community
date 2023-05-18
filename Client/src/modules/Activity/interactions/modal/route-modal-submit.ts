@@ -3,7 +3,7 @@ import { ModalSubmitInteraction } from 'discord.js';
 import { modalRoutes } from './routes';
 
 // Get all available routes
-const availableRoutes: string[] = Object.keys(modalRoutes);
+export const registeredModalInteractions: string[] = Object.keys(modalRoutes);
 
 /**
  * Route button presses
@@ -15,7 +15,7 @@ export async function routeModalSubmit(
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
   // Check if the route is available
-  if (!availableRoutes.includes(interaction.customId)) {
+  if (!registeredModalInteractions.includes(interaction.customId)) {
     await interaction.deferUpdate();
     return;
   }

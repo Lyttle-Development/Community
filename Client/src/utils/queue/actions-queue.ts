@@ -28,7 +28,7 @@ const currentActionTypes = Object.keys(actionTypes);
 let waitingForActions = false;
 
 // Local variable to check which actions are currently being executed
-const currentlyBeingExecuted: number[] = [];
+export const actionsCurrentlyBeingExecuted: number[] = [];
 
 /**
  * Checks if there are any actions in the queue.
@@ -72,9 +72,9 @@ async function triggerActionsQueue() {
     if (!currentActionTypes.includes(action.key)) continue;
 
     // Check if the action is already being executed
-    if (currentlyBeingExecuted.includes(action.id)) continue;
+    if (actionsCurrentlyBeingExecuted.includes(action.id)) continue;
     // Add to currently being executed
-    currentlyBeingExecuted.push(action.id);
+    actionsCurrentlyBeingExecuted.push(action.id);
 
     // Get the action function
     const actionFunction = actionTypes[action.key];
@@ -90,7 +90,7 @@ async function triggerActionsQueue() {
 }
 
 // Local variable to store the last action ids
-const lastActionIds: number[] = [];
+export const actionsInQueue: number[] = [];
 
 /**
  * Adds an action to the queue.
@@ -101,9 +101,9 @@ const lastActionIds: number[] = [];
  */
 function addActionToQueue(action, id, guildId, valuesString) {
   // Check if the action id is already in the queue
-  if (lastActionIds.includes(id)) return;
+  if (actionsInQueue.includes(id)) return;
   // Add to last action ids
-  lastActionIds.push(id);
+  actionsInQueue.push(id);
 
   try {
     // Parse the values
@@ -113,9 +113,12 @@ function addActionToQueue(action, id, guildId, valuesString) {
       // Set as executed
       await setGuildActionAsExecuted(id);
       // Remove from currently being executed
-      currentlyBeingExecuted.splice(currentlyBeingExecuted.indexOf(id), 1);
+      actionsCurrentlyBeingExecuted.splice(
+        actionsCurrentlyBeingExecuted.indexOf(id),
+        1,
+      );
       // Remove from last action ids
-      lastActionIds.splice(lastActionIds.indexOf(id), 1);
+      actionsInQueue.splice(actionsInQueue.indexOf(id), 1);
     };
 
     // Make queue action

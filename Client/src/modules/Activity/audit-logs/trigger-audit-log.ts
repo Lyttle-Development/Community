@@ -1,10 +1,10 @@
 import { Guild, GuildAuditLogsEntry } from 'discord.js';
+import { MAX_AUDIT_LOGS } from '../../../../constants';
 
 export interface GuildAuditLogsEntryWithGuildId extends GuildAuditLogsEntry {
   guildId: string;
 }
 
-const maxAuditLogs = 100;
 export const mostRecentAuditLogs: GuildAuditLogsEntryWithGuildId[] = [];
 
 export function triggerAuditLog(auditLog: GuildAuditLogsEntry, guild: Guild) {
@@ -20,7 +20,7 @@ export function triggerAuditLog(auditLog: GuildAuditLogsEntry, guild: Guild) {
   mostRecentAuditLogs.push(auditLogWithGuildId);
 
   // If we have more than the max, remove the oldest
-  while (mostRecentAuditLogs.length > maxAuditLogs) {
+  while (mostRecentAuditLogs.length > MAX_AUDIT_LOGS) {
     mostRecentAuditLogs.shift();
   }
 }

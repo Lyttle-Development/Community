@@ -3,7 +3,7 @@ import { ButtonInteraction } from 'discord.js';
 import { buttonRoutes } from './routes';
 
 // Get all available routes
-const availableRoutes: string[] = Object.keys(buttonRoutes);
+export const registeredButtonInteractions: string[] = Object.keys(buttonRoutes);
 
 /**
  * Route button presses
@@ -15,7 +15,7 @@ export async function routeButtonPress(
   interaction: ButtonInteraction,
 ): Promise<void> {
   // Check if the route is available
-  if (!availableRoutes.includes(interaction.customId)) {
+  if (!registeredButtonInteractions.includes(interaction.customId)) {
     await interaction.deferUpdate();
     return;
   }
