@@ -82,7 +82,7 @@ export async function createVoiceTopicChild(
   await sendResponse(interaction, guildMember, defaultVariables);
 
   // Wait for sleep time.
-  await sleep(10 * 1000);
+  await sleep(9 * 1000);
 
   // Deletes channel when needed.
   await deleteChannel(id);
