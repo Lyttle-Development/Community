@@ -83,6 +83,11 @@ async function checkChannelState(
   await deleteChild(masterChannel.guild_id.toString(), oldState.channel);
 }
 
+/**
+ * Deletes a channel, when available.
+ * @param guildId
+ * @param channel
+ */
 async function deleteChild(
   guildId: string,
   channel: VoiceBasedChannel,
