@@ -38,10 +38,14 @@ export function checkActionsQueue() {
   if (waitingForActions) return;
 
   // Execute actions queue
-  void executeActionsQueue();
+  void triggerActionsQueue();
 }
 
-async function executeActionsQueue() {
+/**
+ * Check for actions in the queue.
+ * And pass them to the correct function.
+ */
+async function triggerActionsQueue() {
   // Set waiting for actions to true
   waitingForActions = true;
 
@@ -85,18 +89,21 @@ async function executeActionsQueue() {
   waitingForActions = false;
 }
 
+// Local variable to store the last action ids
 const lastActionIds: number[] = [];
 
+/**
+ * Adds an action to the queue.
+ * @param action
+ * @param id
+ * @param guildId
+ * @param valuesString
+ */
 function addActionToQueue(action, id, guildId, valuesString) {
   // Check if the action id is already in the queue
   if (lastActionIds.includes(id)) return;
   // Add to last action ids
   lastActionIds.push(id);
-
-  // prevent list from getting too big
-  while (lastActionIds.length > 100) {
-    lastActionIds.splice(0, 1);
-  }
 
   try {
     // Parse the values
@@ -107,6 +114,8 @@ function addActionToQueue(action, id, guildId, valuesString) {
       await setGuildActionAsExecuted(id);
       // Remove from currently being executed
       currentlyBeingExecuted.splice(currentlyBeingExecuted.indexOf(id), 1);
+      // Remove from last action ids
+      lastActionIds.splice(lastActionIds.indexOf(id), 1);
     };
 
     // Make queue action
