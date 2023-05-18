@@ -7,7 +7,8 @@ import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../guild';
 import { delGuildModuleVoiceGrowthChilds } from './VoiceGrowthChild';
 
-interface GuildModuleVoiceGrowthWithChilds extends GuildModuleVoiceGrowth {
+export interface GuildModuleVoiceGrowthWithChilds
+  extends GuildModuleVoiceGrowth {
   childs?: GuildModuleVoiceGrowthChild[];
 }
 export async function createGuildModuleVoiceGrowth(

@@ -1,7 +1,8 @@
 import { actionPrefix } from './index';
 import { ButtonInteraction } from 'discord.js';
 import { GuildMember } from '../../types';
-import { limit } from '../../utils';
+import { executor, limit } from '../../utils';
+import { routeButtonPress } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionButton.';
@@ -15,7 +16,12 @@ export async function onGuildInteractionButton(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    // executor(prefix + 'test', test, guildMember, interaction),
+    executor(
+      prefix + 'routeButtonPress',
+      routeButtonPress,
+      guildMember,
+      interaction,
+    ),
   ];
 
   // If no actions, return

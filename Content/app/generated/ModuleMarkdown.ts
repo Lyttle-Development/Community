@@ -53,6 +53,39 @@ export const ModuleMarkdown = {
       },
     },
   },
+  Communication: {
+    'voice-topic': {
+      txt: {
+        deleted: {
+          content:
+            'The channel was deleted due to inactivity!\n{prefix}If you still want to be on-topic, create a new one!',
+          documentation: '',
+        },
+        'dialog-limit': {
+          content: 'With how many people? (1-99)',
+          documentation: '',
+        },
+        'dialog-title': {
+          content: 'Create a voice topic channel',
+          documentation: '',
+        },
+        'dialog-topic': {
+          content: 'Whats the topic?',
+          documentation: '',
+        },
+        joined: {
+          content:
+            'Channel has been created successfully!\n{prefix}Have fun talking! *(hopefully on-topic 😉!)*',
+          documentation: '',
+        },
+        success: {
+          content:
+            "Channel has been created successfully!\n{prefix}We will delete this channel <t:{time}:R> if you don't go into it.",
+          documentation: '',
+        },
+      },
+    },
+  },
   Global: {
     prefix: {
       content: '> ',

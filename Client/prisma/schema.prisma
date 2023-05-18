@@ -75,8 +75,9 @@ model Guild {
   enabled Boolean @default(true)
 
   // Date information
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now()) @updatedAt
+  GuildAction GuildAction[]
 
   // Refactors
   @@map("guild")
@@ -106,6 +107,27 @@ model GuildTranslation {
   // Refactors
   @@id([guild_id, key])
   @@map("guild__translation")
+}
+
+model GuildAction {
+  // Primary key information
+  id Int @id @default(autoincrement())
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  key      String
+  values   String
+  guild_id BigInt
+  executed Boolean @default(false)
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild__action")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

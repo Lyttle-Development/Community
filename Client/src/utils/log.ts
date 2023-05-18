@@ -19,7 +19,7 @@ export function log(type: LogType, ...messages) {
   // Build strings
   const dateStr = `${dd}/${mm}/${yyyy}`;
   const timeStr = `${hh}:${min}:${sec}.${ms}`;
-  const contentStr = messages.join('');
+  const contentStr = messages.join(' ');
 
   let typeStr;
   switch (type) {

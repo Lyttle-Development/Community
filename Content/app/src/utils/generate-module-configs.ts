@@ -1,6 +1,10 @@
 import { spider } from './spider';
 import { saveFile } from './saveFile';
-import { buildConstConfig, buildInterfaceConfig } from './module-configs';
+import {
+  buildConstConfig,
+  buildInterfaceConfig,
+  buildTypeConfig,
+} from './module-configs';
 import { SpiderFile } from '../types/Spider';
 
 export function generateModuleConfigs() {
@@ -9,6 +13,7 @@ export function generateModuleConfigs() {
     buildInterfaceConfig,
   );
   const moduleConstConfig = spider('../content/modules', buildConstConfig);
+  const moduleTypeConfig = spider('../content/modules', buildTypeConfig);
 
   let content = '// This file is auto generated, do not edit it manually.\n';
 
@@ -30,6 +35,7 @@ export function generateModuleConfigs() {
   };
 
   builder(moduleInterfaceConfig, '../../content/modules');
+  builder(moduleTypeConfig, '../../content/modules');
   builder(moduleConstConfig, '../../content/modules');
 
   content = content.trim();

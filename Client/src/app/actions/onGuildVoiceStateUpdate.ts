@@ -7,6 +7,7 @@ import {
   createEvent,
   triggerCallEvent,
 } from '../../modules';
+import { checkVoiceTopicChannels } from '../../modules/Communication/voice-topics/check-channels';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -39,6 +40,13 @@ export async function onGuildVoiceStateUpdate(
     executor(
       prefix + 'dynamicVoiceEvent',
       checkDynamicChannels,
+      guildMember,
+      oldState,
+      newState,
+    ),
+    executor(
+      prefix + 'voiceTopicEvent',
+      checkVoiceTopicChannels,
       guildMember,
       oldState,
       newState,
