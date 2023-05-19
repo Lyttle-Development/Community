@@ -28,8 +28,7 @@ import {
   registeredModalInteractions,
   voiceTopicChildCreationCache,
 } from '../../modules';
-import { formatNumber } from '../helpers';
-import { getDiscordTime } from '../helpers/get-discord-time';
+import { formatNumber, getDiscordTime } from '../helpers';
 
 let statsQueueStarted = false;
 
