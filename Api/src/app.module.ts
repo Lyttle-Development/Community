@@ -20,7 +20,6 @@ import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
 import { DiscordOauthModule } from './auth/discord-oauth.module';
 import { JwtAuthModule } from './auth/jwt-auth.module';
 import { ConfigModule } from '@nestjs/config';
-import * as process from 'process';
 
 @Module({
   imports: [
@@ -40,9 +39,9 @@ import * as process from 'process';
         type: 'postgres',
         host: process.env.HOST,
         port: parseInt(process.env.TYPEORM_PORT),
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
       }),
