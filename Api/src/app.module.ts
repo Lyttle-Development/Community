@@ -23,9 +23,8 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot(),
+    DiscordOauthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
@@ -56,7 +55,6 @@ import { ConfigModule } from '@nestjs/config';
     MemberModuleLevelModule,
     MemberModuleLevelDayModule,
     GuildModuleVoiceGrowthModule,
-    DiscordOauthModule,
     JwtAuthModule,
   ],
   controllers: [AppController],
