@@ -11,6 +11,35 @@ export const ModuleMarkdown = {
       },
     },
     levels: {
+      commands: {
+        'get-levels': {
+          other: {
+            content:
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}They needs **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** bigger than their first level ever...  📈',
+            documentation: '',
+          },
+          others: {
+            content:
+              '{levelsUnit}: **{levels}**\n{prefix}{pointsUnit}: **{points}**\n{prefix}**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\n{prefix}Leveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
+            documentation: '',
+          },
+          'others-ahead': {
+            content:
+              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **ahead** 🏃',
+            documentation: '',
+          },
+          'others-behind': {
+            content:
+              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **behind** 🚶',
+            documentation: '',
+          },
+          yourself: {
+            content:
+              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}You need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** times bigger than your first level ever...  📈',
+            documentation: '',
+          },
+        },
+      },
       event: {
         'level-up': {
           content: '{user} just advanced to {level} {unit}!',
@@ -48,6 +77,14 @@ export const ModuleMarkdown = {
         },
         levels: {
           content: 'levels',
+          documentation: '',
+        },
+        point: {
+          content: 'point',
+          documentation: '',
+        },
+        points: {
+          content: 'points',
           documentation: '',
         },
       },

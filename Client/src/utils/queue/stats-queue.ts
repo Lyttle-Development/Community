@@ -28,6 +28,8 @@ import {
   registeredModalInteractions,
   voiceTopicChildCreationCache,
 } from '../../modules';
+import { formatNumber } from '../helpers';
+import { getDiscordTime } from '../helpers/get-discord-time';
 
 let statsQueueStarted = false;
 
@@ -41,10 +43,10 @@ export function startupStatsQueue() {
 
 function sendStatsToQueue() {
   // Global:
-  const now = getDiscordDate(new Date());
+  const now = getDiscordTime(new Date());
 
   // General:
-  const boot = getDiscordDate(bootdate);
+  const boot = getDiscordTime(bootdate);
   const totalGuilds = client.guilds.cache.size;
 
   // Queue:
@@ -101,57 +103,42 @@ function sendStatsToQueue() {
 > - **Jobs in use**: \`${jobsInUse}/${ALLOWED_REQUESTS_SECOND}\`
 
 **Executor**:
-> - **Known modules**: \`${f(totalExecutorModules)}\`
-> - **Disabled modules**: \`${f(disabledExecutorModules)}\`
+> - **Known modules**: \`${formatNumber(totalExecutorModules)}\`
+> - **Disabled modules**: \`${formatNumber(disabledExecutorModules)}\`
 
 **Rate Limit**:
-> - **Total checks**: \`${f(rateLimitTotalChecks)}\`
-> - **Being checked**: \`${f(totalRateLimitChecks)}\`
-> - **Currently blocked**: \`${f(totalRateLimitBlocked)}\`
+> - **Total checks**: \`${formatNumber(rateLimitTotalChecks)}\`
+> - **Being checked**: \`${formatNumber(totalRateLimitChecks)}\`
+> - **Currently blocked**: \`${formatNumber(totalRateLimitBlocked)}\`
 
 **Interactions**:
-> - **Registered Commands**: \`${f(totalRegisteredCommandInteractions)}\`
-> - **Registered Buttons**: \`${f(totalRegisteredButtonInteractions)}\`
-> - **Registered Modals**: \`${f(totalRegisteredModalInteractions)}\`
+> - **Registered Commands**: \`${formatNumber(
+      totalRegisteredCommandInteractions,
+    )}\`
+> - **Registered Buttons**: \`${formatNumber(
+      totalRegisteredButtonInteractions,
+    )}\`
+> - **Registered Modals**: \`${formatNumber(totalRegisteredModalInteractions)}\`
 
 **Actions**:
-> - **Processing**: \`${f(totalActionsBeingProcessed)}\`
-> - **Queued**: \`${f(totalActionsQueued)}\`
+> - **Processing**: \`${formatNumber(totalActionsBeingProcessed)}\`
+> - **Queued**: \`${formatNumber(totalActionsQueued)}\`
 
 **Caches**:
-> - **Message-channels in cache**: \`${f(totalMessageChannelsInQueue)}\`
-> - **Dynamic Channels Being Checked**: \`${f(
+> - **Message-channels in cache**: \`${formatNumber(
+      totalMessageChannelsInQueue,
+    )}\`
+> - **Dynamic Channels Being Checked**: \`${formatNumber(
       totalDynamicChannelsBeingChecked,
     )}\`
-> - **Voice Topic Being Created**: \`${f(totalVoiceTopicChildCreations)}\`
-> - **Total audit logs being kept**: \`${f(totalAuditLogs)}\`
-> - **Nicknames being set**: \`${f(totalNicknamesBeingSet)}\`
+> - **Voice Topic Being Created**: \`${formatNumber(
+      totalVoiceTopicChildCreations,
+    )}\`
+> - **Total audit logs being kept**: \`${formatNumber(totalAuditLogs)}\`
+> - **Nicknames being set**: \`${formatNumber(totalNicknamesBeingSet)}\`
 
 \`\`\` \`\`\`** **`;
 
   // Send the message:
   void sendMessage(STATS_CHANNEL_ID, message);
-}
-
-function getDiscordDate(date): number {
-  const time = date.getTime();
-  return parseInt((time / 1000).toString(), 10);
-}
-
-/**
- * Format a number 1000000 to 1,000,000
- * @param nr
- */
-function f(nr: string | number) {
-  const nrStr = nr.toString();
-  const nrArr = nrStr.split('');
-  const formatted = [];
-  for (let i = nrArr.length - 1; i >= 0; i--) {
-    const index = nrArr.length - i - 1;
-    if (index % 3 === 0 && index !== 0) {
-      formatted.push(',');
-    }
-    formatted.push(nrArr[i]);
-  }
-  return formatted.reverse().join('');
 }
