@@ -7,59 +7,63 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
+import { Member } from '../../member/entities/member.entity';
+import { Guild } from '../../guild/entities/guild.entity';
 
 @Entity('member__module__level_day')
 @ObjectType()
 export class MemberModuleLevelDay {
-  @PrimaryColumn()
-  @OneToOne(
-    () => MemberModuleLevel,
-    (memberModuleLevel: MemberModuleLevel) => memberModuleLevel.guild_id,
-  )
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
   @PrimaryColumn()
-  @OneToOne(
-    () => MemberModuleLevel,
-    (memberModuleLevel: MemberModuleLevel) => memberModuleLevel.user_id,
-  )
   @Field(() => Int)
   user_id: number;
 
-  @Column()
-  @Field(() => Int)
+  // Relations
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  @OneToOne(() => Member, (member: Member) => member.user_id)
+  @Field(() => Member)
+  member: Member;
+
+  // Values
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_mon: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_tue: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_wed: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_thu: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_fri: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_sat: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points_sun: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   points: number;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

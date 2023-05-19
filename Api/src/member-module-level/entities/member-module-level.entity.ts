@@ -7,41 +7,30 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Member } from '../../member/entities/member.entity';
 import { MemberModuleLevelDay } from '../../member-module-level-day/entities/member-module-level-day.entity';
+import { Guild } from '../../guild/entities/guild.entity';
+import { Member } from '../../member/entities/member.entity';
 
 @Entity('member__module__level')
 @ObjectType()
 export class MemberModuleLevel {
-  @PrimaryColumn()
-  @OneToOne(() => Member, (member: Member) => member.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @PrimaryColumn()
-  @OneToOne(() => Member, (member: Member) => member.user_id)
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   user_id: number;
 
-  @Column()
-  @Field(() => Int)
-  spam_check: number;
+  // Relations
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
 
-  @Column()
-  @Field(() => Int)
-  cooldown_count: number;
-
-  @Column()
-  @Field(() => Date)
-  cooldown_time: Date;
-
-  @Column()
-  @Field(() => Date)
-  call_start: Date;
-
-  @Column()
-  @Field(() => Float)
-  points: number;
+  @OneToOne(() => Member, (user: Member) => user.user_id)
+  @Field(() => Member)
+  member: Member;
 
   @OneToOne(
     () => MemberModuleLevelDay,
@@ -51,6 +40,29 @@ export class MemberModuleLevel {
   @Field(() => MemberModuleLevelDay)
   memberModuleLevelDay: MemberModuleLevelDay;
 
+  // Checks
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
+  spam_check: number;
+
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
+  cooldown_count: number;
+
+  @Column({ default: new Date() })
+  @Field(() => Date, { defaultValue: new Date() })
+  cooldown_time: Date;
+
+  @Column({ default: new Date() })
+  @Field(() => Date, { defaultValue: new Date() })
+  call_start: Date;
+
+  // Actual level data:
+  @Column({ default: 0, type: 'double precision' })
+  @Field(() => Float, { defaultValue: 0 })
+  points: number;
+
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

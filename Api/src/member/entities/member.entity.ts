@@ -15,15 +15,23 @@ import { MemberModuleLevel } from '../../member-module-level/entities/member-mod
 @Entity()
 @ObjectType()
 export class Member {
-  @PrimaryColumn()
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @PrimaryColumn()
-  @ManyToOne(() => User, (user: User) => user.user_id)
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   user_id: number;
+
+  // Relations
+  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  @ManyToOne(() => User, (user: User) => user.user_id)
+  @Field(() => User)
+  user: User;
 
   @OneToOne(
     () => MemberModuleLevel,
@@ -32,18 +40,20 @@ export class Member {
   @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
 
-  @Column()
-  @Field(() => Date)
+  // Values
+  @Column({ nullable: true })
+  @Field(() => Date, { nullable: true })
   birthday_date: Date;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ nullable: true })
+  @Field(() => Int, { nullable: true })
   birthday: number;
 
-  @Column()
-  @Field(() => String)
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
   nickname: string;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

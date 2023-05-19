@@ -12,28 +12,38 @@ import { Guild } from '../../guild/entities/guild.entity';
 @Entity('guild__module__voice_growth')
 @ObjectType()
 export class GuildModuleVoiceGrowth {
-  @Column()
-  @PrimaryColumn()
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @Column()
-  @Field(() => Boolean)
+  @PrimaryColumn({ type: 'bigint' })
+  @Field(() => Int)
+  channel_id: number;
+
+  // Relations
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  // Values
+  @Column({ default: false })
+  @Field(() => Boolean, { defaultValue: false })
   enabled: boolean;
 
-  @Column()
-  @Field(() => Int)
-  announce_channel_id: number;
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  preset: string;
 
-  @Column()
-  @Field(() => Int)
-  leaderboard_channel_id: number;
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  prefix: string;
 
-  @Column()
-  @Field(() => Boolean)
-  nicknames: boolean;
+  @Column({ default: false })
+  @Field(() => Boolean, { defaultValue: false })
+  manual: boolean;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
