@@ -52,20 +52,20 @@ export const ModuleMarkdown = {
           documentation: '',
         },
         'nickname-numbers': {
-          exp: {
-            content: 'subscript',
-            documentation: '',
-          },
           levels: {
             content: 'superscript',
             documentation: '',
           },
-          'recent-exp': {
-            content: 'round-full',
+          points: {
+            content: 'subscript',
             documentation: '',
           },
           'recent-levels': {
             content: 'serif',
+            documentation: '',
+          },
+          'recent-points': {
+            content: 'round-full',
             documentation: '',
           },
         },

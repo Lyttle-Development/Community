@@ -116,12 +116,12 @@ async function setNickname(
   const recentPoints = await getSpecialNumbers(
     guildId,
     pointsWeekNr,
-    'Activity.levels.txt.nickname-numbers.recent-exp',
+    'Activity.levels.txt.nickname-numbers.recent-points',
   );
   const points = await getSpecialNumbers(
     guildId,
     pointsNr,
-    'Activity.levels.txt.nickname-numbers.exp',
+    'Activity.levels.txt.nickname-numbers.points',
   );
 
   // Get message variables

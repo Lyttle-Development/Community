@@ -19,7 +19,7 @@ export * as ModuleConfigCommunicationVoiceTopicTxtDialogLimit from '../../conten
 export * as ModuleConfigCommunicationVoiceTopicTxtDialogTitle from '../../content/modules/Communication/voice-topic/txt/dialog-title/config';
 export * as ModuleConfigCommunicationVoiceTopicTxtDialogTopic from '../../content/modules/Communication/voice-topic/txt/dialog-topic/config';
 export * as ModuleConfigCommunicationVoiceTopicTxtJoined from '../../content/modules/Communication/voice-topic/txt/joined/config';
-export * as ModuleConfigActivityLevelsTxtNicknameNumbersExp from '../../content/modules/Activity/levels/txt/nickname-numbers/exp/config';
 export * as ModuleConfigActivityLevelsTxtNicknameNumbersLevels from '../../content/modules/Activity/levels/txt/nickname-numbers/levels/config';
-export * as ModuleConfigActivityLevelsTxtNicknameNumbersRecentExp from '../../content/modules/Activity/levels/txt/nickname-numbers/recent-exp/config';
+export * as ModuleConfigActivityLevelsTxtNicknameNumbersPoints from '../../content/modules/Activity/levels/txt/nickname-numbers/points/config';
 export * as ModuleConfigActivityLevelsTxtNicknameNumbersRecentLevels from '../../content/modules/Activity/levels/txt/nickname-numbers/recent-levels/config';
+export * as ModuleConfigActivityLevelsTxtNicknameNumbersRecentPoints from '../../content/modules/Activity/levels/txt/nickname-numbers/recent-points/config';
