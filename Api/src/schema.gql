@@ -37,6 +37,7 @@ type GuildMessage {
   message_id: Int!
   created_at: Timestamp!
   updated_at: Timestamp!
+  getGuild: Guild!
 }
 
 type GuildTranslation {
@@ -135,7 +136,7 @@ type Guild {
 
 type Query {
   guilds: [Guild!]!
-  guild(id: Int!): Guild!
+  guild(id: Int!): GuildTranslation!
   guildModuleLevelAll: [GuildModuleLevel!]!
   guildModuleLevel(id: Int!): GuildModuleLevel!
   guildModuleQotd(id: Int!): GuildModuleQotd!
@@ -143,7 +144,7 @@ type Query {
   guildTranslation(id: Int!, key: String!): GuildTranslation!
   member(userId: Int!, guildId: Int!): Member!
   guildModuleVoiceGrowth(id: Int!): GuildModuleVoiceGrowth!
-  user(id: Int!): User!
+  user(id: Int!): Profile!
   profile(id: Int!): Profile!
   memberModuleLevel(id: Int!): MemberModuleLevel!
   memberModuleLevelDay(id: Int!): MemberModuleLevelDay!
@@ -217,25 +218,28 @@ input UpdateGuildModuleQotdInput {
 }
 
 input CreateGuildMessageInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guild_id: Int!
+  message_id: Int!
+  channel_id: Int!
 }
 
 input UpdateGuildMessageInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  guild_id: Int
+  message_id: Int!
+  channel_id: Int!
   id: Int!
 }
 
 input CreateGuildTranslationInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  key: String!
+  value: String!
 }
 
 input UpdateGuildTranslationInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  key: String!
+  value: String!
 }
 
 input CreateMemberInput {
@@ -272,11 +276,13 @@ input UpdateUserInput {
 input CreateProfileInput {
   user_id: Int!
   tokens: Int!
+  tokens_used: Int!
 }
 
 input UpdateProfileInput {
   user_id: Int
-  tokens: Int
+  tokens: Int!
+  tokens_used: Int!
   id: Int!
 }
 

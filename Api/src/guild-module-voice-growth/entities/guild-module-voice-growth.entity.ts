@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   OneToOne,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
@@ -12,6 +13,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 @ObjectType()
 export class GuildModuleVoiceGrowth {
   @Column()
+  @PrimaryColumn()
   @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
   @Field(() => Int)
   guild_id: number;
