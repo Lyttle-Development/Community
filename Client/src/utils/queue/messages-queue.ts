@@ -2,17 +2,17 @@ import { AnyThreadChannel, TextChannel, ThreadChannel } from 'discord.js';
 import { queue, QueueBacklogType } from './queue';
 import { ALLOWED_MESSAGE_LENGTH } from '../../../constants';
 
-interface ChannelsQueueItem {
+export interface MessageQueueChannel {
   channel: TextChannel | AnyThreadChannel | ThreadChannel;
   content: string;
 }
 
-interface ChannelsQueue {
-  [key: string]: ChannelsQueueItem[];
+export interface MessageQueueChannels {
+  [key: string]: MessageQueueChannel[];
 }
 
 // The message queue
-const channels: ChannelsQueue = {};
+export const messageQueueChannels: MessageQueueChannels = {};
 
 /**
  * Add a message to the queue.
@@ -21,7 +21,7 @@ const channels: ChannelsQueue = {};
  */
 export function queueMessage(channel, content) {
   // If the channel doesn't exist, create it
-  if (!channels[channel]) channels[channel] = [];
+  if (!messageQueueChannels[channel]) messageQueueChannels[channel] = [];
 
   // If the message is too long, return
   if (content.length > ALLOWED_MESSAGE_LENGTH) {
@@ -39,13 +39,13 @@ export function queueMessage(channel, content) {
   }
 
   // Create the item
-  const item: ChannelsQueueItem = {
+  const item: MessageQueueChannel = {
     channel,
     content,
   };
 
   // Add the item to the queue
-  channels[channel].push(item);
+  messageQueueChannels[channel].push(item);
 }
 
 /**
@@ -53,12 +53,12 @@ export function queueMessage(channel, content) {
  */
 export function checkMessagesQueue() {
   // Go through each channel
-  for (const channel in channels) {
+  for (const channel in messageQueueChannels) {
     // Get the channel / target
-    let target = channels[channel][0]?.channel;
+    let target = messageQueueChannels[channel][0]?.channel;
 
     // Get the queue
-    const channelQueue = channels[channel];
+    const channelQueue = messageQueueChannels[channel];
 
     // Create a new array for the messages
     const messages: string[] = [];
@@ -109,6 +109,8 @@ export function checkMessagesQueue() {
     }
 
     // Cleanup the channel if it's empty
-    if (channels[channel].length < 1) delete channels[channel];
+    if (messageQueueChannels[channel].length < 1) {
+      delete messageQueueChannels[channel];
+    }
   }
 }

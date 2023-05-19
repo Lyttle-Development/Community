@@ -4,7 +4,7 @@ import { DefaultVariables } from '../../../../Global/variables/config';
 export interface Variables extends DefaultVariables {
   recentLevels: string;
   levels: string;
-  exp: string;
-  recentExp: string;
+  points: string;
+  recentPoints: string;
   name: string;
 }

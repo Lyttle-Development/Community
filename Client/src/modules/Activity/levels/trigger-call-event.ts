@@ -94,7 +94,9 @@ async function groupCheck(
   // Get variables for groupCheck.
   const leaves = oldChannel && !newChannel;
   const channel = newChannel ?? oldChannel;
-  const members = channel.members.filter((member) => !member.user.bot);
+  const members =
+    channel?.members?.filter((member) => !member.user.bot) ?? null;
+  if (!members) return false;
   const memberCount = members.size;
 
   // Check if the user is not alone.

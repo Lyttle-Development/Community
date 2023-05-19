@@ -113,15 +113,15 @@ async function setNickname(
     levelsNr,
     'Activity.levels.txt.nickname-numbers.levels',
   );
-  const recentExp = await getSpecialNumbers(
+  const recentPoints = await getSpecialNumbers(
     guildId,
     pointsWeekNr,
-    'Activity.levels.txt.nickname-numbers.recent-exp',
+    'Activity.levels.txt.nickname-numbers.recent-points',
   );
-  const exp = await getSpecialNumbers(
+  const points = await getSpecialNumbers(
     guildId,
     pointsNr,
-    'Activity.levels.txt.nickname-numbers.exp',
+    'Activity.levels.txt.nickname-numbers.points',
   );
 
   // Get message variables
@@ -130,8 +130,8 @@ async function setNickname(
     ...defaultVariables,
     recentLevels,
     levels,
-    recentExp,
-    exp,
+    recentPoints,
+    points,
     name: nickname,
   };
   // Get new nickname

@@ -1,8 +1,8 @@
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { GuildMember } from 'discord.js';
 import { GuildMember as ClientGuildMember } from '../../types';
-import { checkNickname } from '../../modules';
+import { checkNickname, userUpdatedTheirName } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildMemberUpdate.';
@@ -13,6 +13,9 @@ export async function onGuildMemberUpdate(
   oldMember: GuildMember,
   newMember: GuildMember,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+  if (!userUpdatedTheirName(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(

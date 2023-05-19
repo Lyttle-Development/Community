@@ -11,6 +11,35 @@ export const ModuleMarkdown = {
       },
     },
     levels: {
+      commands: {
+        'get-levels': {
+          other: {
+            content:
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}They needs **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** bigger than their first level ever...  📈',
+            documentation: '',
+          },
+          others: {
+            content:
+              '{levelsUnit}: **{levels}**\n{prefix}{pointsUnit}: **{points}**\n{prefix}**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\n{prefix}Leveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
+            documentation: '',
+          },
+          'others-ahead': {
+            content:
+              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **ahead** 🏃',
+            documentation: '',
+          },
+          'others-behind': {
+            content:
+              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **behind** 🚶',
+            documentation: '',
+          },
+          yourself: {
+            content:
+              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}You need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** times bigger than your first level ever...  📈',
+            documentation: '',
+          },
+        },
+      },
       event: {
         'level-up': {
           content: '{user} just advanced to {level} {unit}!',
@@ -23,20 +52,20 @@ export const ModuleMarkdown = {
           documentation: '',
         },
         'nickname-numbers': {
-          exp: {
-            content: 'subscript',
-            documentation: '',
-          },
           levels: {
             content: 'superscript',
             documentation: '',
           },
-          'recent-exp': {
-            content: 'round-full',
+          points: {
+            content: 'subscript',
             documentation: '',
           },
           'recent-levels': {
             content: 'serif',
+            documentation: '',
+          },
+          'recent-points': {
+            content: 'round-full',
             documentation: '',
           },
         },
@@ -48,6 +77,47 @@ export const ModuleMarkdown = {
         },
         levels: {
           content: 'levels',
+          documentation: '',
+        },
+        point: {
+          content: 'point',
+          documentation: '',
+        },
+        points: {
+          content: 'points',
+          documentation: '',
+        },
+      },
+    },
+  },
+  Communication: {
+    'voice-topic': {
+      txt: {
+        deleted: {
+          content:
+            'The channel was deleted due to inactivity!\n{prefix}If you still want to be on-topic, create a new one!',
+          documentation: '',
+        },
+        'dialog-limit': {
+          content: 'With how many people? (1-99)',
+          documentation: '',
+        },
+        'dialog-title': {
+          content: 'Create a voice topic channel',
+          documentation: '',
+        },
+        'dialog-topic': {
+          content: 'Whats the topic?',
+          documentation: '',
+        },
+        joined: {
+          content:
+            'Channel has been created successfully!\n{prefix}Have fun talking! *(hopefully on-topic 😉!)*',
+          documentation: '',
+        },
+        success: {
+          content:
+            "Channel has been created successfully!\n{prefix}We will delete this channel <t:{time}:R> if you don't go into it.",
           documentation: '',
         },
       },

@@ -1,4 +1,4 @@
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { ThreadChannel } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
@@ -13,6 +13,8 @@ export async function onGuildThreadCreate(
   thread: ThreadChannel,
   newlyCreated: boolean,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(
