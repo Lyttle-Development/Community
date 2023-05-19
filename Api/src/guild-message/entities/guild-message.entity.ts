@@ -11,24 +11,31 @@ import { Guild } from '../../guild/entities/guild.entity';
 
 @Entity('guild__message')
 @ObjectType()
+// Primary key information
 export class GuildMessage {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;
 
-  @Column()
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Column({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @Column()
+  // Relations
+  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  // Values
+  @Column({ type: 'bigint' })
   @Field(() => Int)
   channel_id: number;
 
-  @Column()
+  @Column({ type: 'bigint' })
   @Field(() => Int)
   message_id: number;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

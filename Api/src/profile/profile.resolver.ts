@@ -32,8 +32,13 @@ export class ProfileResolver {
   }
 
   @Mutation(() => Profile)
-  updateProfile(@Args('updateProfileInput') updateProfileInput: UpdateProfileInput) {
-    return this.profileService.update(updateProfileInput.id, updateProfileInput);
+  updateProfile(
+    @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
+  ) {
+    return this.profileService.update(
+      updateProfileInput.id,
+      updateProfileInput,
+    );
   }
 
   @Mutation(() => Profile)

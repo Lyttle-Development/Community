@@ -5,7 +5,7 @@ import {
   Entity,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { GuildModuleLevel } from '../../guild-module-level/entities/guild-module-level.entity';
@@ -18,14 +18,28 @@ import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities
 @Entity()
 @ObjectType()
 export class Guild {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @Column()
-  @Field(() => Boolean)
-  enabled: boolean;
+  // Relations
+  // - Members
+  @OneToMany(() => Member, (member: Member) => member.guild_id, {
+    nullable: true,
+  })
+  @Field(() => [Member])
+  members: Member[];
 
+  // - Cache
+  @OneToMany(
+    () => GuildTranslation,
+    (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
+    { nullable: true },
+  )
+  @Field(() => [GuildTranslation])
+  guildTranslations: GuildTranslation[];
+
+  // - Modules
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
   @Field(() => GuildModuleLevel)
   guildModuleLevel: GuildModuleLevel;
@@ -49,20 +63,12 @@ export class Guild {
   @Field(() => [GuildMessage])
   guildMessages: GuildMessage[];
 
-  @OneToMany(
-    () => GuildTranslation,
-    (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
-    { nullable: true },
-  )
-  @Field(() => [GuildTranslation])
-  guildTranslations: GuildTranslation[];
+  // Values
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 
-  @OneToMany(() => Member, (member: Member) => member.guild_id, {
-    nullable: true,
-  })
-  @Field(() => [Member])
-  members: Member[];
-
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

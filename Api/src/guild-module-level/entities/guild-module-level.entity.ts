@@ -1,5 +1,4 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Guild } from '../../guild/entities/guild.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,44 +7,53 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Guild } from '../../guild/entities/guild.entity';
 
 @Entity('guild__module__level')
-// @Entity()
 @ObjectType()
 export class GuildModuleLevel {
-  @PrimaryColumn()
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
+  // Relations
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  // Values
   @Column()
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: false })
   enabled: boolean;
 
   @Column()
-  @Field(() => Int)
+  @Field(() => Int, { defaultValue: 8 })
   leveling_multiplier: number;
 
-  @Column()
-  @Field(() => Int)
-  announcement_channel_id: number;
+  @Column({ type: 'bigint', nullable: true })
+  @Field(() => Int, {
+    nullable: true,
+  })
+  announcement_channel_id?: number;
 
-  @Column()
-  @Field(() => Int)
-  leaderboard_channel_id: number;
+  @Column({ type: 'bigint', nullable: true })
+  @Field(() => Int, { nullable: true })
+  leaderboard_channel_id?: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ nullable: true })
+  @Field(() => Int, { nullable: true })
   leaderboard_last_week: number;
 
   @Column()
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: false })
   nicknames: boolean;
 
   @Column()
-  @Field(() => Date)
+  @Field(() => Date, { defaultValue: new Date() })
   last_leaderboard: Date;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

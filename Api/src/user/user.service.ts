@@ -48,7 +48,7 @@ export class UserService {
   }
 
   // currently not implemented
-  async update(id: number, updateUserInput: UpdateUserInput): Promise<String> {
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<string> {
     return `This action updates a #${id} user`;
   }
 

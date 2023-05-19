@@ -13,10 +13,12 @@ import { Profile } from '../../profile/entities/profile.entity';
 @Entity()
 @ObjectType()
 export class User {
-  @PrimaryColumn()
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   user_id: number;
 
+  // Relations
   @OneToMany(() => Member, (member: Member) => member.guild_id, {
     nullable: true,
   })
@@ -27,6 +29,7 @@ export class User {
   @Field(() => Profile)
   profile: Profile;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;
