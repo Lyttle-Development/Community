@@ -56,7 +56,7 @@ export async function triggerPointsChange(
       ...defaultVariables,
       lastLevel: oldLevel.toString(),
       level: level.toString(),
-      exp: db_MemberModuleLevel.points.toString(),
+      points: db_MemberModuleLevel.points.toString(),
       unit,
     };
 

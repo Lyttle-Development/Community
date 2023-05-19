@@ -10,3 +10,4 @@ export * from './prevent-spam';
 export * from './trigger-call-event';
 export * from './trigger-event';
 export * from './trigger-points-change';
+export * from './get-levels-command';

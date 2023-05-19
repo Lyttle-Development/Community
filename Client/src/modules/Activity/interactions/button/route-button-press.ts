@@ -1,25 +1,9 @@
 import { GuildMember } from '../../../../types';
 import { ButtonInteraction } from 'discord.js';
-import { openVoiceTopicModal } from '../../../Communication/voice-topics';
-
-// All routes for button presses interface
-interface ButtonRoutes {
-  [key: string]: (
-    guildMember: GuildMember,
-    interaction: ButtonInteraction,
-  ) => void;
-}
-
-/**
- * All routes for button presses
- * customId: Function
- */
-const buttonRoutes: ButtonRoutes = {
-  openVoiceTopicModal: openVoiceTopicModal,
-};
+import { buttonRoutes } from './routes';
 
 // Get all available routes
-const availableRoutes = Object.keys(buttonRoutes);
+export const registeredButtonInteractions: string[] = Object.keys(buttonRoutes);
 
 /**
  * Route button presses
@@ -29,9 +13,9 @@ const availableRoutes = Object.keys(buttonRoutes);
 export async function routeButtonPress(
   guildMember: GuildMember,
   interaction: ButtonInteraction,
-) {
+): Promise<void> {
   // Check if the route is available
-  if (!availableRoutes.includes(interaction.customId)) {
+  if (!registeredButtonInteractions.includes(interaction.customId)) {
     await interaction.deferUpdate();
     return;
   }

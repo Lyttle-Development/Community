@@ -1,5 +1,5 @@
 import { LogType } from '../types';
-import { setNumberLength } from './helpers/set-number-length';
+import { setNumberLength } from './helpers';
 import { sendMessage } from './queue';
 import { BOT_LOG_CHANNEL_ID } from '../../constants';
 

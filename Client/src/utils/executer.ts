@@ -51,17 +51,25 @@ export async function executor(
 // The path to the modules.json file
 const modulesPath: string = process.cwd() + '\\modules.json';
 // Cached modules
-let modules = {};
+
+export interface ExecutorModules {
+  [key: string]: {
+    enabled: boolean;
+    errors: number;
+  };
+}
+export let executorModules: ExecutorModules = {};
 
 // Check if a module may be executed
 function mayExecute(moduleName: string): boolean {
   // Try to get the module status.
   try {
     // Get enabled state
-    const enabled = modules[moduleName].enabled === true;
+    const enabled = executorModules[moduleName].enabled === true;
 
     // Check if the module has too many errors
-    const tooManyErrors = modules[moduleName].errors >= ALLOWED_ERROR_COUNT;
+    const tooManyErrors =
+      executorModules[moduleName].errors >= ALLOWED_ERROR_COUNT;
 
     // Check if the module is enabled and not disabled
     return enabled && !tooManyErrors;
@@ -80,7 +88,7 @@ function setModule(moduleName: string, errors = 0): void {
     // Read the modules.json file otherwise keep the cached version
     try {
       const file = fs.readFileSync(modulesPath, 'utf8');
-      modules = JSON.parse(file);
+      executorModules = JSON.parse(file);
     } catch (error) {
       // If the file could not be read, log the error
       log(LogType.ERROR, error);
@@ -95,23 +103,23 @@ function setModule(moduleName: string, errors = 0): void {
     // Set the module's status
     try {
       // If the module exists, add the errors
-      modules[moduleName].errors += errors;
+      executorModules[moduleName].errors += errors;
     } catch (error) {
       // / If the module does not exist, create it
-      modules[moduleName] = { enabled: true, errors };
+      executorModules[moduleName] = { enabled: true, errors };
     }
 
     // Disable the module if it has too many errors
-    if (modules[moduleName].errors >= ALLOWED_ERROR_COUNT) {
+    if (executorModules[moduleName].errors >= ALLOWED_ERROR_COUNT) {
       // Disable the module
-      modules[moduleName].enabled = false;
+      executorModules[moduleName].enabled = false;
     }
 
     // Sort the modules
-    modules = sortObject(modules);
+    executorModules = sortObject(executorModules);
 
     // Write the modules.json file
-    fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
+    fs.writeFileSync(modulesPath, JSON.stringify(executorModules, null, 2));
   } catch (error) {
     // If the module could not be set, log the error
     log(LogType.ERROR, error);

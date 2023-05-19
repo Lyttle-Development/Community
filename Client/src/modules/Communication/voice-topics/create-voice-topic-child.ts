@@ -25,7 +25,7 @@ interface LocalCache {
   [key: string]: VoiceChannel;
 }
 
-const localCache: LocalCache = {};
+export const voiceTopicChildCreationCache: LocalCache = {};
 
 /**
  * Create a voice topic child channel.
@@ -91,7 +91,7 @@ export async function createVoiceTopicChild(
   await updateResponse(id, interaction, guildMember, defaultVariables);
 
   // Delete the cache entry.
-  delete localCache[id];
+  delete voiceTopicChildCreationCache[id];
 }
 
 /**
@@ -136,7 +136,7 @@ async function createChannel(
     });
 
     // Add the channel to the local cache.
-    localCache[id] = channel;
+    voiceTopicChildCreationCache[id] = channel;
 
     // Move the channel to the correct position.
     await channel.setPosition(addPosition);
@@ -208,7 +208,7 @@ async function sendResponse(
  */
 function deleteChannel(id: string) {
   // Get the channel. (out of cache)
-  const channel = localCache[id];
+  const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists and has no members.
   if (!channel || channel.members.size > 0) return;
 
@@ -243,7 +243,7 @@ async function updateResponse(
   // Get the guild id.
   const { guildId } = guildMember;
   // Get the channel. (out of cache)
-  const channel = localCache[id];
+  const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists & has members.
   const deleted = !channel || channel?.members?.size < 0;
 

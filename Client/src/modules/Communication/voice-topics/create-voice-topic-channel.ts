@@ -10,5 +10,5 @@ export function createVoiceTopicChannel(guildId, [channelId, content]) {
       .setStyle(ButtonStyle.Success),
   );
 
-  sendMessage(channelId, content ?? '', true, null, false, [buttons]);
+  void sendMessage(channelId, content ?? '', true, null, false, [buttons]);
 }

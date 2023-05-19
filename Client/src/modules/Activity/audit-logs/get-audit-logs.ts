@@ -2,9 +2,7 @@ import {
   GuildAuditLogsEntryWithGuildId,
   mostRecentAuditLogs,
 } from './trigger-audit-log';
-
-// Max 20 seconds between audit logs
-const maxTimeBetween = 20 * 1000;
+import { MAX_AUDIT_LOG_AGE } from '../../../../constants';
 
 export function getAuditLogs(
   guildId,
@@ -32,7 +30,7 @@ export function getAuditLogs(
   const filtered = result.filter((x: GuildAuditLogsEntryWithGuildId) => {
     const createdAt = new Date(x.createdAt).getTime();
     const diff = now - createdAt;
-    return diff < maxTimeBetween;
+    return diff < MAX_AUDIT_LOG_AGE;
   });
 
   // If no result, return

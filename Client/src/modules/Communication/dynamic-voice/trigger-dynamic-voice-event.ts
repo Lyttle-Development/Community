@@ -9,7 +9,7 @@ import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { getChannelName } from './get-channel-name';
 
 // Little channel cache to prevent spamming & multiple checks
-const channelsBeingChecked: { [key: string]: boolean } = {};
+export const channelsBeingChecked: { [key: string]: boolean } = {};
 
 export async function triggerDynamicVoiceEvent(
   guildId: string,
