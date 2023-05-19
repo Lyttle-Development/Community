@@ -20,6 +20,7 @@ import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
 import { DiscordOauthModule } from './auth/discord-oauth.module';
 import { JwtAuthModule } from './auth/jwt-auth.module';
 import { ConfigModule } from '@nestjs/config';
+import * as process from 'process';
 
 @Module({
   imports: [
@@ -34,15 +35,17 @@ import { ConfigModule } from '@nestjs/config';
         dateScalarMode: 'timestamp',
       },
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'postgres',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: process.env.HOST,
+        port: parseInt(process.env.TYPEORM_PORT),
+        username: process.env.USERNAME,
+        password: process.env.PASSWORD,
+        database: process.env.DATABASE,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }),
     }),
     GuildModule,
     MemberModule,
