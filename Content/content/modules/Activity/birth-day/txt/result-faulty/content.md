@@ -1,0 +1,1 @@
+Nothing is saved, please run /setbday again!

@@ -210,12 +210,12 @@ function deleteChannel(id: string) {
   // Get the channel. (out of cache)
   const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists and has no members.
-  if (!channel || channel.members.size > 0) return;
+  if (!channel || channel?.members?.size > 0) return;
 
   // Create the delete action.
   const deleteAction = async () => {
     // Check if channel still exists.
-    if (!channel) return;
+    if (!channel || !channel?.deletable) return;
     // Get the channel id and guild id.
     const { id: channelId, guildId } = channel;
     // Delete the channel.
@@ -245,7 +245,7 @@ async function updateResponse(
   // Get the channel. (out of cache)
   const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists & has members.
-  const deleted = !channel || channel?.members?.size < 0;
+  const deleted = !channel || channel?.members?.size < 1;
 
   // Get the message.
   const content = deleted
