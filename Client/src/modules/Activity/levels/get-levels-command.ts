@@ -24,10 +24,16 @@ import {
 } from './utils';
 
 /**
- * The data for the get levels command
+ * The command name
+ * !! Not typed, so we can detect the command name !!
  */
-export const getLevelsCommandData: Command = new SlashCommandBuilder()
-  .setName('xp')
+export const commandName = 'xp' as const;
+
+/**
+ * The command data for the command
+ */
+export const commandData: Command = new SlashCommandBuilder()
+  .setName(commandName)
   .setDescription('Get yours and others level information')
   .addUserOption((option) =>
     option
@@ -43,8 +49,17 @@ export const getLevelsCommandData: Command = new SlashCommandBuilder()
   );
 
 /**
- * The get level command logic.
- * Run when a user uses the get level command.
+ * The command data with the command name.
+ * !! Not typed, so we can detect the command name !!
+ */
+export const getLevelsCommandData = {
+  commandName,
+  commandData,
+} as const;
+
+/**
+ * The command function
+ * Run when the command is used
  * @param guildMember
  * @param interaction
  */
