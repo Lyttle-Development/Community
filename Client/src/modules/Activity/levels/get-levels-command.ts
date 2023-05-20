@@ -1,5 +1,6 @@
 import {
   CommandInteraction,
+  ContextMenuCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
   User,
@@ -22,6 +23,7 @@ import {
   getLevelsFromPoints,
   getPointsFromLevels,
 } from './utils';
+import client from '../../../main';
 
 /**
  * The command name
@@ -408,4 +410,31 @@ async function getOthersLevel(
   };
   // Queue the action
   queue(QueueBacklogType.URGENT, action);
+}
+
+export const AppCommandName = 'Get their points' as const;
+
+export const getMemberLevelsAppData = {
+  commandName: AppCommandName,
+  commandData: {
+    name: AppCommandName,
+    type: 2,
+    description: null,
+  },
+} as const;
+
+export async function getMemberLevelsApp(
+  guildMember: GuildMember,
+  interaction: ContextMenuCommandInteraction,
+) {
+  await interaction.deferReply({ ephemeral: true });
+  let userId = interaction.targetId;
+  userId = userId ?? guildMember.userId;
+
+  if (userId === guildMember.userId) {
+    return getOwnLevel(guildMember, interaction);
+  }
+
+  const user: User = client.users.cache.get(userId);
+  return getOtherLevel(guildMember, interaction, user);
 }

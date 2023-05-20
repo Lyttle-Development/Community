@@ -3,6 +3,7 @@ import { GuildMember } from '../../types';
 import {
   onGuildInteractionButton,
   onGuildInteractionCommand,
+  onGuildInteractionContextMenuCommand,
   onGuildInteractionModalSubmit,
   onPrivateInteractionButton,
   onPrivateInteractionCommand,
@@ -15,8 +16,12 @@ async function interactionCreate(interaction: Interaction): Promise<void> {
   if (interaction?.user?.bot) return;
 
   // Get the user id
-  const userId = interaction?.user?.id;
-  const inGuild = !!interaction?.guild ?? interaction?.inGuild() ?? false;
+  const userId = interaction?.user?.id ?? interaction?.member?.user.id ?? null;
+  const inGuild =
+    !!interaction?.guild ??
+    interaction?.inGuild() ??
+    !!interaction?.guildId ??
+    false;
 
   // Check if the interaction is a DM
   if (!inGuild) {
@@ -43,7 +48,7 @@ async function interactionCreate(interaction: Interaction): Promise<void> {
   if (inGuild) {
     // Build the guildMember
     const guildMember: GuildMember = {
-      guildId: interaction?.guild?.id,
+      guildId: interaction?.guild?.id ?? interaction?.guildId,
       userId,
     };
 
@@ -56,6 +61,11 @@ async function interactionCreate(interaction: Interaction): Promise<void> {
     // Check if the interaction is a button
     if (interaction.isButton()) {
       return onGuildInteractionButton(guildMember, interaction);
+    }
+
+    // Check if the interaction is a context menu command
+    if (interaction.isContextMenuCommand()) {
+      return onGuildInteractionContextMenuCommand(guildMember, interaction);
     }
 
     // Check if the interaction is a command

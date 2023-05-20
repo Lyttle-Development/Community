@@ -2,15 +2,13 @@ import process from 'process';
 import { REST, Routes } from 'discord.js';
 import { environment } from './environment';
 import { log } from './log';
-import { Command, LogType } from '../types';
+import { LogType } from '../types';
 import { commands } from '../modules';
 
 export async function deployCommands(): Promise<void> {
   // Only deploy if --deploy-commands is passed
   if (process.argv.includes('--deploy-commands')) {
-    const discordCommands: Command[] = commands.map(
-      (command) => command.commandData,
-    );
+    const discordCommands = commands.map((command) => command.commandData);
 
     // Get the rest client
     const rest = new REST({ version: '10' }).setToken(environment.BOT_TOKEN);
