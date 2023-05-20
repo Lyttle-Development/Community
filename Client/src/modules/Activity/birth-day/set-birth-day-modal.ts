@@ -9,6 +9,7 @@ import {
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import {
   ModuleConfigActivityBirthDayTxtErrorDate,
+  ModuleConfigActivityBirthDayTxtErrorTimeout,
   ModuleConfigActivityBirthDayTxtQuestionButtonCorrect,
   ModuleConfigActivityBirthDayTxtQuestionButtonIncorrect,
   ModuleConfigActivityBirthDayTxtQuestionConfirm,
@@ -192,11 +193,12 @@ export async function setBirthDayModal(
   // If no user clicked on button, update message
   if (!setBirthDayCache[userKey]) return;
 
-  const msgTimeout = await getMessage(
-    guildId,
-    'Activity.birth-day.txt.timeout',
-    defaultVariables,
-  );
+  const msgTimeout =
+    await getMessage<ModuleConfigActivityBirthDayTxtErrorTimeout.Variables>(
+      guildId,
+      'Activity.birth-day.txt.error-timeout',
+      defaultVariables,
+    );
 
   const action2 = async () => {
     if (!setBirthDayCache[userKey]) return;

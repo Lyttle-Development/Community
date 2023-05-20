@@ -25,6 +25,9 @@ import {
 } from './utils';
 import client from '../../../main';
 
+export let xpCommandsRanAfterLastRestart = 0;
+export let xpFromContextMenuRanAfterLastRestart = 0;
+
 /**
  * The command name
  * !! Not typed, so we can detect the command name !!
@@ -69,6 +72,7 @@ export async function getLevelsCommand(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ) {
+  xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
   const getUser1: User = interaction.options.getUser('member', false);
@@ -427,6 +431,7 @@ export async function getMemberLevelsApp(
   guildMember: GuildMember,
   interaction: ContextMenuCommandInteraction,
 ) {
+  xpFromContextMenuRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   let userId = interaction.targetId;
   userId = userId ?? guildMember.userId;

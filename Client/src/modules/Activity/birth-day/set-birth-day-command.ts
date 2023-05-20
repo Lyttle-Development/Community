@@ -18,6 +18,8 @@ import {
   ModuleConfigActivityBirthDayTxtModalTitle,
 } from '../../../../../Content';
 
+export let birthdayCommandsRanAfterLastRestart = 0;
+
 /**
  * The command name
  * !! Not typed, so we can detect the command name !!
@@ -50,6 +52,7 @@ export async function setBirthDayCommand(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ) {
+  birthdayCommandsRanAfterLastRestart++;
   // Get guildId and userId from interaction
   const { guildId, userId } = guildMember;
 

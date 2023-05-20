@@ -21,6 +21,13 @@ import {
 } from '../../../database/handlers';
 import { cleanChannelName, getHighestPosition } from './utils';
 
+export let totalVoiceTopicsCompletedSinceLastRestart = 0;
+export let totalVoiceTopicsCreatedSinceLastRestart = 0;
+export let totalVoiceTopicsDeletedSinceLastRestart = 0;
+export function updateTotalVoiceTopicsDeletedSinceLastRestart() {
+  totalVoiceTopicsDeletedSinceLastRestart++;
+}
+
 interface LocalCache {
   [key: string]: VoiceChannel;
 }
@@ -80,6 +87,8 @@ export async function createVoiceTopicChild(
 
   // Send response
   await sendResponse(interaction, guildMember, defaultVariables);
+
+  totalVoiceTopicsCompletedSinceLastRestart++;
 
   // Wait for sleep time.
   await sleep(9 * 1000);
@@ -150,6 +159,7 @@ async function createChannel(
       interactionChannel.id,
       channelName,
     );
+    totalVoiceTopicsCreatedSinceLastRestart++;
   };
 
   // Queue the channel creation.
@@ -222,6 +232,7 @@ function deleteChannel(id: string) {
     await channel.delete();
     // Delete the channel from the database.
     await delGuildModuleVoiceGrowthChild(guildId, channelId);
+    totalVoiceTopicsDeletedSinceLastRestart++;
   };
   // Queue the delete action.
   queue(QueueBacklogType.URGENT, deleteAction);

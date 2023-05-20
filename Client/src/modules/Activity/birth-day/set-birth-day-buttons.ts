@@ -9,6 +9,8 @@ import {
 } from '../../../../../Content';
 import { setMemberValue } from '../../../database/handlers';
 
+export let birthdaysSetSinceLastRestart = 0;
+
 /**
  * Executed when the user presses the submit button in the set birthday modal
  * @param guildMember
@@ -49,6 +51,7 @@ export async function setBirthDaySubmitButton(
   await setMemberValue(guildId, userId, {
     birthday,
   });
+  birthdaysSetSinceLastRestart++;
 
   // Create the action.
   const action = async () => {
