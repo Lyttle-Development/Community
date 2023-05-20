@@ -11,6 +11,9 @@ import { triggerPointsChange } from './trigger-points-change';
 import { WEEK_DAYS } from './constants';
 import { triggerNickname } from './trigger-nickname';
 
+export let timesPointsGivenSinceLastRestart = 0;
+export let totalPointsGivenSinceLastRestart = 0;
+
 /**
  * Give points to a guild member.
  * @param amount
@@ -25,6 +28,9 @@ export async function givePoints(amount: number, guildMember: GuildMember) {
 
   // Check if the amount is valid
   if (roundedAmount <= 0) return;
+
+  totalPointsGivenSinceLastRestart += roundedAmount;
+  timesPointsGivenSinceLastRestart++;
 
   // Give points to user
   const {

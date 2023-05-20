@@ -25,10 +25,28 @@ import {
   nicknamesBeingSet,
   registeredButtonInteractions,
   registeredCommandInteractions,
+  registeredContextMenuCommandInteractions,
   registeredModalInteractions,
+  timesEventsCreatedSinceLastRestart,
+  timesEventsTriggeredSinceLastRestart,
+  timesPointsGivenSinceLastRestart,
+  totalDynamicVoiceChannelCheckedSinceLastRestart,
+  totalDynamicVoiceChannelCreatedSinceLastRestart,
+  totalDynamicVoiceChannelDeletedSinceLastRestart,
+  totalNicknamesSetSinceLastRestart,
+  totalPointsGivenSinceLastRestart,
+  totalVoiceTopicsCompletedSinceLastRestart,
+  totalVoiceTopicsCreatedSinceLastRestart,
+  totalVoiceTopicsDeletedSinceLastRestart,
+  totalVoiceTopicsStartedSinceLastRestart,
   voiceTopicChildCreationCache,
+  xpCommandsRanAfterLastRestart,
+  xpFromContextMenuRanAfterLastRestart,
 } from '../../modules';
 import { formatNumber, getDiscordTime } from '../helpers';
+import { setBirthDayCache } from '../../modules/Activity/birth-day/set-birth-day-modal';
+import { birthdaysSetSinceLastRestart } from '../../modules/Activity/birth-day/set-birth-day-buttons';
+import { birthdayCommandsRanAfterLastRestart } from '../../modules/Activity/birth-day';
 
 let statsQueueStarted = false;
 
@@ -68,6 +86,9 @@ function sendStatsToQueue() {
   const totalRegisteredCommandInteractions = Object.values(
     registeredCommandInteractions,
   ).length;
+  const totalRegisteredUserContextMenuCommandInteractions = Object.values(
+    registeredContextMenuCommandInteractions,
+  ).length;
   const totalRegisteredButtonInteractions = Object.values(
     registeredButtonInteractions,
   ).length;
@@ -86,6 +107,7 @@ function sendStatsToQueue() {
   ).length;
   const totalNicknamesBeingSet = Object.keys(nicknamesBeingSet).length;
   const totalAuditLogs = mostRecentAuditLogs.length;
+  const totalBirthDaysBeingSet = Object.keys(setBirthDayCache).length;
 
   // The message:
   const message =
@@ -114,6 +136,9 @@ function sendStatsToQueue() {
 > - **Registered Commands**: \`${formatNumber(
       totalRegisteredCommandInteractions,
     )}\`
+> - **Registered User Context Menu Commands**: \`${formatNumber(
+      totalRegisteredUserContextMenuCommandInteractions,
+    )}\`
 > - **Registered Buttons**: \`${formatNumber(
       totalRegisteredButtonInteractions,
     )}\`
@@ -122,6 +147,50 @@ function sendStatsToQueue() {
 **Actions**:
 > - **Processing**: \`${formatNumber(totalActionsBeingProcessed)}\`
 > - **Queued**: \`${formatNumber(totalActionsQueued)}\`
+
+**Stats**: (Since last reboot)
+> - **Total times points given**: \`${formatNumber(
+      timesPointsGivenSinceLastRestart,
+    )}\`
+> - **Total amount of points given**: \`${formatNumber(
+      totalPointsGivenSinceLastRestart,
+    )}\`
+> - **Total events created (passed & denied)**: \`${formatNumber(
+      timesEventsCreatedSinceLastRestart,
+    )}\`
+> - **Total events triggered (passed)**: \`${formatNumber(
+      timesEventsTriggeredSinceLastRestart,
+    )}\`
+> - **"/xp" commands ran**: \`${formatNumber(xpCommandsRanAfterLastRestart)}\`
+> - **Points reveived from user context menu**: \`${formatNumber(
+      xpFromContextMenuRanAfterLastRestart,
+    )}\`
+> - **"/setbday" commands ran**: \`${formatNumber(
+      birthdayCommandsRanAfterLastRestart,
+    )}\`
+> - **Birthdays set**: \`${formatNumber(birthdaysSetSinceLastRestart)}\`
+> - **Nicknames set**: \`${formatNumber(totalNicknamesSetSinceLastRestart)}\`
+> - **Total Dynamic Channels checked**: \`${formatNumber(
+      totalDynamicVoiceChannelCheckedSinceLastRestart,
+    )}\`
+> - **Total Dynamic Channels created**: \`${formatNumber(
+      totalDynamicVoiceChannelCreatedSinceLastRestart,
+    )}\`
+> - **Total Dynamic Channels deleted**: \`${formatNumber(
+      totalDynamicVoiceChannelDeletedSinceLastRestart,
+    )}\`
+> - **Total Voice Topics Started**: \`${formatNumber(
+      totalVoiceTopicsStartedSinceLastRestart,
+    )}\`
+> - **Total Voice Topics Competed**: \`${formatNumber(
+      totalVoiceTopicsCompletedSinceLastRestart,
+    )}\`
+> - **Total Voice Topics Created**: \`${formatNumber(
+      totalVoiceTopicsCreatedSinceLastRestart,
+    )}\`
+> - **Total Voice Topics Deleted**: \`${formatNumber(
+      totalVoiceTopicsDeletedSinceLastRestart,
+    )}\`
 
 **Caches**:
 > - **Message-channels in cache**: \`${formatNumber(
@@ -135,6 +204,7 @@ function sendStatsToQueue() {
     )}\`
 > - **Total audit logs being kept**: \`${formatNumber(totalAuditLogs)}\`
 > - **Nicknames being set**: \`${formatNumber(totalNicknamesBeingSet)}\`
+> - **Birthdays being set**: \`${formatNumber(totalBirthDaysBeingSet)}\`
 
 \`\`\` \`\`\`** **`;
 

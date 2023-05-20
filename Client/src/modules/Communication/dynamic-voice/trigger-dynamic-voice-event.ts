@@ -8,6 +8,10 @@ import client from '../../../main';
 import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { getChannelName } from './get-channel-name';
 
+export let totalDynamicVoiceChannelCheckedSinceLastRestart = 0;
+export let totalDynamicVoiceChannelCreatedSinceLastRestart = 0;
+export let totalDynamicVoiceChannelDeletedSinceLastRestart = 0;
+
 // Little channel cache to prevent spamming & multiple checks
 export const channelsBeingChecked: { [key: string]: boolean } = {};
 
@@ -22,6 +26,7 @@ export async function triggerDynamicVoiceEvent(
     // Try again
     return triggerDynamicVoiceEvent(guildId, channelId);
   }
+  totalDynamicVoiceChannelCheckedSinceLastRestart++;
   // Add the channel to the being checked cache
   channelsBeingChecked[channelId] = true;
 
@@ -96,6 +101,7 @@ async function fireDynamicVoiceEvent(
       if (x.manageable && x.id !== masterId) {
         // Queue the deletion
         queue(QueueBacklogType.LOW, async () => {
+          totalDynamicVoiceChannelDeletedSinceLastRestart++;
           // Delete the channel
           await x.delete();
           // Delete the channel from the database
@@ -126,6 +132,7 @@ async function fireDynamicVoiceEvent(
 
     // Queue the creation of a new channel
     queue(QueueBacklogType.LOW, async () => {
+      totalDynamicVoiceChannelCreatedSinceLastRestart++;
       // Create the new channel
       const newChannel = name
         ? // If a valid name was found, use it

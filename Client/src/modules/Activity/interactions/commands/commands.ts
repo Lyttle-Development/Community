@@ -1,7 +1,8 @@
 import { getLevelsCommandData } from '../../levels';
-import { Commands } from '../../../../types';
+import { setBirthDayCommandData } from '../../birth-day';
 
 /**
  * All registered commands DATA
+ * !! Not typed, so we can detect the command name !!
  */
-export const commands: Commands = [getLevelsCommandData];
+export const commands = [getLevelsCommandData, setBirthDayCommandData] as const;

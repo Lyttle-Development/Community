@@ -1,5 +1,6 @@
 import {
   CommandInteraction,
+  ContextMenuCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
   User,
@@ -22,12 +23,22 @@ import {
   getLevelsFromPoints,
   getPointsFromLevels,
 } from './utils';
+import client from '../../../main';
+
+export let xpCommandsRanAfterLastRestart = 0;
+export let xpFromContextMenuRanAfterLastRestart = 0;
 
 /**
- * The data for the get levels command
+ * The command name
+ * !! Not typed, so we can detect the command name !!
  */
-export const getLevelsCommandData: Command = new SlashCommandBuilder()
-  .setName('xp')
+export const commandName = 'xp' as const;
+
+/**
+ * The command data for the command
+ */
+export const commandData: Command = new SlashCommandBuilder()
+  .setName(commandName)
   .setDescription('Get yours and others level information')
   .addUserOption((option) =>
     option
@@ -43,8 +54,17 @@ export const getLevelsCommandData: Command = new SlashCommandBuilder()
   );
 
 /**
- * The get level command logic.
- * Run when a user uses the get level command.
+ * The command data with the command name.
+ * !! Not typed, so we can detect the command name !!
+ */
+export const getLevelsCommandData = {
+  commandName,
+  commandData,
+} as const;
+
+/**
+ * The command function
+ * Run when the command is used
  * @param guildMember
  * @param interaction
  */
@@ -52,6 +72,7 @@ export async function getLevelsCommand(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ) {
+  xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
   const getUser1: User = interaction.options.getUser('member', false);
@@ -393,4 +414,32 @@ async function getOthersLevel(
   };
   // Queue the action
   queue(QueueBacklogType.URGENT, action);
+}
+
+export const AppCommandName = 'Get their points' as const;
+
+export const getMemberLevelsAppData = {
+  commandName: AppCommandName,
+  commandData: {
+    name: AppCommandName,
+    type: 2,
+    description: null,
+  },
+} as const;
+
+export async function getMemberLevelsApp(
+  guildMember: GuildMember,
+  interaction: ContextMenuCommandInteraction,
+) {
+  xpFromContextMenuRanAfterLastRestart++;
+  await interaction.deferReply({ ephemeral: true });
+  let userId = interaction.targetId;
+  userId = userId ?? guildMember.userId;
+
+  if (userId === guildMember.userId) {
+    return getOwnLevel(guildMember, interaction);
+  }
+
+  const user: User = client.users.cache.get(userId);
+  return getOtherLevel(guildMember, interaction, user);
 }

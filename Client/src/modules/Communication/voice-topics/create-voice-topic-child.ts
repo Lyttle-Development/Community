@@ -21,6 +21,13 @@ import {
 } from '../../../database/handlers';
 import { cleanChannelName, getHighestPosition } from './utils';
 
+export let totalVoiceTopicsCompletedSinceLastRestart = 0;
+export let totalVoiceTopicsCreatedSinceLastRestart = 0;
+export let totalVoiceTopicsDeletedSinceLastRestart = 0;
+export function updateTotalVoiceTopicsDeletedSinceLastRestart() {
+  totalVoiceTopicsDeletedSinceLastRestart++;
+}
+
 interface LocalCache {
   [key: string]: VoiceChannel;
 }
@@ -80,6 +87,8 @@ export async function createVoiceTopicChild(
 
   // Send response
   await sendResponse(interaction, guildMember, defaultVariables);
+
+  totalVoiceTopicsCompletedSinceLastRestart++;
 
   // Wait for sleep time.
   await sleep(9 * 1000);
@@ -150,6 +159,7 @@ async function createChannel(
       interactionChannel.id,
       channelName,
     );
+    totalVoiceTopicsCreatedSinceLastRestart++;
   };
 
   // Queue the channel creation.
@@ -210,18 +220,19 @@ function deleteChannel(id: string) {
   // Get the channel. (out of cache)
   const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists and has no members.
-  if (!channel || channel.members.size > 0) return;
+  if (!channel || channel?.members?.size > 0) return;
 
   // Create the delete action.
   const deleteAction = async () => {
     // Check if channel still exists.
-    if (!channel) return;
+    if (!channel || !channel?.deletable) return;
     // Get the channel id and guild id.
     const { id: channelId, guildId } = channel;
     // Delete the channel.
     await channel.delete();
     // Delete the channel from the database.
     await delGuildModuleVoiceGrowthChild(guildId, channelId);
+    totalVoiceTopicsDeletedSinceLastRestart++;
   };
   // Queue the delete action.
   queue(QueueBacklogType.URGENT, deleteAction);
@@ -245,7 +256,7 @@ async function updateResponse(
   // Get the channel. (out of cache)
   const channel = voiceTopicChildCreationCache[id];
   // Check if channel exists & has members.
-  const deleted = !channel || channel?.members?.size < 0;
+  const deleted = !channel || channel?.members?.size < 1;
 
   // Get the message.
   const content = deleted
