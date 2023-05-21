@@ -46,6 +46,8 @@ export function checkActionsQueue() {
  * And pass them to the correct function.
  */
 async function triggerActionsQueue() {
+  // Check if waiting for actions
+  if (waitingForActions) return;
   // Set waiting for actions to true
   waitingForActions = true;
 
@@ -55,7 +57,7 @@ async function triggerActionsQueue() {
   await deleteAllExecutedGuildActions();
 
   // Check if there are any actions
-  if (actions && actions.length < 1) {
+  if (!actions || actions.length < 1) {
     // Set waiting for actions to false
     waitingForActions = false;
 
@@ -139,6 +141,12 @@ function addActionToQueue(action, id, guildId, valuesString) {
     // Add to queue
     queue(QueueBacklogType.IMPORTANT, queueAction);
   } catch (error) {
+    // Remove from currently being executed
+    actionsCurrentlyBeingExecuted.splice(
+      actionsCurrentlyBeingExecuted.indexOf(id),
+      1,
+    );
+
     // Log the error
     log(LogType.ERROR, error);
   }
