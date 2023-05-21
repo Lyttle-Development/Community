@@ -3,6 +3,10 @@ export const ModuleMarkdown = {
   Activity: {
     'birth-day': {
       txt: {
+        announcement: {
+          content: 'Happy Birthday, {users}!',
+          documentation: '',
+        },
         'error-date': {
           content: 'The date we got was invalid, please try again!',
           documentation: '',

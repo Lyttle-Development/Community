@@ -1,4 +1,5 @@
 // This file is auto generated, do not edit it manually.
+export * as ModuleConfigActivityBirthDayTxtAnnouncement from '../../content/modules/Activity/birth-day/txt/announcement/config';
 export * as ModuleConfigActivityBirthDayTxtErrorDate from '../../content/modules/Activity/birth-day/txt/error-date/config';
 export * as ModuleConfigActivityBirthDayTxtErrorSet from '../../content/modules/Activity/birth-day/txt/error-set/config';
 export * as ModuleConfigActivityBirthDayTxtErrorTimeout from '../../content/modules/Activity/birth-day/txt/error-timeout/config';
