@@ -1,2 +1,2 @@
 So if everything is correct...
-{prefix}You were born on {day} {month}.
+You were born on {day} {month}.

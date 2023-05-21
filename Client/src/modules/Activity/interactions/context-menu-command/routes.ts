@@ -1,4 +1,4 @@
-import { getMemberLevelsApp } from '../../levels';
+import { getMemberLevelsApp, getOthersLevelsApp } from '../../levels';
 import { ContextMenuCommandRoutes } from '../../../../types';
 
 /**
@@ -6,5 +6,6 @@ import { ContextMenuCommandRoutes } from '../../../../types';
  * customId: Function
  */
 export const contextMenuCommandRoutes: ContextMenuCommandRoutes = {
-  'Get their points': getMemberLevelsApp,
+  'Get points': getMemberLevelsApp,
+  'Compare points': getOthersLevelsApp,
 };
