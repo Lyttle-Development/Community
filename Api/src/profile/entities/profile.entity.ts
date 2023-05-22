@@ -12,15 +12,26 @@ import { User } from '../../user/entities/user.entity';
 @Entity()
 @ObjectType()
 export class Profile {
-  @PrimaryColumn()
-  @OneToOne(() => User, (user: User) => user.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
-  guild_id: number;
+  user_id: number;
 
-  @Column()
-  @Field(() => Int)
+  // Relations
+  @OneToOne(() => User, (user: User) => user.user_id)
+  @Field(() => User)
+  user: User;
+
+  // Values
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
   tokens: number;
 
+  @Column({ default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
+  tokens_used: number;
+
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

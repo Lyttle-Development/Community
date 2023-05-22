@@ -4,7 +4,7 @@ import type { MemberModuleLevel, Prisma } from '@prisma/client';
 
 export function createMemberModuleLevel(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevel> {
   return prismaClient.memberModuleLevel.create({
     data: {
@@ -16,7 +16,7 @@ export function createMemberModuleLevel(
 
 export function findSingleMemberModuleLevel(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevel> {
   return prismaClient.memberModuleLevel.findUnique({
     where: {
@@ -30,7 +30,7 @@ export function findSingleMemberModuleLevel(
 
 export async function getOrCreateMemberModuleLevel(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevel> {
   await getOrCreateMember(guildId, userId);
 
@@ -44,7 +44,7 @@ export async function incrementMemberModuleLevelNumber(
   guildId: string,
   userId: string,
   column: keyof Prisma.MemberModuleLevelUpdateInput,
-  value: number
+  value: number,
 ): Promise<MemberModuleLevel> {
   await getOrCreateMemberModuleLevel(guildId, userId);
 
@@ -66,7 +66,7 @@ export async function incrementMemberModuleLevelNumber(
 export async function setMemberModuleLevelValue(
   guildId: string,
   userId: string,
-  data: Prisma.MemberModuleLevelUpdateInput
+  data: Prisma.MemberModuleLevelUpdateInput,
 ): Promise<MemberModuleLevel> {
   await getOrCreateMemberModuleLevel(guildId, userId);
 
@@ -82,7 +82,7 @@ export async function setMemberModuleLevelValue(
 }
 
 export function getInactiveMemberModuleLevel(
-  guildId: string
+  guildId: string,
 ): Promise<MemberModuleLevel[]> {
   const last7Days = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
@@ -98,7 +98,7 @@ export function getInactiveMemberModuleLevel(
 
 export async function get5TopMembers(
   guildId: string,
-  date: Date
+  date: Date,
 ): Promise<MemberModuleLevel[]> {
   return prismaClient.memberModuleLevel.findMany({
     where: {

@@ -1,4 +1,3 @@
-import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
 
@@ -12,8 +11,11 @@ export async function onPrivateMessageCreate(
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, userId, message),
+    // executor(prefix + 'test', test, userId, message),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import type { CreateGuildModuleLevelInput } from './dto/create-guild-module-level.input';
 import type { UpdateGuildModuleLevelInput } from './dto/update-guild-module-level.input';
-import type { GuildModuleLevel } from './entities/guild-module-level.entity';
+import { GuildModuleLevel } from './entities/guild-module-level.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Guild } from '../guild/entities/guild.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class GuildModuleLevelService {
   constructor(
-    @InjectRepository(Guild)
+    @InjectRepository(GuildModuleLevel)
     private guildModuleLevelRepository: Repository<GuildModuleLevel>,
   ) {}
 

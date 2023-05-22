@@ -1,8 +1,11 @@
 import { GuildMember, LevelEvent } from '../../../types';
 import { preventSpam } from './prevent-spam';
 import { checkCooldown } from './check-cooldown';
-import { TOKENS_EVENT_PRICES } from '../../../../constants';
 import { triggerEvent } from './trigger-event';
+import { EVENT_PRICES } from './constants';
+import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
+
+export let timesEventsCreatedSinceLastRestart = 0;
 
 /**
  * Create an event.
@@ -13,6 +16,16 @@ import { triggerEvent } from './trigger-event';
  * @param guildMember
  */
 export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
+  timesEventsCreatedSinceLastRestart++;
+  // Destructure guildMember
+  const { guildId } = guildMember;
+
+  // Get guild module level settings.
+  const db_GuildModuleLevel = await getOrCreateGuildModuleLevel(guildId);
+
+  // If the levels module is not enabled, stop here.
+  if (!db_GuildModuleLevel.enabled) return;
+
   // Check if user is spamming.
   const { isSpamming, db_MemberModuleLevel } = await preventSpam(guildMember);
   if (isSpamming) return;
@@ -22,7 +35,7 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   if (inCooldown) return;
 
   // Create the event.
-  const price = TOKENS_EVENT_PRICES[event];
+  const price = EVENT_PRICES[event];
 
   // Trigger the event actions.
   await triggerEvent(price, guildMember);

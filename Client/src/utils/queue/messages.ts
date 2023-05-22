@@ -1,8 +1,8 @@
 import {
   AnyThreadChannel,
-  APIEmbed,
   BaseMessageOptions,
   CommandInteraction,
+  GuildTextBasedChannel,
   InteractionResponse,
   Message,
   MessageMentionOptions,
@@ -10,14 +10,24 @@ import {
   ThreadChannel,
   User,
 } from 'discord.js';
-import client from '../../main';
+import client, { isReady } from '../../main';
 import { queue as sendQueue, QueueBacklogType } from './queue';
-import { queueMessage } from './messagesQueue';
+import { queueMessage } from './messages-queue';
+import { sleep } from '../helpers';
 
-export function sendMessage(
+/**
+ * Send a message to a target.
+ * @param channel
+ * @param content
+ * @param silent
+ * @param embed
+ * @param queue
+ */
+export async function sendMessage(
   channel:
     | string
     | TextChannel
+    | GuildTextBasedChannel
     | AnyThreadChannel
     | ThreadChannel
     | Message
@@ -25,8 +35,17 @@ export function sendMessage(
   content: string,
   silent = true,
   embed = false,
-  queue: QueueBacklogType | false = QueueBacklogType.NORMAL
+  queue: QueueBacklogType | false = QueueBacklogType.NORMAL,
+  components?: any,
 ): Promise<Message> {
+  // If the client isn't ready, wait a second and try again
+  if (!isReady) {
+    // Wait a second
+    await sleep(1000);
+    // Try again
+    return sendMessage(channel, content, silent, embed, queue, components);
+  }
+
   // Resolve the channel if it's a string
   if (typeof channel === 'string') {
     channel = client.channels.resolve(channel) as TextChannel;
@@ -41,40 +60,75 @@ export function sendMessage(
   if (typeof channel === 'string') return;
 
   // Retype the channel
-  const target: TextChannel | AnyThreadChannel | ThreadChannel | User = channel;
+  const target:
+    | TextChannel
+    | GuildTextBasedChannel
+    | AnyThreadChannel
+    | ThreadChannel
+    | User = channel;
 
-  const response: BaseMessageOptions = getResponse(content, silent, embed);
+  const response: BaseMessageOptions = getResponse(
+    content,
+    silent,
+    embed,
+    components,
+  );
 
   // Create the action
   const action = () => target.send(response);
 
   // Send the message
   if (!queue) return action();
-  if (silent && !embed && queue === QueueBacklogType.NORMAL) {
+  if (silent && !embed && !components && queue === QueueBacklogType.NORMAL) {
+    // Add the message to the message queue
     queueMessage(target, content);
     return;
   }
+
+  // Add the message to the queue
   sendQueue(queue, action);
 }
 
+/**
+ * Send a reply to a message.
+ * @param message
+ * @param content
+ * @param silent
+ * @param embed
+ * @param queue
+ */
 export function sendReply(
   message: Message | CommandInteraction,
   content: string,
   silent = true,
   embed = false,
-  queue: QueueBacklogType | false = QueueBacklogType.NORMAL
+  queue: QueueBacklogType | false = QueueBacklogType.NORMAL,
+  components?: any,
 ): Promise<Message | InteractionResponse | void> {
-  const response: BaseMessageOptions = getResponse(content, silent, embed);
+  const response: BaseMessageOptions = getResponse(
+    content,
+    silent,
+    embed,
+    components,
+  );
 
   // Create the action
   const action = () => message.reply(response);
 
   // Send the message
   if (!queue) return action();
+
+  // Add the message to the queue
   sendQueue(queue, action);
 }
 
-function getResponse(content, silent, embed) {
+/**
+ * Get variables needed to send the message.
+ * @param content
+ * @param silent
+ * @param embed
+ */
+function getResponse(content, silent, embed, components) {
   // Set the allowed mentions
   const allowedMentions: MessageMentionOptions = silent
     ? { parse: [] }
@@ -85,8 +139,10 @@ function getResponse(content, silent, embed) {
     ? {
         allowedMentions,
         embeds: [content],
+        components,
       }
-    : { allowedMentions, content };
+    : { allowedMentions, content, components };
 
+  // Return the response
   return response;
 }

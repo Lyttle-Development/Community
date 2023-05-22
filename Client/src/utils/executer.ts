@@ -1,12 +1,20 @@
 import * as fs from 'fs';
-import { environment, sortObject } from './';
-import { messageDevs } from './helpers/messageDevs';
+import { log, sortObject } from './';
+import { messageDevs } from './helpers';
+import { ALLOWED_ERROR_COUNT } from '../../constants';
+import { LogType } from '../types';
 
+/**
+ * The main module executor, it prevents the bot from hard crashing.
+ * @param moduleName
+ * @param moduleFunction
+ * @param args
+ */
 export async function executor(
   moduleName: string,
   moduleFunction: ((...args) => Promise<() => void>) | ((...args) => void),
   ...args: unknown[]
-): Promise<any> {
+) {
   let result = null;
 
   // Check if the module may be executed
@@ -16,44 +24,60 @@ export async function executor(
   try {
     // Execute the module
     if (args.length === 0) {
+      // If no arguments are given, execute the module without arguments
       result = await moduleFunction();
     } else {
+      // If arguments are given, execute the module with arguments
       result = await moduleFunction(...args);
     }
   } catch (error) {
     // If the module fails, increase the error count
     setModule(moduleName, 1);
-    console.error(error);
+
+    // Log the error
+    log(LogType.ERROR, error);
+
+    // Send the error to the devs
     messageDevs(
       error,
       `The error was caught in the executor, the following module crashed: ${moduleName}`,
     );
   }
 
+  // Return the result
   return result;
 }
 
 // The path to the modules.json file
 const modulesPath: string = process.cwd() + '\\modules.json';
 // Cached modules
-let modules = {};
+
+export interface ExecutorModules {
+  [key: string]: {
+    enabled: boolean;
+    errors: number;
+  };
+}
+export let executorModules: ExecutorModules = {};
 
 // Check if a module may be executed
 function mayExecute(moduleName: string): boolean {
   // Try to get the module status.
   try {
     // Get enabled state
-    const enabled = modules[moduleName].enabled === true;
+    const enabled = executorModules[moduleName].enabled === true;
 
     // Check if the module has too many errors
     const tooManyErrors =
-      modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT;
+      executorModules[moduleName].errors >= ALLOWED_ERROR_COUNT;
 
     // Check if the module is enabled and not disabled
     return enabled && !tooManyErrors;
   } catch (error) {
     // If not found, create it.
     setModule(moduleName);
+
+    // Retry the function
     return mayExecute(moduleName);
   }
 }
@@ -64,8 +88,12 @@ function setModule(moduleName: string, errors = 0): void {
     // Read the modules.json file otherwise keep the cached version
     try {
       const file = fs.readFileSync(modulesPath, 'utf8');
-      modules = JSON.parse(file);
+      executorModules = JSON.parse(file);
     } catch (error) {
+      // If the file could not be read, log the error
+      log(LogType.ERROR, error);
+
+      // Send the error to the devs
       messageDevs(
         error,
         'This was executed in the "executor" i think it could not get the modules from json.',
@@ -74,21 +102,29 @@ function setModule(moduleName: string, errors = 0): void {
 
     // Set the module's status
     try {
-      modules[moduleName].errors += errors;
+      // If the module exists, add the errors
+      executorModules[moduleName].errors += errors;
     } catch (error) {
-      modules[moduleName] = { enabled: true, errors };
+      // / If the module does not exist, create it
+      executorModules[moduleName] = { enabled: true, errors };
     }
 
     // Disable the module if it has too many errors
-    if (modules[moduleName].errors >= environment.ALLOWED_ERROR_COUNT) {
-      modules[moduleName].enabled = false;
+    if (executorModules[moduleName].errors >= ALLOWED_ERROR_COUNT) {
+      // Disable the module
+      executorModules[moduleName].enabled = false;
     }
 
-    modules = sortObject(modules);
+    // Sort the modules
+    executorModules = sortObject(executorModules);
 
     // Write the modules.json file
-    fs.writeFileSync(modulesPath, JSON.stringify(modules, null, 2));
+    fs.writeFileSync(modulesPath, JSON.stringify(executorModules, null, 2));
   } catch (error) {
+    // If the module could not be set, log the error
+    log(LogType.ERROR, error);
+
+    // Send the error to the devs
     messageDevs(
       error,
       'This was executed in the "executor" i think it could not save the modules to json.',

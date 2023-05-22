@@ -1,13 +1,23 @@
-import { checkMessagesQueue } from './messagesQueue';
-import { environment } from '../environment';
-import { messageDevs } from '../helpers/messageDevs';
+import { checkMessagesQueue } from './messages-queue';
+import { messageDevs } from '../helpers';
+import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
+import { LogType } from '../../types';
+import { log } from '../log';
+import { checkActionsQueue } from './actions-queue';
+import { triggerChecks } from './trigger-checks';
 
+// Weather the queue is active or not
 let queueActive = false;
-const queueFree: boolean[] = [];
-let queueInterval: NodeJS.Timeout;
-const allowedRequestsPerSecond: number =
-  parseInt(environment.ALLOWED_REQUESTS_SECOND) ?? 10;
 
+// The queue jobs state
+export const queueFree: boolean[] = [];
+
+// The queue interval
+let queueInterval: NodeJS.Timeout;
+
+export let totalQueues = 0;
+
+// The queue types
 export enum QueueBacklogType {
   CRITICAL = 'critical',
   URGENT = 'urgent',
@@ -17,18 +27,22 @@ export enum QueueBacklogType {
   BACKGROUND = 'background',
 }
 
+// The queue time types
 export enum QueueBacklogTimeType {
   TIME = 'time',
   TIMEOUT = 'timeout',
 }
 
-type QueueBacklogTypeItem = Function;
+// The queue backlog item type
+type QueueBacklogTypeItem = (jobId: number) => Promise<unknown> | unknown;
 
+// The queue backlog time item type
 interface QueueBacklogTimeItem {
   time: number;
-  action: Function;
+  action: (jobId: number) => Promise<unknown> | unknown;
 }
 
+// The queue backlog type
 interface QueueBacklog {
   [QueueBacklogType.CRITICAL]: QueueBacklogTypeItem[];
   [QueueBacklogType.URGENT]: QueueBacklogTypeItem[];
@@ -40,7 +54,8 @@ interface QueueBacklog {
   timeout: QueueBacklogTimeItem[];
 }
 
-const backlog: QueueBacklog = {
+// The queue backlog
+export const queueBacklog: QueueBacklog = {
   [QueueBacklogType.CRITICAL]: [],
   [QueueBacklogType.URGENT]: [],
   [QueueBacklogType.IMPORTANT]: [],
@@ -51,85 +66,195 @@ const backlog: QueueBacklog = {
   timeout: [],
 };
 
+/**
+ * Initialize the queue
+ */
 export function initQueue() {
+  // Check if the queue is already active
   if (queueActive || queueInterval) return;
+
+  // Start the queue
   queueInterval = setInterval(() => {
     // Run queue
-    fireQueues();
+    fireJobs();
 
     // Tasks that need to be done every second
     checkMessagesQueue();
+
+    // Check for actions, queued by the bot
+    checkActionsQueue();
+
+    // Check for checks
+    void triggerChecks();
   }, 1000);
+
+  // Set the queue to active
   queueActive = true;
 }
 
-function fireQueues() {
-  for (let i = 0; i < allowedRequestsPerSecond; i++) {
+/**
+ * Fire all jobs
+ */
+function fireJobs() {
+  for (let i = 0; i < ALLOWED_REQUESTS_SECOND; i++) {
     // Add to queue if not full
-    if (queueFree.length < allowedRequestsPerSecond) {
+    if (queueFree.length < ALLOWED_REQUESTS_SECOND) {
       queueFree.push(true);
     }
 
     // Run queue if free
     if (queueFree[i]) {
-      void Queue(i);
+      void fireJob(i);
     }
   }
 }
 
-async function Queue(id) {
-  queueFree[id] = false;
+/**
+ * Fire a job
+ * @param jobId
+ */
+async function fireJob(jobId: number) {
+  // Set the queue to busy
+  queueFree[jobId] = false;
   try {
-    await queueAction();
+    // Run the job
+    await job(jobId);
+
+    // Catch any errors
   } catch (error) {
-    console.log(error);
+    // Log the error
+    log(LogType.ERROR, error);
+
+    // Send the error to the devs
     messageDevs(error, 'The error was caught in the main queue');
   }
-  queueFree[id] = true;
+
+  // Set the queue to free
+  queueFree[jobId] = true;
 }
 
-async function queueActionItem(type: QueueBacklogType) {
-  if (backlog[type].length > 0) {
-    const action = backlog[type].shift();
-    await action();
-    return true;
-  }
-  return false;
-}
-
-async function queueActionTimeItem(type: QueueBacklogTimeType) {
-  if (backlog[type].length > 0 && backlog[type][0].time < Date.now()) {
-    const { action } = backlog[type].shift();
-    await action();
-    return true;
-  }
-  return false;
-}
-
-async function queueAction() {
+/**
+ * The job, to be executed.
+ */
+async function job(jobId: number) {
   // Run critical first
-  if (await queueActionItem(QueueBacklogType.CRITICAL)) return;
-  if (await queueActionItem(QueueBacklogType.URGENT)) return;
-  if (await queueActionItem(QueueBacklogType.IMPORTANT)) return;
+  if (await fireAction(jobId, QueueBacklogType.CRITICAL)) return;
+  if (await fireAction(jobId, QueueBacklogType.URGENT)) return;
+  if (await fireAction(jobId, QueueBacklogType.IMPORTANT)) return;
 
   // Run time based next
-  if (await queueActionTimeItem(QueueBacklogTimeType.TIME)) return;
-  if (await queueActionTimeItem(QueueBacklogTimeType.TIMEOUT)) return;
+  if (await fireTimeAction(jobId, QueueBacklogTimeType.TIME)) return;
+  if (await fireTimeAction(jobId, QueueBacklogTimeType.TIMEOUT)) return;
 
   // Run normal last
-  if (await queueActionItem(QueueBacklogType.NORMAL)) return;
-  if (await queueActionItem(QueueBacklogType.LOW)) return;
-  if (await queueActionItem(QueueBacklogType.BACKGROUND)) return;
+  if (await fireAction(jobId, QueueBacklogType.NORMAL)) return;
+  if (await fireAction(jobId, QueueBacklogType.LOW)) return;
+  if (await fireAction(jobId, QueueBacklogType.BACKGROUND)) return;
 }
 
-export function queue(importance: QueueBacklogType, action: Function) {
-  backlog[importance].push(action);
+/**
+ * Fire an action
+ * @param jobId
+ * @param type
+ */
+async function fireAction(jobId: number, type: QueueBacklogType) {
+  // Check if there is an action to run
+  if (queueBacklog[type].length > 0) {
+    // Increment the total queues
+    totalQueues++;
+
+    // Get the action, and remove it from the queue
+    const action = queueBacklog[type].shift();
+
+    // Run the action
+    await action(jobId);
+
+    // Return true, thus stopping this job.
+    return true;
+  }
+
+  // Return false, thus continuing this job. Allowing a lesser important job to run.
+  return false;
 }
 
-export function queueAt(date: Date, action: Function) {
-  backlog.time.push({ time: date.getTime(), action: action });
+/**
+ * Fire a time based action
+ * @param jobId
+ * @param type
+ */
+async function fireTimeAction(jobId: number, type: QueueBacklogTimeType) {
+  // Check if there is an action to run
+  if (
+    queueBacklog[type].length > 0 &&
+    queueBacklog[type][0].time < Date.now()
+  ) {
+    // Increment the total queues
+    totalQueues++;
+
+    // Get the action, and remove it from the queue
+    const { action } = queueBacklog[type].shift();
+
+    // Run the action
+    await action(jobId);
+
+    // Return true, thus stopping this job.
+    return true;
+  }
+
+  // Return false, thus continuing this job. Allowing a lesser important job to run.
+  return false;
 }
 
-export function queueIn(ms: number, action: Function) {
-  backlog.timeout.push({ time: Date.now() + ms, action: action });
+/**
+ * Add an action to the queue
+ *
+ * ### Order of importance:
+ * - CRITICAL
+ * - URGENT
+ * - IMPORTANT
+ * - NORMAL
+ * - LOW
+ * - BACKGROUND
+ *
+ * @param importance
+ * @param action
+ */
+export function queue(
+  importance: QueueBacklogType,
+  action: (jobId: number) => Promise<unknown> | unknown,
+): void {
+  // Add to the queue
+  queueBacklog[importance].push(action);
+}
+
+/**
+ * Add an action to the queue at a specific time
+ * @param date
+ * @param action
+ */
+export function queueAt(
+  date: Date,
+  action: (jobId: number) => Promise<unknown> | unknown,
+): void {
+  // Add to the queue
+  queueBacklog.time.push({ time: date.getTime(), action: action });
+
+  // Sort the queue, this to prioritize the actions that need to be done first
+  queueBacklog.time.sort((a, b) => a.time - b.time);
+}
+
+/**
+ * Add an action to the queue in a specific amount of time
+ * @param ms
+ * @param action
+ */
+export function queueIn(
+  ms: number,
+  action: (jobId: number) => Promise<unknown> | unknown,
+): void {
+  // Add to the queue
+  queueBacklog.timeout.push({ time: Date.now() + ms, action: action });
+
+  // Sort the queue, this to prioritize the actions that need to be done first
+  queueBacklog.timeout.sort((a, b) => a.time - b.time);
 }
