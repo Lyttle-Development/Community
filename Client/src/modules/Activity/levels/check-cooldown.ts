@@ -4,11 +4,13 @@ import {
   incrementMemberModuleLevelNumber,
   setMemberModuleLevelValue,
 } from '../../../database/handlers';
-import {
-  TOKENS_COOLDOWN_ALLOWED,
-  TOKENS_COOLDOWN_TIME,
-} from '../../../../constants';
+import { COOLDOWN_ALLOWED, COOLDOWN_TIME } from './constants';
 
+/**
+ * Check the cooldown for a guild member.
+ * @param guildMember
+ * @param db_MemberModuleLevel
+ */
 export async function checkCooldown(
   guildMember: GuildMember,
   db_MemberModuleLevel: MemberModuleLevel,
@@ -26,7 +28,7 @@ export async function checkCooldown(
   }
 
   // Check if user is in cooldown & check if user is over the cooldown time.
-  if (!cooldownTime || timeBetween > TOKENS_COOLDOWN_TIME) {
+  if (!cooldownTime || timeBetween > COOLDOWN_TIME) {
     // If so reset the time and cooldown count.
     await setMemberModuleLevelValue(guildId, userId, {
       cooldown_time: new Date(),
@@ -44,7 +46,7 @@ export async function checkCooldown(
 
   // Create cooldown check.
   const cooldownCount = db_MemberModuleLevel.cooldown_count;
-  const inCooldown = cooldownCount > TOKENS_COOLDOWN_ALLOWED;
+  const inCooldown = cooldownCount > COOLDOWN_ALLOWED;
 
   // Return state.
   return { inCooldown, db_MemberModuleLevel };

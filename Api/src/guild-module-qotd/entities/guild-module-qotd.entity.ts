@@ -9,23 +9,30 @@ import {
 } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
 
+// TODO: Check against real database (what is and is not nullable)
 @Entity('guild__module__qotd')
 @ObjectType()
 export class GuildModuleQotd {
-  @PrimaryColumn()
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
+  // Relations
+  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  // Values
   @Column()
   @Field(() => Boolean)
   enabled: boolean;
 
-  @Column()
+  @Column({ type: 'bigint' })
   @Field(() => Int)
   channel_id: number;
 
-  @Column()
+  @Column({ type: 'bigint' })
   @Field(() => Int)
   message_id: number;
 
@@ -33,6 +40,7 @@ export class GuildModuleQotd {
   @Field(() => Boolean)
   nicknames: boolean;
 
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

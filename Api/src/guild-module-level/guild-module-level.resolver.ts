@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleLevelService } from './guild-module-level.service';
 import { GuildModuleLevel } from './entities/guild-module-level.entity';
 import { CreateGuildModuleLevelInput } from './dto/create-guild-module-level.input';
@@ -6,14 +6,19 @@ import { UpdateGuildModuleLevelInput } from './dto/update-guild-module-level.inp
 
 @Resolver(() => GuildModuleLevel)
 export class GuildModuleLevelResolver {
-  constructor(private readonly guildModuleLevelService: GuildModuleLevelService) {}
+  constructor(
+    private readonly guildModuleLevelService: GuildModuleLevelService,
+  ) {}
 
   @Mutation(() => GuildModuleLevel)
-  createGuildModuleLevel(@Args('createGuildModuleLevelInput') createGuildModuleLevelInput: CreateGuildModuleLevelInput) {
+  createGuildModuleLevel(
+    @Args('createGuildModuleLevelInput')
+    createGuildModuleLevelInput: CreateGuildModuleLevelInput,
+  ) {
     return this.guildModuleLevelService.create(createGuildModuleLevelInput);
   }
 
-  @Query(() => [GuildModuleLevel], { name: 'guildModuleLevel' })
+  @Query(() => [GuildModuleLevel], { name: 'guildModuleLevelAll' })
   findAll() {
     return this.guildModuleLevelService.findAll();
   }
@@ -24,8 +29,14 @@ export class GuildModuleLevelResolver {
   }
 
   @Mutation(() => GuildModuleLevel)
-  updateGuildModuleLevel(@Args('updateGuildModuleLevelInput') updateGuildModuleLevelInput: UpdateGuildModuleLevelInput) {
-    return this.guildModuleLevelService.update(updateGuildModuleLevelInput.id, updateGuildModuleLevelInput);
+  updateGuildModuleLevel(
+    @Args('updateGuildModuleLevelInput')
+    updateGuildModuleLevelInput: UpdateGuildModuleLevelInput,
+  ) {
+    return this.guildModuleLevelService.update(
+      updateGuildModuleLevelInput.id,
+      updateGuildModuleLevelInput,
+    );
   }
 
   @Mutation(() => GuildModuleLevel)

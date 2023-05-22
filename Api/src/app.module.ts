@@ -15,9 +15,16 @@ import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.
 import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
 import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
 import { MemberModuleLevelDayModule } from './member-module-level-day/member-module-level-day.module';
+import { GuildModuleVoiceGrowthModule } from './guild-module-voice-growth/guild-module-voice-growth.module';
+import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
+import { DiscordOauthModule } from './auth/discord-oauth.module';
+import { JwtAuthModule } from './auth/jwt-auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
+    DiscordOauthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
@@ -27,15 +34,17 @@ import { MemberModuleLevelDayModule } from './member-module-level-day/member-mod
         dateScalarMode: 'timestamp',
       },
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'postgres',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: process.env.HOST,
+        port: parseInt(process.env.TYPEORM_PORT),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }),
     }),
     GuildModule,
     MemberModule,
@@ -47,8 +56,10 @@ import { MemberModuleLevelDayModule } from './member-module-level-day/member-mod
     GuildModuleQotdModule,
     MemberModuleLevelModule,
     MemberModuleLevelDayModule,
+    GuildModuleVoiceGrowthModule,
+    JwtAuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DiscordOauthStrategy],
 })
 export class AppModule {}

@@ -27,7 +27,7 @@ model User {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// Client Relations - Modules
+// Client Relations
 ////////////////////////////////////////////////////////////////////////////////////////
 
 model UserProfile {
@@ -38,9 +38,8 @@ model UserProfile {
   user User @relation(fields: [user_id], references: [user_id])
 
   // Values
-  tokens        Float     @default(0)
-  birthday_date DateTime?
-  birthday      Int?
+  tokens      Float @default(0)
+  tokens_used Float @default(0)
 
   // Date information
   created_at DateTime @default(now())
@@ -62,26 +61,73 @@ model Guild {
   // - Members
   members Member[]
 
+  // - Cache
+  guild__translations GuildTranslation[]
+
   // - Modules
   guild__module__level           GuildModuleLevel?
+  guild__module__birthday        GuildModuleBirthday?
   guild__module__easter_egg      GuildModuleEasterEgg?
   guild__module__count_to_number GuildModuleCountToNumber[]
   guild__module__voice_growth    GuildModuleVoiceGrowth[]
-  guild__module__birthday        GuildModuleBirthday[]
-  guild__translations            GuildTranslation[]
-
-  // - Cache
-  // Todo add cache
 
   // Values
   enabled Boolean @default(true)
+
+  // Date information
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now()) @updatedAt
+  GuildAction GuildAction[]
+
+  // Refactors
+  @@map("guild")
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Guild Relations - Cache
+////////////////////////////////////////////////////////////////////////////////////////
+
+// Todo: Create Messages
+
+model GuildTranslation {
+  // Primary key information
+  guild_id BigInt
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  key   String
+  value String
 
   // Date information
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
   // Refactors
-  @@map("guild")
+  @@id([guild_id, key])
+  @@map("guild__translation")
+}
+
+model GuildAction {
+  // Primary key information
+  id Int @id @default(autoincrement())
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  key      String
+  values   String
+  guild_id BigInt
+  executed Boolean @default(false)
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@map("guild__action")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -219,33 +265,6 @@ model GuildModuleBirthday {
   @@map("guild__module__birthday")
 }
 
-model GuildTranslation {
-  // Primary key information
-  guild_id BigInt
-
-  // Relations
-  guild Guild @relation(fields: [guild_id], references: [guild_id])
-
-  // Values
-  key   String
-  value String
-
-  // Date information
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-
-  // Refactors
-  @@id([guild_id, key])
-  @@map("guild__translation")
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-// Guild Relations - Cache
-////////////////////////////////////////////////////////////////////////////////////////
-
-// Todo: Create Messages
-// Todo: Create Translations
-
 ////////////////////////////////////////////////////////////////////////////////////////
 // Member Section
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -256,13 +275,12 @@ model Member {
   guild_id BigInt
 
   // Relations
-  guild                      Guild                 @relation(fields: [guild_id], references: [guild_id])
-  member_level               MemberModuleLevel[]
-  member__module__level__day MemberModuleLevelDay?
+  guild                 Guild              @relation(fields: [guild_id], references: [guild_id])
+  member__module__level MemberModuleLevel?
 
   // Values
-  birthday_date DateTime?
-  birthday      Int?
+  birthday Int?
+  nickname String?
 
   // Date information
   created_at DateTime @default(now())
@@ -270,6 +288,7 @@ model Member {
 
   // Refactors
   @@id([guild_id, user_id])
+  @@unique([user_id, guild_id])
   @@map("member")
 }
 
@@ -283,16 +302,14 @@ model MemberModuleLevel {
   guild_id BigInt
 
   // Relations
-  member                     Member                 @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
-  member__module__level__day MemberModuleLevelDay[]
+  member                     Member                @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
+  member__module__level__day MemberModuleLevelDay?
 
   // Checks
   spam_check     Int      @default(0)
   cooldown_count Int      @default(0)
   cooldown_time  DateTime @default(now())
-  in_call        Boolean  @default(false)
   call_start     DateTime @default(now())
-  call_alone     Boolean  @default(false)
 
   // Actual level data:
   points Float @default(0)
@@ -303,6 +320,7 @@ model MemberModuleLevel {
 
   // Refactors
   @@id([guild_id, user_id])
+  @@unique([user_id, guild_id])
   @@map("member__module__level")
 }
 
@@ -312,7 +330,7 @@ model MemberModuleLevelDay {
   guild_id BigInt
 
   // Relations
-  member Member @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
+  member__module__level MemberModuleLevel @relation(fields: [user_id, guild_id], references: [user_id, guild_id])
 
   // Values
   points_monday    Int @default(0)
@@ -325,11 +343,8 @@ model MemberModuleLevelDay {
   points           Int @default(0) // Todo: Check if needed
 
   // Date information
-  created_at                    DateTime           @default(now())
-  updated_at                    DateTime           @default(now()) @updatedAt
-  member__module__level         MemberModuleLevel? @relation(fields: [member__module__levelGuild_id, member__module__levelUser_id], references: [guild_id, user_id])
-  member__module__levelGuild_id BigInt?
-  member__module__levelUser_id  BigInt?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 
   // Refactors
   @@id([guild_id, user_id])

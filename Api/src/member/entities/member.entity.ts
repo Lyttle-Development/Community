@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -14,15 +15,23 @@ import { MemberModuleLevel } from '../../member-module-level/entities/member-mod
 @Entity()
 @ObjectType()
 export class Member {
-  @PrimaryColumn()
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  // Primary key information
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @PrimaryColumn()
-  @ManyToOne(() => User, (user: User) => user.guild_id)
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   user_id: number;
+
+  // Relations
+  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
+  @Field(() => Guild)
+  guild: Guild;
+
+  @ManyToOne(() => User, (user: User) => user.user_id)
+  @Field(() => User)
+  user: User;
 
   @OneToOne(
     () => MemberModuleLevel,
@@ -31,6 +40,20 @@ export class Member {
   @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
 
+  // Values
+  @Column({ nullable: true })
+  @Field(() => Date, { nullable: true })
+  birthday_date: Date;
+
+  @Column({ nullable: true })
+  @Field(() => Int, { nullable: true })
+  birthday: number;
+
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  nickname: string;
+
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

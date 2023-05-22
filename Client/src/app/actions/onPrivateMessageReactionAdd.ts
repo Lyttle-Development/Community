@@ -1,4 +1,3 @@
-import { executor, test } from '../../utils';
 import { actionPrefix } from './index';
 import { MessageReaction, User } from 'discord.js';
 
@@ -13,8 +12,11 @@ export async function onPrivateMessageReactionAdd(
 ): Promise<void> {
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
-    executor(prefix + 'test', test, userId, messageReaction, user),
+    // executor(prefix + 'test', test, userId, messageReaction, user),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

@@ -4,6 +4,6 @@ import { DefaultVariables } from '../../../../Global/variables/config';
 export interface Variables extends DefaultVariables {
   lastLevel: string;
   level: string;
-  exp: string;
+  points: string;
   unit: string;
 }
