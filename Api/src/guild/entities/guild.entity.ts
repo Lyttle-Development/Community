@@ -5,7 +5,7 @@ import {
   Entity,
   OneToMany,
   OneToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { GuildModuleLevel } from '../../guild-module-level/entities/guild-module-level.entity';
@@ -13,27 +13,47 @@ import { GuildModuleQotd } from '../../guild-module-qotd/entities/guild-module-q
 import { GuildMessage } from '../../guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../../guild-translation/entities/guild-translation.entity';
 import { Member } from '../../member/entities/member.entity';
-
-let guildModuleLevel;
+import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
 @Entity()
 @ObjectType()
 export class Guild {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Int)
   guild_id: number;
 
-  @Column()
-  @Field(() => Boolean)
-  enabled: boolean;
+  // Relations
+  // - Members
+  @OneToMany(() => Member, (member: Member) => member.guild_id, {
+    nullable: true,
+  })
+  @Field(() => [Member])
+  members: Member[];
 
+  // - Cache
+  @OneToMany(
+    () => GuildTranslation,
+    (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
+    { nullable: true },
+  )
+  @Field(() => [GuildTranslation])
+  guildTranslations: GuildTranslation[];
+
+  // - Modules
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => guildModuleLevel)
+  @Field(() => GuildModuleLevel)
   guildModuleLevel: GuildModuleLevel;
 
   @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
   @Field(() => GuildModuleQotd)
   guildModuleQotd: GuildModuleQotd;
+
+  @OneToOne(() => GuildModuleVoiceGrowth, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  @Field(() => GuildModuleVoiceGrowth)
+  guildModuleVoiceGrowth: GuildModuleVoiceGrowth;
 
   @OneToMany(
     () => GuildMessage,
@@ -43,20 +63,12 @@ export class Guild {
   @Field(() => [GuildMessage])
   guildMessages: GuildMessage[];
 
-  @OneToMany(
-    () => GuildTranslation,
-    (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
-    { nullable: true },
-  )
-  @Field(() => [GuildTranslation])
-  guildTranslations: GuildTranslation[];
+  // Values
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 
-  @OneToMany(() => Member, (member: Member) => member.guild_id, {
-    nullable: true,
-  })
-  @Field(() => [Member])
-  members: Member[];
-
+  // Date information
   @CreateDateColumn()
   @Field(() => Date)
   created_at: Date;

@@ -16,6 +16,7 @@ import { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd
 import { GuildMessage } from '../guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../guild-translation/entities/guild-translation.entity';
 import { Member } from '../member/entities/member.entity';
+import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -40,10 +41,9 @@ export class GuildResolver {
 
   @Mutation(() => Guild)
   updateGuild(
-    @Args('updateGuildInput, id') updateGuildInput: UpdateGuildInput,
-    id: number,
+    @Args('updateGuildInput') updateGuildInput: UpdateGuildInput,
   ): Promise<Guild> {
-    return this.guildService.update(id, updateGuildInput);
+    return this.guildService.update(updateGuildInput.id, updateGuildInput);
   }
 
   @Mutation(() => Guild)
@@ -59,6 +59,11 @@ export class GuildResolver {
   @ResolveField(() => GuildModuleQotd)
   moduleQotd(@Parent() guild: Guild): Promise<GuildModuleQotd> {
     return this.guildService.getGuildModuleQotd(guild.guild_id);
+  }
+
+  @ResolveField(() => GuildModuleVoiceGrowth)
+  moduleVoiceGrowth(@Parent() guild: Guild): Promise<GuildModuleVoiceGrowth> {
+    return this.guildService.getGuildModuleVoiceGrowth(guild.guild_id);
   }
 
   @ResolveField(() => GuildMessage)

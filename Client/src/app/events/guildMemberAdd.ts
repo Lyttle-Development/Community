@@ -1,6 +1,7 @@
-import { GuildMember } from "discord.js";
-import { GuildMember as ClientGuildMember } from "../../types";
-import { onGuildMemberAdd } from "../actions";
+import { GuildMember } from 'discord.js';
+import { GuildMember as ClientGuildMember } from '../../types';
+import { onGuildMemberAdd } from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 // Emitted whenever a user subscribes to a guild scheduled event
 async function guildMemberAdd(member: GuildMember): Promise<void> {
@@ -15,6 +16,9 @@ async function guildMemberAdd(member: GuildMember): Promise<void> {
 
   // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Fire actions
   await onGuildMemberAdd(guildMember, member);

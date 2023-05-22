@@ -1,35 +1,60 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GuildMessageService } from './guild-message.service';
 import { GuildMessage } from './entities/guild-message.entity';
 import { CreateGuildMessageInput } from './dto/create-guild-message.input';
 import { UpdateGuildMessageInput } from './dto/update-guild-message.input';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Resolver(() => GuildMessage)
 export class GuildMessageResolver {
   constructor(private readonly guildMessageService: GuildMessageService) {}
 
   @Mutation(() => GuildMessage)
-  createGuildMessage(@Args('createGuildMessageInput') createGuildMessageInput: CreateGuildMessageInput) {
+  createGuildMessage(
+    @Args('createGuildMessageInput')
+    createGuildMessageInput: CreateGuildMessageInput,
+  ): Promise<GuildMessage> {
     return this.guildMessageService.create(createGuildMessageInput);
   }
 
   @Query(() => [GuildMessage], { name: 'guildMessage' })
-  findAll() {
+  findAll(): Promise<GuildMessage[]> {
     return this.guildMessageService.findAll();
   }
 
   @Query(() => GuildMessage, { name: 'guildMessage' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 
-  @Mutation(() => GuildMessage)
-  updateGuildMessage(@Args('updateGuildMessageInput') updateGuildMessageInput: UpdateGuildMessageInput) {
-    return this.guildMessageService.update(updateGuildMessageInput.id, updateGuildMessageInput);
+  @ResolveField(() => Guild)
+  getGuild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
+    return this.guildMessageService.getGuild(guildMessage.guild_id);
   }
 
   @Mutation(() => GuildMessage)
-  removeGuildMessage(@Args('id', { type: () => Int }) id: number) {
+  updateGuildMessage(
+    @Args('updateGuildMessageInput')
+    updateGuildMessageInput: UpdateGuildMessageInput,
+  ): Promise<GuildMessage> | null {
+    return this.guildMessageService.update(
+      updateGuildMessageInput.id,
+      updateGuildMessageInput,
+    );
+  }
+
+  @Mutation(() => GuildMessage)
+  removeGuildMessage(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<GuildMessage> | null {
     return this.guildMessageService.remove(id);
   }
 }

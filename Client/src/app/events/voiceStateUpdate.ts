@@ -1,11 +1,12 @@
-import { VoiceState } from "discord.js";
-import { GuildMember, VoiceEvent } from "../../types";
-import { onGuildVoiceStateUpdate } from "../actions";
+import { VoiceState } from 'discord.js';
+import { GuildMember, VoiceEvent } from '../../types';
+import { onGuildVoiceStateUpdate } from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 // Emitted whenever a member changes voice state - e.g. joins/leaves a channel, mutes/unmutes.
 async function voiceStateUpdate(
   oldState?: VoiceState,
-  newState?: VoiceState
+  newState?: VoiceState,
 ): Promise<void> {
   // Ignore bots
   if (oldState?.member?.user?.bot) return;
@@ -21,6 +22,9 @@ async function voiceStateUpdate(
 
   // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Get the event
   let voiceEvent: VoiceEvent = null;

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/Client/src/main.js",
-    "update-commands": "node dist/Client/src/deployCommands.js",
+    "update-commands": "node dist/Client/src/main.js --deploy-commands",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
     "prisma:dangerously-db-push": "prisma db push",

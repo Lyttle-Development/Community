@@ -1,13 +1,17 @@
 import { sleep } from './sleep';
 
+/**
+ * Test function
+ * @param args
+ */
 export async function test(...args) {
-  // console.log('test');
+  // log(LogType.LOG, 'test');
   await sleep(100);
 
   // randomly throw an error
   // if (Math.random() < 0.3) {
-  //   console.log('test error');
+  //   log(LogType.LOG, 'test error');
   //   throw new Error('test error');
   // }
-  // console.log('test done');
+  // log(LogType.LOG, 'test done');
 }

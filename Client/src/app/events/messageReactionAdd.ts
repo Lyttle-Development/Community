@@ -1,14 +1,15 @@
-import { MessageReaction, User } from "discord.js";
-import { GuildMember } from "../../types";
+import { MessageReaction, User } from 'discord.js';
+import { GuildMember } from '../../types';
 import {
   onGuildMessageReactionAdd,
-  onPrivateMessageReactionAdd
-} from "../actions";
+  onPrivateMessageReactionAdd,
+} from '../actions';
+import { checkGuildEnabled } from '../../utils';
 
 // Emitted whenever a reaction is added to a cached message.
 async function messageReactionAdd(
   messageReaction: MessageReaction,
-  user: User
+  user: User,
 ): Promise<void> {
   // Ignore bots
   if (user?.bot) return;
@@ -34,6 +35,9 @@ async function messageReactionAdd(
 
   // Check if we have a valid guildMember
   if (!guildMember?.guildId || !guildMember?.userId) return;
+
+  const guildEnabled = await checkGuildEnabled(guildMember);
+  if (!guildEnabled) return;
 
   // Fire actions
   await onGuildMessageReactionAdd(guildMember, messageReaction, user);

@@ -1,31 +1,63 @@
-import { LevelEventPrices } from './src/types';
+/**
+ * The developer's ids.
+ * This is used to message the devs when an error occurs.
+ */
+export const DEV_IDS: string[] = ['132487290835435521', '548240698869284884'];
 
-export const DEV_IDS = ['132487290835435521', '548240698869284884'];
+/**
+ * The channel to send the bot logs to.
+ */
+export const BOT_LOG_CHANNEL_ID = '1096487719603028019';
 
-// Time to wait before checking if user spammed.
-export const TOKENS_SPAM_PREVENTION_TIME = 3000;
+/**
+ * The channel to send the bot logs to.
+ */
+export const STATS_CHANNEL_ID = '1108822634264801380';
 
-// Allowed end result after spam prevention time.
-export const TOKENS_SPAM_ALLOWED = 2;
+/**
+ * The maximum allowed errors.
+ * If the "module" has this number, it will be disabled.
+ */
+export const ALLOWED_ERROR_COUNT = 3;
 
-// Allowed time between cooldowns.
-export const TOKENS_COOLDOWN_TIME = 30000;
+/**
+ * The maximum allowed requests per second.
+ * This will be used in the queue.
+ */
+export const ALLOWED_REQUESTS_SECOND = 10;
 
-// Allowed passes before end cooldown time.
-export const TOKENS_COOLDOWN_ALLOWED = 3;
+/**
+ * Maximum allowed message length.
+ * This is used to cut off messages that are too long.
+ */
+export const ALLOWED_MESSAGE_LENGTH = 2000;
 
-export const TOKENS_EVENT_PRICES: LevelEventPrices = {
-  default: 0,
-  invite: 55,
-  message: 31,
-  reaction: 24,
-  inCallTime: 1.54321,
-  voiceUpdate: 29,
-  messageEdit: 21,
-  easterEgg: 80,
-  command: 35,
-  threadCreate: 33,
-  eventInterest: 45,
-};
+/**
+ * The maximum allowed characters in a nickname.
+ */
+export const ALLOWED_NICKNAME_LENGTH = 32;
 
-export const ALMOST_7_DAYS = 600900000;
+/**
+ * The amount of time in milliseconds that a rate limit is allowed to last.
+ */
+export const ALLOWED_RATE_LIMIT_TIME = 1500;
+
+/**
+ * The maximum allowed rate limit amount.
+ */
+export const ALLOWED_RATE_LIMIT_AMOUNT = 3;
+
+/**
+ * Send stats to logging server every x milliseconds.
+ */
+export const SEND_STATS_INTERVAL = 1000 * 60 * 5; // 5 minutes
+
+/**
+ * Max amount of audit logs to keep in memory.
+ */
+export const MAX_AUDIT_LOGS = 100;
+
+/**
+ * Max audit log age.
+ */
+export const MAX_AUDIT_LOG_AGE = 20 * 1000; // 20 seconds

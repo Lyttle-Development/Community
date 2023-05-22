@@ -4,13 +4,15 @@ import {
   incrementMemberModuleLevelNumber,
   setMemberModuleLevelValue,
 } from '../../../database/handlers';
-import {
-  TOKENS_SPAM_ALLOWED,
-  TOKENS_SPAM_PREVENTION_TIME,
-} from '../../../../constants';
+import { SPAM_ALLOWED, SPAM_PREVENTION_TIME } from './constants';
 import { sleep } from '../../../utils';
 
+/**
+ * Prevents spam by checking if the user spammed.
+ * @param guildMember
+ */
 export async function preventSpam(guildMember: GuildMember) {
+  // Get guild and user id
   const { guildId, userId } = guildMember;
 
   // Get current spamCount.
@@ -22,7 +24,7 @@ export async function preventSpam(guildMember: GuildMember) {
   );
 
   // Sleep/wait for set timeout.
-  await sleep(TOKENS_SPAM_PREVENTION_TIME);
+  await sleep(SPAM_PREVENTION_TIME);
 
   // Get current spamCount.
   let db_MemberModuleLevel = await getOrCreateMemberModuleLevel(
@@ -40,6 +42,6 @@ export async function preventSpam(guildMember: GuildMember) {
   }
 
   // Return state.
-  const isSpamming = check2 > TOKENS_SPAM_ALLOWED;
+  const isSpamming = check2 > SPAM_ALLOWED;
   return { isSpamming, db_MemberModuleLevel };
 }

@@ -1,8 +1,13 @@
-import { executor } from '../../utils';
+import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
-import { createEvent } from '../../modules/Activity/levels/create-event';
+import {
+  checkDynamicChannels,
+  createEvent,
+  triggerCallEvent,
+} from '../../modules';
+import { checkVoiceTopicChannels } from '../../modules/Communication/voice-topics/check-channels';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -14,6 +19,8 @@ export async function onGuildVoiceStateUpdate(
   newState: VoiceState,
   voiceEvent: VoiceEvent,
 ): Promise<void> {
+  if (await limit(guildMember)) return;
+
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(
@@ -22,7 +29,32 @@ export async function onGuildVoiceStateUpdate(
       LevelEvent.voiceUpdate,
       guildMember,
     ),
+    executor(
+      prefix + 'levelCallEvent',
+      triggerCallEvent,
+      guildMember,
+      oldState,
+      newState,
+      voiceEvent,
+    ),
+    executor(
+      prefix + 'dynamicVoiceEvent',
+      checkDynamicChannels,
+      guildMember,
+      oldState,
+      newState,
+    ),
+    executor(
+      prefix + 'voiceTopicEvent',
+      checkVoiceTopicChannels,
+      guildMember,
+      oldState,
+      newState,
+    ),
   ];
+
+  // If no actions, return
+  if (actions.length < 1) return;
 
   // Execute all actions
   await Promise.all(actions);

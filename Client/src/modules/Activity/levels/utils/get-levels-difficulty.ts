@@ -1,17 +1,26 @@
 import { getPointsFromLevels } from './get-points-from-levels';
-import type { LevelDifficulty } from '../../../../types';
 
+/**
+ * Get the difficulty of a level
+ * @param guildId
+ * @param levels
+ */
 export async function getLevelDifficulty(
   guildId: string,
   levels: number,
-): Promise<LevelDifficulty> {
+): Promise<number> {
+  // Get the xp for one level
   const xpForOne = await getPointsFromLevels(guildId, 1);
+
+  // Get the current xp
   const currentXp = await getPointsFromLevels(guildId, levels);
 
+  // Get the times
   let times = Math.round((currentXp - xpForOne) / xpForOne);
-  const procent = Math.round(((currentXp - xpForOne) / xpForOne) * 100);
 
+  // If the times is below 1, set it to 0
   times = times < 1 ? 0 : times;
 
-  return { times, procent };
+  // Return the times
+  return times;
 }
