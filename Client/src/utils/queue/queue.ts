@@ -4,6 +4,7 @@ import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
 import { LogType } from '../../types';
 import { log } from '../log';
 import { checkActionsQueue } from './actions-queue';
+import { triggerChecks } from './trigger-checks';
 
 // Weather the queue is active or not
 let queueActive = false;
@@ -82,6 +83,9 @@ export function initQueue() {
 
     // Check for actions, queued by the bot
     checkActionsQueue();
+
+    // Check for checks
+    void triggerChecks();
   }, 1000);
 
   // Set the queue to active

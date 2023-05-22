@@ -3,6 +3,10 @@ export const ModuleMarkdown = {
   Activity: {
     'birth-day': {
       txt: {
+        announcement: {
+          content: 'Happy Birthday, {users}!',
+          documentation: '',
+        },
         'error-date': {
           content: 'The date we got was invalid, please try again!',
           documentation: '',
@@ -39,7 +43,7 @@ export const ModuleMarkdown = {
         },
         'question-confirm': {
           content:
-            'So if everything is correct...\n{prefix}You were born on {day} {month}.',
+            'So if everything is correct...\nYou were born on {day} {month}.',
           documentation: '',
         },
         'question-confirm-image-url': {
@@ -64,29 +68,34 @@ export const ModuleMarkdown = {
     levels: {
       commands: {
         'get-levels': {
+          failed: {
+            content:
+              "**Oh no!**\nIt looks like we did not have the requirements for nice data!\nThe user(s) you gave me were not in our record or did not have that nice data we need...\nI'm so sorry, try with other users or say to your friend to be active xD!",
+            documentation: '',
+          },
           other: {
             content:
-              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}They needs **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** bigger than their first level ever...  📈',
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}.  🪙\nThey needs **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** bigger than their first level ever...  📈',
             documentation: '',
           },
           others: {
             content:
-              '{levelsUnit}: **{levels}**\n{prefix}{pointsUnit}: **{points}**\n{prefix}**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\n{prefix}Leveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
+              '{levelsUnit}: **{levels}**\n{pointsUnit}: **{points}**\n**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\nLeveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
             documentation: '',
           },
           'others-ahead': {
             content:
-              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **ahead** 🏃',
+              'Is {levels} {levelsUnit} or {points} {pointsUnit} **ahead** 🏃',
             documentation: '',
           },
           'others-behind': {
             content:
-              'Is {levels} {levelsUnit}\n{prefix}or {points} {pointsUnit} **behind** 🚶',
+              'Is {levels} {levelsUnit} or {points} {pointsUnit} **behind** 🚶',
             documentation: '',
           },
           yourself: {
             content:
-              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}.  🪙\n{prefix}You need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\n{prefix}Leveling **difficulty** is **{timesHarder}** times bigger than your first level ever...  📈',
+              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}.  🪙\nYou need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times bigger than your first level ever...  📈',
             documentation: '',
           },
         },
@@ -155,7 +164,7 @@ export const ModuleMarkdown = {
       txt: {
         deleted: {
           content:
-            'The channel was deleted due to inactivity!\n{prefix}If you still want to be on-topic, create a new one!',
+            'The channel was deleted due to inactivity!\nIf you still want to be on-topic, create a new one!',
           documentation: '',
         },
         'dialog-limit': {
@@ -172,12 +181,12 @@ export const ModuleMarkdown = {
         },
         joined: {
           content:
-            'Channel has been created successfully!\n{prefix}Have fun talking! *(hopefully on-topic 😉!)*',
+            'Channel has been created successfully!\nHave fun talking! *(hopefully on-topic 😉!)*',
           documentation: '',
         },
         success: {
           content:
-            "Channel has been created successfully!\n{prefix}We will delete this channel <t:{time}:R> if you don't go into it.",
+            "Channel has been created successfully!\nWe will delete this channel <t:{time}:R> if you don't go into it.",
           documentation: '',
         },
       },

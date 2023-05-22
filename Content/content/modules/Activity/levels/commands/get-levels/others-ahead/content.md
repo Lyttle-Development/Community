@@ -1,2 +1,1 @@
-Is {levels} {levelsUnit}
-{prefix}or {points} {pointsUnit} **ahead** 🏃
+Is {levels} {levelsUnit} or {points} {pointsUnit} **ahead** 🏃

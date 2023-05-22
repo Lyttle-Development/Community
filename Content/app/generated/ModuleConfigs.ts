@@ -1,4 +1,5 @@
 // This file is auto generated, do not edit it manually.
+export * as ModuleConfigActivityBirthDayTxtAnnouncement from '../../content/modules/Activity/birth-day/txt/announcement/config';
 export * as ModuleConfigActivityBirthDayTxtErrorDate from '../../content/modules/Activity/birth-day/txt/error-date/config';
 export * as ModuleConfigActivityBirthDayTxtErrorSet from '../../content/modules/Activity/birth-day/txt/error-set/config';
 export * as ModuleConfigActivityBirthDayTxtErrorTimeout from '../../content/modules/Activity/birth-day/txt/error-timeout/config';
@@ -12,6 +13,7 @@ export * as ModuleConfigActivityBirthDayTxtQuestionConfirmImageUrl from '../../c
 export * as ModuleConfigActivityBirthDayTxtResultClosure from '../../content/modules/Activity/birth-day/txt/result-closure/config';
 export * as ModuleConfigActivityBirthDayTxtResultFaulty from '../../content/modules/Activity/birth-day/txt/result-faulty/config';
 export * as ModuleConfigActivityBirthDayTxtResultSuccess from '../../content/modules/Activity/birth-day/txt/result-success/config';
+export * as ModuleConfigActivityLevelsCommandsGetLevelsFailed from '../../content/modules/Activity/levels/commands/get-levels/failed/config';
 export * as ModuleConfigActivityLevelsCommandsGetLevelsOther from '../../content/modules/Activity/levels/commands/get-levels/other/config';
 export * as ModuleConfigActivityLevelsCommandsGetLevelsOthers from '../../content/modules/Activity/levels/commands/get-levels/others/config';
 export * as ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead from '../../content/modules/Activity/levels/commands/get-levels/others-ahead/config';
