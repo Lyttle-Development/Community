@@ -1,0 +1,25 @@
+$color-primary: #6E00FF;
+$color-secondary: #FF7A49;
+$color-tertiary: #FEB900;
+
+$color-text: #FAFAFA;
+$color-text-light: #000000;
+$color-text-dark: #000000;
+
+$color-background: #0E1015;
+$color-background-light: #181A20;
+$color-background-dark: #000000;
+
+$main-nav-width: 15rem;
+
+:export {
+  colorPrimary: $color-primary;
+  colorSecondary: $color-secondary;
+  colorTertiary: $color-tertiary;
+  colorText: $color-text;
+  colorTextLight: $color-text-light;
+  colorTextDark: $color-text-dark;
+  colorBackground: $color-background;
+  colorBackgroundLight: $color-background-light;
+  colorBackgroundDark: $color-background-dark;
+}

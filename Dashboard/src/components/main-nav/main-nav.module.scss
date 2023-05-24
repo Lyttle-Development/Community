@@ -1,0 +1,10 @@
+@use '../../styles/variables.scss' as v;
+
+.main-menu {
+  position: fixed;
+  width: v.$main-nav-width;
+  background-color: v.$color-background-light;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
