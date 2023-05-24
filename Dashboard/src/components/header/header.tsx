@@ -1,3 +1,3 @@
 export function Header() {
-  return <footer>Hello from header</footer>;
+  return <header>Hello from header</header>;
 }
