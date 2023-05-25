@@ -16,7 +16,7 @@ function Page() {
 
   return (
     <>
-      <Component.Title>Servers</Component.Title>
+      <Component.Title>{title}</Component.Title>
       <div>Test</div>
     </>
   );

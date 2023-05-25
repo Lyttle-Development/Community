@@ -18,7 +18,7 @@ function Page() {
 
   return (
     <>
-      <Component.Title>Home</Component.Title>
+      <Component.Title>{title}</Component.Title>
       <div className={styles.main}>Test</div>
     </>
   );
