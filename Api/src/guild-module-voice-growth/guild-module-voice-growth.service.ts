@@ -12,8 +12,12 @@ export class GuildModuleVoiceGrowthService {
     private guildModuleVoiceGrowthRepository: Repository<GuildModuleVoiceGrowth>,
   ) {}
 
-  create(createGuildModuleVoiceGrowthInput: CreateGuildModuleVoiceGrowthInput) {
-    return 'This action adds a new guildModuleVoiceGrowth';
+  create(
+    createGuildModuleVoiceGrowthInput: CreateGuildModuleVoiceGrowthInput,
+  ): Promise<GuildModuleVoiceGrowth> {
+    return this.guildModuleVoiceGrowthRepository.save(
+      createGuildModuleVoiceGrowthInput,
+    );
   }
 
   findAll(): Promise<GuildModuleVoiceGrowth[]> {
@@ -26,14 +30,33 @@ export class GuildModuleVoiceGrowthService {
     });
   }
 
-  update(
+  async update(
     id: number,
     updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput,
-  ) {
-    return `This action updates a #${id} guildModuleVoiceGrowth`;
+  ): Promise<GuildModuleVoiceGrowth> | null {
+    const guildModuleVoiceGrowth: GuildModuleVoiceGrowth =
+      await this.guildModuleVoiceGrowthRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleVoiceGrowth) {
+      return this.guildModuleVoiceGrowthRepository.save({
+        ...guildModuleVoiceGrowth,
+        ...updateGuildModuleVoiceGrowthInput,
+      });
+    }
+    throw new Error('GuildModuleVoiceGrowth not found');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleVoiceGrowth`;
+  async remove(id: number): Promise<GuildModuleVoiceGrowth> | null {
+    const guildModuleVoiceGrowth: GuildModuleVoiceGrowth =
+      await this.guildModuleVoiceGrowthRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleVoiceGrowth) {
+      return this.guildModuleVoiceGrowthRepository.remove(
+        guildModuleVoiceGrowth,
+      );
+    }
+    throw new Error('GuildModuleVoiceGrowth not found');
   }
 }

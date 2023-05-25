@@ -1,8 +1,25 @@
 import { CreateGuildModuleVoiceGrowthInput } from './create-guild-module-voice-growth.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateGuildModuleVoiceGrowthInput extends PartialType(CreateGuildModuleVoiceGrowthInput) {
+export class UpdateGuildModuleVoiceGrowthInput extends PartialType(
+  CreateGuildModuleVoiceGrowthInput,
+) {
   @Field(() => Int)
   id: number;
+
+  @Field(() => Int)
+  channel_id: number;
+
+  @Field(() => Boolean, { defaultValue: false })
+  enabled: boolean;
+
+  @Field(() => String, { nullable: true })
+  preset: string;
+
+  @Field(() => String, { nullable: true })
+  prefix: string;
+
+  @Field(() => Boolean, { defaultValue: false })
+  manual: boolean;
 }
