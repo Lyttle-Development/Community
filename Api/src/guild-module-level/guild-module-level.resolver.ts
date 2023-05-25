@@ -14,17 +14,19 @@ export class GuildModuleLevelResolver {
   createGuildModuleLevel(
     @Args('createGuildModuleLevelInput')
     createGuildModuleLevelInput: CreateGuildModuleLevelInput,
-  ) {
+  ): Promise<GuildModuleLevel> {
     return this.guildModuleLevelService.create(createGuildModuleLevelInput);
   }
 
   @Query(() => [GuildModuleLevel], { name: 'guildModuleLevelAll' })
-  findAll() {
+  findAll(): Promise<GuildModuleLevel[]> {
     return this.guildModuleLevelService.findAll();
   }
 
   @Query(() => GuildModuleLevel, { name: 'guildModuleLevel' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<GuildModuleLevel> {
     return this.guildModuleLevelService.findOne(id);
   }
 
@@ -32,7 +34,7 @@ export class GuildModuleLevelResolver {
   updateGuildModuleLevel(
     @Args('updateGuildModuleLevelInput')
     updateGuildModuleLevelInput: UpdateGuildModuleLevelInput,
-  ) {
+  ): Promise<GuildModuleLevel> | null {
     return this.guildModuleLevelService.update(
       updateGuildModuleLevelInput.id,
       updateGuildModuleLevelInput,
@@ -40,7 +42,9 @@ export class GuildModuleLevelResolver {
   }
 
   @Mutation(() => GuildModuleLevel)
-  removeGuildModuleLevel(@Args('id', { type: () => Int }) id: number) {
+  removeGuildModuleLevel(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<GuildModuleLevel> | null {
     return this.guildModuleLevelService.remove(id);
   }
 }

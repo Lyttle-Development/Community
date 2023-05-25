@@ -12,12 +12,14 @@ export class GuildModuleLevelService {
     private guildModuleLevelRepository: Repository<GuildModuleLevel>,
   ) {}
 
-  create(createGuildModuleLevelInput: CreateGuildModuleLevelInput) {
-    return 'This action adds a new guildModuleLevel';
+  create(
+    createGuildModuleLevelInput: CreateGuildModuleLevelInput,
+  ): Promise<GuildModuleLevel> {
+    return this.guildModuleLevelRepository.save(createGuildModuleLevelInput);
   }
 
-  findAll() {
-    return `This action returns all guildModuleLevel`;
+  findAll(): Promise<GuildModuleLevel[]> {
+    return this.guildModuleLevelRepository.find();
   }
 
   findOne(id: number): Promise<GuildModuleLevel> {
@@ -26,11 +28,31 @@ export class GuildModuleLevelService {
     });
   }
 
-  update(id: number, updateGuildModuleLevelInput: UpdateGuildModuleLevelInput) {
-    return `This action updates a #${id} guildModuleLevel`;
+  async update(
+    id: number,
+    updateGuildModuleLevelInput: UpdateGuildModuleLevelInput,
+  ): Promise<GuildModuleLevel> | null {
+    const guildModuleLevel: GuildModuleLevel =
+      await this.guildModuleLevelRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleLevel) {
+      return this.guildModuleLevelRepository.save({
+        ...guildModuleLevel,
+        ...updateGuildModuleLevelInput,
+      });
+    }
+    throw new Error('GuildModuleLevel not found');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleLevel`;
+  async remove(id: number): Promise<GuildModuleLevel> | null {
+    const guildModuleLevel: GuildModuleLevel =
+      await this.guildModuleLevelRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleLevel) {
+      return this.guildModuleLevelRepository.remove(guildModuleLevel);
+    }
+    throw new Error('GuildModuleLevel not found');
   }
 }
