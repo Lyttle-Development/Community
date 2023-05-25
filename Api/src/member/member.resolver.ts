@@ -11,12 +11,12 @@ export class MemberResolver {
   @Mutation(() => Member)
   createMember(
     @Args('createMemberInput') createMemberInput: CreateMemberInput,
-  ) {
+  ): Promise<Member> {
     return this.memberService.create(createMemberInput);
   }
 
   @Query(() => [Member], { name: 'member' })
-  findAll() {
+  findAll(): Promise<Member[]> {
     return this.memberService.findAll();
   }
 
@@ -24,19 +24,22 @@ export class MemberResolver {
   findOne(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('guildId', { type: () => Int }) guildId: number,
-  ) {
+  ): Promise<Member> {
     return this.memberService.findOne(userId, guildId);
   }
 
   @Mutation(() => Member)
   updateMember(
     @Args('updateMemberInput') updateMemberInput: UpdateMemberInput,
-  ) {
-    return this.memberService.update(updateMemberInput.id, updateMemberInput);
+  ): Promise<Member> | null {
+    return this.memberService.update(updateMemberInput);
   }
 
   @Mutation(() => Member)
-  removeMember(@Args('id', { type: () => Int }) id: number) {
-    return this.memberService.remove(id);
+  removeMember(
+    @Args('id', { type: () => Int }) guildId: number,
+    userId: number,
+  ): Promise<Member> | null {
+    return this.memberService.remove(guildId, userId);
   }
 }

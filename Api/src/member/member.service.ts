@@ -12,8 +12,8 @@ export class MemberService {
     private memberRepository: Repository<Member>,
   ) {}
 
-  create(createMemberInput: CreateMemberInput) {
-    return 'This action adds a new member';
+  create(createMemberInput: CreateMemberInput): Promise<Member> {
+    return this.memberRepository.save(createMemberInput);
   }
 
   findAll(): Promise<Member[]> {
@@ -32,11 +32,29 @@ export class MemberService {
     });
   }
 
-  update(id: number, updateMemberInput: UpdateMemberInput) {
-    return `This action updates a #${id} member`;
+  async update(updateMemberInput: UpdateMemberInput): Promise<Member> | null {
+    const member: Member = await this.memberRepository.findOne({
+      where: {
+        user_id: updateMemberInput.user_id,
+        guild_id: updateMemberInput.guild_id,
+      },
+    });
+    if (member) {
+      return this.memberRepository.save({ ...member, ...updateMemberInput });
+    }
+    throw new Error('Member not found');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} member`;
+  async remove(guildId: number, userId: number): Promise<Member> | null {
+    const member: Member = await this.memberRepository.findOne({
+      where: {
+        user_id: userId,
+        guild_id: guildId,
+      },
+    });
+    if (member) {
+      return this.memberRepository.remove(member);
+    }
+    throw new Error('Member not found');
   }
 }
