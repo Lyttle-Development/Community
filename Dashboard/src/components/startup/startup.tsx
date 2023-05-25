@@ -11,20 +11,21 @@ export function Startup() {
 
   // Start startup animation
   useEffect(() => {
+    const base = 1500;
     // Open the main nav after 700ms
     setTimeout(() => {
       setMainNavOpen(true);
-    }, 700);
+    }, base - 300);
 
     // Close startup logo after 1 second
     setTimeout(() => {
       setHide(true);
-    }, 1000);
+    }, base);
 
     // Hide startup logo after 1.6 seconds
     setTimeout(() => {
       setHidden(true);
-    }, 1600);
+    }, base + 600);
   }, []);
 
   return (

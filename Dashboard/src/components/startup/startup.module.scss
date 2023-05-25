@@ -17,6 +17,8 @@
 .img {
   display: block;
   width: 50%;
+  animation-name: startup;
+  animation-duration: .8s;
 }
 
 
@@ -33,6 +35,15 @@
 
 .hidden {
   display: none;
+}
+
+@keyframes startup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes hide {
