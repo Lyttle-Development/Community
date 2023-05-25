@@ -13,6 +13,7 @@ export function Default({ children }: DefaultProps) {
 
   return (
     <Layout.Base>
+      <Component.Startup></Component.Startup>
       <div className={`default-layout ${mainNavOpen ? 'main-nav--open' : ''}`}>
         <Component.MainNav />
         <section>

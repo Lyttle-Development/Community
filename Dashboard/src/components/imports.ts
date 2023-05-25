@@ -5,3 +5,4 @@ export * from './main-nav-item';
 export * from './logo';
 export * from './link';
 export * from './title';
+export * from './startup';
