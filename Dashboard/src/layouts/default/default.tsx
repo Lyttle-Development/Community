@@ -18,8 +18,10 @@ export function Default({ children }: DefaultProps) {
         <Component.MainNav />
         <section>
           <Component.Header />
-          <main>{children}</main>
-          <Component.Footer />
+          <Layout.Transition>
+            <main>{children}</main>
+          </Layout.Transition>
+          {/* <Component.Footer />*/}
         </section>
       </div>
     </Layout.Base>
