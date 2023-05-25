@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { storage } from '@lyttledev-dashboard/utils/storage';
+import { getMessage } from '@lyttledev-dashboard/utils';
+import { pagesPrefix } from '@lyttledev-dashboard/pages';
 
 export interface AppContextInterface {
   mainNavOpen: boolean;
@@ -7,6 +9,8 @@ export interface AppContextInterface {
   toggleMainNav: () => void;
   selectedGuildId: string | null;
   setSelectedGuildId: (guildId: string | null) => void;
+  pageTitle: string;
+  setPageTitle: (title: string) => void;
 }
 
 export type AppContextType = AppContextInterface | null;
@@ -34,6 +38,9 @@ export function AppProvider({ children }: AppContextProps) {
     storage.set('selectedGuildId', guildId ?? '');
   };
 
+  const homeTitle = getMessage(pagesPrefix + 'home.title');
+  const [pageTitle, setPageTitle] = React.useState(homeTitle);
+
   return (
     <AppContext.Provider
       value={{
@@ -42,6 +49,8 @@ export function AppProvider({ children }: AppContextProps) {
         toggleMainNav,
         setSelectedGuildId,
         selectedGuildId,
+        pageTitle,
+        setPageTitle,
       }}
     >
       {children}

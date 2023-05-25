@@ -231,6 +231,20 @@ export const ModuleMarkdown = {
         },
       },
     },
+    pages: {
+      dashboard: {
+        title: {
+          content: 'Servers',
+          documentation: '',
+        },
+      },
+      home: {
+        title: {
+          content: 'Home',
+          documentation: '',
+        },
+      },
+    },
   },
   Global: {
     months: {

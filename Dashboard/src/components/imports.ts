@@ -10,5 +10,6 @@ export * from './title';
 export * from './startup';
 export * from './search';
 export * from './container';
+export * from './avatar';
 
 export const componentsPrefix = dashboardPrefix + 'components.';
