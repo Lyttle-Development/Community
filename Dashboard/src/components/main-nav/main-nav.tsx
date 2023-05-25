@@ -4,20 +4,18 @@ import { Component } from '@lyttledev-dashboard/components';
 import Link from 'next/link';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 
-export interface MainNavProps {
-  open: boolean;
-}
-
-export function MainNav({ open }: MainNavProps) {
+export function MainNav() {
   const app = useApp();
   const selectedGuildId = app?.selectedGuildId ?? null;
+  const mainNavOpen = app?.mainNavOpen ?? false;
+
   const prefix = 'main-nav';
-  const openClass = open
+  const openClass = mainNavOpen
     ? `${prefix} ${prefix}--open`
     : `${prefix} ${prefix}--closed`;
 
   const signOut = () => {
-    window.alert('sign out');
+    window.alert('Currently not implemented!');
   };
 
   return (

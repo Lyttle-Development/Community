@@ -10,14 +10,12 @@ export interface DefaultProps {
 export function Default({ children }: DefaultProps) {
   const app = useApp();
   const mainNavOpen = app?.mainNavOpen ?? false;
-  const toggleMainNav = app?.toggleMainNav ?? (() => console.log(':"('));
 
   return (
     <Layout.Base>
       <div className={`default-layout ${mainNavOpen ? 'main-nav--open' : ''}`}>
-        <Component.MainNav open={mainNavOpen} />
+        <Component.MainNav />
         <section>
-          <button onClick={toggleMainNav}>{'E'.repeat(50)}</button>
           <Component.Header />
           <main>{children}</main>
           <Component.Footer />
