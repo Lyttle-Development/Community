@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { Profile } from '../profile/entities/profile.entity';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -26,8 +27,8 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: 'user' })
-  profile(@Args('id', { type: () => Int }) id: number): Promise<User> {
-    return this.userService.findOne(id);
+  profile(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
+    return this.userService.getProfile(id);
   }
 
   // currently not implemented

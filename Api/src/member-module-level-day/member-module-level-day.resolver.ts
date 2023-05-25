@@ -3,6 +3,8 @@ import { MemberModuleLevelDayService } from './member-module-level-day.service';
 import { MemberModuleLevelDay } from './entities/member-module-level-day.entity';
 import { CreateMemberModuleLevelDayInput } from './dto/create-member-module-level-day.input';
 import { UpdateMemberModuleLevelDayInput } from './dto/update-member-module-level-day.input';
+import { Guild } from '../guild/entities/guild.entity';
+import { Member } from '../member/entities/member.entity';
 
 @Resolver(() => MemberModuleLevelDay)
 export class MemberModuleLevelDayResolver {
@@ -31,6 +33,19 @@ export class MemberModuleLevelDayResolver {
     userId: number,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
+  }
+
+  @Query(() => MemberModuleLevelDay, { name: 'memberModuleLevelDay' })
+  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
+    return this.memberModuleLevelDayService.getGuild(id);
+  }
+
+  @Query(() => MemberModuleLevelDay, { name: 'memberModuleLevelDay' })
+  member(
+    @Args('id', { type: () => Int }) guildId: number,
+    memberId: number,
+  ): Promise<Member> {
+    return this.memberModuleLevelDayService.getMember(guildId, memberId);
   }
 
   @Mutation(() => MemberModuleLevelDay)
