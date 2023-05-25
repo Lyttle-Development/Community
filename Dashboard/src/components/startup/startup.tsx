@@ -28,12 +28,16 @@ export function Startup() {
   }, []);
 
   return (
-    <div
-      className={`${styles.startup} ${hide && styles.hide} ${
-        hidden && styles.hidden
-      }`}
-    >
-      <Component.Logo className={styles.img} />
-    </div>
+    <>
+      {!hidden && (
+        <div
+          className={`${styles.startup} ${hide && styles.hide} ${
+            hidden && styles.hidden
+          }`}
+        >
+          <Component.Logo className={styles.img} />
+        </div>
+      )}
+    </>
   );
 }
