@@ -12,12 +12,14 @@ export class GuildModuleQotdService {
     private guildModuleQotdRepository: Repository<GuildModuleQotd>,
   ) {}
 
-  create(createGuildModuleQotdInput: CreateGuildModuleQotdInput) {
-    return 'This action adds a new guildModuleQotd';
+  create(
+    createGuildModuleQotdInput: CreateGuildModuleQotdInput,
+  ): Promise<GuildModuleQotd> {
+    return this.guildModuleQotdRepository.save(createGuildModuleQotdInput);
   }
 
-  findAll() {
-    return `This action returns all guildModuleQotd`;
+  findAll(): Promise<GuildModuleQotd[]> {
+    return this.guildModuleQotdRepository.find();
   }
 
   findOne(id: number): Promise<GuildModuleQotd> {
@@ -26,11 +28,31 @@ export class GuildModuleQotdService {
     });
   }
 
-  update(id: number, updateGuildModuleQotdInput: UpdateGuildModuleQotdInput) {
-    return `This action updates a #${id} guildModuleQotd`;
+  async update(
+    id: number,
+    updateGuildModuleQotdInput: UpdateGuildModuleQotdInput,
+  ): Promise<GuildModuleQotd> | null {
+    const guildModuleQotd: GuildModuleQotd =
+      await this.guildModuleQotdRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleQotd) {
+      return this.guildModuleQotdRepository.save({
+        ...guildModuleQotd,
+        ...updateGuildModuleQotdInput,
+      });
+    }
+    throw new Error('GuildModuleQotd not found');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleQotd`;
+  async remove(id: number): Promise<GuildModuleQotd> | null {
+    const guildModuleQotd: GuildModuleQotd =
+      await this.guildModuleQotdRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleQotd) {
+      return this.guildModuleQotdRepository.remove(guildModuleQotd);
+    }
+    throw new Error('GuildModuleQotd not found');
   }
 }
