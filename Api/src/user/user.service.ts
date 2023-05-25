@@ -47,9 +47,17 @@ export class UserService {
     return this.profileService.findOne(id);
   }
 
-  // currently not implemented
-  async update(id: number, updateUserInput: UpdateUserInput): Promise<string> {
-    return `This action updates a #${id} user`;
+  async update(
+    id: number,
+    updateUserInput: UpdateUserInput,
+  ): Promise<User> | null {
+    const user: User = await this.userRepository.findOne({
+      where: { user_id: id },
+    });
+    if (user) {
+      return this.userRepository.save({ ...user, ...updateUserInput });
+    }
+    throw new Error('User not found');
   }
 
   async remove(id: number): Promise<User> | null {

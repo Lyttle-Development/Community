@@ -34,12 +34,14 @@ export class UserResolver {
   @Mutation(() => User)
   updateUser(
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
-  ): Promise<string> {
+  ): Promise<User> | null {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
+  removeUser(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<User> | null {
     return this.userService.remove(id);
   }
 }
