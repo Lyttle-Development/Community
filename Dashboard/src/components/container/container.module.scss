@@ -1,0 +1,7 @@
+@use '../../styles/variables.scss' as v;
+
+.container {
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  max-width: v.$max-container-width;
+}
