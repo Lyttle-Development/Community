@@ -34,7 +34,7 @@ export class ProfileResolver {
   @Mutation(() => Profile)
   updateProfile(
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
-  ) {
+  ): Promise<Profile> | null {
     return this.profileService.update(
       updateProfileInput.id,
       updateProfileInput,
