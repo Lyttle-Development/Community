@@ -12,6 +12,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @UseGuards(AuthGuard('discord'))
+  @Get('auth/discord')
+  async discordAuth(@Request() req) {
+    return req.user;
+  }
+
   @Post('auth/login')
   async login(@Request() req) {
     return req.user;
