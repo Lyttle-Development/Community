@@ -1,8 +1,14 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
 import styles from './index.module.scss';
+import { Component } from '@lyttledev-dashboard/components';
 
 function Page() {
-  return <div className={styles.main}>Test</div>;
+  return (
+    <>
+      <Component.Title>Home</Component.Title>
+      <div className={styles.main}>Test</div>
+    </>
+  );
 }
 
 Page.getLayout = Layout.getDefault;

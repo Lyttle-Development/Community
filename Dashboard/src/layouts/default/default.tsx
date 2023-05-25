@@ -1,7 +1,6 @@
 import { Component } from '@lyttledev-dashboard/components';
 import { Layout } from '@lyttledev-dashboard/layouts';
 import React from 'react';
-import './default.scss';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 
 export interface DefaultProps {

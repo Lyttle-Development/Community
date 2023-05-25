@@ -1,3 +1,5 @@
+import styles from './header.module.scss';
+
 export function Header() {
-  return <header>Hello from header</header>;
+  return <header className={styles.header}>Hello from header</header>;
 }
