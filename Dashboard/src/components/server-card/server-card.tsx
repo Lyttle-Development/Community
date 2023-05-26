@@ -1,4 +1,7 @@
-import { componentsPrefix } from '@lyttledev-dashboard/components/imports';
+import {
+  ButtonColors,
+  componentsPrefix,
+} from '@lyttledev-dashboard/components/imports';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import Image from 'next/image';
 import styles from './server-card.module.scss';
@@ -24,8 +27,8 @@ export function ServerCard({ active }: ServerCardProps) {
 
   // Values
   const guildImage = '/media/images/placeholder.png';
-  const guildName = 'LyttleDev';
-  const guildId = '874234773969715230';
+  const guildName = active ? 'LyttleDev' : 'KneegHub';
+  const guildId = active ? '874234773969715230' : '874234773969716230';
   const staffMembers = 8;
   const modules = 12;
   const members = 245;
@@ -43,7 +46,7 @@ export function ServerCard({ active }: ServerCardProps) {
         <h2>{guildName}</h2>
         <p>{msgSetup}</p>
         <Component.Button
-          color={SCSSPrimaryColors.organge}
+          color={ButtonColors.orange}
           text={msgSetupButton}
           // Todo: Setup server
           onClick={() => window.alert('Setup')}
@@ -80,7 +83,7 @@ export function ServerCard({ active }: ServerCardProps) {
         active={active}
         // Todo: Toggle server / add to actions for graphql
         onClick={(e) => alert('Switched!')}
-        color={SCSSPrimaryColors.organge}
+        color={SCSSPrimaryColors.orange}
         className={styles.switch}
       />
     </Component.Link>

@@ -41,3 +41,17 @@
   align-items: flex-end;
   margin-bottom: 1.5rem;
 }
+
+.guild {
+  transition: transform .5s ease-in-out;
+  transform: translateX(0);
+}
+
+.server-menu {
+  transition: transform .5s ease-in-out;
+  transform: translateX(0);
+}
+
+.hide {
+  transform: translateX(-100%);
+}
