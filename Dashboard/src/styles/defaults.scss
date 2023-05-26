@@ -28,6 +28,8 @@ body {
   font-family: 'Varela Round', Helvetica, Arial, sans-serif;
   background-color: v.$color-background;
   color: v.$color-text;
+  letter-spacing: .04rem;
+  overflow-y: scroll;
 }
 
 h1 {
@@ -58,3 +60,23 @@ a, button {
   cursor: pointer;
 }
 
+
+/* width */
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: v.$color-background;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: v.$color-background-light;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: v.$color-background-dark;
+}

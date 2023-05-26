@@ -1,0 +1,45 @@
+@use '../../styles/variables.scss' as v;
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  border-radius: .8rem;
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+  transition: background-color 0.2s ease-in-out;
+  text-transform: uppercase;
+}
+
+
+.button--purple {
+  background-color: v.$color-primary;
+}
+
+.button--orange {
+  background-color: v.$color-primary-orange;
+}
+
+.button--yellow {
+  background-color: v.$color-primary-yellow;
+}
+
+.button.disabled {
+  cursor: not-allowed;
+  color: v.$color-text-dark;
+
+  &.button--purple {
+    background-color: transparentize(v.$color-primary, 0.8);
+  }
+
+  &.button--orange {
+    background-color: transparentize(v.$color-primary-orange, 0.8);
+  }
+
+  &.button--yellow {
+    background-color: transparentize(v.$color-primary-yellow, 0.8);
+  }
+}
+
+.button.no-upper {
+  text-transform: none;
+}

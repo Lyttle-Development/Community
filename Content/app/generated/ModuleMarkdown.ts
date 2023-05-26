@@ -230,6 +230,28 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      'server-card': {
+        members: {
+          content: 'members',
+          documentation: '',
+        },
+        modules: {
+          content: 'modules',
+          documentation: '',
+        },
+        setup: {
+          content: 'This server is not setup, yet!',
+          documentation: '',
+        },
+        'setup-button': {
+          content: 'Setup',
+          documentation: '',
+        },
+        'staff-members': {
+          content: 'staff members',
+          documentation: '',
+        },
+      },
     },
     pages: {
       dashboard: {

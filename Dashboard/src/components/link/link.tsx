@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 export interface LinkProps {
   href?: string;
+  route?: string;
   onClick?: () => void;
   children: React.ReactNode;
   className?: string;
@@ -11,13 +12,15 @@ export interface LinkProps {
 
 export function Link({
   href,
+  route,
   onClick,
   children,
   className,
   classNameActive,
 }: LinkProps) {
+  route = route ?? href;
   const router = useRouter();
-  const active = router.pathname == href ? classNameActive : '';
+  const active = router.pathname == route ? classNameActive : '';
 
   if (!href && onClick) {
     return (

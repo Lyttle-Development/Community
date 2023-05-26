@@ -1,0 +1,70 @@
+@use '../../styles/variables.scss' as v;
+
+.switch {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.7rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 1.3rem;
+    width: 1.3rem;
+    border-radius: 50%;
+    background-color: v.$color-text;
+    transform: translateX(0);
+    transition: transform 0.2s ease-in-out;
+  }
+}
+
+.switch.active {
+  &:before {
+    transform: translateX(1.5rem);
+  }
+}
+
+.switch--purple {
+  background-color: transparentize(v.$color-primary, 0.8);
+  border: .2rem solid transparentize(v.$color-primary, 0.7);
+}
+
+.switch.active {
+  &.switch--purple {
+    background-color: v.$color-primary;
+    border: .2rem solid darken(v.$color-primary, 5%);
+  }
+}
+
+.switch--orange {
+  background-color: transparentize(v.$color-primary-orange, 0.8);
+  border: .2rem solid transparentize(v.$color-primary-orange, 0.7);
+}
+
+.switch.active {
+  &.switch--orange {
+    background-color: v.$color-primary-orange;
+    border: .2rem solid darken(v.$color-primary-orange, 5%);
+  }
+}
+
+.switch--yellow {
+  background-color: transparentize(v.$color-primary-yellow, 0.8);
+  border: .2rem solid transparentize(v.$color-primary-yellow, 0.7);
+}
+
+.switch.active {
+  &.switch--yellow {
+    background-color: v.$color-primary-yellow;
+    border: .2rem solid darken(v.$color-primary-yellow, 5%);
+  }
+}
+
+.input {
+  display: none;
+}
