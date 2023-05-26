@@ -17,7 +17,9 @@ function Page() {
   return (
     <>
       <Component.Title>{title}</Component.Title>
-      <div>Test</div>
+      <Component.Container>
+        <Component.ServerCardGrid />
+      </Component.Container>
     </>
   );
 }

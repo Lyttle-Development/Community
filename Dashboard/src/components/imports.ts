@@ -11,5 +11,8 @@ export * from './startup';
 export * from './search';
 export * from './container';
 export * from './avatar';
+export * from './server-card';
+export * from './server-card-grid';
+export * from './light-switch';
 
 export const componentsPrefix = dashboardPrefix + 'components.';

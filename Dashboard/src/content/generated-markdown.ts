@@ -230,6 +230,20 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      'server-card': {
+        members: {
+          content: 'members',
+          documentation: '',
+        },
+        modules: {
+          content: 'modules',
+          documentation: '',
+        },
+        'staff-members': {
+          content: 'staff members',
+          documentation: '',
+        },
+      },
     },
     pages: {
       dashboard: {

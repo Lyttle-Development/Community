@@ -44,6 +44,9 @@ export * as ModuleConfigDashboardComponentsMainNavLabelModules from '../../conte
 export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelStatistics from '../../content/modules/Dashboard/components/main-nav/label-statistics/config';
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
+export * as ModuleConfigDashboardComponentsServerCardMembers from '../../content/modules/Dashboard/components/server-card/members/config';
+export * as ModuleConfigDashboardComponentsServerCardModules from '../../content/modules/Dashboard/components/server-card/modules/config';
+export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';

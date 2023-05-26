@@ -6,7 +6,7 @@ import { Component } from '@lyttledev-dashboard/components';
 export function Avatar() {
   // TODO: Get real avatar url? or out of user object.
   const app = useApp() as any;
-  const avatarUrl = app?.avatarUrl ?? '/media/images/placeholder-person.png';
+  const avatarUrl = app?.avatarUrl ?? '/media/images/placeholder.png';
   return (
     <article className={styles.container}>
       <Component.Link href="profile" className={styles.link}>
