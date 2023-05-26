@@ -1,5 +1,5 @@
 import styles from './light-switch.module.scss';
-import { useState } from 'react';
+import { ChangeEvent, MouseEvent as ReactMouseEvent, useState } from 'react';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 
 export interface LightSwitchProps {
@@ -19,7 +19,8 @@ export function LightSwitch({
 }: LightSwitchProps) {
   const [activeState, setActiveState] = useState(active);
 
-  const handleClick = (e: MouseEvent) => {
+  // Click handling
+  const handleClick = (e: ReactMouseEvent<HTMLLabelElement, MouseEvent>) => {
     e.preventDefault();
     if (onClick) {
       const newActiveState = !activeState;
@@ -28,22 +29,28 @@ export function LightSwitch({
     }
   };
 
-  const activeClass = activeState ? classNameActive : '';
-  const selfActiveClass = activeState ? styles.active : '';
+  // Input change handling
+  const unInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setActiveState(e.target.checked);
+  };
+
+  // Active class handling
+  const activeClass = activeState ? styles.active : '';
+  const customActiveClass = activeState ? classNameActive : '';
 
   return (
     <label
       className={`${styles.switch} ${
         styles[`switch--${color}`]
-      } ${selfActiveClass} ${className} ${activeClass}`}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore // we have right type in function.
+      } ${activeClass} ${className} ${customActiveClass}`}
       onClick={handleClick}
     >
       <input
         type="checkbox"
         checked={activeState}
         className={`${styles.input}`}
+        onChange={unInputChange}
       />
     </label>
   );
