@@ -1,5 +1,5 @@
 export enum SCSSPrimaryColors {
   purple = 'purple',
-  organge = 'orange',
+  orange = 'orange',
   yellow = 'yellow',
 }

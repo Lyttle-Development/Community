@@ -1,3 +1,25 @@
-.main {
-  background-color: red;
+.landing {
+  display: flex;
+  flex-direction: column;
+  height: calc(80vh - 10rem);
+  align-items: center;
+  justify-content: center;
+  max-width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.description {
+  max-width: 25rem;
+  margin: 1rem auto 3rem;
+}
+
+.logo {
+  max-width: 12rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1.5rem
 }

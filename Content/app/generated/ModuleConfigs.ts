@@ -50,6 +50,10 @@ export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/m
 export * as ModuleConfigDashboardComponentsServerCardSetupButton from '../../content/modules/Dashboard/components/server-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
+export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
+export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
+export * as ModuleConfigDashboardPagesHomeLandingDescription from '../../content/modules/Dashboard/pages/home/landing-description/config';
+export * as ModuleConfigDashboardPagesHomeLandingTitle from '../../content/modules/Dashboard/pages/home/landing-title/config';
 export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';

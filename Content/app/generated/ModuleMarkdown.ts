@@ -261,6 +261,23 @@ export const ModuleMarkdown = {
         },
       },
       home: {
+        'add-button': {
+          content: 'Add To Server',
+          documentation: '',
+        },
+        'join-button': {
+          content: 'Join us on Discord',
+          documentation: '',
+        },
+        'landing-description': {
+          content:
+            'Based on your community & everything that involves it. I try to keep my communities active, safe, and fun for everyone, and this without any product placement.',
+          documentation: '',
+        },
+        'landing-title': {
+          content: 'Your community, our duty!',
+          documentation: '',
+        },
         title: {
           content: 'Home',
           documentation: '',

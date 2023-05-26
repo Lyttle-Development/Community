@@ -12,13 +12,20 @@ interface SelectedGuild {
   id: string;
   name: string;
   avatar: string;
+  show: boolean;
 }
+
+const emptySelectedGuild: SelectedGuild = {
+  id: '',
+  name: '',
+  avatar: '',
+  show: false,
+} as const;
 
 export function MainNav() {
   const app = useApp();
-  const [selectedGuild, setSelectedGuild] = useState<SelectedGuild | null>(
-    null,
-  );
+  const [selectedGuild, setSelectedGuild] =
+    useState<SelectedGuild>(emptySelectedGuild);
   const mainNavOpen = app?.mainNavOpen ?? false;
   const pfx = componentsPrefix + 'main-nav.label-';
   const labelDashboard = getMessage(pfx + 'dashboard');
@@ -45,12 +52,17 @@ export function MainNav() {
     // Check id against current id
     if (guildId === selectedGuild?.id) return;
     if (typeof guildId !== 'string') return;
-    // Update id
-    setSelectedGuild({
-      id: guildId,
-      name: 'Lyttle Dev',
-      avatar: '/media/images/placeholder.png',
-    });
+    setSelectedGuild({ ...selectedGuild, show: false });
+
+    setTimeout(() => {
+      // Update id
+      setSelectedGuild({
+        id: guildId,
+        name: 'Lyttle Dev',
+        avatar: '/media/images/placeholder.png',
+        show: true,
+      });
+    }, 800);
   }, [app?.selectedGuildId, selectedGuild, setSelectedGuild]);
 
   return (
@@ -64,40 +76,44 @@ export function MainNav() {
           <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
           <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>
         </ul>
-        {selectedGuild && (
-          <>
-            <section>
-              <Image
-                className={styles.avatar}
-                src={selectedGuild.avatar}
-                alt={`Avatar of server ${selectedGuild.name}.`}
-                width={30}
-                height={30}
-              />
-              <p>{selectedGuild.name}</p>
-            </section>
-            <ul className={styles['server-menu']}>
-              <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/modules`}
-                route={'/dashboard/[id]/modules'}
-              >
-                {labelModules}
-              </MainNavItem>
-              <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/statistics`}
-                route={'/dashboard/[id]/statistics'}
-              >
-                {labelStatistics}
-              </MainNavItem>
-              <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/messages`}
-                route={'/dashboard/[id]/messages'}
-              >
-                {labelMessages}
-              </MainNavItem>
-            </ul>
-          </>
-        )}
+        <article>
+          <section
+            className={`${styles.guild} ${!selectedGuild.show && styles.hide}`}
+          >
+            <Image
+              className={styles.avatar}
+              src={selectedGuild.avatar}
+              alt={`Avatar of server ${selectedGuild.name}.`}
+              width={30}
+              height={30}
+            />
+            <p>{selectedGuild.name}</p>
+          </section>
+          <ul
+            className={`${styles['server-menu']} ${
+              selectedGuild.id === '' && styles.hide
+            }`}
+          >
+            <MainNavItem
+              href={`/dashboard/${selectedGuild.id}/modules`}
+              route={'/dashboard/[id]/modules'}
+            >
+              {labelModules}
+            </MainNavItem>
+            <MainNavItem
+              href={`/dashboard/${selectedGuild.id}/statistics`}
+              route={'/dashboard/[id]/statistics'}
+            >
+              {labelStatistics}
+            </MainNavItem>
+            <MainNavItem
+              href={`/dashboard/${selectedGuild.id}/messages`}
+              route={'/dashboard/[id]/messages'}
+            >
+              {labelMessages}
+            </MainNavItem>
+          </ul>
+        </article>
       </nav>
       <ul className={`${styles['main-menu__footer']}`}>
         <MainNavItem onClick={signOut}>{labelLogout}</MainNavItem>
