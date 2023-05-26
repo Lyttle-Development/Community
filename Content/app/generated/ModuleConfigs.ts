@@ -46,6 +46,7 @@ export * as ModuleConfigDashboardComponentsMainNavLabelStatistics from '../../co
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
 export * as ModuleConfigDashboardComponentsServerCardMembers from '../../content/modules/Dashboard/components/server-card/members/config';
 export * as ModuleConfigDashboardComponentsServerCardModules from '../../content/modules/Dashboard/components/server-card/modules/config';
+export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/modules/Dashboard/components/server-card/setup/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';

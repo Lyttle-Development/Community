@@ -5,12 +5,19 @@ import styles from './server-card.module.scss';
 import { Component } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 
-export function ServerCard() {
+export interface ServerCardProps {
+  active?: boolean;
+}
+
+export function ServerCard({ active }: ServerCardProps) {
+  const isNew = active === undefined;
+
   // Messages
   const pfx = componentsPrefix + 'server-card.';
   const msgStaffMembers = getMessage(pfx + 'staff-members');
   const msgModules = getMessage(pfx + 'modules');
   const msgMembers = getMessage(pfx + 'members');
+  const msgSetup = getMessage(pfx + 'setup');
 
   // Values
   const guildImage = '/media/images/placeholder.png';
@@ -18,7 +25,22 @@ export function ServerCard() {
   const staffMembers = 8;
   const modules = 12;
   const members = 245;
-  const enabled = true;
+
+  if (isNew) {
+    return (
+      <article className={styles.card}>
+        <Image
+          className={styles.avatar}
+          src={guildImage}
+          alt={`Avatar of the ${guildName} server`}
+          width={100}
+          height={100}
+        />
+        <h2>{guildName}</h2>
+        <p>{msgSetup}</p>
+      </article>
+    );
+  }
 
   return (
     <article className={styles.card}>
@@ -42,7 +64,7 @@ export function ServerCard() {
         </li>
       </ul>
       <Component.LightSwitch
-        active={enabled}
+        active={active}
         onClick={(e) => console.log(e)}
         color={SCSSPrimaryColors.organge}
         className={styles.switch}

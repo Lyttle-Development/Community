@@ -239,6 +239,10 @@ export const ModuleMarkdown = {
           content: 'modules',
           documentation: '',
         },
+        setup: {
+          content: 'This server is not setup, yet!',
+          documentation: '',
+        },
         'staff-members': {
           content: 'staff members',
           documentation: '',
