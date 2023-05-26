@@ -1,25 +1,35 @@
 import styles from './button.module.scss';
 import { MouseEvent as ReactMouseEvent } from 'react';
-import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
+import Link from 'next/link';
+
+export enum ButtonColors {
+  purple = 'purple',
+  orange = 'orange',
+  yellow = 'yellow',
+  tertiary = 'tertiary',
+  secondary = 'secondary',
+}
 
 export interface ButtonProps {
   disabled?: boolean;
   text?: string;
+  href?: string;
   onClick?: (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
   classNameDisabled?: string;
-  color?: SCSSPrimaryColors;
+  color?: ButtonColors;
   children?: React.ReactNode;
   noUpper?: boolean;
 }
 
 export function Button({
   text,
+  href,
   onClick,
   disabled = false,
   className,
   classNameDisabled,
-  color = SCSSPrimaryColors.purple,
+  color = ButtonColors.purple,
   children,
   noUpper = false,
 }: ButtonProps) {
@@ -36,6 +46,19 @@ export function Button({
   const customDisabledClass = disabled ? classNameDisabled : '';
   const noUpperClass = noUpper ? styles['no-upper'] : '';
 
+  if (href && !disabled) {
+    return (
+      <Link
+        className={`${styles.button} ${
+          styles[`button--${color}`]
+        } ${disabledClass} ${noUpperClass} ${className} ${customDisabledClass}`}
+        href={href}
+      >
+        {text}
+        {children}
+      </Link>
+    );
+  }
   return (
     <button
       disabled={disabled}
