@@ -1,5 +1,10 @@
 import styles from './light-switch.module.scss';
-import { ChangeEvent, MouseEvent as ReactMouseEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useState,
+} from 'react';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 
 export interface LightSwitchProps {
@@ -19,13 +24,16 @@ export function LightSwitch({
 }: LightSwitchProps) {
   const [activeState, setActiveState] = useState(active);
 
+  useEffect(() => {
+    if (active === activeState) return;
+    setActiveState(active);
+  }, [active, setActiveState, activeState]);
+
   // Click handling
   const handleClick = (e: ReactMouseEvent<HTMLLabelElement, MouseEvent>) => {
     e.preventDefault();
     if (onClick) {
-      const newActiveState = !activeState;
-      setActiveState(newActiveState);
-      onClick(newActiveState);
+      onClick(!activeState);
     }
   };
 

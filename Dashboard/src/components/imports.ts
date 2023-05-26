@@ -14,5 +14,6 @@ export * from './avatar';
 export * from './server-card';
 export * from './server-card-grid';
 export * from './light-switch';
+export * from './button';
 
 export const componentsPrefix = dashboardPrefix + 'components.';

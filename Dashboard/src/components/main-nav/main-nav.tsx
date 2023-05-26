@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { componentsPrefix } from '@lyttledev-dashboard/components/imports';
+import { useEffect, useState } from 'react';
 
 export function MainNav() {
   const app = useApp();
-  const selectedGuildId = app?.selectedGuildId ?? null;
+  const [selectedGuildId, setSelectedGuildId] = useState<string | null>(null);
   const mainNavOpen = app?.mainNavOpen ?? false;
   const pfx = componentsPrefix + 'main-nav.label-';
   const labelDashboard = getMessage(pfx + 'dashboard');
@@ -28,6 +29,16 @@ export function MainNav() {
     window.alert('Currently not implemented!');
   };
 
+  // Update selected guild id
+  useEffect(() => {
+    // Get id
+    const guildId = app?.selectedGuildId ?? null;
+    // Check id against current id
+    if (guildId === selectedGuildId) return;
+    // Update id
+    setSelectedGuildId(guildId);
+  }, [app?.selectedGuildId, selectedGuildId, setSelectedGuildId]);
+
   return (
     <aside className={`${openClass} ${styles['main-menu']}`}>
       <Link href="/">
@@ -39,13 +50,22 @@ export function MainNav() {
           <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
           {selectedGuildId && (
             <>
-              <MainNavItem href={`/dashboard/${selectedGuildId}/modules`}>
+              <MainNavItem
+                href={`/dashboard/${selectedGuildId}/modules`}
+                route={'/dashboard/[id]/modules'}
+              >
                 {labelModules}
               </MainNavItem>
-              <MainNavItem href={`/dashboard/${selectedGuildId}/statistics`}>
+              <MainNavItem
+                href={`/dashboard/${selectedGuildId}/statistics`}
+                route={'/dashboard/[id]/statistics'}
+              >
                 {labelStatistics}
               </MainNavItem>
-              <MainNavItem href={`/dashboard/${selectedGuildId}/messages`}>
+              <MainNavItem
+                href={`/dashboard/${selectedGuildId}/messages`}
+                route={'/dashboard/[id]/messages'}
+              >
                 {labelMessages}
               </MainNavItem>
             </>
