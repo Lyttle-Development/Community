@@ -36,6 +36,16 @@ export * as ModuleConfigCommunicationVoiceTopicTxtDialogTitle from '../../conten
 export * as ModuleConfigCommunicationVoiceTopicTxtDialogTopic from '../../content/modules/Communication/voice-topic/txt/dialog-topic/config';
 export * as ModuleConfigCommunicationVoiceTopicTxtJoined from '../../content/modules/Communication/voice-topic/txt/joined/config';
 export * as ModuleConfigCommunicationVoiceTopicTxtSuccess from '../../content/modules/Communication/voice-topic/txt/success/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelDashboard from '../../content/modules/Dashboard/components/main-nav/label-dashboard/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelHome from '../../content/modules/Dashboard/components/main-nav/label-home/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelLogout from '../../content/modules/Dashboard/components/main-nav/label-logout/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelMessages from '../../content/modules/Dashboard/components/main-nav/label-messages/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelModules from '../../content/modules/Dashboard/components/main-nav/label-modules/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelStatistics from '../../content/modules/Dashboard/components/main-nav/label-statistics/config';
+export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
+export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
+export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';
 export * as ModuleConfigGlobalVariables from '../../content/modules/Global/variables/config';
