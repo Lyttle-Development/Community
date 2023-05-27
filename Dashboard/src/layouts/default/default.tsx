@@ -2,6 +2,7 @@ import { Component } from '@lyttledev-dashboard/components';
 import { Layout } from '@lyttledev-dashboard/layouts';
 import React from 'react';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
+import styles from './default.module.scss';
 
 export interface DefaultProps {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ export function Default({ children }: DefaultProps) {
         <section>
           <Component.Header />
           <Layout.Transition>
-            <main>{children}</main>
+            <main className={styles.main}>{children}</main>
           </Layout.Transition>
           {/* <Component.Footer />*/}
         </section>
