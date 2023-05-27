@@ -59,14 +59,12 @@ export function ModuleCard({
       <p className={styles.description}>{description}</p>
       {subItems && (
         <ul className={styles['sub-items']}>
-          {subItems.length > 1 &&
+          {subItems.length > 0 &&
             subItems.map((item, i) => (
               <li key={i}>
                 <Component.Link
                   href={item.route}
-                  className={`${styles['sub-item']} ${
-                    item.id === null && styles['sub-item--setup']
-                  }`}
+                  className={styles['sub-item']}
                 >
                   {item.id !== null && (
                     <Component.LightSwitch

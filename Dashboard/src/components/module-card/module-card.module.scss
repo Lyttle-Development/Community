@@ -50,8 +50,8 @@
 
     .sub-item__switch {
       position: absolute;
-      top: 1rem;
       right: 1rem;
+      bottom: 1rem;
     }
 
     .sub-item__setup-button {
@@ -60,17 +60,11 @@
       right: 1rem;
     }
 
-    &.sub-item--setup {
-      padding-bottom: 5rem;
-    }
-
     h3 {
-      padding-top: .2rem;
       font-size: 1.5rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-right: 3rem;
       color: v.$color-primary-yellow;
       margin-bottom: .5rem;
     }
@@ -79,6 +73,10 @@
       font-size: 1rem;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    &:not(.sub-item--add) {
+      padding-bottom: 5rem;
     }
 
     &.sub-item--add {
