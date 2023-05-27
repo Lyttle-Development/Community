@@ -1,10 +1,9 @@
 import styles from './main-nav.module.scss';
 import { MainNavItem } from '@lyttledev-dashboard/components/main-nav-item';
-import { Component } from '@lyttledev-dashboard/components';
+import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import Link from 'next/link';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import { componentsPrefix } from '@lyttledev-dashboard/components/imports';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
@@ -16,9 +15,9 @@ interface SelectedGuild {
 }
 
 const emptySelectedGuild: SelectedGuild = {
-  id: '',
-  name: '',
-  avatar: '',
+  id: '0',
+  name: 'Loading...',
+  avatar: '/media/images/placeholder.png',
   show: false,
 } as const;
 
@@ -63,7 +62,7 @@ export function MainNav() {
         show: true,
       });
     }, 800);
-  }, [app?.selectedGuildId, selectedGuild, setSelectedGuild]);
+  }, [app?.selectedGuildId]);
 
   return (
     <aside className={`${openClass} ${styles['main-menu']}`}>
