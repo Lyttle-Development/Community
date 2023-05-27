@@ -9,31 +9,47 @@
   transition: background-color 0.2s ease-in-out, filter .2s ease-in-out;
   text-transform: uppercase;
   transform: scale(1);
+}
+
+
+.button--purple {
+  background-color: v.$color-primary;
 
   &:hover {
     filter: brightness(1.5);
   }
 }
 
-
-.button--purple {
-  background-color: v.$color-primary;
-}
-
 .button--orange {
   background-color: v.$color-primary-orange;
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .button--yellow {
   background-color: v.$color-primary-yellow;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .button--secondary {
   background-color: v.$color-background-light;
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .button--tertiary {
   background-color: transparent;
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .button.disabled {

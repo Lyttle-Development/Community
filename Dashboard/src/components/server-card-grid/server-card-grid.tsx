@@ -1,6 +1,5 @@
-import { componentsPrefix } from '@lyttledev-dashboard/components/imports';
+import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import { Component } from '@lyttledev-dashboard/components';
 import styles from './server-card-grid.module.scss';
 
 export function ServerCardGrid() {

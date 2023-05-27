@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,7 +18,9 @@
     "next": "13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-markdown": "^8.0.7",
     "react-transition-group": "^4.4.5",
+    "remark-gfm": "^3.0.1",
     "sass": "^1.62.1",
     "typescript": "5.0.4"
   },

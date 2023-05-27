@@ -1,11 +1,8 @@
-import {
-  ButtonColors,
-  componentsPrefix,
-} from '@lyttledev-dashboard/components/imports';
+import { ButtonColors } from '@lyttledev-dashboard/components/imports';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import Image from 'next/image';
 import styles from './server-card.module.scss';
-import { Component } from '@lyttledev-dashboard/components';
+import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { useState } from 'react';
 
