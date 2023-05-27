@@ -16,3 +16,4 @@ export * from './server-card-grid';
 export * from './startup';
 export * from './title';
 export * from './markdown';
+export * from './icon-button';

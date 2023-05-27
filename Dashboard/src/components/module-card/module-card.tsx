@@ -3,24 +3,23 @@ import styles from './module-card.module.scss';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { getMessage } from '@lyttledev-dashboard/utils';
+import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 
 interface ModuleCardItem {
   id: string | null;
   route: string;
   title: string;
   description: string;
-  active: boolean;
+  active: boolean | null;
 }
 
 export interface ModuleCardProps extends ModuleCardItem {
-  setup: boolean;
   extendable?: boolean;
   subItems?: ModuleCardItem[];
   onClick: (subItem: boolean, id: string | null, active: boolean) => void;
 }
 
 export function ModuleCard({
-  setup,
   title,
   description,
   route,
@@ -30,13 +29,16 @@ export function ModuleCard({
   id,
   extendable = false,
 }: ModuleCardProps) {
+  // Check if the module is set up.
+  const setup = id !== null;
+
   const pfx = componentsPrefix + 'module-card.';
   const msgTitlePrefix = getMessage(pfx + 'title-prefix');
   const msgSetupButton = getMessage(pfx + 'setup-button');
 
   const cardInners = (
     <>
-      {!extendable && setup && (
+      {active !== null && setup && (
         <Component.LightSwitch
           active={active}
           onClick={() => onClick(false, id, !active)}
@@ -44,7 +46,14 @@ export function ModuleCard({
           className={styles['switch']}
         />
       )}
-      {!extendable && !setup && (
+      {setup && (
+        <Component.IconButton
+          icon={IconButtonIcons.cog}
+          className={styles['cog']}
+          href={route}
+        />
+      )}
+      {!setup && (
         <Component.Button
           color={ButtonColors.yellow}
           onClick={() => onClick(false, null, true)}
@@ -69,12 +78,19 @@ export function ModuleCard({
                   className={styles['sub-item']}
                 >
                   {item.id !== null && (
-                    <Component.LightSwitch
-                      active={item.active}
-                      onClick={() => onClick(true, item.id, !item.active)}
-                      className={styles['sub-item__switch']}
-                      color={SCSSPrimaryColors.yellow}
-                    />
+                    <>
+                      <Component.LightSwitch
+                        active={item.active ?? false}
+                        onClick={() => onClick(true, item.id, !item.active)}
+                        className={styles['sub-item__switch']}
+                        color={SCSSPrimaryColors.yellow}
+                      />
+                      <Component.IconButton
+                        icon={IconButtonIcons.cog}
+                        className={styles['sub-item__cog']}
+                        href={item.route}
+                      />
+                    </>
                   )}
                   {item.id === null && (
                     <Component.Button

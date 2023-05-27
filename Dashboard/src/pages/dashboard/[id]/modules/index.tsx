@@ -11,7 +11,6 @@ const modules: CardModules = [
     route: '/',
     onClick: (...e) => console.log(e),
     id: '5',
-    setup: true,
     title: 'Leveling',
     description:
       'When enabled, members can level up by participating in the server.',
@@ -41,11 +40,10 @@ const modules: CardModules = [
     ],
   },
   {
-    active: true,
+    active: null,
     route: '/',
     onClick: (...e) => console.log(e),
     id: '5',
-    setup: true,
     title: 'Dynamic Voice Channels',
     description:
       'Add an "master" channel which dynamically creates new channels based on its (and its childs) usage.',
@@ -62,16 +60,31 @@ const modules: CardModules = [
     ],
   },
   {
-    active: true,
+    active: false,
     route: '/',
     onClick: (...e) => console.log(e),
-    id: '5',
-    setup: true,
+    id: null,
     title: 'Voice Topics',
     description:
       'A textchannel with a button for members to create a voice channel with a topic.',
-    extendable: true,
     subItems: [],
+  },
+  {
+    active: null,
+    route: '/',
+    onClick: (...e) => console.log(e),
+    id: '1',
+    title: 'Birthday',
+    description: 'Announce when a member has a birthday.',
+    subItems: [
+      {
+        id: null,
+        route: '/',
+        active: true,
+        title: 'Announcement',
+        description: 'The channel were announcements are sent in',
+      },
+    ],
   },
 ];
 
