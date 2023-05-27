@@ -1,5 +1,5 @@
 import styles from './search.module.scss';
-import { componentsPrefix } from '@lyttledev-dashboard/components/imports';
+import { componentsPrefix } from '@lyttledev-dashboard/components';
 import { getMessage } from '@lyttledev-dashboard/utils';
 
 export function Search() {

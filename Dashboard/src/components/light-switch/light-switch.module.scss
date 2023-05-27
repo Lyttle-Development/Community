@@ -8,7 +8,7 @@
   height: 1.7rem;
   border-radius: 1.5rem;
   overflow: hidden;
-  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out, filter .2s ease-in-out;;
 
   &:before {
     content: '';
@@ -32,6 +32,10 @@
 .switch--purple {
   background-color: transparentize(v.$color-primary, 0.8);
   border: .2rem solid transparentize(v.$color-primary, 0.7);
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .switch.active {
@@ -44,6 +48,10 @@
 .switch--orange {
   background-color: transparentize(v.$color-primary-orange, 0.8);
   border: .2rem solid transparentize(v.$color-primary-orange, 0.7);
+
+  &:hover {
+    filter: brightness(1.5);
+  }
 }
 
 .switch.active {
@@ -56,6 +64,10 @@
 .switch--yellow {
   background-color: transparentize(v.$color-primary-yellow, 0.8);
   border: .2rem solid transparentize(v.$color-primary-yellow, 0.7);
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .switch.active {

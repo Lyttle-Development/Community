@@ -224,6 +224,16 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      'module-card': {
+        'setup-button': {
+          content: 'Setup',
+          documentation: '',
+        },
+        'title-prefix': {
+          content: 'Module: ',
+          documentation: '',
+        },
+      },
       search: {
         'input-placeholder': {
           content: "I'm looking for ...",
