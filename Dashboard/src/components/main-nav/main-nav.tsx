@@ -90,7 +90,7 @@ export function MainNav() {
           </section>
           <ul
             className={`${styles['server-menu']} ${
-              selectedGuild.id === '' && styles.hide
+              selectedGuild.id === '0' && styles.hide
             }`}
           >
             <MainNavItem

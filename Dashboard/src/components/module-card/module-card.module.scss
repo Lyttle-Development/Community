@@ -47,6 +47,12 @@
     background-color: v.$color-background;
     border-radius: 1rem;
     padding: 1rem;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.01) rotate(1deg);
+      background-color: darken(v.$color-background, 2%);
+    }
 
     .sub-item__switch {
       position: absolute;

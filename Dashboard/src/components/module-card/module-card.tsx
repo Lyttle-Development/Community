@@ -56,7 +56,9 @@ export function ModuleCard({
       <h2 className={styles.title}>
         {msgTitlePrefix} {title}
       </h2>
-      <p className={styles.description}>{description}</p>
+      <Component.Markdown className={styles.description}>
+        {description}
+      </Component.Markdown>
       {subItems && (
         <ul className={styles['sub-items']}>
           {subItems.length > 0 &&
