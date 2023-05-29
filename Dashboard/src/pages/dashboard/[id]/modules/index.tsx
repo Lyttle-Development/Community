@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { Component } from '@lyttledev-dashboard/components';
 import { CardModules } from '@lyttledev-dashboard/components/modules';
-import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels/_levels.config';
-import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays/_birthdays.config';
-import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice/_dynamic-voice.config';
-import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics/_voice-topics.config';
+import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels';
+import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays';
+import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice';
+import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics';
 
 function Page() {
   const router = useRouter();
