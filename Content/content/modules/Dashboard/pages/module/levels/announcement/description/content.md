@@ -1,0 +1,1 @@
+The channel to announce when someone leveled up.

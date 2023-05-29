@@ -17,13 +17,13 @@ export function Default({ children }: DefaultProps) {
       <Component.Startup></Component.Startup>
       <div className={`default-layout ${mainNavOpen ? 'main-nav--open' : ''}`}>
         <Component.MainNav />
-        <section>
-          <Component.Header />
-          <Layout.Transition>
+        <Layout.Transition>
+          <section>
+            <Component.Header />
             <main className={styles.main}>{children}</main>
-          </Layout.Transition>
-          {/* <Component.Footer />*/}
-        </section>
+            {/* <Component.Footer />*/}
+          </section>
+        </Layout.Transition>
       </div>
     </Layout.Base>
   );

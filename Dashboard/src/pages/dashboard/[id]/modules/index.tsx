@@ -4,94 +4,16 @@ import { useEffect, useState } from 'react';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { Component } from '@lyttledev-dashboard/components';
 import { CardModules } from '@lyttledev-dashboard/components/modules';
-
-const modules: CardModules = [
-  {
-    active: true,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '5',
-    title: 'Leveling',
-    description:
-      'When enabled, members can level up by participating in the server.',
-    subItems: [
-      {
-        id: '1',
-        route: '/',
-        active: true,
-        title: 'Nicknames',
-        description:
-          'Set a nickname for every active user with their level in it.',
-      },
-      {
-        id: '1',
-        route: '/',
-        active: true,
-        title: 'Announcement',
-        description: 'The channel were announcements are sent in',
-      },
-      {
-        id: null,
-        route: '/',
-        active: false,
-        title: 'Leaderboard',
-        description: 'The channel were the leaderboard is sent in',
-      },
-    ],
-  },
-  {
-    active: null,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '5',
-    title: 'Dynamic Voice Channels',
-    description:
-      'Add an "master" channel which dynamically creates new channels based on its (and its childs) usage.',
-    extendable: true,
-    subItems: [
-      {
-        id: '1',
-        active: true,
-        title: '#Kneeg Room',
-        description:
-          'This channel is configured to dynamically grow based on its usage.',
-        route: '/',
-      },
-    ],
-  },
-  {
-    active: false,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: null,
-    title: 'Voice Topics',
-    description:
-      'A textchannel with a button for members to create a voice channel with a topic.',
-    subItems: [],
-  },
-  {
-    active: null,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '1',
-    title: 'Birthday',
-    description: 'Announce when a member has a birthday.',
-    subItems: [
-      {
-        id: null,
-        route: '/',
-        active: true,
-        title: 'Announcement',
-        description: 'The channel were announcements are sent in',
-      },
-    ],
-  },
-];
+import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels/levels.config';
+import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays/birthdays.config';
+import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice/dynamic-voice.config';
+import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics/voice-topics.config';
 
 function Page() {
   const router = useRouter();
   const app = useApp();
   const [guildId, setGuildId] = useState<string | null>(null);
+  const [modules, setModules] = useState<CardModules>([]);
 
   // Set selected guild id from router, on initial load
   useEffect(() => {
@@ -109,6 +31,16 @@ function Page() {
     if (id === guildId) return;
     // Update id
     setGuildId(id);
+
+    if (typeof id !== 'string') return;
+
+    // Get modules
+    setModules([
+      getLevelsConfig(id),
+      getBirthdaysConfig(id),
+      getDynamicVoiceConfig(id),
+      getVoiceTopicsConfig(id),
+    ]);
   }, [app?.selectedGuildId, guildId, setGuildId]);
 
   return (

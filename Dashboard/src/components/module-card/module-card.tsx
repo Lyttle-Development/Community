@@ -53,10 +53,10 @@ export function ModuleCard({
           href={route}
         />
       )}
-      {!setup && (
+      {active !== null && !setup && (
         <Component.Button
           color={ButtonColors.yellow}
-          onClick={() => onClick(false, null, true)}
+          href={route}
           className={styles['setup-button']}
         >
           {msgSetupButton}
@@ -95,7 +95,7 @@ export function ModuleCard({
                   {item.id === null && (
                     <Component.Button
                       color={ButtonColors.yellow}
-                      onClick={() => onClick(false, null, true)}
+                      href={item.route}
                       className={styles['sub-item__setup-button']}
                     >
                       {msgSetupButton}
@@ -109,7 +109,7 @@ export function ModuleCard({
           {extendable && (
             <li>
               <Component.Link
-                onClick={() => onClick(true, null, true)}
+                href={route}
                 className={`${styles['sub-item']} ${styles['sub-item--add']} ${styles['sub-item__link']}`}
               >
                 Add a new {title.toLowerCase()}.<span>+</span>
