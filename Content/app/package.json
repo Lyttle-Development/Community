@@ -11,8 +11,7 @@
     "format:generated": "prettier --write \"generated/**/*.ts\""
   },
   "engines": {
-    "node": "18.15.0",
-    "npm": "9.6.3"
+    "node": "18.15.0"
   },
   "author": "",
   "license": "ISC",
