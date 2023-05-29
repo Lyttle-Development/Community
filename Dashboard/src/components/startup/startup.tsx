@@ -3,7 +3,11 @@ import { Component } from '@lyttledev-dashboard/components';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { useEffect, useState } from 'react';
 
-export function Startup() {
+export interface StartupProps {
+  mobile: boolean;
+}
+
+export function Startup({ mobile }: StartupProps) {
   const app = useApp();
   const setMainNavOpen = app?.setMainNavOpen ?? ((x) => x);
   const [hide, setHide] = useState(false);
@@ -14,6 +18,7 @@ export function Startup() {
     const base = 1500;
     // Open the main nav after 700ms
     setTimeout(() => {
+      if (mobile) return;
       setMainNavOpen(true);
     }, base - 300);
 

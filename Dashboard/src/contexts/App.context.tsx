@@ -1,7 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { storage } from '@lyttledev-dashboard/utils/storage';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
+import { useWindowSize } from '@lyttledev-dashboard/hooks/useWindowSize';
+import { Constants } from '@lyttledev-dashboard/constants';
 
 export interface AppContextInterface {
   mainNavOpen: boolean;
@@ -11,6 +13,8 @@ export interface AppContextInterface {
   setSelectedGuildId: (guildId: string | null) => void;
   pageTitle: string;
   setPageTitle: (title: string) => void;
+  mobile: boolean;
+  setMobile: (state: boolean) => void;
 }
 
 export type AppContextType = AppContextInterface | null;
@@ -23,7 +27,9 @@ export interface AppContextProps {
 }
 
 export function AppProvider({ children }: AppContextProps) {
-  const [mainNavOpen, setMainNavOpen] = React.useState(false);
+  const windowSize = useWindowSize();
+  const [initialized, setIsInitialized] = useState<Date | null>(null);
+  const [mainNavOpen, setMainNavOpen] = useState(false);
   const toggleMainNav = () => {
     const state = !mainNavOpen;
     setMainNavOpen(state);
@@ -31,15 +37,39 @@ export function AppProvider({ children }: AppContextProps) {
 
   const localSGI = storage.get('selectedGuildId') ?? null;
   const localSelectedGuildId = localSGI === '' ? null : localSGI;
-  const [selectedGuildId, _setSelectedGuildId] =
-    React.useState(localSelectedGuildId);
+  const [selectedGuildId, _setSelectedGuildId] = useState(localSelectedGuildId);
   const setSelectedGuildId = (guildId: string | null) => {
     _setSelectedGuildId(guildId);
     storage.set('selectedGuildId', guildId ?? '');
   };
 
   const homeTitle = getMessage(pagesPrefix + 'home.title');
-  const [pageTitle, setPageTitle] = React.useState(homeTitle);
+  const [pageTitle, setPageTitle] = useState(homeTitle);
+  const [mobile, setMobile] = useState<boolean>(true);
+
+  useEffect(() => {
+    console.log(windowSize);
+    const isMobile = windowSize.width
+      ? windowSize.width < Constants.mobileWidth
+      : true;
+
+    if (!windowSize?.width) return;
+    if (!initialized) setIsInitialized(new Date());
+
+    if (isMobile !== mobile) {
+      setMobile(isMobile);
+
+      if (!isMobile === mainNavOpen) return;
+      const now = new Date();
+      const time = initialized ? now.getTime() - initialized.getTime() : 0;
+      if (time < 2000) return;
+      setMainNavOpen(!isMobile);
+    }
+  }, [windowSize, mobile]);
+
+  useEffect(() => {
+    if (mobile && mainNavOpen) setMainNavOpen(false);
+  }, []);
 
   return (
     <AppContext.Provider
@@ -51,9 +81,11 @@ export function AppProvider({ children }: AppContextProps) {
         selectedGuildId,
         pageTitle,
         setPageTitle,
+        mobile,
+        setMobile,
       }}
     >
-      {children}
+      {initialized && children}
     </AppContext.Provider>
   );
 }
