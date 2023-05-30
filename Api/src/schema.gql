@@ -196,7 +196,7 @@ type Mutation {
   removeMemberModuleLevel(id: Int!): MemberModuleLevel!
   createMemberModuleLevelDay(createMemberModuleLevelDayInput: CreateMemberModuleLevelDayInput!): MemberModuleLevelDay!
   updateMemberModuleLevelDay(updateMemberModuleLevelDayInput: UpdateMemberModuleLevelDayInput!): MemberModuleLevelDay!
-  removeMemberModuleLevelDay(id: Int!): MemberModuleLevelDay!
+  removeMemberModuleLevelDay(guildId: Int!): MemberModuleLevelDay!
 }
 
 input CreateGuildInput {
@@ -209,25 +209,42 @@ input UpdateGuildInput {
 }
 
 input CreateGuildModuleLevelInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  enabled: Boolean!
+  leveling_multiplier: Int!
+  announcement_channel_id: Int
+  leaderboard_channel_id: Int
+  leaderboard_last_week: Int
+  nicknames: Boolean!
+  last_leaderboard: Timestamp!
 }
 
 input UpdateGuildModuleLevelInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  enabled: Boolean!
+  leveling_multiplier: Int!
+  announcement_channel_id: Int
+  leaderboard_channel_id: Int
+  leaderboard_last_week: Int
+  nicknames: Boolean!
+  last_leaderboard: Timestamp!
 }
 
 input CreateGuildModuleQotdInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  enabled: Boolean!
+  channel_id: Int!
+  message_id: Int!
+  nicknames: Boolean!
 }
 
 input UpdateGuildModuleQotdInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  enabled: Boolean!
+  channel_id: Int!
+  message_id: Int!
+  nicknames: Boolean!
 }
 
 input CreateGuildMessageInput {
@@ -256,25 +273,37 @@ input UpdateGuildTranslationInput {
 }
 
 input CreateMemberInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guild_id: Int!
+  user_id: Int!
+  birthday_date: Timestamp
+  birthday: Int
+  nickname: String
 }
 
 input UpdateMemberInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  guild_id: Int!
+  user_id: Int!
+  birthday_date: Timestamp
+  birthday: Int
+  nickname: String
 }
 
 input CreateGuildModuleVoiceGrowthInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: Int!
+  channel_id: Int!
+  enabled: Boolean! = false
+  preset: String
+  prefix: String
+  manual: Boolean! = false
 }
 
 input UpdateGuildModuleVoiceGrowthInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  channel_id: Int!
+  enabled: Boolean! = false
+  preset: String
+  prefix: String
+  manual: Boolean! = false
 }
 
 input CreateUserInput {
@@ -300,23 +329,45 @@ input UpdateProfileInput {
 }
 
 input CreateMemberModuleLevelInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guild_id: Int!
+  user_id: Int!
+  spam_check: Int! = 0
+  cooldown_count: Int! = 0
+  cooldown_time: Timestamp! = 1685450621563
+  call_start: Timestamp! = 1685450621563
+  points: Int! = 0
 }
 
 input UpdateMemberModuleLevelInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  guild_id: Int!
+  user_id: Int!
+  spam_check: Int! = 0
+  cooldown_count: Int! = 0
+  cooldown_time: Timestamp! = 1685450621567
+  call_start: Timestamp! = 1685450621567
+  points: Int! = 0
 }
 
 input CreateMemberModuleLevelDayInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guild_id: Int!
+  user_id: Int!
+  points_mon: Int! = 0
+  points_tue: Int! = 0
+  points_wed: Int! = 0
+  points_thu: Int! = 0
+  points_fri: Int! = 0
+  points_sat: Int! = 0
+  points_sun: Int! = 0
 }
 
 input UpdateMemberModuleLevelDayInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  guild_id: Int!
+  user_id: Int!
+  points_mon: Int! = 0
+  points_tue: Int! = 0
+  points_wed: Int! = 0
+  points_thu: Int! = 0
+  points_fri: Int! = 0
+  points_sat: Int! = 0
+  points_sun: Int! = 0
 }

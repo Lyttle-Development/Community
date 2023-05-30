@@ -34,15 +34,15 @@ export class MemberModuleLevelService {
     return this.memberModuleLevelRepository.find();
   }
 
-  findOne(userId: number, guildId: number): Promise<MemberModuleLevel> {
+  findOne(guildId: number, userId: number): Promise<MemberModuleLevel> {
     return this.memberModuleLevelRepository.findOne({
       where: { user_id: userId, guild_id: guildId },
     });
   }
 
   getMemberModuleLevelDay(
-    userId: number,
     guildId: number,
+    userId: number,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }

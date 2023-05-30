@@ -5,6 +5,7 @@ import { CreateMemberModuleLevelInput } from './dto/create-member-module-level.i
 import { UpdateMemberModuleLevelInput } from './dto/update-member-module-level.input';
 import { Guild } from '../guild/entities/guild.entity';
 import { Member } from '../member/entities/member.entity';
+import { MemberModuleLevelDay } from '../member-module-level-day/entities/member-module-level-day.entity';
 
 @Resolver(() => MemberModuleLevel)
 export class MemberModuleLevelResolver {
@@ -37,8 +38,11 @@ export class MemberModuleLevelResolver {
   memberModuleLevelDay(
     @Args('id', { type: () => Int }) guildId: number,
     userId: number,
-  ): Promise<MemberModuleLevel> {
-    return this.memberModuleLevelService.findOne(guildId, userId);
+  ): Promise<MemberModuleLevelDay> {
+    return this.memberModuleLevelService.getMemberModuleLevelDay(
+      guildId,
+      userId,
+    );
   }
 
   @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
