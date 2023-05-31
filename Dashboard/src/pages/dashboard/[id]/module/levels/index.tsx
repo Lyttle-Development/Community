@@ -6,6 +6,7 @@ import { Component } from '@lyttledev-dashboard/components';
 import { useEffect, useState } from 'react';
 import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
+import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -78,9 +79,35 @@ function Page() {
     setSettings([
       {
         id: '1',
-        title: 'lol',
-        active: false,
-        activeKey: 'moduleLevelsActive',
+        title: 'Level up',
+        enabled: { state: true, key: 'moduleLevelsActive' },
+        description: 'Enable or disable the level up module.',
+        subItems: [
+          {
+            type: SettingCardSubItems.Input,
+            key: '',
+            value: '',
+            variables: [],
+            defaultKey: '',
+            placeholder: '',
+          },
+        ],
+      },
+      {
+        id: '1',
+        title: 'Level up',
+        enabled: { state: true, key: 'moduleLevels2Active' },
+        description: 'Enable or disable the level up module.',
+        subItems: [
+          {
+            type: SettingCardSubItems.Input,
+            key: '',
+            value: '',
+            variables: [],
+            defaultKey: '',
+            placeholder: '',
+          },
+        ],
       },
     ]);
   }, []);

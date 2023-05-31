@@ -1,9 +1,8 @@
 import { Component } from '@lyttledev-dashboard/components';
 import styles from './settings.module.scss';
-import { SettingCardProps } from '@lyttledev-dashboard/components/setting-card';
+import { SettingCard } from '@lyttledev-dashboard/components/setting-card';
 
-export type CardSetting = SettingCardProps;
-export type CardSettings = CardSetting[];
+export type CardSettings = SettingCard[];
 
 export interface SettingsProps {
   settings: CardSettings;
