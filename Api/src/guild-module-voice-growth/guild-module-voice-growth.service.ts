@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateGuildModuleVoiceGrowthInput } from './dto/create-guild-module-voice-growth.input';
 import { UpdateGuildModuleVoiceGrowthInput } from './dto/update-guild-module-voice-growth.input';
 import { GuildModuleVoiceGrowth } from './entities/guild-module-voice-growth.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Injectable()
 export class GuildModuleVoiceGrowthService {
   constructor(
     @InjectRepository(GuildModuleVoiceGrowth)
     private guildModuleVoiceGrowthRepository: Repository<GuildModuleVoiceGrowth>,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
   ) {}
 
   create(
@@ -28,6 +32,10 @@ export class GuildModuleVoiceGrowthService {
     return this.guildModuleVoiceGrowthRepository.findOne({
       where: { guild_id: id },
     });
+  }
+
+  getGuild(id: number): Promise<Guild> {
+    return this.guildService.findOne(id);
   }
 
   async update(

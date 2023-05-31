@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { CreateGuildModuleQotdInput } from './dto/create-guild-module-qotd.input';
 import type { UpdateGuildModuleQotdInput } from './dto/update-guild-module-qotd.input';
 import { GuildModuleQotd } from './entities/guild-module-qotd.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Injectable()
 export class GuildModuleQotdService {
   constructor(
     @InjectRepository(GuildModuleQotd)
     private guildModuleQotdRepository: Repository<GuildModuleQotd>,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
   ) {}
 
   create(
@@ -26,6 +30,10 @@ export class GuildModuleQotdService {
     return this.guildModuleQotdRepository.findOne({
       where: { guild_id: id },
     });
+  }
+
+  getGuild(id: number): Promise<Guild> {
+    return this.guildService.findOne(id);
   }
 
   async update(

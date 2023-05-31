@@ -3,6 +3,7 @@ import { GuildModuleVoiceGrowthService } from './guild-module-voice-growth.servi
 import { GuildModuleVoiceGrowth } from './entities/guild-module-voice-growth.entity';
 import { CreateGuildModuleVoiceGrowthInput } from './dto/create-guild-module-voice-growth.input';
 import { UpdateGuildModuleVoiceGrowthInput } from './dto/update-guild-module-voice-growth.input';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Resolver(() => GuildModuleVoiceGrowth)
 export class GuildModuleVoiceGrowthResolver {
@@ -30,6 +31,11 @@ export class GuildModuleVoiceGrowthResolver {
     @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildModuleVoiceGrowth> | null {
     return this.guildModuleVoiceGrowthService.findOne(id);
+  }
+
+  @Query(() => GuildModuleVoiceGrowth, { name: 'guildModuleVoiceGrowth' })
+  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
+    return this.guildModuleVoiceGrowthService.getGuild(id);
   }
 
   @Mutation(() => GuildModuleVoiceGrowth)
