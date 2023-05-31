@@ -80,3 +80,7 @@ a, button {
 ::-webkit-scrollbar-thumb:hover {
   background: v.$color-background-dark;
 }
+
+*:focus {
+  outline: v.$color-primary solid .2rem;
+}

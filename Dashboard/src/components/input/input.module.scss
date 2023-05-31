@@ -1,0 +1,21 @@
+@use '../../styles/variables.scss' as v;
+
+.label,
+.input {
+  display: block;
+  border-radius: .7rem;
+}
+
+.label {
+  background-color: v.$color-background;
+}
+
+.input {
+  padding: 2rem;
+  width: 100%;
+  color: v.$color-text;
+
+  &::placeholder {
+    color: v.$color-text-dark;
+  }
+}

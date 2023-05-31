@@ -4,6 +4,7 @@ export * from './container';
 export * from './footer';
 export * from './header';
 export * from './icon-button';
+export * from './input';
 export * from './light-switch';
 export * from './link';
 export * from './logo';
