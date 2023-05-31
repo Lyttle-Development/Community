@@ -22,7 +22,8 @@
     "react-transition-group": "^4.4.5",
     "remark-gfm": "^3.0.1",
     "sass": "^1.62.1",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "discord.js": "^14.9.0"
   },
   "devDependencies": {
     "@types/react-transition-group": "^4.4.6"
