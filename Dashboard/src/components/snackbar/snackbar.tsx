@@ -37,17 +37,19 @@ export function Snackbar() {
   if (hidden) return null;
 
   return (
-    <Component.Container className={`${styles.container}`}>
+    <Component.Container className={`${styles.container} snackbar-container`}>
       <article
         className={`${styles.snackbar} ${
           hasChanges && styles.changes
         } snackbar`}
       >
-        <p className={styles.message}>
+        <p className={`${styles.message} snackbar-message`}>
           {msgMessage}
-          <span className={styles.amount}>({changes})</span>
+          <span className={`${styles.amount} snackbar-amount`}>
+            ({changes})
+          </span>
         </p>
-        <section className={styles.actions}>
+        <section className={`${styles.actions} snackbar-actions`}>
           <Component.Button
             color={ButtonColors.secondary}
             className={styles['review-btn']}
@@ -58,6 +60,7 @@ export function Snackbar() {
             color={ButtonColors.orange}
             className={styles['reset-btn']}
             text={msgReset}
+            onClick={() => app?.updateChange('reset')}
           />
         </section>
       </article>

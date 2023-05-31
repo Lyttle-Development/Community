@@ -34,3 +34,31 @@
 .mobile .container {
   padding: 0 .7rem;
 }
+
+.mobile .snackbar-container {
+  width: 100%;
+  padding-bottom: 1rem;
+  padding-top: .5rem;
+
+  .snackbar-message {
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+
+    .snackbar-amount {
+      transform: translateY(-.5rem);
+      margin-left: .1rem;
+      font-size: .5rem;
+    }
+  }
+
+  .snackbar-actions {
+    justify-content: center;
+
+    button {
+      font-size: .8rem;
+      padding: .8rem 1.5rem;
+      border-radius: .5rem;
+    }
+  }
+}

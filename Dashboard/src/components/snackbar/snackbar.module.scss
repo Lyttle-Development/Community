@@ -1,10 +1,10 @@
 @use '../../styles/variables.scss' as v;
 
 .container {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
   padding-bottom: 2rem;
-  width: 100%;
+  bottom: 0;
+  width: calc(100% - 15rem);
   overflow: hidden;
   padding-top: .5rem;
 }
@@ -14,13 +14,15 @@
 }
 
 .snackbar {
-  background-color: transparentize(v.$color-primary-orange, 0.6);
+  background-color: transparentize(v.$color-primary-orange, 0.85);
   color: v.$color-primary-orange;
-  padding: 1.5rem 0 1.5rem 2rem;
+  padding: 1.5rem 2rem;
   border-radius: .5rem;
   transform: translateY(200%);
   transition: transform 0.5s ease-in-out;
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
 }
@@ -43,10 +45,9 @@
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem;
-  transform: scale(0.9);
-  height: 2rem;
 
   .review-btn {
     background-color: v.$color-text;
