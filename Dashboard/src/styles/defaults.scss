@@ -81,6 +81,7 @@ a, button {
   background: v.$color-background-dark;
 }
 
-*:focus {
+input:focus,
+textarea:focus {
   outline: v.$color-primary solid .2rem;
 }

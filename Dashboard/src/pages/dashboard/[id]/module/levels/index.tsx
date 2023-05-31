@@ -103,27 +103,27 @@ function Page() {
         subItems: [
           {
             type: SettingCardSubItems.Input,
-            key: '',
+            key: 'A',
             value: '',
             variables: VarLevelUp,
             defaultKey: '',
-            placeholder: '',
+            placeholder: 'What?',
           },
         ],
       },
       {
         id: '1',
         title: 'Level up',
-        enabled: { state: true, key: 'moduleLevels2Active' },
+        enabled: { state: false, key: 'moduleLevels2Active' },
         description: 'Enable or disable the level up module.',
         subItems: [
           {
             type: SettingCardSubItems.Input,
-            key: '',
-            value: '',
+            key: 'B',
+            value: 'Hello world here',
             variables: [],
             defaultKey: '',
-            placeholder: '',
+            placeholder: 'Hmmm...',
           },
         ],
       },
