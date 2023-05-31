@@ -75,7 +75,14 @@ export function AppProvider({ children }: AppContextProps) {
     }
   }, [windowSize, mobile]);
 
-  const [changes, setChanges] = useState<Changes>({});
+  const localChanges = storage.get('changes') ?? null;
+  const [changes, setChanges] = useState<Changes>(
+    localChanges ? JSON.parse(localChanges) : {},
+  );
+
+  useEffect(() => {
+    storage.set('changes', JSON.stringify(changes));
+  }, [changes]);
 
   const updateChange = (key: string, value?: Change): Changes => {
     // Reset changes.
