@@ -155,7 +155,7 @@ type Query {
   guildModuleQotd(id: Int!): GuildModuleQotd!
   guildMessage(id: Int!): GuildMessage!
   guildTranslation(id: Int!, key: String!): GuildTranslation!
-  member(userId: Int!, guildId: Int!): Member!
+  member(guildId: Int!, userId: Int!): [Member!]!
   guildModuleVoiceGrowth(id: Int!): GuildModuleVoiceGrowth!
   user(id: Int!): Profile!
   profile(id: Int!): Profile!
@@ -333,8 +333,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685450621563
-  call_start: Timestamp! = 1685450621563
+  cooldown_time: Timestamp! = 1685541257450
+  call_start: Timestamp! = 1685541257450
   points: Int! = 0
 }
 
@@ -343,8 +343,8 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685450621567
-  call_start: Timestamp! = 1685450621567
+  cooldown_time: Timestamp! = 1685541257458
+  call_start: Timestamp! = 1685541257458
   points: Int! = 0
 }
 

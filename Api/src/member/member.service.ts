@@ -1,15 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { CreateMemberInput } from './dto/create-member.input';
 import type { UpdateMemberInput } from './dto/update-member.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Member } from './entities/member.entity';
 import { Repository } from 'typeorm';
+import { MemberModuleLevelService } from 'member-module-level/member-module-level.service';
+import { UserService } from '../user/user.service';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
+import { User } from '../user/entities/user.entity';
+import { MemberModuleLevel } from '../member-module-level/entities/member-module-level.entity';
 
 @Injectable()
 export class MemberService {
   constructor(
     @InjectRepository(Member)
     private memberRepository: Repository<Member>,
+    @Inject(forwardRef(() => MemberModuleLevelService))
+    private memberModuleLevelService: MemberModuleLevelService,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) {}
 
   create(createMemberInput: CreateMemberInput): Promise<Member> {
@@ -30,6 +42,21 @@ export class MemberService {
     return this.memberRepository.findOne({
       where: { user_id: user_id, guild_id: guild_id },
     });
+  }
+
+  getGuild(id: number): Promise<Guild> {
+    return this.guildService.findOne(id);
+  }
+
+  getUser(id: number): Promise<User> {
+    return this.userService.findOne(id);
+  }
+
+  getMemberModuleLevel(
+    guildId: number,
+    userId: number,
+  ): Promise<MemberModuleLevel> {
+    return this.memberModuleLevelService.findOne(guildId, userId);
   }
 
   async update(updateMemberInput: UpdateMemberInput): Promise<Member> | null {
