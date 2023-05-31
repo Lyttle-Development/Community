@@ -1,0 +1,71 @@
+@use '../../styles/variables.scss' as v;
+
+.container {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 2rem;
+  width: 100%;
+  overflow: hidden;
+  padding-top: .5rem;
+}
+
+.container.hidden {
+  display: none;
+}
+
+.snackbar {
+  background-color: transparentize(v.$color-primary-orange, 0.6);
+  color: v.$color-primary-orange;
+  padding: 1.5rem 0 1.5rem 1.5rem;
+  border-radius: .5rem;
+  transform: translateY(200%);
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amount {
+  display: inline-block;
+  font-size: 1rem;
+  transform: translateY(-.7rem);
+  margin-left: .3rem;
+}
+
+.snackbar.changes {
+  transition: transform 0.5s cubic-bezier(.51, .92, .24, 1.15);
+  transform: translateY(0);
+}
+
+.message {
+  font-size: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transform: scale(0.9);
+  height: 2rem;
+
+  .review-btn {
+    background-color: v.$color-text;
+    color: v.$color-primary-orange;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      filter: none;
+      transform: scale(1.1);
+    }
+  }
+
+  .reset-btn {
+    color: v.$color-text;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      filter: none;
+      transform: scale(1.1);
+    }
+  }
+}

@@ -2,6 +2,10 @@ import { Layout } from '@lyttledev-dashboard/layouts';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { CardModule } from '@lyttledev-dashboard/components/modules';
+import { Component } from '@lyttledev-dashboard/components';
+import { useEffect, useState } from 'react';
+import { CardSettings } from '@lyttledev-dashboard/components/settings';
+import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -67,7 +71,30 @@ export const getLevelsConfig = (
 });
 
 function Page() {
-  return <>Hiii</>;
+  const [settings, setSettings] = useState<CardSettings | null>(null);
+  const title = usePage(pagesPrefix + 'module.levels.title');
+
+  useEffect(() => {
+    setSettings([
+      {
+        id: '1',
+        title: 'lol',
+        active: false,
+        activeKey: 'moduleLevelsActive',
+      },
+    ]);
+  }, []);
+
+  return (
+    <>
+      <Component.Title>{title}</Component.Title>
+      <Component.Container>
+        {settings !== null && (
+          <Component.Settings settings={settings}></Component.Settings>
+        )}
+      </Component.Container>
+    </>
+  );
 }
 
 Page.getLayout = Layout.getDefault;

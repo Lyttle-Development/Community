@@ -262,6 +262,20 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      snackbar: {
+        reset: {
+          content: 'Reset',
+          documentation: '',
+        },
+        review: {
+          content: 'Review and save',
+          documentation: '',
+        },
+        title: {
+          content: 'You have unsaved updates!',
+          documentation: '',
+        },
+      },
     },
     pages: {
       dashboard: {
@@ -390,6 +404,12 @@ export const ModuleMarkdown = {
             content: 'Voice Topics',
             documentation: '',
           },
+        },
+      },
+      modules: {
+        title: {
+          content: 'Modules',
+          documentation: '',
         },
       },
     },

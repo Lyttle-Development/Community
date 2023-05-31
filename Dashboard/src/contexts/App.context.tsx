@@ -15,6 +15,9 @@ export interface AppContextInterface {
   setPageTitle: (title: string) => void;
   mobile: boolean;
   setMobile: (state: boolean) => void;
+  changes: Changes;
+  updateChange: (key: string, value?: Change) => Changes;
+  removeChange: (key: string) => Changes;
 }
 
 export type AppContextType = AppContextInterface | null;
@@ -24,6 +27,12 @@ export const useApp = () => useContext(AppContext);
 
 export interface AppContextProps {
   children: React.ReactNode;
+}
+
+export type Change = string | number | boolean | null;
+
+export interface Changes {
+  [key: string]: Change;
 }
 
 export function AppProvider({ children }: AppContextProps) {
@@ -66,6 +75,32 @@ export function AppProvider({ children }: AppContextProps) {
     }
   }, [windowSize, mobile]);
 
+  const [changes, setChanges] = useState<Changes>({});
+
+  const updateChange = (key: string, value?: Change): Changes => {
+    // Reset changes.
+    if (key === 'reset' && !value) {
+      setChanges({});
+    }
+
+    // Get changes.
+    if (value === undefined) return changes;
+
+    // Set changes.
+    const newChanges: Changes = { ...changes, [key]: value };
+    setChanges(newChanges);
+
+    // Return changes.
+    return newChanges;
+  };
+
+  const removeChange = (key: string): Changes => {
+    const newChanges = { ...changes };
+    delete newChanges[key];
+    setChanges(newChanges);
+    return newChanges;
+  };
+
   useEffect(() => {
     if (mobile && mainNavOpen) setMainNavOpen(false);
   }, []);
@@ -82,6 +117,9 @@ export function AppProvider({ children }: AppContextProps) {
         setPageTitle,
         mobile,
         setMobile,
+        changes,
+        updateChange,
+        removeChange,
       }}
     >
       {initialized && children}

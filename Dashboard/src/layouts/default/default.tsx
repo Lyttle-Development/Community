@@ -33,6 +33,7 @@ export function Default({ children }: DefaultProps) {
           <section>
             <Component.Header mobile={mobile} />
             <main className={styles.main}>{children}</main>
+            <Component.Snackbar />
           </section>
         </Layout.Transition>
       </div>

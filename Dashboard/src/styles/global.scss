@@ -14,7 +14,9 @@
 // No margin left by default.
 .default-layout > section {
   margin-left: 0;
-  transition: margin-left 0.8s ease-in-out
+  transition: margin-left 0.8s ease-in-out;
+  min-height: 100vh;
+  position: relative;
 }
 
 // Add margin left when main-nav--open class is added to default-layout

@@ -51,6 +51,9 @@ export * as ModuleConfigDashboardComponentsServerCardModules from '../../content
 export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/modules/Dashboard/components/server-card/setup/config';
 export * as ModuleConfigDashboardComponentsServerCardSetupButton from '../../content/modules/Dashboard/components/server-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
+export * as ModuleConfigDashboardComponentsSnackbarReset from '../../content/modules/Dashboard/components/snackbar/reset/config';
+export * as ModuleConfigDashboardComponentsSnackbarReview from '../../content/modules/Dashboard/components/snackbar/review/config';
+export * as ModuleConfigDashboardComponentsSnackbarTitle from '../../content/modules/Dashboard/components/snackbar/title/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
@@ -75,6 +78,7 @@ export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modu
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../../content/modules/Dashboard/pages/module/voice-topics/card/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
+export * as ModuleConfigDashboardPagesModulesTitle from '../../content/modules/Dashboard/pages/modules/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';
 export * as ModuleConfigGlobalVariables from '../../content/modules/Global/variables/config';
