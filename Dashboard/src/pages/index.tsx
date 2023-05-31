@@ -2,26 +2,18 @@ import { Layout } from '@lyttledev-dashboard/layouts';
 import styles from './index.module.scss';
 import { Component } from '@lyttledev-dashboard/components';
 import { dashboardPrefix, getMessage } from '@lyttledev-dashboard/utils';
-import { useApp } from '@lyttledev-dashboard/contexts/App.context';
-import { useEffect } from 'react';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
+import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 
 export const pagesPrefix = dashboardPrefix + 'pages.';
 
 function Page() {
-  const app = useApp();
-  const setPageTitle = app?.setPageTitle ?? ((p) => p);
-
   const pfx = pagesPrefix + 'home.';
-  const title = getMessage(pfx + 'title');
+  const title = usePage(pfx + 'title');
   const msgTitle = getMessage(pfx + 'landing-title');
   const msgDescription = getMessage(pfx + 'landing-description');
   const msgAdd = getMessage(pfx + 'add-button');
   const msgJoin = getMessage(pfx + 'join-button');
-
-  useEffect(() => {
-    setPageTitle(title);
-  }, []);
 
   return (
     <>

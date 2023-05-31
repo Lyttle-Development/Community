@@ -1,51 +1,37 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { Component } from '@lyttledev-dashboard/components';
 import { CardModules } from '@lyttledev-dashboard/components/modules';
 import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels';
 import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays';
 import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice';
 import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { usePage } from '@lyttledev-dashboard/hooks/usePage';
+import { pagesPrefix } from '@lyttledev-dashboard/pages';
 
 function Page() {
-  const router = useRouter();
-  const app = useApp();
-  const [guildId, setGuildId] = useState<string | null>(null);
+  const guildId = useGuild();
+  const title = usePage(pagesPrefix + 'modules.title');
   const [modules, setModules] = useState<CardModules>([]);
-
-  // Set selected guild id from router, on initial load
-  useEffect(() => {
-    const _guildId = router.query.id;
-    if (app?.selectedGuildId === _guildId) return;
-    if (typeof _guildId !== 'string') return;
-    app?.setSelectedGuildId(_guildId);
-  }, []);
 
   // Update selected guild id from context
   useEffect(() => {
-    // Get the id.
-    const id = app?.selectedGuildId ?? null;
-    // Check id against current id
-    if (id === guildId) return;
-    // Update id
-    setGuildId(id);
-
-    if (typeof id !== 'string') return;
+    if (guildId === null) return;
 
     // Get modules
     setModules([
-      getLevelsConfig(id),
-      getBirthdaysConfig(id),
-      getDynamicVoiceConfig(id),
-      getVoiceTopicsConfig(id),
+      getLevelsConfig(guildId),
+      getBirthdaysConfig(guildId),
+      getDynamicVoiceConfig(guildId),
+      getVoiceTopicsConfig(guildId),
     ]);
-  }, [app?.selectedGuildId, guildId, setGuildId]);
+  }, [guildId]);
 
   return (
     <Component.Container>
-      <Component.Modules modules={modules} />
+      <Component.Title>{title}</Component.Title>
+      {guildId !== null && <Component.Modules modules={modules} />}
     </Component.Container>
   );
 }
