@@ -1,28 +1,34 @@
 @use "./variables" as v;
 
+// Hide main nav by default
 .default-layout > .main-nav {
   transform: translateX(-100%);
   transition: transform 0.8s ease-in-out;
 }
 
+// Show main nav when main-nav--open class is added to default-layout
 .default-layout.main-nav--open > .main-nav {
   transform: translateX(0);
 }
 
+// No margin left by default.
 .default-layout > section {
   margin-left: 0;
   transition: margin-left 0.8s ease-in-out
 }
 
+// Add margin left when main-nav--open class is added to default-layout
 .default-layout.main-nav--open:not(.mobile) > section {
   margin-left: v.$main-nav-width;
 }
 
-.default-layout.main-nav--open > section {
+// Stop page from scrolling when main nav is open
+.default-layout.main-nav--open.mobile > section {
   max-height: 100vh;
   overflow: hidden;
 }
 
+// Change mobile container width to be smaller than desktop.
 .mobile .container {
   padding: 0 .7rem;
 }
