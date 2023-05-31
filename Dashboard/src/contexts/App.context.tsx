@@ -48,7 +48,6 @@ export function AppProvider({ children }: AppContextProps) {
   const [mobile, setMobile] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log(windowSize);
     const isMobile = windowSize.width
       ? windowSize.width < Constants.mobileWidth
       : true;

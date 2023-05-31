@@ -15,8 +15,6 @@ export function Default({ children }: DefaultProps) {
   const mobile = app?.mobile ?? true;
   const router = useRouter();
 
-  console.log(mobile);
-
   useEffect(() => {
     if (!mobile) return;
     app?.setMainNavOpen(false);

@@ -38,33 +38,35 @@ export function ModuleCard({
 
   const cardInners = (
     <>
-      {active !== null && setup && (
-        <Component.LightSwitch
-          active={active}
-          onClick={() => onClick(false, id, !active)}
-          color={SCSSPrimaryColors.yellow}
-          className={styles['switch']}
-        />
-      )}
-      {setup && (
-        <Component.IconButton
-          icon={IconButtonIcons.cog}
-          className={styles['cog']}
-          href={route}
-        />
-      )}
-      {active !== null && !setup && (
-        <Component.Button
-          color={ButtonColors.yellow}
-          href={route}
-          className={styles['setup-button']}
-        >
-          {msgSetupButton}
-        </Component.Button>
-      )}
-      <h2 className={styles.title}>
-        {msgTitlePrefix} {title}
-      </h2>
+      <div className={styles.heading}>
+        <h2 className={styles.title}>
+          {msgTitlePrefix} {title}
+        </h2>
+        {active !== null && setup && (
+          <Component.LightSwitch
+            active={active}
+            onClick={() => onClick(false, id, !active)}
+            color={SCSSPrimaryColors.yellow}
+            className={styles['switch']}
+          />
+        )}
+        {setup && (
+          <Component.IconButton
+            icon={IconButtonIcons.cog}
+            className={styles['cog']}
+            href={route}
+          />
+        )}
+        {active !== null && !setup && (
+          <Component.Button
+            color={ButtonColors.yellow}
+            href={route}
+            className={styles['setup-button']}
+          >
+            {msgSetupButton}
+          </Component.Button>
+        )}
+      </div>
       <Component.Markdown className={styles.description}>
         {description}
       </Component.Markdown>
