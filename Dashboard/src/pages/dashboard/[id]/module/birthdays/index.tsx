@@ -15,17 +15,21 @@ const msgAnnouncementTitle = getMessage(pfx + 'announcement.title');
 const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 
 // Config:
-export const getBirthdaysConfig = (guildId: string): CardModule => ({
+export const getBirthdaysConfig = (
+  guildId: string,
+  moduleId: string | null = null,
+  announcementChannelId: string | null = null,
+): CardModule => ({
   active: null,
   title: msgTitle,
   description: msgDescription,
-  id: null,
+  id: moduleId,
   // Todo: Add birthday disable function
   onClick: (...e) => console.log(e),
   route: `/dashboard/${guildId}/module/birthdays`,
   subItems: [
     {
-      id: null,
+      id: announcementChannelId,
       route: `/dashboard/${guildId}/module/birthdays#announcement`,
       active: true,
       title: msgAnnouncementTitle,

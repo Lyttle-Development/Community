@@ -1,0 +1,1 @@
+This channel is configured to be dynamic master.

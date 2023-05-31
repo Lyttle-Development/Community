@@ -23,33 +23,43 @@ const msgLeaderboardTitle = getMessage(pfx + 'leaderboard.title');
 const msgLeaderboardDescription = getMessage(pfx + 'leaderboard.description');
 
 // Config:
-export const getLevelsConfig = (guildId: string): CardModule => ({
-  active: false,
+export const getLevelsConfig = (
+  guildId: string,
+  enabled = false,
+  levelsId: string | null = null,
+  nicknameId: string | null = null,
+  nicknameActive = false,
+  announcementId: string | null = null,
+  announcementActive = false,
+  leaderboardId: string | null = null,
+  leaderboardActive = false,
+): CardModule => ({
+  active: enabled,
   title: msgTitle,
   description: msgDescription,
-  id: null,
+  id: levelsId,
   // Todo: Add levels disable function
   onClick: (...e) => console.log(e),
   route: `/dashboard/${guildId}/module/levels`,
   subItems: [
     {
-      id: null,
+      id: nicknameId,
       route: `/dashboard/${guildId}/module/levels#nickname`,
-      active: false,
+      active: nicknameActive,
       title: msgNicknameTitle,
       description: msgNicknameDescription,
     },
     {
-      id: null,
+      id: announcementId,
       route: `/dashboard/${guildId}/module/levels#announcement`,
-      active: false,
+      active: announcementActive,
       title: msgAnnouncementTitle,
       description: msgAnnouncementDescription,
     },
     {
-      id: null,
+      id: leaderboardId,
       route: `/dashboard/${guildId}/module/levels#leaderboard`,
-      active: false,
+      active: leaderboardActive,
       title: msgLeaderboardTitle,
       description: msgLeaderboardDescription,
     },

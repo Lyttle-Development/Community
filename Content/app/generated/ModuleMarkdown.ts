@@ -316,6 +316,12 @@ export const ModuleMarkdown = {
           },
         },
         'dynamic-voice': {
+          card: {
+            description: {
+              content: 'This channel is configured to be dynamic master.',
+              documentation: '',
+            },
+          },
           description: {
             content:
               'The Dynamic Voice Growth module enhances the scalability and flexibility of voice channels within a community. It automatically adjusts the number of available voice channels based on user activity, ensuring an optimal balance between demand and available resources. With this module, users can enjoy seamless voice communication without the need for manual channel creation or adjustment, making it easier to accommodate a growing community and fluctuating usage patterns.',
@@ -368,6 +374,13 @@ export const ModuleMarkdown = {
           },
         },
         'voice-topics': {
+          card: {
+            description: {
+              content:
+                'This channel is configured to accept button interactions, creating voice topics below it.',
+              documentation: '',
+            },
+          },
           description: {
             content:
               'The Voice Topics module enriches the voice communication experience within a community or server. It enables users to create dedicated voice channels for specific topics or interests, promoting focused discussions and engagement. With this module, users can easily find and join voice channels that align with their interests, fostering meaningful conversations and building a stronger sense of community.',

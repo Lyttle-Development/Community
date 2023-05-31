@@ -5,7 +5,7 @@ import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 
-interface ModuleCardItem {
+export interface ModuleCardItem {
   id: string | null;
   route: string;
   title: string;

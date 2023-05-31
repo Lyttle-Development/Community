@@ -61,6 +61,7 @@ export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementDescription fro
 export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementTitle from '../../content/modules/Dashboard/pages/module/birthdays/announcement/title/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysDescription from '../../content/modules/Dashboard/pages/module/birthdays/description/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysTitle from '../../content/modules/Dashboard/pages/module/birthdays/title/config';
+export * as ModuleConfigDashboardPagesModuleDynamicVoiceCardDescription from '../../content/modules/Dashboard/pages/module/dynamic-voice/card/description/config';
 export * as ModuleConfigDashboardPagesModuleDynamicVoiceDescription from '../../content/modules/Dashboard/pages/module/dynamic-voice/description/config';
 export * as ModuleConfigDashboardPagesModuleDynamicVoiceTitle from '../../content/modules/Dashboard/pages/module/dynamic-voice/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementDescription from '../../content/modules/Dashboard/pages/module/levels/announcement/description/config';
@@ -71,6 +72,7 @@ export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardTitle from '../../c
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameDescription from '../../content/modules/Dashboard/pages/module/levels/nickname/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameTitle from '../../content/modules/Dashboard/pages/module/levels/nickname/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modules/Dashboard/pages/module/levels/title/config';
+export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../../content/modules/Dashboard/pages/module/voice-topics/card/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
