@@ -20,12 +20,18 @@ export function Snackbar() {
 
     const change = _changes > 0;
     if (!change) {
-      setTimeout(() => setHidden(!change), 500);
-      setTimeout(() => setHasChanges(change), 10);
-      return;
+      const a = setTimeout(() => setHidden(!change), 500);
+      const b = setTimeout(() => setHasChanges(change), 100);
+      return () => {
+        clearTimeout(a);
+        clearTimeout(b);
+      };
     }
     setHidden(!change);
-    setTimeout(() => setHasChanges(change), 10);
+    const c = setTimeout(() => setHasChanges(change), 100);
+    return () => {
+      clearTimeout(c);
+    };
   }, [app?.changes]);
 
   const pfx = componentsPrefix + 'snackbar.';
@@ -34,10 +40,12 @@ export function Snackbar() {
   const msgReview = getMessage(pfx + 'review');
   const msgReset = getMessage(pfx + 'reset');
 
-  if (hidden) return null;
-
   return (
-    <Component.Container className={`${styles.container} snackbar-container`}>
+    <Component.Container
+      className={`${styles.container} ${
+        hidden && styles.hidden
+      } snackbar-container`}
+    >
       <article
         className={`${styles.snackbar} ${
           hasChanges && styles.changes
