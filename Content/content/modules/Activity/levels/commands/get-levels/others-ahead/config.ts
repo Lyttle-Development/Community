@@ -12,3 +12,20 @@ export interface Variables extends DefaultVariables {
   neededPointsNextLevel: string;
   timesHarder: string;
 }
+
+export const variables: (keyof Variables)[] = [
+  'guildId',
+  'guild',
+  'userId',
+  'user',
+  'prefix',
+  'recentLevels',
+  'levels',
+  'levelsUnit',
+  'nextLevel',
+  'points',
+  'pointsUnit',
+  'recentPoints',
+  'neededPointsNextLevel',
+  'timesHarder',
+];
