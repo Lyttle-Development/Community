@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
+import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -71,6 +72,23 @@ export const getLevelsConfig = (
   ],
 });
 
+const getVariables = (
+  module: any,
+): {
+  variable: string;
+  description: string;
+}[] => {
+  const variables = (module?.variables as string[]) ?? [];
+  return variables.map((variable) => ({
+    variable: variable,
+    description: 'No description provided.',
+  }));
+};
+
+const VarLevelUp = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsEventLevelUp,
+);
+
 function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
@@ -87,7 +105,7 @@ function Page() {
             type: SettingCardSubItems.Input,
             key: '',
             value: '',
-            variables: [],
+            variables: VarLevelUp,
             defaultKey: '',
             placeholder: '',
           },

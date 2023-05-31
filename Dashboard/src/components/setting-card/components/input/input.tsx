@@ -19,5 +19,18 @@ export interface SettingCardInputProps {
 
 export function Input({ item, changes, change }: SettingCardInputProps) {
   const { key, value, variables, defaultKey, placeholder } = item;
-  return <>Hi!</>;
+  return (
+    <section>
+      {variables && variables.length > 0 && (
+        <ul>
+          {variables.map((variable, i) => (
+            <li key={i}>
+              <span>{variable.variable}</span>
+              <span>{variable.description}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
 }
