@@ -43,9 +43,9 @@ export function Button({
     }
   };
 
-  const navigate = () => {
+  const navigate = async () => {
     if (!href) return;
-    router.push(href);
+    await router.push(href);
   };
 
   // Active class handling

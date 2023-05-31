@@ -1,6 +1,6 @@
 import styles from './icon-button.module.scss';
 import { MouseEvent as ReactMouseEvent } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export enum IconButtonIcons {
   cog = 'cog',
@@ -67,6 +67,7 @@ export function IconButton({
   classNameDisabled,
   children,
 }: IconButtonProps) {
+  const router = useRouter();
   const IconElement = getIcon(icon);
 
   // Click handling
@@ -77,22 +78,27 @@ export function IconButton({
     }
   };
 
+  const navigate = async () => {
+    if (!href) return;
+    await router.push(href);
+  };
+
   // Active class handling
   const disabledClass = disabled ? styles.disabled : '';
   const customDisabledClass = disabled ? classNameDisabled : '';
 
   if (href && !disabled) {
     return (
-      <Link
+      <button
         className={`${styles.button} ${disabledClass} ${className} ${customDisabledClass}`}
-        href={href}
+        onClick={navigate}
       >
         {IconElement}
         <span className={styles.text}>
           {text}
           {children}
         </span>
-      </Link>
+      </button>
     );
   }
   return (
