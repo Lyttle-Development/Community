@@ -7,6 +7,6 @@
 
   *:focus,
   *:focus-within {
-    outline-color: v.$color-primary-yellow;
+    outline-color: v.$color-primary-yellow !important;
   }
 }

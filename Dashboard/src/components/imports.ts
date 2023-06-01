@@ -20,4 +20,5 @@ export * from './setting-card';
 export * from './settings';
 export * from './snackbar';
 export * from './startup';
+export * from './textarea';
 export * from './title';

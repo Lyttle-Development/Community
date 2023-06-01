@@ -1,14 +1,17 @@
 import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
+import { getMessage } from '@lyttledev-dashboard/utils';
+import { ChangeEvent } from 'react';
+import { Component } from '@lyttledev-dashboard/components';
+import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
+import styles from './textarea.module.scss';
 
 export interface SettingCardTextareaItem {
   type: SettingCardSubItems.Textarea;
   key: string;
   value: string;
   variables: { variable: string; description: string }[];
-  defaultKey: string;
-  placeholder: string;
 }
 
 export interface SettingCardTextareaProps {
@@ -18,6 +21,62 @@ export interface SettingCardTextareaProps {
 }
 
 export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
-  const { key, value, variables, defaultKey, placeholder } = item;
-  return <>Hi!</>;
+  // Get item data.
+  const { key, value, variables } = item;
+
+  // Get default message.
+  const defaultMessage = getMessage(key);
+
+  // Define update function.
+  const updateValue = (newValue: string) => change(value, key, newValue);
+
+  // Handle input change
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = event?.target?.value ?? '';
+    updateValue(newValue);
+  };
+
+  // Handle retrieve default
+  const retrieveDefault = () => {
+    updateValue(defaultMessage);
+  };
+
+  // Check if using default
+  const usingDefault = defaultMessage === changes[key];
+
+  // Render component.
+  return (
+    <section className={styles.card}>
+      <Component.Textarea
+        placeholder={defaultMessage}
+        onChange={handleChange}
+        value={(changes[key] as string) ?? value}
+        className={styles.textarea}
+      />
+      <article className={styles.options}>
+        <Component.IconButton
+          icon={IconButtonIcons.down}
+          className={styles.retrieve}
+          onClick={retrieveDefault}
+          disabled={usingDefault}
+        />
+        {variables && variables.length > 0 && (
+          <ul className={styles.variables}>
+            {variables.map((variable, i) => (
+              <li key={i}>
+                <span className={styles['var-key']}>
+                  {'{'}
+                  {variable.variable}
+                  {'}'}
+                </span>
+                <span className={styles['var-description']}>
+                  {variable.description}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </article>
+    </section>
+  );
 }

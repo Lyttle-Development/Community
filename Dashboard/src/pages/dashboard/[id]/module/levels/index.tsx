@@ -103,7 +103,7 @@ function Page() {
         description: msgLevelUp.description,
         subItems: [
           {
-            type: SettingCardSubItems.Input,
+            type: SettingCardSubItems.Textarea,
             key: 'Activity.levels.event.level-up',
             value: '',
             variables: VarLevelUp,
