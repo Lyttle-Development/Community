@@ -21,3 +21,20 @@
     gap: 1rem;
   }
 }
+
+.sub-items {
+  height: 100%;
+  overflow: hidden;
+  transition: max-height 1s ease-in-out;
+  max-height: 0;
+
+  &.sub-items--enabled {
+    max-height: 100vh;
+  }
+
+  &:focus-within {
+    // Fix outline not working when overflow hidden:
+    padding: .2rem;
+    margin: -.2rem;
+  }
+}

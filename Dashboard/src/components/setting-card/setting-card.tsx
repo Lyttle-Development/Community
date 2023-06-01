@@ -44,11 +44,40 @@ export function SettingCard({
     value: Change,
   ) => {
     if (value === initial) {
-      app?.removeChange(key);
+      app?.change({ remove: key });
       return;
     }
-    app?.updateChange(key, value);
+    app?.change({ update: { key, value } });
   };
+
+  const changeEnabled = (state: boolean) => {
+    // If the enabled state is not defined, return
+    if (!enabled) return;
+
+    // Check if the state is disabled / false.
+    if (!state) {
+      // Get sub items keys
+      const subItemKeys = subItems?.map((item) => item.key) ?? [];
+      // Check if the enabled state is the same as the state we are trying to set
+      const deleteEnabled = enabled.state === state;
+
+      // If we are trying to delete the enabled state, remove the enabled key and all sub items
+      if (deleteEnabled) {
+        app?.change({ remove: [enabled.key, ...subItemKeys] });
+        return;
+      }
+      // If we are trying to set the enabled state, remove all sub items and update the enabled key
+      app?.change({
+        remove: subItemKeys,
+        update: { key: enabled.key, value: state },
+      });
+      return;
+    }
+    // Set the enabled state
+    app?.change({ update: { key: enabled.key, value: state } });
+  };
+
+  const isEnabled = (enabled && (changes[enabled?.key] as boolean)) ?? false;
 
   return (
     <article className={styles.card}>
@@ -59,7 +88,7 @@ export function SettingCard({
           id !== null && (
             <Component.LightSwitch
               active={(changes[enabled.key] as boolean) ?? enabled.state}
-              onClick={(e) => change(enabled?.state, enabled?.key, e)}
+              onClick={changeEnabled}
               color={SCSSPrimaryColors.yellow}
               className={styles['switch']}
             />
@@ -69,7 +98,11 @@ export function SettingCard({
         {description}
       </Component.Markdown>
       {subItems && (
-        <ul className={styles['sub-items']}>
+        <ul
+          className={`${styles['sub-items']} ${
+            isEnabled && styles['sub-items--enabled']
+          }`}
+        >
           {subItems.length > 0 &&
             subItems.map((item: SettingCardSubItem, i) => (
               <li key={i}>

@@ -110,7 +110,8 @@ export const ModuleMarkdown = {
       txt: {
         nickname: {
           content: '{name} • {recentLevels}{levels}',
-          documentation: '',
+          documentation:
+            'Nicknames\nGive members a nickname when they level up.\nHappens when changing name or leveling up.',
         },
         'nickname-numbers': {
           levels: {

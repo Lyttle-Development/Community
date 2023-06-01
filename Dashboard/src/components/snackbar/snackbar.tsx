@@ -34,6 +34,10 @@ export function Snackbar() {
     };
   }, [app?.changes]);
 
+  const onReset = () => {
+    app?.change({ update: { key: 'reset' } });
+  };
+
   const pfx = componentsPrefix + 'snackbar.';
 
   const msgMessage = getMessage(pfx + 'title');
@@ -68,7 +72,7 @@ export function Snackbar() {
             color={ButtonColors.orange}
             className={styles['reset-btn']}
             text={msgReset}
-            onClick={() => app?.updateChange('reset')}
+            onClick={onReset}
           />
         </section>
       </article>

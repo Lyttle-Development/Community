@@ -5,6 +5,22 @@ import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { useWindowSize } from '@lyttledev-dashboard/hooks/useWindowSize';
 import { Constants } from '@lyttledev-dashboard/constants';
 
+export type Change = string | number | boolean | null;
+
+export interface Changes {
+  [key: string]: Change;
+}
+
+interface ChangeProps {
+  remove?: string | string[];
+  update?:
+    | { key: string; value?: Change }
+    | {
+        key: string;
+        value?: Change;
+      }[];
+}
+
 export interface AppContextInterface {
   mainNavOpen: boolean;
   setMainNavOpen: (state: boolean) => void;
@@ -16,8 +32,7 @@ export interface AppContextInterface {
   mobile: boolean;
   setMobile: (state: boolean) => void;
   changes: Changes;
-  updateChange: (key: string, value?: Change) => Changes;
-  removeChange: (key: string) => Changes;
+  change: (props: ChangeProps) => void;
 }
 
 export type AppContextType = AppContextInterface | null;
@@ -27,12 +42,6 @@ export const useApp = () => useContext(AppContext);
 
 export interface AppContextProps {
   children: React.ReactNode;
-}
-
-export type Change = string | number | boolean | null;
-
-export interface Changes {
-  [key: string]: Change;
 }
 
 export function AppProvider({ children }: AppContextProps) {
@@ -84,28 +93,51 @@ export function AppProvider({ children }: AppContextProps) {
     storage.set('changes', JSON.stringify(changes));
   }, [changes]);
 
-  const updateChange = (key: string, value?: Change): Changes => {
-    // Reset changes.
-    if (key === 'reset' && !value) {
-      setChanges({});
+  const change = ({ remove, update }: ChangeProps) => {
+    // Check for reset.
+    if (update) {
+      const updateKeys = (Array.isArray(update) ? update : [update]) //
+        // Get keys only
+        .map((e) => e.key);
+
+      // Check if we have reset key.
+      const hasResetKey = updateKeys.includes('reset');
+      // Reset when we have reset key.
+      if (hasResetKey) return setChanges({});
     }
 
-    // Get changes.
-    if (value === undefined) return changes;
+    // Get current changes.
+    const newChanges: Changes = { ...changes };
+
+    // Remove changes.
+    if (remove) {
+      // Get al remove keys.
+      const removeKeys = Array.isArray(remove) ? remove : [remove];
+      // Check if we have remove keys.
+      if (removeKeys.length > 0) {
+        // Remove keys.
+        removeKeys.forEach((key) => delete newChanges[key]);
+      }
+    }
+
+    // Update changes.
+    if (update) {
+      // Get all updates.
+      const updates = Array.isArray(update) ? update : [update];
+      // Check if we have updates.
+      if (updates.length > 0) {
+        // Update changes.
+        updates.forEach(({ key, value }) => {
+          // Check if we have value.
+          if (value === undefined) return;
+          // Update change.
+          newChanges[key] = value;
+        });
+      }
+    }
 
     // Set changes.
-    const newChanges: Changes = { ...changes, [key]: value };
     setChanges(newChanges);
-
-    // Return changes.
-    return newChanges;
-  };
-
-  const removeChange = (key: string): Changes => {
-    const newChanges = { ...changes };
-    delete newChanges[key];
-    setChanges(newChanges);
-    return newChanges;
   };
 
   useEffect(() => {
@@ -125,8 +157,7 @@ export function AppProvider({ children }: AppContextProps) {
         mobile,
         setMobile,
         changes,
-        updateChange,
-        removeChange,
+        change,
       }}
     >
       {initialized && children}

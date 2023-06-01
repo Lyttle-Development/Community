@@ -85,42 +85,51 @@ const getVariables = (
   }));
 };
 
-const VarLevelUp = getVariables(
+// Level up
+const keyLevelUp = 'Activity.levels.event.level-up';
+const msgLevelUp = getDocumentation(keyLevelUp);
+const varLevelUp = getVariables(
   ContentConfigs.ModuleConfigActivityLevelsEventLevelUp,
+);
+
+// Level up
+const keyNickname = 'Activity.levels.txt.nickname';
+const msgNickname = getDocumentation(keyNickname);
+const varNickname = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsTxtNickname,
 );
 
 function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
-  const msgLevelUp = getDocumentation('Activity.levels.event.level-up');
 
   useEffect(() => {
     setSettings([
       {
-        id: '1',
+        id: '0',
         title: msgLevelUp.title,
-        enabled: { state: true, key: 'moduleLevelsActive' },
+        enabled: { state: false, key: keyLevelUp + '.enabled' },
         description: msgLevelUp.description,
         subItems: [
           {
             type: SettingCardSubItems.Textarea,
-            key: 'Activity.levels.event.level-up',
+            key: keyLevelUp,
             value: '',
-            variables: VarLevelUp,
+            variables: varLevelUp,
           },
         ],
       },
       {
-        id: '1',
-        title: 'Level up',
-        enabled: { state: false, key: 'moduleLevels2Active' },
-        description: 'Enable or disable the level up module.',
+        id: '0',
+        title: msgNickname.title,
+        description: msgNickname.description,
+        enabled: { state: false, key: keyNickname + '.enabled' },
         subItems: [
           {
             type: SettingCardSubItems.Input,
-            key: 'Activity.levels.txt.nickname',
-            value: 'Hello world here',
-            variables: [],
+            key: keyNickname,
+            value: '',
+            variables: varNickname,
           },
         ],
       },
