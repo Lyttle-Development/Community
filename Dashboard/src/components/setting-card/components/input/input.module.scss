@@ -16,6 +16,15 @@
   padding: .6rem 1rem;
   border-radius: .5rem;
   background-color: v.$color-primary-yellow;
+
+  &:disabled {
+    opacity: .2;
+
+    &:hover {
+      background-color: v.$color-primary-yellow;
+      filter: none;
+    }
+  }
 }
 
 .options {

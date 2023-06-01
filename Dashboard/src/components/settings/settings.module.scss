@@ -5,7 +5,8 @@
   flex-direction: column;
   gap: 1rem;
 
-  *:focus {
+  *:focus,
+  *:focus-within {
     outline-color: v.$color-primary-yellow;
   }
 }

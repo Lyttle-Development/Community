@@ -103,7 +103,8 @@ export const ModuleMarkdown = {
       event: {
         'level-up': {
           content: '{user} just advanced to {level} {unit}!',
-          documentation: '',
+          documentation:
+            'Level up\nThe message send when leveling up.\nTriggered when a player levels up.',
         },
       },
       txt: {

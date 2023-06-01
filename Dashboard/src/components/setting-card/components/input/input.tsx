@@ -2,17 +2,16 @@ import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card'
 import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { Component } from '@lyttledev-dashboard/components';
-import { ChangeEvent } from 'react';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './input.module.scss';
+import { ChangeEvent } from 'react';
+import { getMessage } from '@lyttledev-dashboard/utils';
 
 export interface SettingCardInputItem {
   type: SettingCardSubItems.Input;
   key: string;
   value: string;
   variables: { variable: string; description: string }[];
-  defaultKey: string;
-  placeholder: string;
 }
 
 export interface SettingCardInputProps {
@@ -22,18 +21,36 @@ export interface SettingCardInputProps {
 }
 
 export function Input({ item, changes, change }: SettingCardInputProps) {
-  const { key, value, variables, defaultKey, placeholder } = item;
+  // Get item data.
+  const { key, value, variables } = item;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    change(value, key, e.currentTarget.value);
+  // Get default message.
+  const defaultMessage = getMessage(key);
+
+  // Define update function.
+  const updateValue = (newValue: string) => change(value, key, newValue);
+
+  // Handle input change
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event?.target?.value ?? '';
+    updateValue(newValue);
   };
 
+  // Handle retrieve default
+  const retrieveDefault = () => {
+    updateValue(defaultMessage);
+  };
+
+  // Check if using default
+  const usingDefault = defaultMessage === changes[key];
+
+  // Render component.
   return (
     <section className={styles.card}>
       <Component.Input
         type="text"
-        placeholder={placeholder}
-        onChange={(e) => handleChange(e)}
+        placeholder={defaultMessage}
+        onChange={handleChange}
         value={(changes[key] as string) ?? value}
         className={styles.input}
       />
@@ -41,6 +58,8 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
         <Component.IconButton
           icon={IconButtonIcons.down}
           className={styles.retrieve}
+          onClick={retrieveDefault}
+          disabled={usingDefault}
         />
         {variables && variables.length > 0 && (
           <ul className={styles.variables}>

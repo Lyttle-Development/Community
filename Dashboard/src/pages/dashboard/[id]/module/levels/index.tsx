@@ -1,6 +1,6 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { getMessage } from '@lyttledev-dashboard/utils';
+import { getDocumentation, getMessage } from '@lyttledev-dashboard/utils';
 import { CardModule } from '@lyttledev-dashboard/components/modules';
 import { Component } from '@lyttledev-dashboard/components';
 import { useEffect, useState } from 'react';
@@ -92,22 +92,21 @@ const VarLevelUp = getVariables(
 function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
+  const msgLevelUp = getDocumentation('Activity.levels.event.level-up');
 
   useEffect(() => {
     setSettings([
       {
         id: '1',
-        title: 'Level up',
+        title: msgLevelUp.title,
         enabled: { state: true, key: 'moduleLevelsActive' },
-        description: 'Enable or disable the level up module.',
+        description: msgLevelUp.description,
         subItems: [
           {
             type: SettingCardSubItems.Input,
-            key: 'A',
+            key: 'Activity.levels.event.level-up',
             value: '',
             variables: VarLevelUp,
-            defaultKey: '',
-            placeholder: 'What?',
           },
         ],
       },
@@ -119,11 +118,9 @@ function Page() {
         subItems: [
           {
             type: SettingCardSubItems.Input,
-            key: 'B',
+            key: 'Activity.levels.txt.nickname',
             value: 'Hello world here',
             variables: [],
-            defaultKey: '',
-            placeholder: 'Hmmm...',
           },
         ],
       },

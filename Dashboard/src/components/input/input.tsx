@@ -22,9 +22,9 @@ export function Input({
   className,
   classNameDisabled,
 }: InputProps) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!onChange) return;
-    onChange(e);
+    onChange(event);
   };
 
   return (

@@ -26,4 +26,18 @@ export function getMessage(path: string): string {
   return _markdown.content;
 }
 
+export function getDocumentation(path: string): {
+  title: string;
+  description: string;
+} {
+  const _markdown = getModuleMarkdownItem(path);
+  const _content = _markdown.documentation ?? '';
+  const title = _content.split('\n')[0].replace('#', '').trim() ?? '';
+  const description = _content.split('\n').slice(1).join('\n\n').trim() ?? '';
+  return {
+    title,
+    description,
+  };
+}
+
 export const dashboardPrefix = 'Dashboard.';
