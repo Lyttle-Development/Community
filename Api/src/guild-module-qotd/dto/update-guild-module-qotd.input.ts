@@ -7,16 +7,4 @@ export class UpdateGuildModuleQotdInput extends PartialType(
 ) {
   @Field(() => Int)
   id: number;
-
-  @Field(() => Boolean)
-  enabled: boolean;
-
-  @Field(() => Int)
-  channel_id: number;
-
-  @Field(() => Int)
-  message_id: number;
-
-  @Field(() => Boolean)
-  nicknames: boolean;
 }

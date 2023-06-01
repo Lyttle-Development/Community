@@ -8,13 +8,4 @@ export class UpdateMemberInput extends PartialType(CreateMemberInput) {
 
   @Field(() => Int)
   user_id: number;
-
-  @Field(() => Date, { nullable: true })
-  birthday_date: Date;
-
-  @Field(() => Int, { nullable: true })
-  birthday: number;
-
-  @Field(() => String, { nullable: true })
-  nickname: string;
 }

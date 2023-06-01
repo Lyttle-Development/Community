@@ -2,9 +2,6 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleLevelInput {
-  @Field(() => Int)
-  id: number;
-
   @Field(() => Boolean)
   enabled: boolean;
 

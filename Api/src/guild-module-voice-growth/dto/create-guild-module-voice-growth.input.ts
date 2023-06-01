@@ -3,9 +3,6 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 @InputType()
 export class CreateGuildModuleVoiceGrowthInput {
   @Field(() => Int)
-  id: number;
-
-  @Field(() => Int)
   channel_id: number;
 
   @Field(() => Boolean, { defaultValue: false })

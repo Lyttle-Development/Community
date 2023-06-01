@@ -2,9 +2,6 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleQotdInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  id: number;
-
   @Field(() => Boolean)
   enabled: boolean;
 
