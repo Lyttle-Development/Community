@@ -83,7 +83,17 @@ async function getMessagePrefix<T>(
 ): Promise<string> {
   // Get the messages
   const prefix = await getMessageByKey(guildId, 'Global.prefix');
-  const message = await getMessageByKey(guildId, key);
+  let message = await getMessageByKey(guildId, key);
+
+  // Get every row
+  let messageRows = message.split('\n');
+  // Add prefix to every row
+  messageRows = messageRows.map((row, i) =>
+    // If it's not the first row, add the prefix
+    i !== 0 ? `${prefix}${row}` : row,
+  );
+  // Join every row
+  message = messageRows.join('\n');
 
   // Convert to Record<string, Primitive>
   const _variables = variables as Record<string, Primitive>;

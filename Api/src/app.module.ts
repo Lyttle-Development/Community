@@ -43,6 +43,11 @@ import { ConfigModule } from '@nestjs/config';
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        // 1. https://www.google.com/search?q=what+does+synchronize+do+nestjs
+        // - synchronize: Indicates if database schema should be auto-created on every application launch
+        //
+        // 2. https://docs.nestjs.com/techniques/database#:~:text=WARNING,lose%20production%20data.
+        // - Setting "synchronize: true" shouldn't be used in production - otherwise you can lose production data.
         synchronize: false,
       }),
     }),

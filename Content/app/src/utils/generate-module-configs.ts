@@ -1,47 +1,59 @@
-import { spider } from './spider';
 import { saveFile } from './saveFile';
-import {
-  buildConstConfig,
-  buildInterfaceConfig,
-  buildTypeConfig,
-} from './module-configs';
-import { SpiderFile } from '../types/Spider';
+import fs from 'fs';
+import path from 'path';
 
 export function generateModuleConfigs() {
-  const moduleInterfaceConfig = spider(
-    '../content/modules',
-    buildInterfaceConfig,
-  );
-  const moduleConstConfig = spider('../content/modules', buildConstConfig);
-  const moduleTypeConfig = spider('../content/modules', buildTypeConfig);
+  let content = '// This file is auto generated, do not edit it manually.';
 
-  let content = '// This file is auto generated, do not edit it manually.\n';
+  // Build the file getter function.
+  const crawlIn = (fileNames: string, dir: string): void => {
+    const dirFiles = fs.readdirSync(dir);
+    dirFiles.forEach((rawFilePath) => {
+      // Get the file path
+      const filePath = path.join(dir, rawFilePath);
 
-  const builder = (obj: SpiderFile, path: string) => {
-    Object.keys(obj).forEach((key) => {
-      if (typeof obj[key] === 'object') {
-        builder(obj[key], `${path}/${key}`);
-      } else {
-        if (!obj[key]) return;
-        const globalVariable = path
-          .replaceAll('../../content/modules/', '')
-          .split(/[/_-]/gm)
-          .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
-          .join('');
-        content += `\nexport * as ModuleConfig${globalVariable} from '${path}/config';\n`;
+      // Get the name of the file.
+      let fileName = filePath
+        // Remove all path structure
+        .split('/')
+        .pop()
+        .split('\\')
+        .pop()
+        // Remove the file extension or sub extensions
+        .split('.')
+        .shift();
+
+      fileName =
+        fileNames + fileName?.charAt(0).toUpperCase() + fileName?.slice(1);
+
+      // If it's a directory, call the function again
+      if (fs.statSync(filePath).isDirectory()) {
+        return crawlIn(fileName, filePath);
       }
+
+      if (!filePath.endsWith('config.ts')) return;
+
+      let globalVariable = fileName
+        .replaceAll('../../content/modules/', '')
+        .split(/[/_-]/gm)
+        .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+        .join('');
+
+      // Remove file name 'config'
+      globalVariable = globalVariable.slice(0, -6);
+
+      content += `\nexport * as ModuleConfig${globalVariable} from '../${dir}/config';`;
     });
-    content += '\n';
   };
 
-  builder(moduleInterfaceConfig, '../../content/modules');
-  builder(moduleTypeConfig, '../../content/modules');
-  builder(moduleConstConfig, '../../content/modules');
+  // Get all files
+  crawlIn('', '../content/modules');
 
   content = content.trim();
 
   // remove all empty lines
   content = content.replaceAll('\n\n', '');
+  content = content.replaceAll('\\', '/');
 
   saveFile('generated/ModuleConfigs.ts', content);
 }

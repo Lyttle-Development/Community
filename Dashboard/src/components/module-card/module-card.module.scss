@@ -1,0 +1,114 @@
+@use '../../styles/variables.scss' as v;
+
+.card {
+  padding: 2rem;
+  background-color: v.$color-background-light;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+
+  .description {
+    font-size: 1.2rem;
+    color: v.$color-text-dark;
+  }
+
+  .switch {
+    position: absolute;
+    top: 2rem;
+    right: 5rem;
+  }
+
+  .cog {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+
+  .setup-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+}
+
+.sub-items {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  li,
+  .sub-item {
+    width: 100%;
+    max-width: 18rem;
+    min-height: 12rem;
+  }
+
+  .sub-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background-color: v.$color-background;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.01) rotate(1deg);
+      background-color: darken(v.$color-background, 2%);
+    }
+
+    .sub-item__switch {
+      position: absolute;
+      bottom: 1rem;
+      right: 4rem;
+    }
+
+    .sub-item__cog {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+    }
+
+    .sub-item__setup-button {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: v.$color-primary-yellow;
+      margin-bottom: .5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:not(.sub-item--add) {
+      padding-bottom: 5rem;
+    }
+
+    &.sub-item--add {
+      background-color: transparentize(v.$color-primary-yellow, .8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 0;
+
+      span {
+        font-size: 2rem;
+        color: v.$color-primary-yellow;
+      }
+    }
+  }
+}

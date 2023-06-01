@@ -19,7 +19,7 @@ export async function getChannelName(
   // Get the message
   const message = await getMessage(
     guildId,
-    'Activity.dynamic-voice.txt.channel-names',
+    'Communication.dynamic-voice.txt.channel-names',
     defaultVariables,
     false,
   );

@@ -8,6 +8,7 @@ export * from './onGuildAuditLogEntryCreate';
 export * from './onGuildCreate';
 export * from './onGuildInteractionButton';
 export * from './onGuildInteractionCommand';
+export * from './onGuildInteractionContextMenuCommand';
 export * from './onGuildInteractionModalSubmit';
 export * from './onGuildInviteCreate';
 export * from './onGuildMemberAdd';

@@ -14,10 +14,13 @@ import {
   ModuleConfigCommunicationVoiceTopicTxtDialogTopic,
 } from '../../../../../Content';
 
+export let totalVoiceTopicsStartedSinceLastRestart = 0;
+
 export async function openVoiceTopicModal(
   guildMember: GuildMember,
   interaction: ButtonInteraction,
 ) {
+  totalVoiceTopicsStartedSinceLastRestart++;
   // get guildId
   const { guildId } = guildMember;
 

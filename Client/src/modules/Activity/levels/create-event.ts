@@ -5,6 +5,8 @@ import { triggerEvent } from './trigger-event';
 import { EVENT_PRICES } from './constants';
 import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
 
+export let timesEventsCreatedSinceLastRestart = 0;
+
 /**
  * Create an event.
  * - Check if user is spamming.
@@ -14,6 +16,7 @@ import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
  * @param guildMember
  */
 export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
+  timesEventsCreatedSinceLastRestart++;
   // Destructure guildMember
   const { guildId } = guildMember;
 
