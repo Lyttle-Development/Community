@@ -1,5 +1,5 @@
 import { isVoid } from '../utils/is-void';
-import ModuleMarkdown from '../content/generated-markdown';
+import ModuleMarkdown from '../../../Content/app/generated/ModuleMarkdown';
 
 export function getModuleMarkdownItem(path: string) {
   const res: any = path
