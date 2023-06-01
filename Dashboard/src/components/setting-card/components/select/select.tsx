@@ -8,6 +8,7 @@ export interface SettingCardSelectItem {
   value: string;
   title: string;
   options: { key: string; value: string }[];
+  single: boolean;
 }
 
 export interface SettingCardSelectProps {
@@ -17,6 +18,6 @@ export interface SettingCardSelectProps {
 }
 
 export function Select({ item, changes, change }: SettingCardSelectProps) {
-  const { key, value, title, options } = item;
+  const { key, value, title, options, single = true } = item;
   return <>Hi!</>;
 }

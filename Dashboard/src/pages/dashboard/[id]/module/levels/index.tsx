@@ -6,8 +6,8 @@ import { Component } from '@lyttledev-dashboard/components';
 import { useEffect, useState } from 'react';
 import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
-import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
+import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -103,37 +103,36 @@ function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
 
+  const settingLevelUp = new CreateSettingCard()
+    .id('0')
+    .title(msgLevelUp.title)
+    .description(msgLevelUp.description)
+    .enabled(false, keyLevelUp + '.enabled')
+    .addSubItem((subItem) =>
+      subItem.textarea((textarea) =>
+        textarea //
+          .key(keyLevelUp)
+          .variables(varLevelUp),
+      ),
+    )
+    .build();
+
+  const settingNickname = new CreateSettingCard()
+    .id('0')
+    .title(msgNickname.title)
+    .description(msgNickname.description)
+    .enabled(false, keyNickname + '.enabled')
+    .addSubItem((subItem) =>
+      subItem.input((input) =>
+        input //
+          .key(keyNickname)
+          .variables(varNickname),
+      ),
+    )
+    .build();
+
   useEffect(() => {
-    setSettings([
-      {
-        id: '0',
-        title: msgLevelUp.title,
-        enabled: { state: false, key: keyLevelUp + '.enabled' },
-        description: msgLevelUp.description,
-        subItems: [
-          {
-            type: SettingCardSubItems.Textarea,
-            key: keyLevelUp,
-            value: '',
-            variables: varLevelUp,
-          },
-        ],
-      },
-      {
-        id: '0',
-        title: msgNickname.title,
-        description: msgNickname.description,
-        enabled: { state: false, key: keyNickname + '.enabled' },
-        subItems: [
-          {
-            type: SettingCardSubItems.Input,
-            key: keyNickname,
-            value: '',
-            variables: varNickname,
-          },
-        ],
-      },
-    ]);
+    setSettings([settingLevelUp, settingNickname]);
   }, []);
 
   return (
