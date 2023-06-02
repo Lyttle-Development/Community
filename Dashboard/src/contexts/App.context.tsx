@@ -8,7 +8,7 @@ import { Constants } from '@lyttledev-dashboard/constants';
 export type Change = string | number | boolean | null;
 
 export interface Changes {
-  [key: string]: { original: Change; current: Change };
+  [key: string]: { original: Change; current: Change; store: Change };
 }
 
 interface ChangeProps {
@@ -18,11 +18,13 @@ interface ChangeProps {
         key: string;
         value?: Change;
         initial?: Change;
+        store?: Change;
       }
     | {
         key: string;
         value?: Change;
         initial?: Change;
+        store?: Change;
       }[];
 }
 
@@ -140,11 +142,15 @@ export function AppProvider({ children }: AppContextProps) {
       // Check if we have updates.
       if (updates.length > 0) {
         // Update changes.
-        updates.forEach(({ initial, key, value }) => {
+        updates.forEach(({ initial, key, value, store }) => {
           // Check if we have value.
           if (value === undefined || initial === undefined) return;
           // Update change.
-          newChanges[key] = { original: initial, current: value };
+          newChanges[key] = {
+            original: initial,
+            current: value,
+            store: store ?? null,
+          };
         });
       }
     }

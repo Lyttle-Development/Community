@@ -6,6 +6,7 @@ import { SettingCardComponents } from '@lyttledev-dashboard/components/setting-c
 import { SettingCardInputItem } from '@lyttledev-dashboard/components/setting-card/components/input';
 import { SettingCardTextareaItem } from '@lyttledev-dashboard/components/setting-card/components/textarea';
 import { SettingCardSelectItem } from '@lyttledev-dashboard/components/setting-card/components/select';
+import { useEffect, useState } from 'react';
 
 export type SettingCardSubItem =
   | SettingCardTextareaItem
@@ -26,6 +27,7 @@ export type SettingCardChange = (
   initial: Change,
   key: string,
   value: Change,
+  store?: Change,
 ) => void;
 
 export function SettingCard({
@@ -37,11 +39,13 @@ export function SettingCard({
 }: SettingCardProps) {
   const app = useApp();
   const changes = app?.changes ?? {};
+  const [hidden, setHidden] = useState(false);
 
   const change: SettingCardChange = (
     initial: Change,
     key: string,
     value: Change,
+    store = null,
   ) => {
     if (value === initial) {
       app?.change({ remove: key });
@@ -52,6 +56,7 @@ export function SettingCard({
         key,
         value: value,
         initial: initial,
+        store,
       },
     });
   };
@@ -64,17 +69,37 @@ export function SettingCard({
     if (!state) {
       // Get sub items keys
       const subItemKeys = subItems?.map((item) => item.key) ?? [];
+
+      // Get extra sub items keys
+      const extraSubItemKeys = subItemKeys.map((key) =>
+        changes[`${key}[1]`]?.store ? key : null,
+      );
+      const extraSubItemKeysItems = [];
+      for (const key of extraSubItemKeys) {
+        if (key !== null) {
+          const subKey = changes[`${key}[1]`];
+          if (typeof subKey.store === 'number') {
+            for (let i = 1; i <= subKey.store; i++) {
+              extraSubItemKeysItems.push(`${key}[${i}]`);
+            }
+          }
+        }
+      }
+
+      // Combine all sub items keys
+      const allSubItemKeys = [...subItemKeys, ...extraSubItemKeysItems];
+
       // Check if the enabled state is the same as the state we are trying to set
       const deleteEnabled = enabled.state === state;
 
       // If we are trying to delete the enabled state, remove the enabled key and all sub items
       if (deleteEnabled) {
-        app?.change({ remove: [enabled.key, ...subItemKeys] });
+        app?.change({ remove: [enabled.key, ...allSubItemKeys] });
         return;
       }
       // If we are trying to set the enabled state, remove all sub items and update the enabled key
       app?.change({
-        remove: subItemKeys,
+        remove: allSubItemKeys,
         update: { key: enabled.key, value: state, initial: enabled.state },
       });
       return;
@@ -91,6 +116,19 @@ export function SettingCard({
 
   const isEnabled =
     (enabled && (changes[enabled?.key]?.current as boolean)) ?? false;
+
+  useEffect(() => {
+    if (isEnabled) {
+      const timeout = setTimeout(() => {
+        setHidden(false);
+      }, 1000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+
+    setHidden(true);
+  }, [changes]);
 
   return (
     <article className={styles.card}>
@@ -116,7 +154,7 @@ export function SettingCard({
         <ul
           className={`${styles['sub-items']} ${
             isEnabled && styles['sub-items--enabled']
-          }`}
+          } ${hidden && styles['sub-items--hidden']}`}
         >
           {subItems.length > 0 &&
             subItems.map((item: SettingCardSubItem, i) => (
