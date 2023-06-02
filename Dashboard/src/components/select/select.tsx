@@ -12,7 +12,10 @@ export interface SelectProps {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
-  options: { key: string; value: string }[];
+  options: {
+    key: string | { title: string; description: string };
+    value: string;
+  }[];
   onChange?: (newValue: string) => void;
   className?: string;
   classNameDisabled?: string;
@@ -68,6 +71,26 @@ export function Select({
     }, 500);
   }, [startClose]);
 
+  const currentOption = (selectValue &&
+    options.find((option) => option.value === selectValue)) || {
+    key: 'Select',
+    value: null,
+  };
+
+  const valueOption =
+    typeof currentOption.key === 'string' ? (
+      currentOption.key
+    ) : (
+      <>
+        <span className={styles['value__title']}>
+          {currentOption.key.title}
+        </span>
+        <span className={styles['value__description']}>
+          {currentOption.key.description}
+        </span>
+      </>
+    );
+
   // Focus close element
   // This to stop the focus on the select element
   if (closed) {
@@ -81,7 +104,7 @@ export function Select({
 
         <div className={styles.select}>
           <span className={styles.value}>
-            {selectValue || 'Select'}
+            {valueOption}
             <span className={styles.closer}>Close</span>
           </span>
         </div>
@@ -107,7 +130,9 @@ export function Select({
           {options &&
             options.map((option, i) => (
               <option key={i} value={option.value}>
-                {option.key}
+                {typeof option.key === 'string'
+                  ? option.key
+                  : option.key.title + ' - ' + option.key.description}
               </option>
             ))}
         </select>
@@ -120,7 +145,7 @@ export function Select({
               !allowClosing && setStartClose(false);
             }}
           >
-            {selectValue || 'Select'}
+            {valueOption}
             <span
               className={styles.closer}
               onClick={() => {
@@ -136,10 +161,25 @@ export function Select({
               options.map((option, i) => (
                 <li
                   key={i}
-                  className={`${styles.option} option`}
+                  className={`${styles.option} option ${
+                    typeof option.key === 'string'
+                      ? ''
+                      : styles['option--with-description']
+                  }`}
                   onClick={() => handleChange(option.value)}
                 >
-                  {option.key}
+                  {typeof option.key === 'string' ? (
+                    option.key
+                  ) : (
+                    <>
+                      <span className={styles['option__title']}>
+                        {option.key.title}
+                      </span>
+                      <span className={styles['option__description']}>
+                        {option.key.description}
+                      </span>
+                    </>
+                  )}
                 </li>
               ))}
           </ul>

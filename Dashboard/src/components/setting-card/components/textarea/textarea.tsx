@@ -7,11 +7,16 @@ import { Component } from '@lyttledev-dashboard/components';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './textarea.module.scss';
 
+export interface SettingCardTextareaItemVariables {
+  variable: string;
+  description: string;
+}
+
 export interface SettingCardTextareaItem {
   type: SettingCardSubItems.Textarea;
   key: string;
   value: string;
-  variables: { variable: string; description: string }[];
+  variables: SettingCardTextareaItemVariables[];
 }
 
 export interface SettingCardTextareaProps {

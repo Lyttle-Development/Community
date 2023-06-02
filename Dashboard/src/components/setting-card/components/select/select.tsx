@@ -4,12 +4,17 @@ import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-car
 import { Component } from '@lyttledev-dashboard/components';
 import { SelectColor } from '@lyttledev-dashboard/components/select';
 
+export interface SettingCardSelectItemOptions {
+  key: string | { title: string; description: string };
+  value: string;
+}
+
 export interface SettingCardSelectItem {
   type: SettingCardSubItems.Select;
   key: string;
   value: string;
   title: string;
-  options: { key: string; value: string }[];
+  options: SettingCardSelectItemOptions[];
   single: boolean;
 }
 

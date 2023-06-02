@@ -115,11 +115,28 @@ function Page() {
           .title('Test')
           .value('')
           .options([
-            { key: '1', value: '1' },
-            { key: '2', value: '2' },
-            { key: '3', value: '3' },
-            { key: '4', value: '4' },
-            { key: '5', value: '5' },
+            {
+              key: { title: 'General', description: '#off-topic' },
+              value: '0',
+            },
+            { key: { title: 'General', description: '#roles' }, value: '1' },
+            {
+              key: { title: 'Voice Channels', description: '#select-vc' },
+              value: '2',
+            },
+            {
+              key: { title: 'Voice Channels', description: '#no-mic' },
+              value: '3',
+            },
+            {
+              key: { title: 'Voice Channels', description: '#commands' },
+              value: '4',
+            },
+            // { key: '1', value: '1' },
+            // { key: '2', value: '2' },
+            // { key: '3', value: '3' },
+            // { key: '4', value: '4' },
+            // { key: '5', value: '5' },
             // { key: '6', value: '6' },
             // { key: '7', value: '7' },
           ]),

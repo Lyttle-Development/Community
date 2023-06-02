@@ -1,11 +1,20 @@
-import { SettingCardInputItem } from '@lyttledev-dashboard/components/setting-card/components/input';
+import {
+  SettingCardInputItem,
+  SettingCardInputItemVariables,
+} from '@lyttledev-dashboard/components/setting-card/components/input';
 import {
   SettingCard,
   SettingCardSubItem,
 } from '@lyttledev-dashboard/components/setting-card/setting-card';
-import { SettingCardTextareaItem } from '@lyttledev-dashboard/components/setting-card/components/textarea';
+import {
+  SettingCardTextareaItem,
+  SettingCardTextareaItemVariables,
+} from '@lyttledev-dashboard/components/setting-card/components/textarea';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
-import { SettingCardSelectItem } from '@lyttledev-dashboard/components/setting-card/components/select';
+import {
+  SettingCardSelectItem,
+  SettingCardSelectItemOptions,
+} from '@lyttledev-dashboard/components/setting-card/components/select';
 
 export class CreateSettingCard {
   private settings: SettingCard;
@@ -104,7 +113,7 @@ export class CreateSettingCardInputItem {
     return this;
   }
 
-  variables(variables: { variable: string; description: string }[]) {
+  variables(variables: SettingCardInputItemVariables[]) {
     this.subItem.variables = variables;
     return this;
   }
@@ -132,7 +141,7 @@ export class CreateSettingCardTextareaItem {
     return this;
   }
 
-  variables(variables: { variable: string; description: string }[]) {
+  variables(variables: SettingCardTextareaItemVariables[]) {
     this.subItem.variables = variables;
     return this;
   }
@@ -167,7 +176,7 @@ export class CreateSettingCardSelectItem {
     return this;
   }
 
-  options(options: { key: string; value: string }[]) {
+  options(options: SettingCardSelectItemOptions[]) {
     this.subItem.options = options;
     return this;
   }

@@ -7,11 +7,16 @@ import styles from './input.module.scss';
 import { ChangeEvent } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 
+export interface SettingCardInputItemVariables {
+  variable: string;
+  description: string;
+}
+
 export interface SettingCardInputItem {
   type: SettingCardSubItems.Input;
   key: string;
   value: string;
-  variables: { variable: string; description: string }[];
+  variables: SettingCardInputItemVariables[];
 }
 
 export interface SettingCardInputProps {
