@@ -12,8 +12,11 @@ export function Snackbar() {
   const [changes, setChanges] = useState(0);
   const [hidden, setHidden] = useState(true);
   const [hasChanges, setHasChanges] = useState(true);
+  const [resetting, setResetting] = useState(false);
+  const [closingReset, setClosingReset] = useState(5);
 
   useEffect(() => {
+    setResetting(false);
     const appChanges = app?.changes ?? {};
     const _changes = Object.keys(appChanges).length;
     setChanges(_changes);
@@ -33,6 +36,24 @@ export function Snackbar() {
       clearTimeout(c);
     };
   }, [app?.changes]);
+
+  useEffect(() => {
+    if (!resetting) return;
+    setClosingReset(5);
+    const countDown = setInterval(() => {
+      setClosingReset((prev) => prev - 1);
+    }, 1000);
+    const closeResetTimeout = setTimeout(() => {
+      setResetting(false);
+      clearInterval(countDown);
+      setClosingReset(5);
+    }, 5000);
+    return () => {
+      clearTimeout(closeResetTimeout);
+      clearInterval(countDown);
+      setClosingReset(5);
+    };
+  }, [resetting]);
 
   const onReset = () => {
     app?.change({ update: { key: 'reset' } });
@@ -55,26 +76,54 @@ export function Snackbar() {
           hasChanges && styles.changes
         } snackbar`}
       >
-        <p className={`${styles.message} snackbar-message`}>
-          {msgMessage}
-          <span className={`${styles.amount} snackbar-amount`}>
-            ({changes})
-          </span>
-        </p>
-        <section className={`${styles.actions} snackbar-actions`}>
-          <Component.Button
-            color={ButtonColors.secondary}
-            className={styles['review-btn']}
-            text={msgReview}
-            href={`/dashboard/${guildId ?? '0'}/review`}
-          />
-          <Component.Button
-            color={ButtonColors.orange}
-            className={styles['reset-btn']}
-            text={msgReset}
-            onClick={onReset}
-          />
-        </section>
+        {!resetting && (
+          <>
+            <p className={`${styles.message} snackbar-message`}>
+              {msgMessage}
+              <span className={`${styles.amount} snackbar-amount`}>
+                ({changes})
+              </span>
+            </p>
+            <section className={`${styles.actions} snackbar-actions`}>
+              <Component.Button
+                color={ButtonColors.secondary}
+                className={styles['reset-btn']}
+                text={msgReset}
+                onClick={() => setResetting(true)}
+              />
+              <Component.Button
+                color={ButtonColors.orange}
+                className={styles['review-btn']}
+                text={msgReview}
+                href={`/dashboard/${guildId ?? '0'}/review`}
+              />
+            </section>
+          </>
+        )}
+        {resetting && (
+          <>
+            <p className={`${styles.message} snackbar-message`}>
+              Are you sure you want to reset all changes?
+              <span className={`${styles.amount} snackbar-amount`}>
+                ({closingReset}/5)
+              </span>
+            </p>
+            <section className={`${styles.actions} snackbar-actions`}>
+              <Component.Button
+                color={ButtonColors.secondary}
+                className={styles['reset-btn']}
+                text={'No, cancel please!'}
+                onClick={() => setResetting(false)}
+              />
+              <Component.Button
+                color={ButtonColors.orange}
+                className={styles['review-btn']}
+                text={'Yes, Reset!'}
+                onClick={onReset}
+              />
+            </section>
+          </>
+        )}
       </article>
     </Component.Container>
   );
