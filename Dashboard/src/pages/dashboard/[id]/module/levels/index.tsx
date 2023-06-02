@@ -103,69 +103,69 @@ function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
 
-  const settingLevelUp = new CreateSettingCard()
-    .id('0')
-    .title(msgLevelUp.title)
-    .description(msgLevelUp.description)
-    .enabled(false, keyLevelUp + '.enabled')
-    .addSubItem((subItem) =>
-      subItem.select((select) =>
-        select //
-          .key('test')
-          .title('Channel')
-          .value('')
-          .options([
-            {
-              key: { title: 'General', description: '#off-topic' },
-              value: '0',
-            },
-            { key: { title: 'General', description: '#roles' }, value: '1' },
-            {
-              key: { title: 'Voice Channels', description: '#select-vc' },
-              value: '2',
-            },
-            {
-              key: { title: 'Voice Channels', description: '#no-mic' },
-              value: '3',
-            },
-            {
-              key: { title: 'Voice Channels', description: '#commands' },
-              value: '4',
-            },
-            // { key: '1', value: '1' },
-            // { key: '2', value: '2' },
-            // { key: '3', value: '3' },
-            // { key: '4', value: '4' },
-            // { key: '5', value: '5' },
-            // { key: '6', value: '6' },
-            // { key: '7', value: '7' },
-          ]),
-      ),
-    )
-    .addSubItem((subItem) =>
-      subItem.textarea((textarea) =>
-        textarea //
-          .key(keyLevelUp)
-          .variables(varLevelUp),
-      ),
-    )
-    .build();
-
-  const settingNickname = new CreateSettingCard()
-    .id('0')
-    .title(msgNickname.title)
-    .description(msgNickname.description)
-    .enabled(false, keyNickname + '.enabled')
-    .addSubItem((subItem) =>
-      subItem.input((input) =>
-        input //
-          .key(keyNickname)
-          .variables(varNickname),
-      ),
-    )
-    .build();
-
   useEffect(() => {
+    const settingLevelUp = new CreateSettingCard()
+      .id('0')
+      .title(msgLevelUp.title)
+      .description(msgLevelUp.description)
+      .enabled(false, keyLevelUp + '.enabled')
+      .addSubItem((subItem) =>
+        subItem.select((select) =>
+          select //
+            .key('test')
+            .title('Channel')
+            .value('')
+            .options([
+              {
+                key: { title: 'General', description: '#off-topic' },
+                value: '0',
+              },
+              { key: { title: 'General', description: '#roles' }, value: '1' },
+              {
+                key: { title: 'Voice Channels', description: '#select-vc' },
+                value: '2',
+              },
+              {
+                key: { title: 'Voice Channels', description: '#no-mic' },
+                value: '3',
+              },
+              {
+                key: { title: 'Voice Channels', description: '#commands' },
+                value: '4',
+              },
+              // { key: '1', value: '1' },
+              // { key: '2', value: '2' },
+              // { key: '3', value: '3' },
+              // { key: '4', value: '4' },
+              // { key: '5', value: '5' },
+              // { key: '6', value: '6' },
+              // { key: '7', value: '7' },
+            ]),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((textarea) =>
+          textarea //
+            .key(keyLevelUp)
+            .variables(varLevelUp),
+        ),
+      )
+      .build();
+
+    const settingNickname = new CreateSettingCard()
+      .id('0')
+      .title(msgNickname.title)
+      .description(msgNickname.description)
+      .enabled(false, keyNickname + '.enabled')
+      .addSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(keyNickname)
+            .variables(varNickname),
+        ),
+      )
+      .build();
+
     setSettings([settingLevelUp, settingNickname]);
   }, []);
 
