@@ -27,6 +27,9 @@
   overflow: hidden;
   transition: max-height 1s ease-in-out;
   max-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   &.sub-items--enabled {
     max-height: 100vh;

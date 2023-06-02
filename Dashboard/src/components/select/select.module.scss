@@ -1,0 +1,146 @@
+@use '../../styles/variables.scss' as v;
+
+.accessible-select {
+  position: absolute;
+  left: -5000rem;
+  height: 0;
+  overflow: hidden;
+}
+
+.label {
+  display: flex;
+  width: 100%;
+  max-width: 15rem;
+  height: 6rem;
+  gap: 1rem;
+  flex-direction: column;
+
+  .select {
+    background-color: darken(v.$color-primary, 40%);
+    border: v.$color-primary solid .2rem;
+    border-radius: .7rem;
+    position: relative;
+    width: 100%;
+    max-width: 15rem;
+    cursor: pointer;
+    user-select: none;
+
+
+    .closer {
+      font-size: 0;
+      content: '';
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      background-image: url("/media/icons/arrow-down.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      transform: rotate(0deg);
+      transition: transform .2s ease-in-out;
+      transform-origin: center;
+    }
+
+    .value {
+      display: block;
+      color: v.$color-text;
+      font-size: 1.6rem;
+      padding: 1rem 3.5rem 1rem 1.8rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: v.$color-primary solid .01rem;
+    }
+
+    .options {
+      height: 100%;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .5s ease-in-out;
+      display: flex;
+      flex-direction: column;
+
+      .option {
+        padding: 1rem 1.8rem;
+        transition: background-color .2s ease-in-out;
+
+        &:hover {
+          background-color: transparentize(v.$color-primary, .7)
+        }
+
+        &:not(:first-child) {
+          border-top: v.$color-primary solid .01rem;
+        }
+      }
+    }
+  }
+
+  &:focus-within {
+    &:not(.closing) {
+      .select {
+        position: absolute;
+        margin-top: 2rem;
+      }
+
+      .closer {
+        transform: rotate(180deg);
+      }
+
+      .options {
+        overflow-y: auto;
+        max-height: 20rem;
+      }
+    }
+  }
+}
+
+.placeholder {
+  cursor: not-allowed;
+}
+
+.label--yellow {
+  .select {
+    background-color: darken(v.$color-primary-yellow, 40%);
+    border: v.$color-primary-yellow solid .2rem;
+
+    .value {
+      border-bottom: v.$color-primary-yellow solid .01rem;
+    }
+
+    .options {
+      .option {
+        &:hover {
+          background-color: transparentize(v.$color-primary-yellow, .7);
+        }
+
+        &:not(:first-child) {
+          border-top: v.$color-primary-yellow solid .01rem;
+        }
+      }
+    }
+  }
+}
+
+.label--orange {
+  .select {
+    background-color: darken(v.$color-primary-orange, 40%);
+    border: v.$color-primary-orange solid .2rem;
+
+    .value {
+      border-bottom: v.$color-primary-orange solid .01rem;
+    }
+
+    .options {
+      .option {
+        &:hover {
+          background-color: transparentize(v.$color-primary-orange, .7);
+        }
+
+        &:not(:first-child) {
+          border-top: v.$color-primary-orange solid .01rem;
+        }
+      }
+    }
+  }
+}

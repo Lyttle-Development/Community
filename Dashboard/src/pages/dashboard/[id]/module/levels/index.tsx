@@ -109,6 +109,23 @@ function Page() {
     .description(msgLevelUp.description)
     .enabled(false, keyLevelUp + '.enabled')
     .addSubItem((subItem) =>
+      subItem.select((select) =>
+        select //
+          .key('test')
+          .title('Test')
+          .value('')
+          .options([
+            { key: '1', value: '1' },
+            { key: '2', value: '2' },
+            { key: '3', value: '3' },
+            { key: '4', value: '4' },
+            { key: '5', value: '5' },
+            // { key: '6', value: '6' },
+            // { key: '7', value: '7' },
+          ]),
+      ),
+    )
+    .addSubItem((subItem) =>
       subItem.textarea((textarea) =>
         textarea //
           .key(keyLevelUp)

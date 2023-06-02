@@ -14,6 +14,7 @@ export * from './markdown';
 export * from './module-card';
 export * from './modules';
 export * from './search';
+export * from './select';
 export * from './server-card';
 export * from './server-card-grid';
 export * from './setting-card';
