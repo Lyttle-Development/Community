@@ -46,6 +46,11 @@ export function Select({
     handleChange(event.target.value);
   };
 
+  // Update value, if value prop changes
+  useEffect(() => {
+    setValue(value ?? '');
+  }, [value]);
+
   // Close select element
   useEffect(() => {
     if (!startClose) return;

@@ -21,13 +21,16 @@ export interface SettingCardSelectProps {
 
 export function Select({ item, changes, change }: SettingCardSelectProps) {
   const { key, value, title, options, single = true } = item;
+
+  // Define update function.
+  const updateValue = (newValue: string) => change(value, key, newValue);
   return (
     <>
       <Component.Select
         options={options}
-        value={value}
+        value={(changes[key] as string) ?? value}
         label={title}
-        onChange={(newValue) => console.log(newValue)}
+        onChange={updateValue}
         color={SelectColor.Yellow}
       ></Component.Select>
     </>
