@@ -112,7 +112,7 @@ function Page() {
       subItem.select((select) =>
         select //
           .key('test')
-          .title('Test')
+          .title('Channel')
           .value('')
           .options([
             {

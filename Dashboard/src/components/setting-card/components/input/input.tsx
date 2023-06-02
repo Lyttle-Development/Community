@@ -47,7 +47,7 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
   };
 
   // Check if using default
-  const usingDefault = defaultMessage === changes[key];
+  const usingDefault = defaultMessage === changes[key]?.current;
 
   // Render component.
   return (
@@ -56,7 +56,7 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
         type="text"
         placeholder={defaultMessage}
         onChange={handleChange}
-        value={(changes[key] as string) ?? value}
+        value={(changes[key]?.current as string) ?? value}
         className={styles.input}
       />
       <article className={styles.options}>

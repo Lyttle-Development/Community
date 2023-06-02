@@ -33,7 +33,7 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
     <>
       <Component.Select
         options={options}
-        value={(changes[key] as string) ?? value}
+        value={(changes[key]?.current as string) ?? value}
         label={title}
         onChange={updateValue}
         color={SelectColor.Yellow}

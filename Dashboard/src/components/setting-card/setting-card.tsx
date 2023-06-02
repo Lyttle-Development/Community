@@ -47,7 +47,13 @@ export function SettingCard({
       app?.change({ remove: key });
       return;
     }
-    app?.change({ update: { key, value } });
+    app?.change({
+      update: {
+        key,
+        value: value,
+        initial: initial,
+      },
+    });
   };
 
   const changeEnabled = (state: boolean) => {
@@ -69,15 +75,22 @@ export function SettingCard({
       // If we are trying to set the enabled state, remove all sub items and update the enabled key
       app?.change({
         remove: subItemKeys,
-        update: { key: enabled.key, value: state },
+        update: { key: enabled.key, value: state, initial: enabled.state },
       });
       return;
     }
     // Set the enabled state
-    app?.change({ update: { key: enabled.key, value: state } });
+    app?.change({
+      update: {
+        key: enabled.key,
+        value: state,
+        initial: enabled.state,
+      },
+    });
   };
 
-  const isEnabled = (enabled && (changes[enabled?.key] as boolean)) ?? false;
+  const isEnabled =
+    (enabled && (changes[enabled?.key]?.current as boolean)) ?? false;
 
   return (
     <article className={styles.card}>
@@ -87,7 +100,9 @@ export function SettingCard({
           enabled?.key !== undefined &&
           id !== null && (
             <Component.LightSwitch
-              active={(changes[enabled.key] as boolean) ?? enabled.state}
+              active={
+                (changes[enabled.key]?.current as boolean) ?? enabled.state
+              }
               onClick={changeEnabled}
               color={SCSSPrimaryColors.yellow}
               className={styles['switch']}

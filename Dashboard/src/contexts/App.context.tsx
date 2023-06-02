@@ -8,16 +8,21 @@ import { Constants } from '@lyttledev-dashboard/constants';
 export type Change = string | number | boolean | null;
 
 export interface Changes {
-  [key: string]: Change;
+  [key: string]: { original: Change; current: Change };
 }
 
 interface ChangeProps {
   remove?: string | string[];
   update?:
-    | { key: string; value?: Change }
     | {
         key: string;
         value?: Change;
+        initial?: Change;
+      }
+    | {
+        key: string;
+        value?: Change;
+        initial?: Change;
       }[];
 }
 
@@ -84,13 +89,21 @@ export function AppProvider({ children }: AppContextProps) {
     }
   }, [windowSize, mobile]);
 
-  const localChanges = storage.get('changes') ?? null;
+  const localGuildChanges = localSelectedGuildId
+    ? 'changes_' + localSelectedGuildId
+    : 'changes';
+  const localChanges = storage.get(localGuildChanges) ?? null;
   const [changes, setChanges] = useState<Changes>(
     localChanges ? JSON.parse(localChanges) : {},
   );
 
   useEffect(() => {
-    storage.set('changes', JSON.stringify(changes));
+    const guildChanges = storage.get(localGuildChanges) ?? null;
+    setChanges(guildChanges ? JSON.parse(guildChanges) : {});
+  }, [selectedGuildId]);
+
+  useEffect(() => {
+    storage.set(localGuildChanges, JSON.stringify(changes));
   }, [changes]);
 
   const change = ({ remove, update }: ChangeProps) => {
@@ -127,11 +140,11 @@ export function AppProvider({ children }: AppContextProps) {
       // Check if we have updates.
       if (updates.length > 0) {
         // Update changes.
-        updates.forEach(({ key, value }) => {
+        updates.forEach(({ initial, key, value }) => {
           // Check if we have value.
-          if (value === undefined) return;
+          if (value === undefined || initial === undefined) return;
           // Update change.
-          newChanges[key] = value;
+          newChanges[key] = { original: initial, current: value };
         });
       }
     }

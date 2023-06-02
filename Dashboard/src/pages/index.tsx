@@ -18,24 +18,26 @@ function Page() {
   return (
     <>
       <Component.Title>{title}</Component.Title>
-      <section className={styles.landing}>
-        <Component.Logo className={styles.logo} />
-        <h2>{msgTitle}</h2>
-        <p className={styles.description}>{msgDescription}</p>
-        <ul className={styles.buttons}>
-          <li>
-            <Component.Button text={msgAdd} href="" noUpper />
-          </li>
-          <li>
-            <Component.Button
-              text={msgJoin}
-              href=""
-              noUpper
-              color={ButtonColors.secondary}
-            />
-          </li>
-        </ul>
-      </section>
+      <Component.Container>
+        <section className={styles.landing}>
+          <Component.Logo className={styles.logo} />
+          <h2>{msgTitle}</h2>
+          <p className={styles.description}>{msgDescription}</p>
+          <ul className={styles.buttons}>
+            <li>
+              <Component.Button text={msgAdd} href="" noUpper />
+            </li>
+            <li>
+              <Component.Button
+                text={msgJoin}
+                href=""
+                noUpper
+                color={ButtonColors.secondary}
+              />
+            </li>
+          </ul>
+        </section>
+      </Component.Container>
     </>
   );
 }

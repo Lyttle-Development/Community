@@ -47,7 +47,7 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   };
 
   // Check if using default
-  const usingDefault = defaultMessage === changes[key];
+  const usingDefault = defaultMessage === changes[key]?.current;
 
   // Render component.
   return (
@@ -55,7 +55,7 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
       <Component.Textarea
         placeholder={defaultMessage}
         onChange={handleChange}
-        value={(changes[key] as string) ?? value}
+        value={(changes[key]?.current as string) ?? value}
         className={styles.textarea}
       />
       <article className={styles.options}>
