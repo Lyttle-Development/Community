@@ -14,6 +14,7 @@ export function Default({ children }: DefaultProps) {
   const mainNavOpen = app?.mainNavOpen ?? false;
   const mobile = app?.mobile ?? true;
   const router = useRouter();
+  const snackbarActive = Object.keys(app?.changes ?? {}).length > 0;
 
   useEffect(() => {
     if (!mobile) return;
@@ -32,7 +33,13 @@ export function Default({ children }: DefaultProps) {
         <Layout.Transition>
           <section>
             <Component.Header mobile={mobile} />
-            <main className={styles.main}>{children}</main>
+            <main
+              className={`${styles.main} ${
+                snackbarActive && 'snackbar--active'
+              }`}
+            >
+              {children}
+            </main>
             <Component.Snackbar />
           </section>
         </Layout.Transition>

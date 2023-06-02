@@ -62,3 +62,11 @@
     }
   }
 }
+
+.snackbar--active {
+  padding-bottom: 9.5rem !important;
+}
+
+.mobile .snackbar {
+  justify-content: center;
+}
