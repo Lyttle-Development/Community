@@ -13,6 +13,7 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { changeKeys } from '@lyttledev-dashboard/components/review';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 
 // Variables:
 const pfx = pagesPrefix + 'module.birthdays.';
@@ -57,8 +58,9 @@ const varBday = getVariables(
 );
 
 function Page() {
-  const [settings, setSettings] = useState<CardSettings | null>(null);
+  useGuild();
   const title = usePage(pagesPrefix + 'module.levels.title');
+  const [settings, setSettings] = useState<CardSettings | null>(null);
 
   useEffect(() => {
     const settingBday = new CreateSettingCard()
