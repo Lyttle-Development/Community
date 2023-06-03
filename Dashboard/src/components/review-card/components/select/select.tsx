@@ -20,7 +20,6 @@ export function SelectReviewCard({ changeKey, change }: SelectReviewCardProps) {
 
   try {
     const options = JSON.parse(change.store);
-    console.log(options);
 
     // Get original value
     const changeOriginal = change.original ?? '';
@@ -47,7 +46,7 @@ export function SelectReviewCard({ changeKey, change }: SelectReviewCardProps) {
       <>
         {text.split('\n').map((line, i) => {
           if (!line) return null;
-          return <div key={i}>{line}</div>;
+          return <p key={i}>{line}</p>;
         })}
       </>
     );
@@ -63,22 +62,22 @@ export function SelectReviewCard({ changeKey, change }: SelectReviewCardProps) {
           {lineDifference.map(({ added, removed, value }, i) => {
             if (added) {
               return (
-                <p key={i} className={styles.added}>
+                <div key={i} className={styles.added}>
                   {split(value)}
-                </p>
+                </div>
               );
             }
             if (removed) {
               return (
-                <p key={i} className={styles.removed}>
+                <div key={i} className={styles.removed}>
                   {split(value)}
-                </p>
+                </div>
               );
             }
             return (
-              <p key={i} className={styles.unchanged}>
+              <div key={i} className={styles.unchanged}>
                 {split(value)}
-              </p>
+              </div>
             );
           })}
         </section>
