@@ -4,6 +4,7 @@ import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useEffect, useState } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
+import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 
 function Page() {
   const title = usePage(pagesPrefix + 'overview.title');
@@ -30,6 +31,50 @@ function Page() {
           description={recommendation}
           tipKey={'overview.recommendation'}
         />
+        <Component.Stats
+          stats={[
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+            },
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+              color: StatsCardColors.Orange,
+            },
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+              color: StatsCardColors.Yellow,
+            },
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+            },
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+              color: StatsCardColors.Orange,
+            },
+            {
+              title: 'Total',
+              value: 100,
+              change: 10,
+              total: 100,
+              color: StatsCardColors.Yellow,
+            },
+          ]}
+        ></Component.Stats>
       </Component.Container>
     </>
   );
