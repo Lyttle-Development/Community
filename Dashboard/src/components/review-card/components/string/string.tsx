@@ -1,7 +1,7 @@
 import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
 import { diffLines } from 'diff';
 import styles from './string.module.scss';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review/review.config';
+import { changeKeysArray } from '@lyttledev-dashboard/components/review';
 
 export interface StringReviewCardProps {
   changeKey: string;

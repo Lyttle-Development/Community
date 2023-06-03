@@ -7,7 +7,7 @@ import {
 } from '@lyttledev-dashboard/contexts/App.context';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review/review.config';
+import { changeKeysArray } from '@lyttledev-dashboard/components/review';
 
 export interface ReviewProps {
   stats: StatsCardProps[];

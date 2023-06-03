@@ -8,7 +8,7 @@ import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
-import { changeKeys } from '@lyttledev-dashboard/components/review/review.config';
+import { changeKeys } from '@lyttledev-dashboard/components/review';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
