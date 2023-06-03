@@ -116,7 +116,12 @@ export function SettingCard({
   };
 
   const isEnabled =
-    (enabled && (changes[enabled?.key]?.current as boolean)) ?? false;
+    // Get from changes
+    (enabled && (changes[enabled?.key]?.current as boolean)) ??
+    // Get from store
+    enabled?.state ??
+    // Default to false
+    false;
 
   useEffect(() => {
     if (isEnabled) {
