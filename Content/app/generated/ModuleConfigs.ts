@@ -44,6 +44,8 @@ export * as ModuleConfigDashboardComponentsMainNavLabelOverview from '../../cont
 export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
 export * as ModuleConfigDashboardComponentsModuleCardSetupButton from '../../content/modules/Dashboard/components/module-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsModuleCardTitlePrefix from '../../content/modules/Dashboard/components/module-card/title-prefix/config';
+export * as ModuleConfigDashboardComponentsReviewSubmit from '../../content/modules/Dashboard/components/review/submit/config';
+export * as ModuleConfigDashboardComponentsReviewTitle from '../../content/modules/Dashboard/components/review/title/config';
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
 export * as ModuleConfigDashboardComponentsServerCardMembers from '../../content/modules/Dashboard/components/server-card/members/config';
 export * as ModuleConfigDashboardComponentsServerCardModules from '../../content/modules/Dashboard/components/server-card/modules/config';

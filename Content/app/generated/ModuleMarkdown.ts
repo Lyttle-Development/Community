@@ -232,6 +232,16 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      review: {
+        submit: {
+          content: 'Save changes',
+          documentation: '',
+        },
+        title: {
+          content: 'You have unsaved changes!',
+          documentation: '',
+        },
+      },
       search: {
         'input-placeholder': {
           content: "I'm looking for ...",
