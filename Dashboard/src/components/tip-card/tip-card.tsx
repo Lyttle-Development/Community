@@ -6,24 +6,27 @@ import { getMessage, storage } from '@lyttledev-dashboard/utils';
 export interface TipCardProps {
   title: string;
   description: string | null;
-  key: string;
+  tipKey: string;
   onClose?: () => void;
 }
 
-export function TipCard({ title, description, key, onClose }: TipCardProps) {
-  const [lastDismiss, setLastDismiss] = useState<string | null>(null);
+export function TipCard({ title, description, tipKey, onClose }: TipCardProps) {
+  const [tipCard, setTipCard] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
-    const dismiss = storage.get(key);
-    if (dismiss) setLastDismiss(dismiss);
+    const dismiss = storage.get('tip-card') ?? null;
+    const oldTipCard = dismiss ? JSON.parse(dismiss) : {};
+    setTipCard(oldTipCard);
   }, []);
 
-  if (lastDismiss && description === lastDismiss) return null;
+  if (tipCard[tipKey] && description === tipCard[tipKey]) return null;
 
   const onDismiss = () => {
     if (description === null) return;
-    setLastDismiss(description);
-    storage.set(key, description);
+    const newTipCard = { ...tipCard, [tipKey]: description };
+    console.log(newTipCard, tipKey);
+    setTipCard(newTipCard);
+    storage.set('tip-card', JSON.stringify(newTipCard));
     if (onClose) onClose();
   };
 
