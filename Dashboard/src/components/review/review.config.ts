@@ -8,7 +8,7 @@ export interface ChangeKeys {
   [key: string]: ChangeKey;
 }
 
-export const changeKeys = {
+export const changeKeys: ChangeKeys = {
   moduleLevelLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',
@@ -33,6 +33,21 @@ export const changeKeys = {
     title: 'Nickname module text',
     key: 'module.level.nickname.text',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
+  },
+  moduleBirthday: {
+    title: 'Birthday module',
+    key: 'module.birthday',
+    url: (id: string) => `/dashboard/${id}/module/birthdays`,
+  },
+  moduleBirthdayChannel: {
+    title: 'Birthday module channel',
+    key: 'module.birthday.channel',
+    url: (id: string) => `/dashboard/${id}/module/birthdays#channel`,
+  },
+  moduleBirthdayText: {
+    title: 'Birthday module text',
+    key: 'module.birthday.text',
+    url: (id: string) => `/dashboard/${id}/module/birthdays#text`,
   },
 };
 

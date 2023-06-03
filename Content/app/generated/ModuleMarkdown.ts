@@ -5,7 +5,8 @@ export const ModuleMarkdown = {
       txt: {
         announcement: {
           content: 'Happy Birthday, {users}!',
-          documentation: '',
+          documentation:
+            "Birthday\nAnnounce when its someone or multiple people's birthday!",
         },
         'error-date': {
           content: 'The date we got was invalid, please try again!',

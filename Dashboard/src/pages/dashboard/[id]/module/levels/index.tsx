@@ -1,6 +1,10 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { getDocumentation, getMessage } from '@lyttledev-dashboard/utils';
+import {
+  getDocumentation,
+  getMessage,
+  getVariables,
+} from '@lyttledev-dashboard/utils';
 import { CardModule } from '@lyttledev-dashboard/components/modules';
 import { Component } from '@lyttledev-dashboard/components';
 import { useEffect, useState } from 'react';
@@ -72,19 +76,6 @@ export const getLevelsConfig = (
     },
   ],
 });
-
-const getVariables = (
-  module: any,
-): {
-  variable: string;
-  description: string;
-}[] => {
-  const variables = (module?.variables as string[]) ?? [];
-  return variables.map((variable) => ({
-    variable: variable,
-    description: 'No description provided.',
-  }));
-};
 
 // Level up
 const keyLevelUp = 'Activity.levels.event.level-up';
