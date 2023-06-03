@@ -265,17 +265,33 @@ export const ModuleMarkdown = {
         },
       },
       snackbar: {
-        reset: {
-          content: 'Reset',
-          documentation: '',
+        changes: {
+          reset: {
+            content: 'Reset',
+            documentation: '',
+          },
+          review: {
+            content: 'Review and save',
+            documentation: '',
+          },
+          title: {
+            content: 'You have unsaved updates!',
+            documentation: '',
+          },
         },
-        review: {
-          content: 'Review and save',
-          documentation: '',
-        },
-        title: {
-          content: 'You have unsaved updates!',
-          documentation: '',
+        resetting: {
+          cancel: {
+            content: 'No, cancel please!',
+            documentation: '',
+          },
+          reset: {
+            content: 'Yes, Reset!',
+            documentation: '',
+          },
+          title: {
+            content: 'Are you sure you want to reset all changes?',
+            documentation: '',
+          },
         },
       },
     },

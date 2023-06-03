@@ -61,9 +61,13 @@ export function Snackbar() {
 
   const pfx = componentsPrefix + 'snackbar.';
 
-  const msgMessage = getMessage(pfx + 'title');
-  const msgReview = getMessage(pfx + 'review');
-  const msgReset = getMessage(pfx + 'reset');
+  const msgChangesMessage = getMessage(pfx + 'changes.title');
+  const msgChangesReview = getMessage(pfx + 'changes.review');
+  const msgChangesReset = getMessage(pfx + 'changes.reset');
+
+  const msgResettingMessage = getMessage(pfx + 'resetting.title');
+  const msgResettingCancel = getMessage(pfx + 'resetting.cancel');
+  const msgResettingReset = getMessage(pfx + 'resetting.reset');
 
   return (
     <Component.Container
@@ -76,10 +80,10 @@ export function Snackbar() {
           hasChanges && styles.changes
         } snackbar`}
       >
-        {!resetting && (
+        {!resetting ? (
           <>
             <p className={`${styles.message} snackbar-message`}>
-              {msgMessage}
+              {msgChangesMessage}
               <span className={`${styles.amount} snackbar-amount`}>
                 ({changes})
               </span>
@@ -88,22 +92,21 @@ export function Snackbar() {
               <Component.Button
                 color={ButtonColors.secondary}
                 className={styles['reset-btn']}
-                text={msgReset}
+                text={msgChangesReset}
                 onClick={() => setResetting(true)}
               />
               <Component.Button
                 color={ButtonColors.orange}
                 className={styles['review-btn']}
-                text={msgReview}
+                text={msgChangesReview}
                 href={`/dashboard/${guildId ?? '0'}/review`}
               />
             </section>
           </>
-        )}
-        {resetting && (
+        ) : (
           <>
             <p className={`${styles.message} snackbar-message`}>
-              Are you sure you want to reset all changes?
+              {msgResettingMessage}
               <span className={`${styles.amount} snackbar-amount`}>
                 ({closingReset}/5)
               </span>
@@ -112,13 +115,13 @@ export function Snackbar() {
               <Component.Button
                 color={ButtonColors.secondary}
                 className={styles['reset-btn']}
-                text={'No, cancel please!'}
+                text={msgResettingCancel}
                 onClick={() => setResetting(false)}
               />
               <Component.Button
                 color={ButtonColors.orange}
                 className={styles['review-btn']}
-                text={'Yes, Reset!'}
+                text={msgResettingReset}
                 onClick={onReset}
               />
             </section>

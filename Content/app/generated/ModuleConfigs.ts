@@ -51,9 +51,12 @@ export * as ModuleConfigDashboardComponentsServerCardModules from '../../content
 export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/modules/Dashboard/components/server-card/setup/config';
 export * as ModuleConfigDashboardComponentsServerCardSetupButton from '../../content/modules/Dashboard/components/server-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
-export * as ModuleConfigDashboardComponentsSnackbarReset from '../../content/modules/Dashboard/components/snackbar/reset/config';
-export * as ModuleConfigDashboardComponentsSnackbarReview from '../../content/modules/Dashboard/components/snackbar/review/config';
-export * as ModuleConfigDashboardComponentsSnackbarTitle from '../../content/modules/Dashboard/components/snackbar/title/config';
+export * as ModuleConfigDashboardComponentsSnackbarChangesReset from '../../content/modules/Dashboard/components/snackbar/changes/reset/config';
+export * as ModuleConfigDashboardComponentsSnackbarChangesReview from '../../content/modules/Dashboard/components/snackbar/changes/review/config';
+export * as ModuleConfigDashboardComponentsSnackbarChangesTitle from '../../content/modules/Dashboard/components/snackbar/changes/title/config';
+export * as ModuleConfigDashboardComponentsSnackbarResettingCancel from '../../content/modules/Dashboard/components/snackbar/resetting/cancel/config';
+export * as ModuleConfigDashboardComponentsSnackbarResettingReset from '../../content/modules/Dashboard/components/snackbar/resetting/reset/config';
+export * as ModuleConfigDashboardComponentsSnackbarResettingTitle from '../../content/modules/Dashboard/components/snackbar/resetting/title/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
