@@ -53,11 +53,13 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
   // Define update function.
   const updateValue = (newValue: string) => change(value, key, newValue);
 
+  const withEmptyOptions = [{ key: '-', value: '' }, ...options];
+
   return (
     <>
       {single && (
         <Component.Select
-          options={options}
+          options={withEmptyOptions}
           value={(changes[key]?.current as string) ?? value}
           label={title}
           onChange={updateValue}
@@ -70,7 +72,7 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
           {more.map((moreKey, i) => (
             <Component.Select
               key={i}
-              options={[{ key: '-', value: '' }, ...options]}
+              options={withEmptyOptions}
               value={(changes[moreKey]?.current as string) ?? value}
               label={title}
               onChange={(newValue) => {
