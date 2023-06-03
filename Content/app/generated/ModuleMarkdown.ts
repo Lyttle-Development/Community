@@ -209,20 +209,16 @@ export const ModuleMarkdown = {
           content: 'Logout',
           documentation: '',
         },
-        'label-messages': {
-          content: 'Messages',
-          documentation: '',
-        },
         'label-modules': {
           content: 'Modules',
           documentation: '',
         },
-        'label-profile': {
-          content: 'Profile',
+        'label-overview': {
+          content: 'Overview',
           documentation: '',
         },
-        'label-statistics': {
-          content: 'Statistics',
+        'label-profile': {
+          content: 'Profile',
           documentation: '',
         },
       },
