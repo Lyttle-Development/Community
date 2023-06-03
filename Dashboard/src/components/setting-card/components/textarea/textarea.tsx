@@ -1,11 +1,11 @@
 import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
-import { getMessage } from '@lyttledev-dashboard/utils';
 import { ChangeEvent } from 'react';
 import { Component } from '@lyttledev-dashboard/components';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './textarea.module.scss';
+import { getMessage } from '@lyttledev-dashboard/utils';
 
 export interface SettingCardTextareaItemVariables {
   variable: string;
@@ -15,6 +15,7 @@ export interface SettingCardTextareaItemVariables {
 export interface SettingCardTextareaItem {
   type: SettingCardSubItems.Textarea;
   key: string;
+  defaultKey: string;
   value: string;
   variables: SettingCardTextareaItemVariables[];
 }
@@ -27,10 +28,10 @@ export interface SettingCardTextareaProps {
 
 export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   // Get item data.
-  const { key, value, variables } = item;
+  const { key, value, variables, defaultKey } = item;
 
   // Get default message.
-  const defaultMessage = getMessage(key);
+  const defaultMessage = getMessage(defaultKey);
 
   // Define update function.
   const updateValue = (newValue: string) => change(value, key, newValue);

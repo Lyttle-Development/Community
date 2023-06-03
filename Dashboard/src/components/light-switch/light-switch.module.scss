@@ -80,3 +80,12 @@
 .input {
   display: none;
 }
+
+.disabled {
+  cursor: not-allowed;
+  opacity: .5;
+
+  &:hover {
+    filter: none;
+  }
+}

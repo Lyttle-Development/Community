@@ -28,6 +28,7 @@ export type SettingCardChange = (
   key: string,
   value: Change,
   store?: Change,
+  amount?: Change,
 ) => void;
 
 export function SettingCard({

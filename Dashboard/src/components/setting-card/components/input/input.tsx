@@ -15,6 +15,7 @@ export interface SettingCardInputItemVariables {
 export interface SettingCardInputItem {
   type: SettingCardSubItems.Input;
   key: string;
+  defaultKey: string;
   value: string;
   variables: SettingCardInputItemVariables[];
 }
@@ -27,10 +28,10 @@ export interface SettingCardInputProps {
 
 export function Input({ item, changes, change }: SettingCardInputProps) {
   // Get item data.
-  const { key, value, variables } = item;
+  const { key, value, variables, defaultKey } = item;
 
   // Get default message.
-  const defaultMessage = getMessage(key);
+  const defaultMessage = getMessage(defaultKey);
 
   // Define update function.
   const updateValue = (newValue: string) => change(value, key, newValue);

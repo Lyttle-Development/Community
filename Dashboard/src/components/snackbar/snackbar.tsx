@@ -5,10 +5,12 @@ import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { useRouter } from 'next/router';
 
 export function Snackbar() {
   const app = useApp();
   const guildId = useGuild();
+  const router = useRouter();
   const [changes, setChanges] = useState(0);
   const [hidden, setHidden] = useState(true);
   const [hasChanges, setHasChanges] = useState(true);
@@ -69,6 +71,9 @@ export function Snackbar() {
   const msgResettingCancel = getMessage(pfx + 'resetting.cancel');
   const msgResettingReset = getMessage(pfx + 'resetting.reset');
 
+  if (router.pathname === '/dashboard/[id]/review') {
+    if (hasChanges) setHasChanges(false);
+  }
   return (
     <Component.Container
       className={`${styles.container} ${

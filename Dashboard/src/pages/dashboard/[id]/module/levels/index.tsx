@@ -8,6 +8,7 @@ import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
+import { changeKeys } from '@lyttledev-dashboard/components/review/review.config';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -108,11 +109,11 @@ function Page() {
       .id('0')
       .title(msgLevelUp.title)
       .description(msgLevelUp.description)
-      .enabled(false, keyLevelUp + '.enabled')
+      .enabled(false, changeKeys.moduleLevelLevelUp.key)
       .addSubItem((subItem) =>
         subItem.select((select) =>
           select //
-            .key('test')
+            .key(changeKeys.moduleLevelLevelUpChannel.key)
             .title('Channel')
             .value('')
             .options([
@@ -146,7 +147,11 @@ function Page() {
       .addSubItem((subItem) =>
         subItem.textarea((textarea) =>
           textarea //
-            .key(keyLevelUp)
+            .key(changeKeys.moduleLevelLevelUpText.key)
+            .value(
+              'Wow\nSooo many\nlines!\nis this real?\nwhoep\noep!Yeyeyeye\nLol....',
+            )
+            .defaultKey(keyLevelUp)
             .variables(varLevelUp),
         ),
       )
@@ -156,11 +161,12 @@ function Page() {
       .id('0')
       .title(msgNickname.title)
       .description(msgNickname.description)
-      .enabled(false, keyNickname + '.enabled')
+      .enabled(true, changeKeys.moduleLevelNickname.key)
       .addSubItem((subItem) =>
         subItem.input((input) =>
           input //
-            .key(keyNickname)
+            .key(changeKeys.moduleLevelNicknameText.key)
+            .defaultKey(keyNickname)
             .variables(varNickname),
         ),
       )

@@ -1,0 +1,79 @@
+@use '../../../../styles/variables.scss' as v;
+
+.card {
+  background-color: v.$color-background-light;
+  padding: 2rem 3rem 1.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .lines {
+    background-color: v.$color-background;
+    padding: 1rem 0;
+    border-radius: 0.5rem;
+
+    p {
+      padding: .2rem 2rem;
+      position: relative;
+    }
+
+    .added,
+    .removed {
+      &:before {
+        content: '';
+        top: 0;
+        left: -1.5rem;
+        font-size: 1.5rem;
+        position: absolute;
+        z-index: 100;
+      }
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: calc(100% + 10rem);
+        height: 100%;
+        left: -5rem;
+        right: -5rem;
+        top: 0;
+
+        background-color: transparentize(v.$color-green, .85);
+      }
+    }
+
+
+    .added {
+      background-color: transparentize(v.$color-green, .85);
+
+      &:before {
+        content: '+';
+      }
+
+      &:after {
+        background-color: transparentize(v.$color-green, .85);
+      }
+    }
+
+    .removed {
+      background-color: transparentize(v.$color-red, .85);
+
+      &:before {
+        content: '-';
+      }
+
+
+      &:after {
+        background-color: transparentize(v.$color-red, .85);
+      }
+    }
+
+    div {
+      padding: .2rem 0;
+      position: relative;
+      z-index: 100;
+    }
+  }
+}

@@ -97,6 +97,7 @@ export class CreateSettingCardInputItem {
   constructor() {
     this.subItem = {
       key: '',
+      defaultKey: '',
       value: '',
       variables: [],
       type: SettingCardSubItems.Input,
@@ -105,6 +106,11 @@ export class CreateSettingCardInputItem {
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  defaultKey(defaultKey: string) {
+    this.subItem.defaultKey = defaultKey;
     return this;
   }
 
@@ -125,6 +131,7 @@ export class CreateSettingCardTextareaItem {
   constructor() {
     this.subItem = {
       key: '',
+      defaultKey: '',
       value: '',
       variables: [],
       type: SettingCardSubItems.Textarea,
@@ -133,6 +140,11 @@ export class CreateSettingCardTextareaItem {
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  defaultKey(defaultKey: string) {
+    this.subItem.defaultKey = defaultKey;
     return this;
   }
 
