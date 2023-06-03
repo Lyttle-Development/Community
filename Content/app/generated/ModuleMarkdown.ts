@@ -290,6 +290,12 @@ export const ModuleMarkdown = {
           },
         },
       },
+      'tip-card': {
+        dismiss: {
+          content: 'Dismiss',
+          documentation: '',
+        },
+      },
     },
     pages: {
       dashboard: {
@@ -423,6 +429,18 @@ export const ModuleMarkdown = {
       modules: {
         title: {
           content: 'Modules',
+          documentation: '',
+        },
+      },
+      overview: {
+        recommendation: {
+          title: {
+            content: 'Recommendation by ChatGPT',
+            documentation: '',
+          },
+        },
+        title: {
+          content: 'Overview',
           documentation: '',
         },
       },

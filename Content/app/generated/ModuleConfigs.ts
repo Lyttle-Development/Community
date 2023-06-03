@@ -56,6 +56,7 @@ export * as ModuleConfigDashboardComponentsSnackbarChangesTitle from '../../cont
 export * as ModuleConfigDashboardComponentsSnackbarResettingCancel from '../../content/modules/Dashboard/components/snackbar/resetting/cancel/config';
 export * as ModuleConfigDashboardComponentsSnackbarResettingReset from '../../content/modules/Dashboard/components/snackbar/resetting/reset/config';
 export * as ModuleConfigDashboardComponentsSnackbarResettingTitle from '../../content/modules/Dashboard/components/snackbar/resetting/title/config';
+export * as ModuleConfigDashboardComponentsTipCardDismiss from '../../content/modules/Dashboard/components/tip-card/dismiss/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
@@ -81,6 +82,8 @@ export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
 export * as ModuleConfigDashboardPagesModulesTitle from '../../content/modules/Dashboard/pages/modules/title/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationTitle from '../../content/modules/Dashboard/pages/overview/recommendation/title/config';
+export * as ModuleConfigDashboardPagesOverviewTitle from '../../content/modules/Dashboard/pages/overview/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';
 export * as ModuleConfigGlobalVariables from '../../content/modules/Global/variables/config';

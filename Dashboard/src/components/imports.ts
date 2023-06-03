@@ -23,3 +23,4 @@ export * from './snackbar';
 export * from './startup';
 export * from './textarea';
 export * from './title';
+export * from './tip-card';
