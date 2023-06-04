@@ -72,4 +72,3 @@ export class MemberModuleLevelDay {
   @Field(() => Date)
   updated_at: Date;
 }
-

@@ -9,23 +9,23 @@ export class CreateMemberModuleLevelDayInput {
   user_id: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_mon: number;
+  points_monday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_tue: number;
+  points_tuesday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_wed: number;
+  points_wednesday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_thu: number;
+  points_thursday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_fri: number;
+  points_friday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_sat: number;
+  points_saturday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_sun: number;
+  points_sunday: number;
 }
