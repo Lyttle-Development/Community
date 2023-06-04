@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -14,11 +14,11 @@ import { Guild } from '../../guild/entities/guild.entity';
 export class GuildModuleVoiceGrowth {
   // Primary key information
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   channel_id: number;
 
   // Relations

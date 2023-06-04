@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -14,7 +14,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 @ObjectType()
 export class MemberModuleLevelDay {
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   @PrimaryColumn()

@@ -1,13 +1,6 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Guild } from '../../guild/entities/guild.entity';
+import { Field, Float, ObjectType } from "@nestjs/graphql";
+import { Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Guild } from "../../guild/entities/guild.entity";
 
 // TODO: Check against real database (what is and is not nullable)
 @Entity('guild__module__qotd')
@@ -15,7 +8,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 export class GuildModuleQotd {
   // Primary key information
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   // Relations
@@ -29,11 +22,11 @@ export class GuildModuleQotd {
   enabled: boolean;
 
   @Column({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   channel_id: number;
 
   @Column({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   message_id: number;
 
   @Column()
