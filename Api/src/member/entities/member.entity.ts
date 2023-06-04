@@ -40,11 +40,6 @@ export class Member {
   @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
 
-  // Values
-  @Column({ nullable: true })
-  @Field(() => Date, { nullable: true })
-  birthday_date: Date;
-
   @Column({ nullable: true })
   @Field(() => Int, { nullable: true })
   birthday: number;

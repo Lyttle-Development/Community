@@ -106,7 +106,6 @@ type Member {
   guild(id: Int!): Guild!
   user: User!
   memberModuleLevel(guildId: Int!, userId: Int!): MemberModuleLevel!
-  birthday_date: Timestamp
   birthday: Int
   nickname: String
   created_at: Timestamp!
@@ -321,8 +320,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685873351663
-  call_start: Timestamp! = 1685873351663
+  cooldown_time: Timestamp! = 1685873934258
+  call_start: Timestamp! = 1685873934258
   points: Int! = 0
 }
 
@@ -331,8 +330,8 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int = 0
   cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1685873351663
-  call_start: Timestamp = 1685873351663
+  cooldown_time: Timestamp = 1685873934258
+  call_start: Timestamp = 1685873934258
   points: Int = 0
 }
 
