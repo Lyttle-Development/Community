@@ -209,20 +209,16 @@ export const ModuleMarkdown = {
           content: 'Logout',
           documentation: '',
         },
-        'label-messages': {
-          content: 'Messages',
-          documentation: '',
-        },
         'label-modules': {
           content: 'Modules',
           documentation: '',
         },
-        'label-profile': {
-          content: 'Profile',
+        'label-overview': {
+          content: 'Overview',
           documentation: '',
         },
-        'label-statistics': {
-          content: 'Statistics',
+        'label-profile': {
+          content: 'Profile',
           documentation: '',
         },
       },
@@ -292,6 +288,12 @@ export const ModuleMarkdown = {
             content: 'Are you sure you want to reset all changes?',
             documentation: '',
           },
+        },
+      },
+      'tip-card': {
+        dismiss: {
+          content: 'Dismiss',
+          documentation: '',
         },
       },
     },
@@ -427,6 +429,18 @@ export const ModuleMarkdown = {
       modules: {
         title: {
           content: 'Modules',
+          documentation: '',
+        },
+      },
+      overview: {
+        recommendation: {
+          title: {
+            content: 'Recommendation by ChatGPT',
+            documentation: '',
+          },
+        },
+        title: {
+          content: 'Overview',
           documentation: '',
         },
       },

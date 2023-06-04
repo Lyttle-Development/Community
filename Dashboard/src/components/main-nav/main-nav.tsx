@@ -34,10 +34,9 @@ export function MainNav({ mobile }: MainNavProps) {
   const labelDashboard = getMessage(pfx + 'dashboard');
   const labelHome = getMessage(pfx + 'home');
   const labelLogout = getMessage(pfx + 'logout');
-  const labelMessages = getMessage(pfx + 'messages');
   const labelModules = getMessage(pfx + 'modules');
   const labelProfile = getMessage(pfx + 'profile');
-  const labelStatistics = getMessage(pfx + 'statistics');
+  const labelOverview = getMessage(pfx + 'overview');
 
   const prefix = 'main-nav';
   const openClass = mainNavOpen
@@ -106,22 +105,16 @@ export function MainNav({ mobile }: MainNavProps) {
               }`}
             >
               <MainNavItem
+                href={`/dashboard/${selectedGuild.id}`}
+                route={'/dashboard/[id]'}
+              >
+                {labelOverview}
+              </MainNavItem>
+              <MainNavItem
                 href={`/dashboard/${selectedGuild.id}/modules`}
                 route={'/dashboard/[id]/modules'}
               >
                 {labelModules}
-              </MainNavItem>
-              <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/statistics`}
-                route={'/dashboard/[id]/statistics'}
-              >
-                {labelStatistics}
-              </MainNavItem>
-              <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/messages`}
-                route={'/dashboard/[id]/messages'}
-              >
-                {labelMessages}
               </MainNavItem>
             </ul>
           </article>

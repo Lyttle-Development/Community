@@ -1,8 +1,13 @@
 @use '../../styles/variables.scss' as v;
 
-.grid {
-  gap: 1.5rem;
+.stats {
+  gap: 2rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
+  li {
+    width: 100%;
+    max-width: 25rem;
+  }
 }

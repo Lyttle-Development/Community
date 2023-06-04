@@ -39,10 +39,9 @@ export * as ModuleConfigCommunicationVoiceTopicTxtSuccess from '../../content/mo
 export * as ModuleConfigDashboardComponentsMainNavLabelDashboard from '../../content/modules/Dashboard/components/main-nav/label-dashboard/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelHome from '../../content/modules/Dashboard/components/main-nav/label-home/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelLogout from '../../content/modules/Dashboard/components/main-nav/label-logout/config';
-export * as ModuleConfigDashboardComponentsMainNavLabelMessages from '../../content/modules/Dashboard/components/main-nav/label-messages/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelModules from '../../content/modules/Dashboard/components/main-nav/label-modules/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelOverview from '../../content/modules/Dashboard/components/main-nav/label-overview/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
-export * as ModuleConfigDashboardComponentsMainNavLabelStatistics from '../../content/modules/Dashboard/components/main-nav/label-statistics/config';
 export * as ModuleConfigDashboardComponentsModuleCardSetupButton from '../../content/modules/Dashboard/components/module-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsModuleCardTitlePrefix from '../../content/modules/Dashboard/components/module-card/title-prefix/config';
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
@@ -57,6 +56,7 @@ export * as ModuleConfigDashboardComponentsSnackbarChangesTitle from '../../cont
 export * as ModuleConfigDashboardComponentsSnackbarResettingCancel from '../../content/modules/Dashboard/components/snackbar/resetting/cancel/config';
 export * as ModuleConfigDashboardComponentsSnackbarResettingReset from '../../content/modules/Dashboard/components/snackbar/resetting/reset/config';
 export * as ModuleConfigDashboardComponentsSnackbarResettingTitle from '../../content/modules/Dashboard/components/snackbar/resetting/title/config';
+export * as ModuleConfigDashboardComponentsTipCardDismiss from '../../content/modules/Dashboard/components/tip-card/dismiss/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
@@ -82,6 +82,8 @@ export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
 export * as ModuleConfigDashboardPagesModulesTitle from '../../content/modules/Dashboard/pages/modules/title/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationTitle from '../../content/modules/Dashboard/pages/overview/recommendation/title/config';
+export * as ModuleConfigDashboardPagesOverviewTitle from '../../content/modules/Dashboard/pages/overview/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';
 export * as ModuleConfigGlobalVariables from '../../content/modules/Global/variables/config';
