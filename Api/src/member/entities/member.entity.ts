@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -12,16 +12,16 @@ import { Guild } from '../../guild/entities/guild.entity';
 import { User } from '../../user/entities/user.entity';
 import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
 
-@Entity()
+@Entity('member')
 @ObjectType()
 export class Member {
   // Primary key information
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   user_id: number;
 
   // Relations
@@ -39,11 +39,6 @@ export class Member {
   )
   @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
-
-  // Values
-  @Column({ nullable: true })
-  @Field(() => Date, { nullable: true })
-  birthday_date: Date;
 
   @Column({ nullable: true })
   @Field(() => Int, { nullable: true })

@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -9,12 +9,12 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@Entity()
+@Entity('profile')
 @ObjectType()
 export class Profile {
   // Primary key information
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   user_id: number;
 
   // Relations

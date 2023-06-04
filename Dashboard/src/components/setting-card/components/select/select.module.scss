@@ -1,0 +1,7 @@
+@use '../../../../styles/variables.scss' as v;
+
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

@@ -62,6 +62,8 @@ model Guild {
   members Member[]
 
   // - Cache
+  guild__action       GuildAction[]
+  guild__message      GuildMessage[]
   guild__translations GuildTranslation[]
 
   // - Modules
@@ -75,9 +77,8 @@ model Guild {
   enabled Boolean @default(true)
 
   // Date information
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now()) @updatedAt
-  GuildAction GuildAction[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 
   // Refactors
   @@map("guild")
@@ -87,9 +88,7 @@ model Guild {
 // Guild Relations - Cache
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// Todo: Create Messages
-
-model GuildTranslation {
+model GuildMessage {
   // Primary key information
   guild_id BigInt
 
@@ -106,6 +105,26 @@ model GuildTranslation {
 
   // Refactors
   @@id([guild_id, key])
+  @@map("guild__message")
+}
+
+model GuildTranslation {
+  // Primary key information
+  id Int @id @default(autoincrement())
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  guild_id   BigInt
+  channel_id BigInt
+  message_id BigInt
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
   @@map("guild__translation")
 }
 

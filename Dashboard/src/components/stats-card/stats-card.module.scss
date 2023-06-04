@@ -1,0 +1,83 @@
+@use '../../styles/variables.scss' as v;
+
+.card {
+  gap: 2rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 25rem;
+  padding: 1.5rem 2rem 1rem;
+  align-items: center;
+  border-radius: 1rem;
+  justify-content: space-between;
+  background-color: v.$color-background-light;
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+
+    .title {
+      font-size: 1.3rem;
+      color: v.$color-text-dark;
+    }
+
+    .value {
+      font-size: 2.5rem;
+      color: v.$color-text;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      .change {
+        font-size: 1rem;
+        color: v.$color-primary;
+      }
+    }
+  }
+
+  .total {
+    padding: 3rem;
+    border-radius: 50%;
+    background-color: transparentize(v.$color-primary, .8);
+    border: v.$color-primary .3rem solid;
+    position: relative;
+
+    .total__value {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      position: absolute;
+    }
+  }
+}
+
+.card--yellow {
+  .stats {
+    .value {
+      .change {
+        color: v.$color-primary-yellow;
+      }
+    }
+  }
+
+  .total {
+    background-color: transparentize(v.$color-primary-yellow, .8);
+    border: v.$color-primary-yellow .3rem solid;
+  }
+}
+
+.card--orange {
+  .stats {
+    .value {
+      .change {
+        color: v.$color-primary-orange;
+      }
+    }
+  }
+
+  .total {
+    background-color: transparentize(v.$color-primary-orange, .8);
+    border: v.$color-primary-orange .3rem solid;
+  }
+}

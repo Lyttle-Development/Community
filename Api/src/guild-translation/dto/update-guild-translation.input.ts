@@ -7,10 +7,4 @@ export class UpdateGuildTranslationInput extends PartialType(
 ) {
   @Field(() => Int)
   id: number;
-
-  @Field(() => String)
-  key: string;
-
-  @Field(() => String)
-  value: string;
 }

@@ -1,8 +1,13 @@
 import { CreateMemberModuleLevelInput } from './create-member-module-level.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateMemberModuleLevelInput extends PartialType(CreateMemberModuleLevelInput) {
+export class UpdateMemberModuleLevelInput extends PartialType(
+  CreateMemberModuleLevelInput,
+) {
   @Field(() => Int)
-  id: number;
+  guild_id: number;
+
+  @Field(() => Int)
+  user_id: number;
 }

@@ -1,0 +1,18 @@
+@use '../../styles/variables.scss' as v;
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem
+}
+
+.title {
+  background-color: transparentize(v.$color-primary-orange, .8);
+  color: v.$color-primary-orange;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+}
+
+.submit {
+  margin-left: auto;
+}

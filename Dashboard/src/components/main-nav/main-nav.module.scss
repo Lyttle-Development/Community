@@ -1,0 +1,88 @@
+@use '../../styles/variables.scss' as v;
+
+.main-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: v.$main-nav-width;
+  background-color: v.$color-background-light;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  z-index: 9991;
+
+  nav section {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 3rem;
+    padding: .8rem 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: v.$color-text-dark;
+    font-weight: 600;
+  }
+}
+
+.closer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  z-index: 9990;
+  background: transparentize(v.$color-background, .05);
+  transform: translateX(-100%);
+  transition: transform 1s ease-in-out;
+  font-size: 0;
+
+  &:after {
+    content: 'X';
+    font-size: 2rem;
+    position: absolute;
+    top: calc(50% - 1rem);
+    left: calc((100vw + 15rem) / 2 - 1rem);
+    color: v.$color-text-dark
+  }
+}
+
+.closer.open {
+  transform: translateX(0);
+  transition: transform .8s ease-in-out;
+}
+
+.avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.logo {
+  width: 100%;
+  padding: 1.5rem 1.3rem 1rem 1.5rem;
+}
+
+.main-menu__footer {
+  flex-grow: 1;
+  display: flex;
+  padding-top: 3rem;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.guild {
+  transition: transform .5s ease-in-out;
+  transform: translateX(0);
+}
+
+.server-menu {
+  transition: transform .5s ease-in-out;
+  transform: translateX(0);
+}
+
+.hide {
+  transform: translateX(-100%);
+}

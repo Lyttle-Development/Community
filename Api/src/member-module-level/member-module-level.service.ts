@@ -1,26 +1,93 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { CreateMemberModuleLevelInput } from './dto/create-member-module-level.input';
 import type { UpdateMemberModuleLevelInput } from './dto/update-member-module-level.input';
+import { MemberModuleLevel } from './entities/member-module-level.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MemberService } from 'member/member.service';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
+import { Member } from '../member/entities/member.entity';
+import { MemberModuleLevelDay } from '../member-module-level-day/entities/member-module-level-day.entity';
+import { MemberModuleLevelDayService } from '../member-module-level-day/member-module-level-day.service';
 
 @Injectable()
 export class MemberModuleLevelService {
-  create(createMemberModuleLevelInput: CreateMemberModuleLevelInput) {
-    return 'This action adds a new memberModuleLevel';
+  constructor(
+    @InjectRepository(MemberModuleLevel)
+    private memberModuleLevelRepository: Repository<MemberModuleLevel>,
+    @Inject(forwardRef(() => MemberService))
+    private memberService: MemberService,
+    @Inject(forwardRef(() => MemberModuleLevelDayService))
+    private memberModuleLevelDayService: MemberModuleLevelDayService,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
+  ) {}
+
+  create(
+    createMemberModuleLevelInput: CreateMemberModuleLevelInput,
+  ): Promise<MemberModuleLevel> {
+    return this.memberModuleLevelRepository.save(createMemberModuleLevelInput);
   }
 
-  findAll() {
-    return `This action returns all memberModuleLevel`;
+  findAll(): Promise<MemberModuleLevel[]> {
+    return this.memberModuleLevelRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} memberModuleLevel`;
+  findOne(guildId: number, userId: number): Promise<MemberModuleLevel> {
+    return this.memberModuleLevelRepository.findOne({
+      where: { user_id: userId, guild_id: guildId },
+    });
   }
 
-  update(id: number, updateMemberModuleLevelInput: UpdateMemberModuleLevelInput) {
-    return `This action updates a #${id} memberModuleLevel`;
+  getMemberModuleLevelDay(
+    guildId: number,
+    userId: number,
+  ): Promise<MemberModuleLevelDay> {
+    return this.memberModuleLevelDayService.findOne(guildId, userId);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} memberModuleLevel`;
+  getGuild(guildId: number): Promise<Guild> {
+    return this.guildService.findOne(guildId);
+  }
+
+  getMember(userId: number, guildId: number): Promise<Member> {
+    return this.memberService.findOne(guildId, userId);
+  }
+
+  async update(
+    updateMemberModuleLevelInput: UpdateMemberModuleLevelInput,
+  ): Promise<MemberModuleLevel> | null {
+    const memberModuleLevel: MemberModuleLevel =
+      await this.memberModuleLevelRepository.findOne({
+        where: {
+          guild_id: updateMemberModuleLevelInput.guild_id,
+          user_id: updateMemberModuleLevelInput.user_id,
+        },
+      });
+    if (memberModuleLevel) {
+      return this.memberModuleLevelRepository.save({
+        ...memberModuleLevel,
+        ...updateMemberModuleLevelInput,
+      });
+    }
+    throw new Error('MemberModuleLevelDay not found');
+  }
+
+  async remove(
+    guildId: number,
+    userId: number,
+  ): Promise<MemberModuleLevel> | null {
+    const memberModuleLevel: MemberModuleLevel =
+      await this.memberModuleLevelRepository.findOne({
+        where: {
+          guild_id: guildId,
+          user_id: userId,
+        },
+      });
+    if (memberModuleLevel) {
+      return this.memberModuleLevelRepository.remove(memberModuleLevel);
+    }
+    throw new Error('MemberModuleLevelDay not found');
   }
 }
