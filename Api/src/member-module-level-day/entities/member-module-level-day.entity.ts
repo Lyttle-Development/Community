@@ -17,7 +17,7 @@ export class MemberModuleLevelDay {
   @Field(() => Float)
   guild_id: number;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'bigint' })
   @Field(() => Float)
   user_id: number;
 
