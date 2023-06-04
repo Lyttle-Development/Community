@@ -1,8 +1,19 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { MemberService } from './member.service';
 import { Member } from './entities/member.entity';
 import { CreateMemberInput } from './dto/create-member.input';
 import { UpdateMemberInput } from './dto/update-member.input';
+import { Guild } from '../guild/entities/guild.entity';
+import { User } from '../user/entities/user.entity';
+import { MemberModuleLevel } from '../member-module-level/entities/member-module-level.entity';
 
 @Resolver(() => Member)
 export class MemberResolver {
@@ -11,32 +22,60 @@ export class MemberResolver {
   @Mutation(() => Member)
   createMember(
     @Args('createMemberInput') createMemberInput: CreateMemberInput,
-  ) {
+  ): Promise<Member> {
     return this.memberService.create(createMemberInput);
   }
 
-  @Query(() => [Member], { name: 'member' })
-  findAll() {
+  @Query(() => [Member])
+  findAll(): Promise<Member[]> {
     return this.memberService.findAll();
   }
 
-  @Query(() => Member, { name: 'member' })
+  @Query(() => Member)
   findOne(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('guildId', { type: () => Int }) guildId: number,
-  ) {
+  ): Promise<Member> {
     return this.memberService.findOne(userId, guildId);
+  }
+
+  @Query(() => [Member])
+  findAllByGuild(
+    @Args('guildId', { type: () => Int }) guildId: number,
+  ): Promise<Member[]> {
+    return this.memberService.findAllByGuild(guildId);
+  }
+
+  @ResolveField(() => Guild)
+  guild(@Parent() member: Member): Promise<Guild> {
+    return this.memberService.getGuild(member.guild_id);
+  }
+
+  @ResolveField(() => User)
+  getUser(@Parent() member: Member): Promise<User> {
+    return this.memberService.getUser(member.user_id);
+  }
+
+  @ResolveField(() => MemberModuleLevel)
+  memberModuleLevel(@Parent() member: Member): Promise<MemberModuleLevel> {
+    return this.memberService.getMemberModuleLevel(
+      member.guild_id,
+      member.user_id,
+    );
   }
 
   @Mutation(() => Member)
   updateMember(
     @Args('updateMemberInput') updateMemberInput: UpdateMemberInput,
-  ) {
-    return this.memberService.update(updateMemberInput.id, updateMemberInput);
+  ): Promise<Member> | null {
+    return this.memberService.update(updateMemberInput);
   }
 
   @Mutation(() => Member)
-  removeMember(@Args('id', { type: () => Int }) id: number) {
-    return this.memberService.remove(id);
+  removeMember(
+    @Args('id', { type: () => Int }) guildId: number,
+    userId: number,
+  ): Promise<Member> | null {
+    return this.memberService.remove(guildId, userId);
   }
 }

@@ -1,35 +1,83 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { MemberModuleLevelService } from './member-module-level.service';
 import { MemberModuleLevel } from './entities/member-module-level.entity';
 import { CreateMemberModuleLevelInput } from './dto/create-member-module-level.input';
 import { UpdateMemberModuleLevelInput } from './dto/update-member-module-level.input';
+import { Guild } from '../guild/entities/guild.entity';
+import { Member } from '../member/entities/member.entity';
+import { MemberModuleLevelDay } from '../member-module-level-day/entities/member-module-level-day.entity';
 
 @Resolver(() => MemberModuleLevel)
 export class MemberModuleLevelResolver {
-  constructor(private readonly memberModuleLevelService: MemberModuleLevelService) {}
+  constructor(
+    private readonly memberModuleLevelService: MemberModuleLevelService,
+  ) {}
 
   @Mutation(() => MemberModuleLevel)
-  createMemberModuleLevel(@Args('createMemberModuleLevelInput') createMemberModuleLevelInput: CreateMemberModuleLevelInput) {
+  createMemberModuleLevel(
+    @Args('createMemberModuleLevelInput')
+    createMemberModuleLevelInput: CreateMemberModuleLevelInput,
+  ): Promise<MemberModuleLevel> {
     return this.memberModuleLevelService.create(createMemberModuleLevelInput);
   }
 
-  @Query(() => [MemberModuleLevel], { name: 'memberModuleLevel' })
-  findAll() {
+  @Query(() => [MemberModuleLevel])
+  findAll(): Promise<MemberModuleLevel[]> {
     return this.memberModuleLevelService.findAll();
   }
 
-  @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.memberModuleLevelService.findOne(id);
+  @Query(() => MemberModuleLevel)
+  findOne(
+    @Args('id', { type: () => Int }) guildId: number,
+    userId: number,
+  ): Promise<MemberModuleLevel> {
+    return this.memberModuleLevelService.findOne(guildId, userId);
+  }
+
+  @ResolveField(() => MemberModuleLevelDay)
+  memberModuleLevelDay(
+    @Parent() memberModuleLevel: MemberModuleLevel,
+  ): Promise<MemberModuleLevelDay> {
+    return this.memberModuleLevelService.getMemberModuleLevelDay(
+      memberModuleLevel.guild_id,
+      memberModuleLevel.user_id,
+    );
+  }
+
+  @ResolveField(() => Guild)
+  guild(@Parent() memberModuleLevel: MemberModuleLevel): Promise<Guild> {
+    return this.memberModuleLevelService.getGuild(memberModuleLevel.guild_id);
+  }
+
+  @ResolveField(() => Member)
+  member(@Parent() memberModuleLevel: MemberModuleLevel): Promise<Member> {
+    return this.memberModuleLevelService.getMember(
+      memberModuleLevel.guild_id,
+      memberModuleLevel.user_id,
+    );
   }
 
   @Mutation(() => MemberModuleLevel)
-  updateMemberModuleLevel(@Args('updateMemberModuleLevelInput') updateMemberModuleLevelInput: UpdateMemberModuleLevelInput) {
-    return this.memberModuleLevelService.update(updateMemberModuleLevelInput.id, updateMemberModuleLevelInput);
+  updateMemberModuleLevel(
+    @Args('updateMemberModuleLevelInput')
+    updateMemberModuleLevelInput: UpdateMemberModuleLevelInput,
+  ): Promise<MemberModuleLevel> | null {
+    return this.memberModuleLevelService.update(updateMemberModuleLevelInput);
   }
 
   @Mutation(() => MemberModuleLevel)
-  removeMemberModuleLevel(@Args('id', { type: () => Int }) id: number) {
-    return this.memberModuleLevelService.remove(id);
+  removeMemberModuleLevel(
+    @Args('id', { type: () => Int }) guildId: number,
+    userId: number,
+  ): Promise<MemberModuleLevel> | null {
+    return this.memberModuleLevelService.remove(guildId, userId);
   }
 }

@@ -5,7 +5,4 @@ import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 export class UpdateGuildInput extends PartialType(CreateGuildInput) {
   @Field(() => Int)
   id: number;
-
-  @Field(() => Boolean)
-  enabled: boolean;
 }

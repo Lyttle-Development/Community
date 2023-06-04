@@ -29,11 +29,15 @@
     "Database"
   ],
   "dependencies": {
+    "@apollo/server": "^4.7.1",
     "@lyttledev/api": "file:Api",
     "@lyttledev/client": "file:Client",
     "@lyttledev/content": "file:Content/app",
     "@lyttledev/dashboard": "file:Dashboard",
-    "@lyttledev/database": "file:Database"
+    "@lyttledev/database": "file:Database",
+    "@nestjs/apollo": "^11.0.6",
+    "@nestjs/graphql": "^11.0.6",
+    "graphql": "^16.6.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.57.1",
