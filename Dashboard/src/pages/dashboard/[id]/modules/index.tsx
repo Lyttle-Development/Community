@@ -4,8 +4,6 @@ import { Component } from '@lyttledev-dashboard/components';
 import { CardModules } from '@lyttledev-dashboard/components/modules';
 import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels';
 import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays';
-import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice';
-import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
@@ -23,8 +21,8 @@ function Page() {
     setModules([
       getLevelsConfig(guildId),
       getBirthdaysConfig(guildId),
-      getDynamicVoiceConfig(guildId),
-      getVoiceTopicsConfig(guildId),
+      // getDynamicVoiceConfig(guildId),
+      // getVoiceTopicsConfig(guildId),
     ]);
   }, [guildId]);
 

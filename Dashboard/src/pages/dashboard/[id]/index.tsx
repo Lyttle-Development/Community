@@ -5,8 +5,10 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useEffect, useState } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 
 function Page() {
+  useGuild();
   const title = usePage(pagesPrefix + 'overview.title');
   const [recommendation, setRecommendation] = useState<string | null>(null);
 

@@ -13,6 +13,8 @@ export * from './main-nav-item';
 export * from './markdown';
 export * from './module-card';
 export * from './modules';
+export * from './review';
+export * from './review-card';
 export * from './search';
 export * from './select';
 export * from './server-card';

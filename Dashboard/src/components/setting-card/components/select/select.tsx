@@ -29,7 +29,7 @@ export interface SettingCardSelectProps {
 export function Select({ item, changes, change }: SettingCardSelectProps) {
   const { key, value, title, options, single = true } = item;
   const [amount, setAmount] = useState(
-    (changes[`${key}[1]`]?.store as number) ?? 1,
+    (changes[`${key}[1]`]?.amount as number) ?? 1,
   );
 
   const more: string[] = [];
@@ -47,11 +47,15 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
     const oneKey = `${key}[1]`;
     const oneValue = changes[oneKey];
     if (!oneValue) return;
-    change(oneValue.original, oneKey, oneValue.current, newAmount);
+    const JSONOptions = JSON.stringify(item.options);
+    change(oneValue.original, oneKey, oneValue.current, JSONOptions, newAmount);
   }, [changes]);
 
   // Define update function.
-  const updateValue = (newValue: string) => change(value, key, newValue);
+  const updateValue = (newValue: string) => {
+    const JSONOptions = JSON.stringify(item.options);
+    change(value, key, newValue, JSONOptions);
+  };
 
   const withEmptyOptions = [{ key: '-', value: '' }, ...options];
 
