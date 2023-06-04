@@ -1,0 +1,1 @@
+Enable nicknaming your users with their level.

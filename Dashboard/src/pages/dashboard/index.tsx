@@ -1,18 +1,10 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
 import { Component } from '@lyttledev-dashboard/components';
-import { useApp } from '@lyttledev-dashboard/contexts/App.context';
-import { getMessage } from '@lyttledev-dashboard/utils';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { useEffect } from 'react';
+import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 
 function Page() {
-  const app = useApp();
-  const setPageTitle = app?.setPageTitle ?? ((p) => p);
-
-  const title = getMessage(pagesPrefix + 'dashboard.title');
-  useEffect(() => {
-    setPageTitle(title);
-  }, []);
+  const title = usePage(pagesPrefix + 'dashboard.title');
 
   return (
     <>

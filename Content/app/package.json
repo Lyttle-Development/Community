@@ -4,15 +4,15 @@
   "description": "",
   "main": "dist/src/main.js",
   "scripts": {
-    "start": "npm run build && npm run generate && npm run format:generated && npm run end",
+    "start": "npm run build && npm run generate:content && npm run generate:format",
     "build": "tsc",
-    "generate": "node dist/src/main.js",
-    "end": "node dist/src/end.js",
-    "format:generated": "prettier --write \"generated/**/*.ts\""
+    "watch": "nodemon --watch ../content -e ts,md -x \"npm run generate\"",
+    "generate": "npm run generate:content && npm run generate:format",
+    "generate:content": "node dist/src/main.js",
+    "generate:format": "prettier --write \"generated/**/*.ts\""
   },
   "engines": {
-    "node": "18.15.0",
-    "npm": "9.6.3"
+    "node": "18.15.0"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "@types/node": "^18.14.6"
+    "@types/node": "^18.14.6",
+    "nodemon": "^2.0.22"
   }
 }

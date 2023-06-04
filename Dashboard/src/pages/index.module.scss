@@ -1,7 +1,6 @@
 .landing {
   display: flex;
   flex-direction: column;
-  height: calc(80vh - 10rem);
   align-items: center;
   justify-content: center;
   max-width: 50rem;
@@ -21,5 +20,7 @@
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem
 }

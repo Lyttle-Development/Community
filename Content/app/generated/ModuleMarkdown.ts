@@ -103,13 +103,15 @@ export const ModuleMarkdown = {
       event: {
         'level-up': {
           content: '{user} just advanced to {level} {unit}!',
-          documentation: '',
+          documentation:
+            'Level up\nThe message send when leveling up.\nTriggered when a player levels up.',
         },
       },
       txt: {
         nickname: {
           content: '{name} • {recentLevels}{levels}',
-          documentation: '',
+          documentation:
+            'Nicknames\nGive members a nickname when they level up.\nHappens when changing name or leveling up.',
         },
         'nickname-numbers': {
           levels: {
@@ -262,6 +264,36 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      snackbar: {
+        changes: {
+          reset: {
+            content: 'Reset',
+            documentation: '',
+          },
+          review: {
+            content: 'Review and save',
+            documentation: '',
+          },
+          title: {
+            content: 'You have unsaved updates!',
+            documentation: '',
+          },
+        },
+        resetting: {
+          cancel: {
+            content: 'No, cancel please!',
+            documentation: '',
+          },
+          reset: {
+            content: 'Yes, Reset!',
+            documentation: '',
+          },
+          title: {
+            content: 'Are you sure you want to reset all changes?',
+            documentation: '',
+          },
+        },
+      },
     },
     pages: {
       dashboard: {
@@ -290,6 +322,111 @@ export const ModuleMarkdown = {
         },
         title: {
           content: 'Home',
+          documentation: '',
+        },
+      },
+      module: {
+        birthdays: {
+          announcement: {
+            description: {
+              content: "The channel to announce when its someone's birthday.",
+              documentation: '',
+            },
+            title: {
+              content: 'Announcement',
+              documentation: '',
+            },
+          },
+          description: {
+            content:
+              'The Birthday module is designed to enhance the celebration of birthdays within a community or organization. It provides features such as dedicated announcement channels, reminders, and personalized messages, ensuring that birthdays are acknowledged and celebrated in a meaningful way. With this module, users can foster a sense of connection and create a warm and inclusive atmosphere during special occasions.',
+            documentation: '',
+          },
+          title: {
+            content: 'Birthdays',
+            documentation: '',
+          },
+        },
+        'dynamic-voice': {
+          card: {
+            description: {
+              content: 'This channel is configured to be dynamic master.',
+              documentation: '',
+            },
+          },
+          description: {
+            content:
+              'The Dynamic Voice Growth module enhances the scalability and flexibility of voice channels within a community. It automatically adjusts the number of available voice channels based on user activity, ensuring an optimal balance between demand and available resources. With this module, users can enjoy seamless voice communication without the need for manual channel creation or adjustment, making it easier to accommodate a growing community and fluctuating usage patterns.',
+            documentation: '',
+          },
+          title: {
+            content: 'Dynamic Voice Channels',
+            documentation: '',
+          },
+        },
+        levels: {
+          announcement: {
+            description: {
+              content: 'The channel to announce when someone leveled up.',
+              documentation: '',
+            },
+            title: {
+              content: 'Announcement',
+              documentation: '',
+            },
+          },
+          description: {
+            content:
+              'The Leveling module adds a gamified element to the community experience, allowing users to progress and level up based on their participation and activity. It includes features such as automatic assignment of levels, leaderboards, and rewards, motivating users to engage more actively. With this module, users can track their progress, compete with others, and unlock new privileges or perks as they advance through different levels.',
+            documentation: '',
+          },
+          leaderboard: {
+            description: {
+              content: 'The channel to send ones a week a leaderboard in.',
+              documentation: '',
+            },
+            title: {
+              content: 'Leaderboard',
+              documentation: '',
+            },
+          },
+          nickname: {
+            description: {
+              content: 'Enable nicknaming your users with their level.',
+              documentation: '',
+            },
+            title: {
+              content: 'Nicknames',
+              documentation: '',
+            },
+          },
+          title: {
+            content: 'Leveling',
+            documentation: '',
+          },
+        },
+        'voice-topics': {
+          card: {
+            description: {
+              content:
+                'This channel is configured to accept button interactions, creating voice topics below it.',
+              documentation: '',
+            },
+          },
+          description: {
+            content:
+              'The Voice Topics module enriches the voice communication experience within a community or server. It enables users to create dedicated voice channels for specific topics or interests, promoting focused discussions and engagement. With this module, users can easily find and join voice channels that align with their interests, fostering meaningful conversations and building a stronger sense of community.',
+            documentation: '',
+          },
+          title: {
+            content: 'Voice Topics',
+            documentation: '',
+          },
+        },
+      },
+      modules: {
+        title: {
+          content: 'Modules',
           documentation: '',
         },
       },

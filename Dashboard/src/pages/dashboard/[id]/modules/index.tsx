@@ -1,119 +1,37 @@
 import { Layout } from '@lyttledev-dashboard/layouts';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { Component } from '@lyttledev-dashboard/components';
 import { CardModules } from '@lyttledev-dashboard/components/modules';
-
-const modules: CardModules = [
-  {
-    active: true,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '5',
-    title: 'Leveling',
-    description:
-      'When enabled, members can level up by participating in the server.',
-    subItems: [
-      {
-        id: '1',
-        route: '/',
-        active: true,
-        title: 'Nicknames',
-        description:
-          'Set a nickname for every active user with their level in it.',
-      },
-      {
-        id: '1',
-        route: '/',
-        active: true,
-        title: 'Announcement',
-        description: 'The channel were announcements are sent in',
-      },
-      {
-        id: null,
-        route: '/',
-        active: false,
-        title: 'Leaderboard',
-        description: 'The channel were the leaderboard is sent in',
-      },
-    ],
-  },
-  {
-    active: null,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '5',
-    title: 'Dynamic Voice Channels',
-    description:
-      'Add an "master" channel which dynamically creates new channels based on its (and its childs) usage.',
-    extendable: true,
-    subItems: [
-      {
-        id: '1',
-        active: true,
-        title: '#Kneeg Room',
-        description:
-          'This channel is configured to dynamically grow based on its usage.',
-        route: '/',
-      },
-    ],
-  },
-  {
-    active: false,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: null,
-    title: 'Voice Topics',
-    description:
-      'A textchannel with a button for members to create a voice channel with a topic.',
-    subItems: [],
-  },
-  {
-    active: null,
-    route: '/',
-    onClick: (...e) => console.log(e),
-    id: '1',
-    title: 'Birthday',
-    description: 'Announce when a member has a birthday.',
-    subItems: [
-      {
-        id: null,
-        route: '/',
-        active: true,
-        title: 'Announcement',
-        description: 'The channel were announcements are sent in',
-      },
-    ],
-  },
-];
+import { getLevelsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/levels';
+import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/birthdays';
+import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/dynamic-voice';
+import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[id]/module/voice-topics';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { usePage } from '@lyttledev-dashboard/hooks/usePage';
+import { pagesPrefix } from '@lyttledev-dashboard/pages';
 
 function Page() {
-  const router = useRouter();
-  const app = useApp();
-  const [guildId, setGuildId] = useState<string | null>(null);
-
-  // Set selected guild id from router, on initial load
-  useEffect(() => {
-    const _guildId = router.query.id;
-    if (app?.selectedGuildId === _guildId) return;
-    if (typeof _guildId !== 'string') return;
-    app?.setSelectedGuildId(_guildId);
-  }, []);
+  const guildId = useGuild();
+  const title = usePage(pagesPrefix + 'modules.title');
+  const [modules, setModules] = useState<CardModules>([]);
 
   // Update selected guild id from context
   useEffect(() => {
-    // Get the id.
-    const id = app?.selectedGuildId ?? null;
-    // Check id against current id
-    if (id === guildId) return;
-    // Update id
-    setGuildId(id);
-  }, [app?.selectedGuildId, guildId, setGuildId]);
+    if (guildId === null) return;
+
+    // Get modules
+    setModules([
+      getLevelsConfig(guildId),
+      getBirthdaysConfig(guildId),
+      getDynamicVoiceConfig(guildId),
+      getVoiceTopicsConfig(guildId),
+    ]);
+  }, [guildId]);
 
   return (
     <Component.Container>
-      <Component.Modules modules={modules} />
+      <Component.Title>{title}</Component.Title>
+      {guildId !== null && <Component.Modules modules={modules} />}
     </Component.Container>
   );
 }

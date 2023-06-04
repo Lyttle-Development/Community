@@ -1,6 +1,6 @@
 import styles from './button.module.scss';
 import { MouseEvent as ReactMouseEvent } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export enum ButtonColors {
   purple = 'purple',
@@ -33,12 +33,19 @@ export function Button({
   children,
   noUpper = false,
 }: ButtonProps) {
+  const router = useRouter();
+
   // Click handling
   const handleClick = (e: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (onClick) {
       onClick(e);
     }
+  };
+
+  const navigate = async () => {
+    if (!href) return;
+    await router.push(href);
   };
 
   // Active class handling
@@ -48,15 +55,15 @@ export function Button({
 
   if (href && !disabled) {
     return (
-      <Link
+      <button
         className={`${styles.button} ${
           styles[`button--${color}`]
         } ${disabledClass} ${noUpperClass} ${className} ${customDisabledClass}`}
-        href={href}
+        onClick={navigate}
       >
         {text}
         {children}
-      </Link>
+      </button>
     );
   }
   return (

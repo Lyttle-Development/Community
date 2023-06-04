@@ -1,9 +1,11 @@
 import styles from './icon-button.module.scss';
 import { MouseEvent as ReactMouseEvent } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export enum IconButtonIcons {
   cog = 'cog',
+  hamburger = 'hamburger',
+  down = 'down',
 }
 
 export interface IconButtonProps {
@@ -45,6 +47,33 @@ function getIcon(icon: IconButtonIcons) {
           </g>
         </svg>
       );
+    case IconButtonIcons.hamburger:
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path d="M464 256H48a48 48 0 0 0 0 96h416a48 48 0 0 0 0-96zm16 128H32a16 16 0 0 0-16 16v16a64 64 0 0 0 64 64h352a64 64 0 0 0 64-64v-16a16 16 0 0 0-16-16zM58.64 224h394.72c34.57 0 54.62-43.9 34.82-75.88C448 83.2 359.55 32.1 256 32c-103.54.1-192 51.2-232.18 116.11C4 180.09 24.07 224 58.64 224zM384 112a16 16 0 1 1-16 16 16 16 0 0 1 16-16zM256 80a16 16 0 1 1-16 16 16 16 0 0 1 16-16zm-128 32a16 16 0 1 1-16 16 16 16 0 0 1 16-16z" />
+        </svg>
+      );
+    case IconButtonIcons.down:
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="19.407"
+          height="22.333"
+          viewBox="0 0 19.407 22.333"
+        >
+          <g transform="translate(17.578 1) rotate(90)">
+            <path
+              d="M1,7.875H19.333M12.458,1l6.875,6.875L12.458,14.75"
+              fill="none"
+              stroke="#fff"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="4"
+              fillRule="evenodd"
+            />
+          </g>
+        </svg>
+      );
     default:
       return <p>Not icon found!</p>;
   }
@@ -60,6 +89,7 @@ export function IconButton({
   classNameDisabled,
   children,
 }: IconButtonProps) {
+  const router = useRouter();
   const IconElement = getIcon(icon);
 
   // Click handling
@@ -70,22 +100,27 @@ export function IconButton({
     }
   };
 
+  const navigate = async () => {
+    if (!href) return;
+    await router.push(href);
+  };
+
   // Active class handling
   const disabledClass = disabled ? styles.disabled : '';
   const customDisabledClass = disabled ? classNameDisabled : '';
 
   if (href && !disabled) {
     return (
-      <Link
+      <button
         className={`${styles.button} ${disabledClass} ${className} ${customDisabledClass}`}
-        href={href}
+        onClick={navigate}
       >
         {IconElement}
         <span className={styles.text}>
           {text}
           {children}
         </span>
-      </Link>
+      </button>
     );
   }
   return (

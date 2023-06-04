@@ -18,8 +18,7 @@
     "setup": "npm run prisma:generate && npm run prisma:migrate && npm run build && npm run update-commands && npm run dev:start"
   },
   "engines": {
-    "node": "18.15.0",
-    "npm": "9.6.3"
+    "node": "18.15.0"
   },
   "author": "",
   "license": "ISC",

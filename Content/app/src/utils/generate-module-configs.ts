@@ -7,13 +7,13 @@ export function generateModuleConfigs() {
 
   // Build the file getter function.
   const crawlIn = (fileNames: string, dir: string): void => {
-    const dirFiles = fs.readdirSync(dir);
-    dirFiles.forEach((rawFilePath) => {
+    const dirFiles: string[] = fs.readdirSync(dir);
+    dirFiles.forEach((rawFilePath): void => {
       // Get the file path
-      const filePath = path.join(dir, rawFilePath);
+      const filePath: string = path.join(dir, rawFilePath) ?? '';
 
       // Get the name of the file.
-      let fileName = filePath
+      let fileName: string = filePath
         // Remove all path structure
         .split('/')
         .pop()
@@ -33,7 +33,7 @@ export function generateModuleConfigs() {
 
       if (!filePath.endsWith('config.ts')) return;
 
-      let globalVariable = fileName
+      let globalVariable: string = fileName
         .replaceAll('../../content/modules/', '')
         .split(/[/_-]/gm)
         .map((x) => x.charAt(0).toUpperCase() + x.slice(1))

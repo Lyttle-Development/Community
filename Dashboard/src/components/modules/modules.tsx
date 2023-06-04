@@ -2,7 +2,8 @@ import { Component } from '@lyttledev-dashboard/components';
 import { ModuleCardProps } from '@lyttledev-dashboard/components/module-card';
 import styles from './modules.module.scss';
 
-export type CardModules = ModuleCardProps[];
+export type CardModule = ModuleCardProps;
+export type CardModules = CardModule[];
 
 export interface ModulesProps {
   modules: CardModules;

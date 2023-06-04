@@ -1,0 +1,1 @@
+The channel to send ones a week a leaderboard in.
