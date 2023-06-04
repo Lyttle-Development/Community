@@ -2,7 +2,7 @@ import { isVoid } from './isVoid';
 import { ModuleMarkdownItem } from '../types/ModuleMarkdown';
 import markdown from '../../generated/ModuleMarkdown';
 
-function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
+export function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
   const res = path.split('.').reduce((acc, cur) => acc[cur], markdown);
   if (!res || typeof res !== 'object') {
     throw new Error(

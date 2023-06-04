@@ -3,11 +3,15 @@ import { REST, Routes } from 'discord.js';
 import { environment } from './environment';
 import { log } from './log';
 import { LogType } from '../types';
-import { commands } from '../modules';
+import { commands, contextMenuCommands } from '../modules';
 
 export async function deployCommands(): Promise<void> {
   // Only deploy if --deploy-commands is passed
   if (process.argv.includes('--deploy-commands')) {
+    const discordCommands = [...commands, ...contextMenuCommands].map(
+      (command) => command.commandData,
+    );
+
     // Get the rest client
     const rest = new REST({ version: '10' }).setToken(environment.BOT_TOKEN);
 
@@ -17,7 +21,7 @@ export async function deployCommands(): Promise<void> {
 
       // Deploy commands
       await rest.put(Routes.applicationCommands(environment.CLIENT_ID), {
-        body: commands,
+        body: discordCommands,
       });
 
       // Log state

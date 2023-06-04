@@ -23,6 +23,7 @@
     "prettier"
   ],
   "rules": {
+    "ban-ts-comment": "off",
     "prettier/prettier": [
       "error",
       {

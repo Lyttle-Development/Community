@@ -279,9 +279,8 @@ model Member {
   member__module__level MemberModuleLevel?
 
   // Values
-  birthday_date DateTime?
-  birthday      Int?
-  nickname      String?
+  birthday Int?
+  nickname String?
 
   // Date information
   created_at DateTime @default(now())

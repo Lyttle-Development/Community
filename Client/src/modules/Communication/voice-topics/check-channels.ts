@@ -6,6 +6,7 @@ import {
   GuildModuleVoiceGrowthWithChilds,
 } from '../../../database/handlers';
 import { queue, QueueBacklogType } from '../../../utils';
+import { updateTotalVoiceTopicsDeletedSinceLastRestart } from './create-voice-topic-child';
 
 /**
  * Check if a voice topic channel needs to be deleted.
@@ -105,6 +106,7 @@ async function deleteChild(
     await channel.delete();
     // Delete channel from database
     await delGuildModuleVoiceGrowthChild(guildId, channelId);
+    updateTotalVoiceTopicsDeletedSinceLastRestart();
   };
 
   // Queue action

@@ -17,6 +17,7 @@ import { queue, QueueBacklogType, sleep } from '../../../utils';
 import { NUMBER_TYPES, Numbers } from './constants';
 import { nicknamesBeingSet } from './check-nickname';
 
+export let totalNicknamesSetSinceLastRestart = 0;
 // Little fallback cache to prevent spamming the database
 
 /**
@@ -191,6 +192,7 @@ async function setNickname(
   const action = async () => {
     // Set nickname
     await member.setNickname(newNickname);
+    totalNicknamesSetSinceLastRestart++;
 
     // Wait 5 seconds
     await sleep(5 * 1000);

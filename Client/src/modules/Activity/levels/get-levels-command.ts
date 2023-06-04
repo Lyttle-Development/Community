@@ -1,11 +1,12 @@
 import {
   CommandInteraction,
+  ContextMenuCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
   User,
 } from 'discord.js';
-import { Command, GuildMember, LogType } from '../../../types';
-import { formatNumber, log, queue, QueueBacklogType } from '../../../utils';
+import { Command, GuildMember } from '../../../types';
+import { formatNumber, queue, QueueBacklogType } from '../../../utils';
 import {
   getOrCreateMemberModuleLevel,
   getOrCreateMemberModuleLevelDay,
@@ -13,21 +14,38 @@ import {
 import { getMessage, getMessageVariables } from '../../../utils/get-message';
 import { MemberModuleLevel, MemberModuleLevelDay } from '@prisma/client';
 import {
+  ModuleConfigActivityLevelsCommandsGetLevelsFailed,
   ModuleConfigActivityLevelsCommandsGetLevelsOther,
   ModuleConfigActivityLevelsCommandsGetLevelsOthers,
+  ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead,
+  ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind,
   ModuleConfigActivityLevelsCommandsGetLevelsYourself,
+  ModuleConfigActivityLevelsUnitLevel,
+  ModuleConfigActivityLevelsUnitLevels,
+  ModuleConfigActivityLevelsUnitPoint,
+  ModuleConfigActivityLevelsUnitPoints,
 } from '../../../../../Content';
 import {
   getLevelDifficulty,
   getLevelsFromPoints,
   getPointsFromLevels,
 } from './utils';
+import client from '../../../main';
+
+export let xpCommandsRanAfterLastRestart = 0;
+export let xpFromContextMenuRanAfterLastRestart = 0;
 
 /**
- * The data for the get levels command
+ * The command name
+ * !! Not typed, so we can detect the command name !!
  */
-export const getLevelsCommandData: Command = new SlashCommandBuilder()
-  .setName('xp')
+export const commandName = 'xp' as const;
+
+/**
+ * The command data for the command
+ */
+export const commandData: Command = new SlashCommandBuilder()
+  .setName(commandName)
   .setDescription('Get yours and others level information')
   .addUserOption((option) =>
     option
@@ -43,8 +61,17 @@ export const getLevelsCommandData: Command = new SlashCommandBuilder()
   );
 
 /**
- * The get level command logic.
- * Run when a user uses the get level command.
+ * The command data with the command name.
+ * !! Not typed, so we can detect the command name !!
+ */
+export const getLevelsCommandData = {
+  commandName,
+  commandData,
+} as const;
+
+/**
+ * The command function
+ * Run when the command is used
  * @param guildMember
  * @param interaction
  */
@@ -52,6 +79,7 @@ export async function getLevelsCommand(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ) {
+  xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
   const getUser1: User = interaction.options.getUser('member', false);
@@ -86,12 +114,31 @@ export async function getLevelsCommand(
  * @param guildMember
  * @param interaction
  */
-function getLevelsCommandFailed(
+async function getLevelsCommandFailed(
   guildMember: GuildMember,
   interaction: CommandInteraction,
 ) {
-  log(LogType.ERROR, 'getLevelsCommandFailed');
-  return;
+  // Get the guild id from the guild member
+  const { guildId } = guildMember;
+
+  // Get the message default variables
+  const defaultVariables = await getMessageVariables(guildMember);
+
+  // Get the error message
+  const content =
+    await getMessage<ModuleConfigActivityLevelsCommandsGetLevelsFailed.Variables>(
+      guildId,
+      'Activity.levels.commands.get-levels.failed',
+      defaultVariables,
+    );
+
+  // Create the action
+  const action = async () => {
+    // Edit the reply
+    await interaction.editReply({ content });
+  };
+  // Queue the action
+  queue(QueueBacklogType.URGENT, action);
 }
 
 /**
@@ -117,38 +164,32 @@ async function getMessageAndMemberDb<
   const defaultVariables = await getMessageVariables(guildMember);
 
   // Get the level from the points
-  const levels = await getLevelsFromPoints(
-    guildId,
-    db_MemberModuleLevel.points,
-  );
+  const levels =
+    (await getLevelsFromPoints(guildId, db_MemberModuleLevel.points)) ?? 0;
   // Get the next level
   const nextLevel = levels + 1;
   // Get the level unit key
   const levelUnitKey = levels > 1 ? 'levels' : 'level';
   // Get the level unit
-  const levelsUnit = await getMessage(
-    guildId,
-    `Activity.levels.unit.${levelUnitKey}`,
-    defaultVariables,
-    false,
-  );
+  const levelsUnit = await getMessage<
+    | ModuleConfigActivityLevelsUnitLevel.Variables
+    | ModuleConfigActivityLevelsUnitLevels.Variables
+  >(guildId, `Activity.levels.unit.${levelUnitKey}`, defaultVariables, false);
 
   // Get the points
-  const points = db_MemberModuleLevel.points;
+  const points = db_MemberModuleLevel.points ?? 0;
   // Get the points unit key
   const pointUnitKey = points > 1 ? 'points' : 'points';
   // Get the points needed for the next level
   const neededPointsNextLevel = await getPointsFromLevels(guildId, nextLevel);
   // Get the points unit
-  const pointsUnit = await getMessage(
-    guildId,
-    `Activity.levels.unit.${pointUnitKey}`,
-    defaultVariables,
-    false,
-  );
+  const pointsUnit = await getMessage<
+    | ModuleConfigActivityLevelsUnitPoint.Variables
+    | ModuleConfigActivityLevelsUnitPoints.Variables
+  >(guildId, `Activity.levels.unit.${pointUnitKey}`, defaultVariables, false);
 
   // Get the times harder
-  const timesHarder = await getLevelDifficulty(guildId, levels);
+  const timesHarder = (await getLevelDifficulty(guildId, levels)) ?? 0;
 
   // Get the member module level
   const db_MemberModuleLevelDay: MemberModuleLevelDay =
@@ -157,10 +198,10 @@ async function getMessageAndMemberDb<
   // Get the recent levels
   const recentLevels = await getLevelsFromPoints(
     guildId,
-    db_MemberModuleLevelDay.points,
+    db_MemberModuleLevelDay.points ?? 0,
   );
   // Get the recent points
-  const recentPoints = db_MemberModuleLevelDay.points;
+  const recentPoints = db_MemberModuleLevelDay.points ?? 0;
 
   // Build the message variables
   const messageVars: T = {
@@ -265,19 +306,40 @@ async function getOtherLevel(
 async function getUsersState<T>(
   guildId: string,
   db_User1: MemberModuleLevel,
-  messageVarsUser1: T,
+  messageVarsUser1:
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead.Variables
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables,
   db_User2: MemberModuleLevel,
-  messageVarsUser2: T,
+  messageVarsUser2:
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead.Variables
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables,
 ): Promise<[string, string]> {
+  // Get the points difference
+  let pointsDiff = db_User1.points - db_User2.points ?? 0;
+  // If the points difference is negative
+  pointsDiff = pointsDiff < 0 ? pointsDiff * -1 : pointsDiff;
+  // Get the levels difference
+  const levelsDiff = await getLevelsFromPoints(guildId, pointsDiff);
+
+  // copy the message variables
+  const msgVars1 = { ...messageVarsUser1 };
+  const msgVars2 = { ...messageVarsUser2 };
+  // Update points in message variables
+  msgVars1.points = formatNumber(pointsDiff);
+  msgVars2.points = formatNumber(pointsDiff);
+  // Update levels in message variables
+  msgVars1.levels = formatNumber(levelsDiff);
+  msgVars2.levels = formatNumber(levelsDiff);
+
   // Get the user states
   const user1Ahead = db_User1.points > db_User2.points;
   // Build the user state string
-  const user1State = await getUserState(guildId, user1Ahead, messageVarsUser1);
+  const user1State = await getUserState(guildId, user1Ahead, msgVars1);
 
   // Get the user states
   const user2Ahead = db_User2.points > db_User1.points;
   // Build the user state string
-  const user2State = await getUserState(guildId, user2Ahead, messageVarsUser2);
+  const user2State = await getUserState(guildId, user2Ahead, msgVars2);
 
   // Return the user states
   return [user1State, user2State];
@@ -289,19 +351,25 @@ async function getUsersState<T>(
  * @param ahead
  * @param messageVars
  */
-async function getUserState<T>(
+async function getUserState(
   guildId: string,
   ahead: boolean,
-  messageVars: T,
+  messageVars:
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead.Variables
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables,
 ): Promise<string> {
   // Get the user state key
   const userStateKey = ahead ? 'ahead' : 'behind';
 
   // Return the user state string
-  return getMessage<T>(
+  return getMessage<
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead.Variables
+    | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables
+  >(
     guildId,
     `Activity.levels.commands.get-levels.others-${userStateKey}`,
     messageVars,
+    false,
   );
 }
 
@@ -393,4 +461,63 @@ async function getOthersLevel(
   };
   // Queue the action
   queue(QueueBacklogType.URGENT, action);
+}
+
+export const AppCommandName = 'Get points' as const;
+
+export const getMemberLevelsAppData = {
+  commandName: AppCommandName,
+  commandData: {
+    name: AppCommandName,
+    type: 2,
+    description: null,
+  },
+} as const;
+
+export async function getMemberLevelsApp(
+  guildMember: GuildMember,
+  interaction: ContextMenuCommandInteraction,
+) {
+  xpFromContextMenuRanAfterLastRestart++;
+  await interaction.deferReply({ ephemeral: true });
+  let userId = interaction.targetId;
+  userId = userId ?? guildMember.userId;
+
+  if (userId === guildMember.userId) {
+    return getOwnLevel(guildMember, interaction);
+  }
+
+  const user: User = client.users.cache.get(userId);
+  return getOtherLevel(guildMember, interaction, user);
+}
+
+export const AppCommandOthersName = 'Compare points' as const;
+
+export const getOthersLevelsAppData = {
+  commandName: AppCommandOthersName,
+  commandData: {
+    name: AppCommandOthersName,
+    type: 2,
+    description: null,
+  },
+} as const;
+
+export async function getOthersLevelsApp(
+  guildMember: GuildMember,
+  interaction: ContextMenuCommandInteraction,
+) {
+  xpFromContextMenuRanAfterLastRestart++;
+  await interaction.deferReply({ ephemeral: true });
+  let userId = interaction.targetId;
+  userId = userId ?? guildMember.userId;
+
+  const yourselfId = guildMember.userId;
+
+  if (userId === yourselfId) {
+    return getOwnLevel(guildMember, interaction);
+  }
+
+  const otherUser: User = client.users.cache.get(userId);
+  const yourselfUser: User = client.users.cache.get(yourselfId);
+  return getOthersLevel(guildMember, interaction, otherUser, yourselfUser);
 }
