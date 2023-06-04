@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { MemberModuleLevelService } from './member-module-level.service';
 import { MemberModuleLevel } from './entities/member-module-level.entity';
 import { CreateMemberModuleLevelInput } from './dto/create-member-module-level.input';
@@ -21,12 +28,12 @@ export class MemberModuleLevelResolver {
     return this.memberModuleLevelService.create(createMemberModuleLevelInput);
   }
 
-  @Query(() => [MemberModuleLevel], { name: 'memberModuleLevel' })
+  @Query(() => [MemberModuleLevel])
   findAll(): Promise<MemberModuleLevel[]> {
     return this.memberModuleLevelService.findAll();
   }
 
-  @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
+  @Query(() => MemberModuleLevel)
   findOne(
     @Args('id', { type: () => Int }) guildId: number,
     userId: number,
@@ -34,7 +41,7 @@ export class MemberModuleLevelResolver {
     return this.memberModuleLevelService.findOne(guildId, userId);
   }
 
-  @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
+  @ResolveField(() => MemberModuleLevel)
   memberModuleLevelDay(
     @Args('id', { type: () => Int }) guildId: number,
     userId: number,
@@ -45,12 +52,12 @@ export class MemberModuleLevelResolver {
     );
   }
 
-  @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
+  @ResolveField(() => MemberModuleLevel)
   guild(@Args('id', { type: () => Int }) guildId: number): Promise<Guild> {
     return this.memberModuleLevelService.getGuild(guildId);
   }
 
-  @Query(() => MemberModuleLevel, { name: 'memberModuleLevel' })
+  @ResolveField(() => MemberModuleLevel)
   member(
     @Args('id', { type: () => Int }) guildId: number,
     userId: number,

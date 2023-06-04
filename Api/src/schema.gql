@@ -40,12 +40,11 @@ type GuildMessage {
   message_id: Int!
   created_at: Timestamp!
   updated_at: Timestamp!
-  getGuild: Guild!
 }
 
 type GuildTranslation {
   guild_id: Int!
-  guild: Guild!
+  guild(id: Int!): Guild!
   key: String!
   value: String!
   created_at: Timestamp!
@@ -64,7 +63,7 @@ type Profile {
 type User {
   user_id: Int!
   members: [Member!]!
-  profile: Profile!
+  profile(id: Int!): Profile!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -72,8 +71,8 @@ type User {
 type MemberModuleLevelDay {
   guild_id: Int!
   user_id: Int!
-  guild: Guild!
-  member: Member!
+  guild(id: Int!): Guild!
+  member(id: Int!): Member!
   points_mon: Int!
   points_tue: Int!
   points_wed: Int!
@@ -89,9 +88,9 @@ type MemberModuleLevelDay {
 type MemberModuleLevel {
   guild_id: Int!
   user_id: Int!
-  guild: Guild!
-  member: Member!
-  memberModuleLevelDay: MemberModuleLevelDay!
+  guild(id: Int!): Guild!
+  member(id: Int!): Member!
+  memberModuleLevelDay(id: Int!): MemberModuleLevelDay!
   spam_check: Int!
   cooldown_count: Int!
   cooldown_time: Timestamp!
@@ -104,20 +103,21 @@ type MemberModuleLevel {
 type Member {
   guild_id: Int!
   user_id: Int!
-  guild: Guild!
+  guild(id: Int!): Guild!
   user: User!
-  memberModuleLevel: MemberModuleLevel!
+  memberModuleLevel(guildId: Int!, userId: Int!): MemberModuleLevel!
   birthday_date: Timestamp
   birthday: Int
   nickname: String
   created_at: Timestamp!
   updated_at: Timestamp!
+  getUser(id: Int!): [Member!]!
 }
 
 type GuildModuleVoiceGrowth {
   guild_id: Int!
   channel_id: Int!
-  guild: Guild!
+  guild(id: Int!): Guild!
   enabled: Boolean!
   preset: String
   prefix: String
@@ -149,18 +149,11 @@ type Guild {
 
 type Query {
   guilds: [Guild!]!
-  guild(id: Int!): GuildTranslation!
-  guildModuleLevelAll: [GuildModuleLevel!]!
-  guildModuleLevel(id: Int!): GuildModuleLevel!
-  guildModuleQotd(id: Int!): GuildModuleQotd!
-  guildMessage(id: Int!): GuildMessage!
-  guildTranslation(id: Int!, key: String!): GuildTranslation!
-  member(guildId: Int!, userId: Int!): [Member!]!
-  guildModuleVoiceGrowth(id: Int!): GuildModuleVoiceGrowth!
+  guild(id: Int!): Guild!
+  findAll: [MemberModuleLevelDay!]!
+  findOne(guildId: Int!): MemberModuleLevelDay!
+  findAllByGuild(guildId: Int!): [Member!]!
   user(id: Int!): Profile!
-  profile(id: Int!): Profile!
-  memberModuleLevel(id: Int!): MemberModuleLevel!
-  memberModuleLevelDay(id: Int!): MemberModuleLevelDay!
 }
 
 type Mutation {
@@ -204,12 +197,11 @@ input CreateGuildInput {
 }
 
 input UpdateGuildInput {
-  enabled: Boolean!
+  enabled: Boolean
   id: Int!
 }
 
 input CreateGuildModuleLevelInput {
-  id: Int!
   enabled: Boolean!
   leveling_multiplier: Int!
   announcement_channel_id: Int
@@ -220,19 +212,17 @@ input CreateGuildModuleLevelInput {
 }
 
 input UpdateGuildModuleLevelInput {
-  id: Int!
-  enabled: Boolean!
-  leveling_multiplier: Int!
+  enabled: Boolean
+  leveling_multiplier: Int
   announcement_channel_id: Int
   leaderboard_channel_id: Int
   leaderboard_last_week: Int
-  nicknames: Boolean!
-  last_leaderboard: Timestamp!
+  nicknames: Boolean
+  last_leaderboard: Timestamp
+  id: Int!
 }
 
 input CreateGuildModuleQotdInput {
-  """Example field (placeholder)"""
-  id: Int!
   enabled: Boolean!
   channel_id: Int!
   message_id: Int!
@@ -240,11 +230,11 @@ input CreateGuildModuleQotdInput {
 }
 
 input UpdateGuildModuleQotdInput {
+  enabled: Boolean
+  channel_id: Int
+  message_id: Int
+  nicknames: Boolean
   id: Int!
-  enabled: Boolean!
-  channel_id: Int!
-  message_id: Int!
-  nicknames: Boolean!
 }
 
 input CreateGuildMessageInput {
@@ -255,21 +245,20 @@ input CreateGuildMessageInput {
 
 input UpdateGuildMessageInput {
   guild_id: Int
-  message_id: Int!
-  channel_id: Int!
+  message_id: Int
+  channel_id: Int
   id: Int!
 }
 
 input CreateGuildTranslationInput {
-  id: Int!
   key: String!
   value: String!
 }
 
 input UpdateGuildTranslationInput {
+  key: String
+  value: String
   id: Int!
-  key: String!
-  value: String!
 }
 
 input CreateMemberInput {
@@ -289,7 +278,6 @@ input UpdateMemberInput {
 }
 
 input CreateGuildModuleVoiceGrowthInput {
-  id: Int!
   channel_id: Int!
   enabled: Boolean! = false
   preset: String
@@ -298,12 +286,12 @@ input CreateGuildModuleVoiceGrowthInput {
 }
 
 input UpdateGuildModuleVoiceGrowthInput {
-  id: Int!
-  channel_id: Int!
-  enabled: Boolean! = false
+  channel_id: Int
+  enabled: Boolean = false
   preset: String
   prefix: String
-  manual: Boolean! = false
+  manual: Boolean = false
+  id: Int!
 }
 
 input CreateUserInput {
@@ -323,8 +311,8 @@ input CreateProfileInput {
 
 input UpdateProfileInput {
   user_id: Int
-  tokens: Int!
-  tokens_used: Int!
+  tokens: Int
+  tokens_used: Int
   id: Int!
 }
 
@@ -333,19 +321,19 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685553572959
-  call_start: Timestamp! = 1685553572959
+  cooldown_time: Timestamp! = 1685870006634
+  call_start: Timestamp! = 1685870006634
   points: Int! = 0
 }
 
 input UpdateMemberModuleLevelInput {
   guild_id: Int!
   user_id: Int!
-  spam_check: Int! = 0
-  cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685553572964
-  call_start: Timestamp! = 1685553572964
-  points: Int! = 0
+  spam_check: Int = 0
+  cooldown_count: Int = 0
+  cooldown_time: Timestamp = 1685870006634
+  call_start: Timestamp = 1685870006634
+  points: Int = 0
 }
 
 input CreateMemberModuleLevelDayInput {
@@ -363,11 +351,11 @@ input CreateMemberModuleLevelDayInput {
 input UpdateMemberModuleLevelDayInput {
   guild_id: Int!
   user_id: Int!
-  points_mon: Int! = 0
-  points_tue: Int! = 0
-  points_wed: Int! = 0
-  points_thu: Int! = 0
-  points_fri: Int! = 0
-  points_sat: Int! = 0
-  points_sun: Int! = 0
+  points_mon: Int = 0
+  points_tue: Int = 0
+  points_wed: Int = 0
+  points_thu: Int = 0
+  points_fri: Int = 0
+  points_sat: Int = 0
+  points_sun: Int = 0
 }

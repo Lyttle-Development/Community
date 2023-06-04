@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { MemberModuleLevelDayService } from './member-module-level-day.service';
 import { MemberModuleLevelDay } from './entities/member-module-level-day.entity';
 import { CreateMemberModuleLevelDayInput } from './dto/create-member-module-level-day.input';
@@ -22,12 +29,12 @@ export class MemberModuleLevelDayResolver {
     );
   }
 
-  @Query(() => [MemberModuleLevelDay], { name: 'memberModuleLevelDay' })
+  @Query(() => [MemberModuleLevelDay])
   findAll(): Promise<MemberModuleLevelDay[]> {
     return this.memberModuleLevelDayService.findAll();
   }
 
-  @Query(() => MemberModuleLevelDay, { name: 'memberModuleLevelDay' })
+  @Query(() => MemberModuleLevelDay)
   findOne(
     @Args('guildId', { type: () => Int }) guildId: number,
     userId: number,
@@ -35,12 +42,12 @@ export class MemberModuleLevelDayResolver {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }
 
-  @Query(() => MemberModuleLevelDay, { name: 'memberModuleLevelDay' })
+  @ResolveField(() => MemberModuleLevelDay)
   guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
     return this.memberModuleLevelDayService.getGuild(id);
   }
 
-  @Query(() => MemberModuleLevelDay, { name: 'memberModuleLevelDay' })
+  @ResolveField(() => MemberModuleLevelDay)
   member(
     @Args('id', { type: () => Int }) guildId: number,
     memberId: number,

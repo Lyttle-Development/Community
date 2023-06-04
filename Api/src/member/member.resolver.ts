@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { MemberService } from './member.service';
 import { Member } from './entities/member.entity';
 import { CreateMemberInput } from './dto/create-member.input';
@@ -18,12 +25,12 @@ export class MemberResolver {
     return this.memberService.create(createMemberInput);
   }
 
-  @Query(() => [Member], { name: 'member' })
+  @Query(() => [Member])
   findAll(): Promise<Member[]> {
     return this.memberService.findAll();
   }
 
-  @Query(() => Member, { name: 'member' })
+  @Query(() => Member)
   findOne(
     @Args('userId', { type: () => Int }) userId: number,
     @Args('guildId', { type: () => Int }) guildId: number,
@@ -31,25 +38,25 @@ export class MemberResolver {
     return this.memberService.findOne(userId, guildId);
   }
 
-  @Query(() => [Member], { name: 'member' })
+  @Query(() => [Member])
   findAllByGuild(
     @Args('guildId', { type: () => Int }) guildId: number,
   ): Promise<Member[]> {
     return this.memberService.findAllByGuild(guildId);
   }
 
-  @Query(() => [Member], { name: 'member' })
-  getGuild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
+  @ResolveField(() => [Member])
+  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
     return this.memberService.getGuild(id);
   }
 
-  @Query(() => [Member], { name: 'member' })
+  @ResolveField(() => [Member])
   getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return this.memberService.getUser(id);
   }
 
-  @Query(() => [Member], { name: 'member' })
-  getMemberModuleLevel(
+  @ResolveField(() => [Member])
+  memberModuleLevel(
     @Args('guildId', { type: () => Int }) guildId: number,
     @Args('userId', { type: () => Int }) userId: number,
   ): Promise<MemberModuleLevel> {

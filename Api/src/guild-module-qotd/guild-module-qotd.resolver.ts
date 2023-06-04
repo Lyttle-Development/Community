@@ -18,12 +18,12 @@ export class GuildModuleQotdResolver {
     return this.guildModuleQotdService.create(createGuildModuleQotdInput);
   }
 
-  @Query(() => [GuildModuleQotd], { name: 'guildModuleQotd' })
+  @Query(() => [GuildModuleQotd])
   findAll(): Promise<GuildModuleQotd[]> {
     return this.guildModuleQotdService.findAll();
   }
 
-  @Query(() => GuildModuleQotd, { name: 'guildModuleQotd' })
+  @Query(() => GuildModuleQotd)
   findOne(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildModuleQotd> {

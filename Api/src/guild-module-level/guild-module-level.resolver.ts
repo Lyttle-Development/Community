@@ -18,12 +18,12 @@ export class GuildModuleLevelResolver {
     return this.guildModuleLevelService.create(createGuildModuleLevelInput);
   }
 
-  @Query(() => [GuildModuleLevel], { name: 'guildModuleLevelAll' })
+  @Query(() => [GuildModuleLevel])
   findAll(): Promise<GuildModuleLevel[]> {
     return this.guildModuleLevelService.findAll();
   }
 
-  @Query(() => GuildModuleLevel, { name: 'guildModuleLevel' })
+  @Query(() => GuildModuleLevel)
   findOne(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildModuleLevel> {

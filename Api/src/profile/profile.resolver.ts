@@ -16,12 +16,12 @@ export class ProfileResolver {
     return this.profileService.create(createProfileInput);
   }
 
-  @Query(() => [Profile], { name: 'profile' })
+  @Query(() => [Profile])
   findAll(): Promise<Profile[]> {
     return this.profileService.findAll();
   }
 
-  @Query(() => Profile, { name: 'profile' })
+  @Query(() => Profile)
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profileService.findOne(id);
   }

@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GuildModuleVoiceGrowthService } from './guild-module-voice-growth.service';
 import { GuildModuleVoiceGrowth } from './entities/guild-module-voice-growth.entity';
 import { CreateGuildModuleVoiceGrowthInput } from './dto/create-guild-module-voice-growth.input';
@@ -21,19 +28,19 @@ export class GuildModuleVoiceGrowthResolver {
     );
   }
 
-  @Query(() => [GuildModuleVoiceGrowth], { name: 'guildModuleVoiceGrowth' })
+  @Query(() => [GuildModuleVoiceGrowth])
   findAll(): Promise<GuildModuleVoiceGrowth[]> {
     return this.guildModuleVoiceGrowthService.findAll();
   }
 
-  @Query(() => GuildModuleVoiceGrowth, { name: 'guildModuleVoiceGrowth' })
+  @Query(() => GuildModuleVoiceGrowth)
   findOne(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildModuleVoiceGrowth> | null {
     return this.guildModuleVoiceGrowthService.findOne(id);
   }
 
-  @Query(() => GuildModuleVoiceGrowth, { name: 'guildModuleVoiceGrowth' })
+  @ResolveField(() => GuildModuleVoiceGrowth)
   guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
     return this.guildModuleVoiceGrowthService.getGuild(id);
   }

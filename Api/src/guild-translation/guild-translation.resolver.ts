@@ -1,4 +1,11 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { GuildTranslationService } from './guild-translation.service';
 import { GuildTranslation } from './entities/guild-translation.entity';
 import { CreateGuildTranslationInput } from './dto/create-guild-translation.input';
@@ -19,19 +26,19 @@ export class GuildTranslationResolver {
     return this.guildTranslationService.create(createGuildTranslationInput);
   }
 
-  @Query(() => [GuildTranslation], { name: 'guildTranslation' })
+  @Query(() => [GuildTranslation])
   findAll(): Promise<GuildTranslation[]> {
     return this.guildTranslationService.findAll();
   }
 
-  @Query(() => [GuildTranslation], { name: 'guildTranslation' })
+  @Query(() => [GuildTranslation])
   findAllByGuild(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildTranslation[]> {
     return this.guildTranslationService.findAllByGuild(id);
   }
 
-  @Query(() => GuildTranslation, { name: 'guildTranslation' })
+  @Query(() => GuildTranslation)
   findOne(
     @Args('id', { type: () => Int }) id: number,
     @Args('key', { type: () => String }) key: string,
@@ -39,7 +46,7 @@ export class GuildTranslationResolver {
     return this.guildTranslationService.findOne(id, key);
   }
 
-  @Query(() => GuildTranslation)
+  @ResolveField(() => GuildTranslation)
   guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
     return this.guildTranslationService.getGuild(id);
   }
