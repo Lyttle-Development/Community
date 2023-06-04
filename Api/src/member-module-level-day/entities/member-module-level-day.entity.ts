@@ -18,7 +18,7 @@ export class MemberModuleLevelDay {
   guild_id: number;
 
   @PrimaryColumn()
-  @Field(() => Int)
+  @Field(() => Float)
   user_id: number;
 
   // Relations

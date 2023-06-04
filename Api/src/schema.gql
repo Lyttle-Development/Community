@@ -70,7 +70,7 @@ type User {
 
 type MemberModuleLevelDay {
   guild_id: Float!
-  user_id: Int!
+  user_id: Float!
   guild: Guild!
   member: Member!
   points_mon: Int!
@@ -127,12 +127,12 @@ type GuildModuleVoiceGrowth {
 
 type Guild {
   guild_id: Float!
-  members: [Member!]!
-  guildTranslations: [GuildTranslation!]!
-  guildModuleLevel: GuildModuleLevel!
-  guildModuleQotd: GuildModuleQotd!
-  guildModuleVoiceGrowth: GuildModuleVoiceGrowth!
-  guildMessages: [GuildMessage!]!
+  members: [Member!]
+  guildTranslations: [GuildTranslation!]
+  guildModuleLevel: GuildModuleLevel
+  guildModuleQotd: GuildModuleQotd
+  guildModuleVoiceGrowth: GuildModuleVoiceGrowth
+  guildMessages: [GuildMessage!]
   enabled: Boolean!
   created_at: Timestamp!
   updated_at: Timestamp!
@@ -319,8 +319,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685884056657
-  call_start: Timestamp! = 1685884056657
+  cooldown_time: Timestamp! = 1685884690407
+  call_start: Timestamp! = 1685884690407
   points: Int! = 0
 }
 
@@ -329,8 +329,8 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int = 0
   cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1685884056657
-  call_start: Timestamp = 1685884056657
+  cooldown_time: Timestamp = 1685884690407
+  call_start: Timestamp = 1685884690407
   points: Int = 0
 }
 
