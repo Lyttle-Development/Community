@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -34,8 +35,8 @@ export class UserResolver {
   }
 
   @ResolveField(() => User)
-  profile(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
-    return this.userService.getProfile(id);
+  profile(@Parent() user: User): Promise<Profile> {
+    return this.userService.getProfile(user.user_id);
   }
 
   // currently not implemented

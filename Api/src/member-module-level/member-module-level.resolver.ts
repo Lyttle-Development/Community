@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -41,28 +42,27 @@ export class MemberModuleLevelResolver {
     return this.memberModuleLevelService.findOne(guildId, userId);
   }
 
-  @ResolveField(() => MemberModuleLevel)
+  @ResolveField(() => MemberModuleLevelDay)
   memberModuleLevelDay(
-    @Args('id', { type: () => Int }) guildId: number,
-    userId: number,
+    @Parent() memberModuleLevel: MemberModuleLevel,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelService.getMemberModuleLevelDay(
-      guildId,
-      userId,
+      memberModuleLevel.guild_id,
+      memberModuleLevel.user_id,
     );
   }
 
-  @ResolveField(() => MemberModuleLevel)
-  guild(@Args('id', { type: () => Int }) guildId: number): Promise<Guild> {
-    return this.memberModuleLevelService.getGuild(guildId);
+  @ResolveField(() => Guild)
+  guild(@Parent() memberModuleLevel: MemberModuleLevel): Promise<Guild> {
+    return this.memberModuleLevelService.getGuild(memberModuleLevel.guild_id);
   }
 
-  @ResolveField(() => MemberModuleLevel)
-  member(
-    @Args('id', { type: () => Int }) guildId: number,
-    userId: number,
-  ): Promise<Member> {
-    return this.memberModuleLevelService.getMember(guildId, userId);
+  @ResolveField(() => Member)
+  member(@Parent() memberModuleLevel: MemberModuleLevel): Promise<Member> {
+    return this.memberModuleLevelService.getMember(
+      memberModuleLevel.guild_id,
+      memberModuleLevel.user_id,
+    );
   }
 
   @Mutation(() => MemberModuleLevel)

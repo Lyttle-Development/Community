@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -40,9 +41,13 @@ export class GuildModuleVoiceGrowthResolver {
     return this.guildModuleVoiceGrowthService.findOne(id);
   }
 
-  @ResolveField(() => GuildModuleVoiceGrowth)
-  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
-    return this.guildModuleVoiceGrowthService.getGuild(id);
+  @ResolveField(() => Guild)
+  guild(
+    @Parent() guildModuleVoiceGrowth: GuildModuleVoiceGrowth,
+  ): Promise<Guild> {
+    return this.guildModuleVoiceGrowthService.getGuild(
+      guildModuleVoiceGrowth.guild_id,
+    );
   }
 
   @Mutation(() => GuildModuleVoiceGrowth)

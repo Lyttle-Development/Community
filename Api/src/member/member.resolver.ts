@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -45,22 +46,22 @@ export class MemberResolver {
     return this.memberService.findAllByGuild(guildId);
   }
 
-  @ResolveField(() => [Member])
-  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
-    return this.memberService.getGuild(id);
+  @ResolveField(() => Guild)
+  guild(@Parent() member: Member): Promise<Guild> {
+    return this.memberService.getGuild(member.guild_id);
   }
 
-  @ResolveField(() => [Member])
-  getUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
-    return this.memberService.getUser(id);
+  @ResolveField(() => User)
+  getUser(@Parent() member: Member): Promise<User> {
+    return this.memberService.getUser(member.user_id);
   }
 
-  @ResolveField(() => [Member])
-  memberModuleLevel(
-    @Args('guildId', { type: () => Int }) guildId: number,
-    @Args('userId', { type: () => Int }) userId: number,
-  ): Promise<MemberModuleLevel> {
-    return this.memberService.getMemberModuleLevel(guildId, userId);
+  @ResolveField(() => MemberModuleLevel)
+  memberModuleLevel(@Parent() member: Member): Promise<MemberModuleLevel> {
+    return this.memberService.getMemberModuleLevel(
+      member.guild_id,
+      member.user_id,
+    );
   }
 
   @Mutation(() => Member)

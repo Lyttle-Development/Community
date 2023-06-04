@@ -44,7 +44,7 @@ type GuildMessage {
 
 type GuildTranslation {
   guild_id: Float!
-  guild(id: Int!): Guild!
+  guild: Guild!
   key: String!
   value: String!
   created_at: Timestamp!
@@ -63,7 +63,7 @@ type Profile {
 type User {
   user_id: Float!
   members: [Member!]!
-  profile(id: Int!): Profile!
+  profile: Profile!
   created_at: Timestamp!
   updated_at: Timestamp!
 }
@@ -71,8 +71,8 @@ type User {
 type MemberModuleLevelDay {
   guild_id: Float!
   user_id: Int!
-  guild(id: Int!): Guild!
-  member(id: Int!): Member!
+  guild: Guild!
+  member: Member!
   points_mon: Int!
   points_tue: Int!
   points_wed: Int!
@@ -88,9 +88,9 @@ type MemberModuleLevelDay {
 type MemberModuleLevel {
   guild_id: Float!
   user_id: Float!
-  guild(id: Int!): Guild!
-  member(id: Int!): Member!
-  memberModuleLevelDay(id: Int!): MemberModuleLevelDay!
+  guild: Guild!
+  member: Member!
+  memberModuleLevelDay: MemberModuleLevelDay!
   spam_check: Int!
   cooldown_count: Int!
   cooldown_time: Timestamp!
@@ -103,20 +103,20 @@ type MemberModuleLevel {
 type Member {
   guild_id: Float!
   user_id: Float!
-  guild(id: Int!): Guild!
+  guild: Guild!
   user: User!
-  memberModuleLevel(guildId: Int!, userId: Int!): MemberModuleLevel!
+  memberModuleLevel: MemberModuleLevel!
   birthday: Int
   nickname: String
   created_at: Timestamp!
   updated_at: Timestamp!
-  getUser(id: Int!): [Member!]!
+  getUser: User!
 }
 
 type GuildModuleVoiceGrowth {
   guild_id: Float!
   channel_id: Float!
-  guild(id: Int!): Guild!
+  guild: Guild!
   enabled: Boolean!
   preset: String
   prefix: String
@@ -152,7 +152,6 @@ type Query {
   findAll: [MemberModuleLevelDay!]!
   findOne(guildId: Int!): MemberModuleLevelDay!
   findAllByGuild(guildId: Int!): [Member!]!
-  user(id: Int!): Profile!
 }
 
 type Mutation {
@@ -320,8 +319,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685874202293
-  call_start: Timestamp! = 1685874202293
+  cooldown_time: Timestamp! = 1685884056657
+  call_start: Timestamp! = 1685884056657
   points: Int! = 0
 }
 
@@ -330,8 +329,8 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int = 0
   cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1685874202293
-  call_start: Timestamp = 1685874202293
+  cooldown_time: Timestamp = 1685884056657
+  call_start: Timestamp = 1685884056657
   points: Int = 0
 }
 

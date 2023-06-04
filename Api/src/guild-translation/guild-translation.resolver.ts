@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -46,9 +47,9 @@ export class GuildTranslationResolver {
     return this.guildTranslationService.findOne(id, key);
   }
 
-  @ResolveField(() => GuildTranslation)
-  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
-    return this.guildTranslationService.getGuild(id);
+  @ResolveField(() => Guild)
+  guild(@Parent() guildTranslation: GuildTranslation): Promise<Guild> {
+    return this.guildTranslationService.getGuild(guildTranslation.guild_id);
   }
 
   @Mutation(() => GuildTranslation)

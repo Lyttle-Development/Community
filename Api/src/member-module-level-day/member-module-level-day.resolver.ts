@@ -2,6 +2,7 @@ import {
   Args,
   Int,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
@@ -42,17 +43,21 @@ export class MemberModuleLevelDayResolver {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }
 
-  @ResolveField(() => MemberModuleLevelDay)
-  guild(@Args('id', { type: () => Int }) id: number): Promise<Guild> {
-    return this.memberModuleLevelDayService.getGuild(id);
+  @ResolveField(() => Guild)
+  guild(@Parent() memberModuleLevelDay: MemberModuleLevelDay): Promise<Guild> {
+    return this.memberModuleLevelDayService.getGuild(
+      memberModuleLevelDay.guild_id,
+    );
   }
 
-  @ResolveField(() => MemberModuleLevelDay)
+  @ResolveField(() => Member)
   member(
-    @Args('id', { type: () => Int }) guildId: number,
-    memberId: number,
+    @Parent() memberModuleLevelDay: MemberModuleLevelDay,
   ): Promise<Member> {
-    return this.memberModuleLevelDayService.getMember(guildId, memberId);
+    return this.memberModuleLevelDayService.getMember(
+      memberModuleLevelDay.guild_id,
+      memberModuleLevelDay.user_id,
+    );
   }
 
   @Mutation(() => MemberModuleLevelDay)
