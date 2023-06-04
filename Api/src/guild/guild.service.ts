@@ -41,15 +41,12 @@ export class GuildService {
   }
 
   findAll(): Promise<Guild[]> {
-    return this.guildRepository.find({
-      relations: ['guildMessages', 'members'],
-    });
+    return this.guildRepository.find();
   }
 
   findOne(id: number): Promise<Guild> {
     return this.guildRepository.findOne({
       where: { guild_id: id },
-      relations: ['guildMessages', 'members'],
     });
   }
 
