@@ -12,7 +12,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 import { User } from '../../user/entities/user.entity';
 import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
 
-@Entity()
+@Entity('member')
 @ObjectType()
 export class Member {
   // Primary key information

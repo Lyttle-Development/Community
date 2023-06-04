@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@Entity()
+@Entity('profile')
 @ObjectType()
 export class Profile {
   // Primary key information

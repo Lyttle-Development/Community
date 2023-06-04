@@ -10,7 +10,7 @@ import {
 import { Member } from '../../member/entities/member.entity';
 import { Profile } from '../../profile/entities/profile.entity';
 
-@Entity()
+@Entity('user')
 @ObjectType()
 export class User {
   // Primary key information

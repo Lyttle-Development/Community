@@ -15,7 +15,7 @@ import { GuildTranslation } from '../../guild-translation/entities/guild-transla
 import { Member } from '../../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
-@Entity()
+@Entity('guild')
 @ObjectType()
 export class Guild {
   @PrimaryColumn({ type: 'bigint' })
