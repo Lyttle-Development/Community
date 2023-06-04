@@ -1,8 +1,13 @@
 import { CreateMemberModuleLevelDayInput } from './create-member-module-level-day.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateMemberModuleLevelDayInput extends PartialType(CreateMemberModuleLevelDayInput) {
+export class UpdateMemberModuleLevelDayInput extends PartialType(
+  CreateMemberModuleLevelDayInput,
+) {
   @Field(() => Int)
-  id: number;
+  guild_id: number;
+
+  @Field(() => Int)
+  user_id: number;
 }

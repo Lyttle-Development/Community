@@ -1,0 +1,27 @@
+@use '../../styles/variables.scss' as v;
+
+.header {
+  display: flex;
+  padding: 3rem 0 2.5rem;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 2rem;
+  letter-spacing: 0.15rem;
+  font-weight: 600;
+}
+
+.navigation {
+  display: flex;
+  gap: 4rem;
+}
+
+.hide {
+  display: none;
+}
+
+.hamburger svg {
+  width: 2rem;
+  fill: v.$color-text-dark;
+}

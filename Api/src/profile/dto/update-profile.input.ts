@@ -5,10 +5,4 @@ import { Field, InputType, Int, PartialType } from '@nestjs/graphql';
 export class UpdateProfileInput extends PartialType(CreateProfileInput) {
   @Field(() => Int)
   id: number;
-
-  @Field(() => Int)
-  tokens: number;
-
-  @Field(() => Int)
-  tokens_used: number;
 }

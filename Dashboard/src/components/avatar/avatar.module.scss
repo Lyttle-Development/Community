@@ -1,0 +1,28 @@
+@use '../../styles/variables.scss' as v;
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.avatar {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: flex;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background-color: v.$color-background-light;
+}
+
+.link {
+  font-size: 0;
+  padding-right: 2rem;
+  background-image: url("/media/icons/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1.2rem;
+}

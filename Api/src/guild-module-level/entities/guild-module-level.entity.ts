@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -14,7 +14,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 export class GuildModuleLevel {
   // Primary key information
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   // Relations
@@ -32,17 +32,17 @@ export class GuildModuleLevel {
   leveling_multiplier: number;
 
   @Column({ type: 'bigint', nullable: true })
-  @Field(() => Int, {
+  @Field(() => Float, {
     nullable: true,
   })
   announcement_channel_id?: number;
 
   @Column({ type: 'bigint', nullable: true })
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   leaderboard_channel_id?: number;
 
   @Column({ nullable: true })
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   leaderboard_last_week: number;
 
   @Column()

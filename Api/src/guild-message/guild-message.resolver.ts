@@ -25,18 +25,18 @@ export class GuildMessageResolver {
     return this.guildMessageService.create(createGuildMessageInput);
   }
 
-  @Query(() => [GuildMessage], { name: 'guildMessage' })
+  @Query(() => [GuildMessage])
   findAll(): Promise<GuildMessage[]> {
     return this.guildMessageService.findAll();
   }
 
-  @Query(() => GuildMessage, { name: 'guildMessage' })
+  @Query(() => GuildMessage)
   findOne(@Args('id', { type: () => Int }) id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 
   @ResolveField(() => Guild)
-  getGuild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
+  guild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
     return this.guildMessageService.getGuild(guildMessage.guild_id);
   }
 

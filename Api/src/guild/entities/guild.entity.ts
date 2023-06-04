@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -15,11 +15,11 @@ import { GuildTranslation } from '../../guild-translation/entities/guild-transla
 import { Member } from '../../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
-@Entity()
+@Entity('guild')
 @ObjectType()
 export class Guild {
   @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   // Relations
@@ -27,8 +27,8 @@ export class Guild {
   @OneToMany(() => Member, (member: Member) => member.guild_id, {
     nullable: true,
   })
-  @Field(() => [Member])
-  members: Member[];
+  @Field(() => [Member], { nullable: true })
+  members?: Member[];
 
   // - Cache
   @OneToMany(
@@ -36,32 +36,32 @@ export class Guild {
     (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
     { nullable: true },
   )
-  @Field(() => [GuildTranslation])
-  guildTranslations: GuildTranslation[];
+  @Field(() => [GuildTranslation], { nullable: true })
+  guildTranslations?: GuildTranslation[];
 
   // - Modules
   @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => GuildModuleLevel)
-  guildModuleLevel: GuildModuleLevel;
+  @Field(() => GuildModuleLevel, { nullable: true })
+  guildModuleLevel?: GuildModuleLevel;
 
   @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => GuildModuleQotd)
-  guildModuleQotd: GuildModuleQotd;
+  @Field(() => GuildModuleQotd, { nullable: true })
+  guildModuleQotd?: GuildModuleQotd;
 
   @OneToOne(() => GuildModuleVoiceGrowth, {
     onDelete: 'CASCADE',
     nullable: true,
   })
-  @Field(() => GuildModuleVoiceGrowth)
-  guildModuleVoiceGrowth: GuildModuleVoiceGrowth;
+  @Field(() => GuildModuleVoiceGrowth, { nullable: true })
+  guildModuleVoiceGrowth?: GuildModuleVoiceGrowth;
 
   @OneToMany(
     () => GuildMessage,
     (guildMessage: GuildMessage) => guildMessage.guild_id,
     { nullable: true },
   )
-  @Field(() => [GuildMessage])
-  guildMessages: GuildMessage[];
+  @Field(() => [GuildMessage], { nullable: true })
+  guildMessages?: GuildMessage[];
 
   // Values
   @Column()

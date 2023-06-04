@@ -1,23 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import type { CreateGuildModuleQotdInput } from './dto/create-guild-module-qotd.input';
 import type { UpdateGuildModuleQotdInput } from './dto/update-guild-module-qotd.input';
 import { GuildModuleQotd } from './entities/guild-module-qotd.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Injectable()
 export class GuildModuleQotdService {
   constructor(
     @InjectRepository(GuildModuleQotd)
     private guildModuleQotdRepository: Repository<GuildModuleQotd>,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
   ) {}
 
-  create(createGuildModuleQotdInput: CreateGuildModuleQotdInput) {
-    return 'This action adds a new guildModuleQotd';
+  create(
+    createGuildModuleQotdInput: CreateGuildModuleQotdInput,
+  ): Promise<GuildModuleQotd> {
+    return this.guildModuleQotdRepository.save(createGuildModuleQotdInput);
   }
 
-  findAll() {
-    return `This action returns all guildModuleQotd`;
+  findAll(): Promise<GuildModuleQotd[]> {
+    return this.guildModuleQotdRepository.find();
   }
 
   findOne(id: number): Promise<GuildModuleQotd> {
@@ -26,11 +32,35 @@ export class GuildModuleQotdService {
     });
   }
 
-  update(id: number, updateGuildModuleQotdInput: UpdateGuildModuleQotdInput) {
-    return `This action updates a #${id} guildModuleQotd`;
+  getGuild(id: number): Promise<Guild> {
+    return this.guildService.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleQotd`;
+  async update(
+    id: number,
+    updateGuildModuleQotdInput: UpdateGuildModuleQotdInput,
+  ): Promise<GuildModuleQotd> | null {
+    const guildModuleQotd: GuildModuleQotd =
+      await this.guildModuleQotdRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleQotd) {
+      return this.guildModuleQotdRepository.save({
+        ...guildModuleQotd,
+        ...updateGuildModuleQotdInput,
+      });
+    }
+    throw new Error('GuildModuleQotd not found');
+  }
+
+  async remove(id: number): Promise<GuildModuleQotd> | null {
+    const guildModuleQotd: GuildModuleQotd =
+      await this.guildModuleQotdRepository.findOne({
+        where: { guild_id: id },
+      });
+    if (guildModuleQotd) {
+      return this.guildModuleQotdRepository.remove(guildModuleQotd);
+    }
+    throw new Error('GuildModuleQotd not found');
   }
 }

@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
@@ -18,7 +18,7 @@ export class GuildMessage {
   id: number;
 
   @Column({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   guild_id: number;
 
   // Relations
@@ -28,11 +28,11 @@ export class GuildMessage {
 
   // Values
   @Column({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   channel_id: number;
 
   @Column({ type: 'bigint' })
-  @Field(() => Int)
+  @Field(() => Float)
   message_id: number;
 
   // Date information
