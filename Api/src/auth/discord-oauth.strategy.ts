@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-discord';
 import { PassportStrategy } from '@nestjs/passport';
 
+export interface DiscordValidateResponse {
+  accessToken: string;
+  refreshToken: string;
+  profile: any;
+}
+
 @Injectable()
 export class DiscordOauthStrategy extends PassportStrategy(
   Strategy,
@@ -17,13 +23,11 @@ export class DiscordOauthStrategy extends PassportStrategy(
   }
 
   async validate(_accessToken: string, _refreshToken: string, profile: any) {
-    const { id, username, discriminator, avatar, guilds } = profile;
+    delete profile.accessToken;
     return {
-      discordId: id,
-      username,
-      discriminator,
-      avatar,
-      guilds,
+      accessToken: _accessToken,
+      refreshToken: _refreshToken,
+      profile,
     };
   }
 }

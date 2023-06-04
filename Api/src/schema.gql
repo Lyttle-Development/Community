@@ -319,8 +319,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685886801923
-  call_start: Timestamp! = 1685886801923
+  cooldown_time: Timestamp! = 1685904033403
+  call_start: Timestamp! = 1685904033403
   points: Int! = 0
 }
 
@@ -329,31 +329,31 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int = 0
   cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1685886801923
-  call_start: Timestamp = 1685886801923
+  cooldown_time: Timestamp = 1685904033403
+  call_start: Timestamp = 1685904033403
   points: Int = 0
 }
 
 input CreateMemberModuleLevelDayInput {
   guild_id: Int!
   user_id: Int!
-  points_mon: Int! = 0
-  points_tue: Int! = 0
-  points_wed: Int! = 0
-  points_thu: Int! = 0
-  points_fri: Int! = 0
-  points_sat: Int! = 0
-  points_sun: Int! = 0
+  points_monday: Int! = 0
+  points_tuesday: Int! = 0
+  points_wednesday: Int! = 0
+  points_thursday: Int! = 0
+  points_friday: Int! = 0
+  points_saturday: Int! = 0
+  points_sunday: Int! = 0
 }
 
 input UpdateMemberModuleLevelDayInput {
   guild_id: Int!
   user_id: Int!
-  points_mon: Int = 0
-  points_tue: Int = 0
-  points_wed: Int = 0
-  points_thu: Int = 0
-  points_fri: Int = 0
-  points_sat: Int = 0
-  points_sun: Int = 0
+  points_monday: Int = 0
+  points_tuesday: Int = 0
+  points_wednesday: Int = 0
+  points_thursday: Int = 0
+  points_friday: Int = 0
+  points_saturday: Int = 0
+  points_sunday: Int = 0
 }
