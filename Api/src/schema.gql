@@ -73,13 +73,13 @@ type MemberModuleLevelDay {
   user_id: Float!
   guild: Guild!
   member: Member!
-  points_mon: Int!
-  points_tue: Int!
-  points_wed: Int!
-  points_thu: Int!
-  points_fri: Int!
-  points_sat: Int!
-  points_sun: Int!
+  points_monday: Int!
+  points_tuesday: Int!
+  points_wednesday: Int!
+  points_thursday: Int!
+  points_friday: Int!
+  points_saturday: Int!
+  points_sunday: Int!
   points: Int!
   created_at: Timestamp!
   updated_at: Timestamp!
@@ -319,8 +319,8 @@ input CreateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int! = 0
   cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1685884824292
-  call_start: Timestamp! = 1685884824292
+  cooldown_time: Timestamp! = 1685886801923
+  call_start: Timestamp! = 1685886801923
   points: Int! = 0
 }
 
@@ -329,8 +329,8 @@ input UpdateMemberModuleLevelInput {
   user_id: Int!
   spam_check: Int = 0
   cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1685884824292
-  call_start: Timestamp = 1685884824292
+  cooldown_time: Timestamp = 1685886801923
+  call_start: Timestamp = 1685886801923
   points: Int = 0
 }
 

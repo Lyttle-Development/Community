@@ -10,7 +10,7 @@ import {
 import { Member } from '../../member/entities/member.entity';
 import { Guild } from '../../guild/entities/guild.entity';
 
-@Entity('member__module__level_day')
+@Entity('member__module__level__day')
 @ObjectType()
 export class MemberModuleLevelDay {
   @PrimaryColumn({ type: 'bigint' })
@@ -33,31 +33,31 @@ export class MemberModuleLevelDay {
   // Values
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_mon: number;
+  points_monday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_tue: number;
+  points_tuesday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_wed: number;
+  points_wednesday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_thu: number;
+  points_thursday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_fri: number;
+  points_friday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_sat: number;
+  points_saturday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  points_sun: number;
+  points_sunday: number;
 
   @Column({ default: 0 })
   @Field(() => Int, { defaultValue: 0 })
@@ -72,3 +72,4 @@ export class MemberModuleLevelDay {
   @Field(() => Date)
   updated_at: Date;
 }
+
