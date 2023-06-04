@@ -7,10 +7,4 @@ export class UpdateGuildMessageInput extends PartialType(
 ) {
   @Field(() => Int)
   id: number;
-
-  @Field(() => Int)
-  message_id: number;
-
-  @Field(() => Int)
-  channel_id: number;
 }

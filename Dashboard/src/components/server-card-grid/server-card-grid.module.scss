@@ -1,0 +1,8 @@
+@use '../../styles/variables.scss' as v;
+
+.grid {
+  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

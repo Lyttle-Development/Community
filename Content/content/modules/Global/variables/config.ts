@@ -8,3 +8,11 @@ export interface DefaultVariables {
   user: GuildMember;
   prefix: string;
 }
+
+export const variables: (keyof DefaultVariables)[] = [
+  'guildId',
+  'guild',
+  'userId',
+  'user',
+  'prefix',
+];

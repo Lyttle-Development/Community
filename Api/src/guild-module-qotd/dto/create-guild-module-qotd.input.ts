@@ -1,7 +1,16 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleQotdInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => Boolean)
+  enabled: boolean;
+
+  @Field(() => Int)
+  channel_id: number;
+
+  @Field(() => Int)
+  message_id: number;
+
+  @Field(() => Boolean)
+  nicknames: boolean;
 }

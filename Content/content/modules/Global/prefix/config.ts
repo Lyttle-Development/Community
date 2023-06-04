@@ -1,4 +1,6 @@
 // export
 export interface Variables {
-  guild_id: string;
+  guildId: string;
 }
+
+export const variables: (keyof Variables)[] = ['guildId'];

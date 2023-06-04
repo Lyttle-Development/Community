@@ -1,0 +1,31 @@
+@use '../../styles/variables.scss' as v;
+
+.label,
+.textarea {
+  display: block;
+  border-radius: .7rem;
+}
+
+.label {
+  background-color: v.$color-background;
+
+  &:focus-within {
+    outline: v.$color-primary solid .2rem;
+  }
+}
+
+.textarea {
+  resize: none;
+  padding: 2rem;
+  width: 100%;
+  color: v.$color-text;
+  height: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    color: v.$color-text-dark;
+  }
+}

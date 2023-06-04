@@ -6,3 +6,10 @@ export interface Variables {
   prefix: string;
   users: string;
 }
+
+export const variables: (keyof Variables)[] = [
+  'guildId',
+  'guild',
+  'prefix',
+  'users',
+];

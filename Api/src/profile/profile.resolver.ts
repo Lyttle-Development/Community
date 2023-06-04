@@ -1,4 +1,12 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { ProfileService } from './profile.service';
 import { Profile } from './entities/profile.entity';
 import { CreateProfileInput } from './dto/create-profile.input';
@@ -16,25 +24,25 @@ export class ProfileResolver {
     return this.profileService.create(createProfileInput);
   }
 
-  @Query(() => [Profile], { name: 'profile' })
+  @Query(() => [Profile])
   findAll(): Promise<Profile[]> {
     return this.profileService.findAll();
   }
 
-  @Query(() => Profile, { name: 'profile' })
+  @Query(() => Profile)
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profileService.findOne(id);
   }
 
-  @Query(() => Profile)
-  user(@Args('id', { type: () => Int }) id: number): Promise<User> {
-    return this.profileService.getUser(id);
+  @ResolveField(() => User)
+  user(@Parent() profile: Profile): Promise<User> {
+    return this.profileService.getUser(profile.user_id);
   }
 
   @Mutation(() => Profile)
   updateProfile(
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
-  ) {
+  ): Promise<Profile> | null {
     return this.profileService.update(
       updateProfileInput.id,
       updateProfileInput,
