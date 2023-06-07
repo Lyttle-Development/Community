@@ -14,22 +14,11 @@
     color: v.$color-text-dark;
   }
 
-  .switch {
-    position: absolute;
-    top: 2rem;
-    right: 5rem;
-  }
-
-  .cog {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-  }
-
-  .setup-button {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
+  .heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
   }
 }
 

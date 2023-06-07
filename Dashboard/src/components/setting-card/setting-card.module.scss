@@ -1,0 +1,46 @@
+@use '../../styles/variables.scss' as v;
+
+.card {
+  padding: 2rem;
+  background-color: v.$color-background-light;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+
+  .description {
+    font-size: 1.2rem;
+    color: v.$color-text-dark;
+  }
+
+  .heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.sub-items {
+  height: 100%;
+  transition: max-height 1s ease-in-out;
+  max-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  &.sub-items--hidden {
+    overflow: hidden;
+  }
+
+  &.sub-items--enabled {
+    max-height: 100vh;
+  }
+
+  &:focus-within {
+    // Fix outline not working when overflow hidden:
+    padding: .2rem;
+    margin: -.2rem;
+  }
+}

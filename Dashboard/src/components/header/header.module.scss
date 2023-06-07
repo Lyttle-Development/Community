@@ -1,3 +1,5 @@
+@use '../../styles/variables.scss' as v;
+
 .header {
   display: flex;
   padding: 3rem 0 2.5rem;
@@ -13,4 +15,13 @@
 .navigation {
   display: flex;
   gap: 4rem;
+}
+
+.hide {
+  display: none;
+}
+
+.hamburger svg {
+  width: 2rem;
+  fill: v.$color-text-dark;
 }

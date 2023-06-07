@@ -1,5 +1,5 @@
 import { isVoid } from '../utils/is-void';
-import ModuleMarkdown from '../content/generated-markdown';
+import ModuleMarkdown from '../../../Content/app/generated/ModuleMarkdown';
 
 export function getModuleMarkdownItem(path: string) {
   const res: any = path
@@ -24,6 +24,20 @@ export function getModuleMarkdownItem(path: string) {
 export function getMessage(path: string): string {
   const _markdown = getModuleMarkdownItem(path);
   return _markdown.content;
+}
+
+export function getDocumentation(path: string): {
+  title: string;
+  description: string;
+} {
+  const _markdown = getModuleMarkdownItem(path);
+  const _content = _markdown.documentation ?? '';
+  const title = _content.split('\n')[0].replace('#', '').trim() ?? '';
+  const description = _content.split('\n').slice(1).join('\n\n').trim() ?? '';
+  return {
+    title,
+    description,
+  };
 }
 
 export const dashboardPrefix = 'Dashboard.';

@@ -13,6 +13,7 @@ export interface LightSwitchProps {
   className?: string;
   classNameActive?: string;
   color?: SCSSPrimaryColors;
+  disabled?: boolean;
 }
 
 export function LightSwitch({
@@ -21,6 +22,7 @@ export function LightSwitch({
   className,
   classNameActive,
   color = SCSSPrimaryColors.purple,
+  disabled = false,
 }: LightSwitchProps) {
   const [activeState, setActiveState] = useState(active);
 
@@ -51,7 +53,9 @@ export function LightSwitch({
     <label
       className={`${styles.switch} ${
         styles[`switch--${color}`]
-      } ${activeClass} ${className} ${customActiveClass}`}
+      } ${activeClass} ${
+        disabled && styles.disabled
+      } ${className} ${customActiveClass}`}
       onClick={handleClick}
     >
       <input

@@ -13,9 +13,9 @@ export function spider(
     const dirFiles = fs.readdirSync(dir);
     dirFiles.forEach((rawFilePath) => {
       // Get the file path
-      const filePath = path.join(dir, rawFilePath);
+      const filePath: string = path.join(dir, rawFilePath) ?? '';
       // Get the name of the file.
-      const fileName = filePath
+      const fileName: string = filePath
         // Remove all path structure
         .split('/')
         .pop()

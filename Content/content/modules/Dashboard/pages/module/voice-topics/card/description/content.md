@@ -1,0 +1,1 @@
+This channel is configured to accept button interactions, creating voice topics below it.

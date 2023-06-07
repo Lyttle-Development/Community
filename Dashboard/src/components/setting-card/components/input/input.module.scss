@@ -1,0 +1,54 @@
+@use '../../../../styles/variables.scss' as v;
+
+.card {
+  gap: 1rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.input {
+  flex-grow: 1;
+}
+
+.retrieve {
+  padding: .6rem 1rem;
+  border-radius: .5rem;
+  background-color: v.$color-primary-yellow;
+
+  &:disabled {
+    opacity: .2;
+
+    &:hover {
+      background-color: v.$color-primary-yellow;
+      filter: none;
+    }
+  }
+}
+
+.options {
+  width: 100%;
+  max-width: 20rem;
+  flex-grow: 1;
+}
+
+.variables {
+  margin-top: 2rem;
+
+  li {
+    gap: .5rem;
+    display: grid;
+    margin-bottom: .5rem;
+    grid-template-columns: 1fr 2fr;
+
+    .var-key {
+      font-size: .8rem;
+    }
+
+    .var-description {
+      font-size: .8rem;
+      color: v.$color-text-dark;
+    }
+  }
+}

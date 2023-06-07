@@ -1,0 +1,82 @@
+@use '../../styles/variables.scss' as v;
+
+.card {
+  background-color: transparentize(v.$color-primary, .8);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .title {
+    margin: 0 .5rem;
+    padding-left: 4rem;
+    color: v.$color-primary;
+    background-image: url('/media/icons/tip.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 1.5rem;
+    word-break: break-word;
+  }
+
+  .message {
+    gap: 2rem;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .description {
+    background-color: v.$color-background;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    flex-grow: 1;
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .mocks {
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    .mock {
+      opacity: .5;
+      display: block;
+      height: 1rem;
+      background-color: transparentize(v.$color-text, .5);
+      overflow: hidden;
+
+      &:after {
+        content: '';
+        display: block;
+        height: 1rem;
+        background-color: transparentize(v.$color-text, .5);
+        animation: alternate mock-effect 1s infinite ease-in-out;
+      }
+    }
+
+    @keyframes mock-effect {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .mock-1 {
+      width: 80%;
+    }
+
+    .mock-2 {
+      width: 60%;
+    }
+
+    .mock-3 {
+      width: 70%;
+    }
+  }
+}
