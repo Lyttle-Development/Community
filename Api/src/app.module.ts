@@ -18,13 +18,13 @@ import { MemberModuleLevelDayModule } from './member-module-level-day/member-mod
 import { GuildModuleVoiceGrowthModule } from './guild-module-voice-growth/guild-module-voice-growth.module';
 import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
 import { DiscordOauthModule } from './auth/discord-oauth.module';
-import { JwtAuthModule } from './auth/jwt-auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { DiscordGuard } from './auth/discord.guard';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    DiscordOauthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
@@ -62,9 +62,16 @@ import { ConfigModule } from '@nestjs/config';
     MemberModuleLevelModule,
     MemberModuleLevelDayModule,
     GuildModuleVoiceGrowthModule,
-    JwtAuthModule,
+    DiscordOauthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DiscordOauthStrategy],
+  providers: [
+    AppService,
+    DiscordOauthStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: DiscordGuard,
+    },
+  ],
 })
 export class AppModule {}
