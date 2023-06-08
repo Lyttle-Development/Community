@@ -32,29 +32,29 @@ export class MemberService {
     return this.memberRepository.find();
   }
 
-  findAllByGuild(guild_id: number): Promise<Member[]> {
+  findAllByGuild(guildId: string): Promise<Member[]> {
     return this.memberRepository.find({
-      where: { guild_id: guild_id },
+      where: { guildId: guildId },
     });
   }
 
-  findOne(user_id: number, guild_id: number): Promise<Member> {
+  findOne(userId: string, guildId: string): Promise<Member> {
     return this.memberRepository.findOne({
-      where: { user_id: user_id, guild_id: guild_id },
+      where: { userId: userId, guildId: guildId },
     });
   }
 
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
-  getUser(id: number): Promise<User> {
+  getUser(id: string): Promise<User> {
     return this.userService.findOne(id);
   }
 
   getMemberModuleLevel(
-    guildId: number,
-    userId: number,
+    guildId: string,
+    userId: string,
   ): Promise<MemberModuleLevel> {
     return this.memberModuleLevelService.findOne(guildId, userId);
   }
@@ -62,8 +62,8 @@ export class MemberService {
   async update(updateMemberInput: UpdateMemberInput): Promise<Member> | null {
     const member: Member = await this.memberRepository.findOne({
       where: {
-        user_id: updateMemberInput.user_id,
-        guild_id: updateMemberInput.guild_id,
+        userId: updateMemberInput.user_id,
+        guildId: updateMemberInput.guild_id,
       },
     });
     if (member) {
@@ -72,11 +72,11 @@ export class MemberService {
     throw new Error('Member not found');
   }
 
-  async remove(guildId: number, userId: number): Promise<Member> | null {
+  async remove(guildId: string, userId: string): Promise<Member> | null {
     const member: Member = await this.memberRepository.findOne({
       where: {
-        user_id: userId,
-        guild_id: guildId,
+        userId: userId,
+        guildId: guildId,
       },
     });
     if (member) {

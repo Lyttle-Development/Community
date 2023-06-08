@@ -26,38 +26,29 @@ export class GuildMessageService {
     return this.guildMessageRepository.find();
   }
 
-  findAllByGuild(id: number): Promise<GuildMessage[]> {
+  findAllByGuild(id: string): Promise<GuildMessage[]> {
     return this.guildMessageRepository.find({
-      where: { guild_id: id },
+      where: { messageId: id },
     });
   }
 
-  findOne(id: number): Promise<GuildMessage> {
+  findOne(id: string): Promise<GuildMessage> {
     return this.guildMessageRepository.findOne({
-      where: { guild_id: id },
+      where: { messageId: id },
     });
   }
 
-  findOneByGuildAndMessageId(
-    guildId: number,
-    messageId: number,
-  ): Promise<GuildMessage> {
-    return this.guildMessageRepository.findOne({
-      where: { guild_id: guildId, message_id: messageId },
-    });
-  }
-
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildMessageInput: UpdateGuildMessageInput,
   ): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
       await this.guildMessageRepository.findOne({
-        where: { guild_id: id },
+        where: { messageId: id },
       });
 
     if (guildMessage) {
@@ -69,10 +60,10 @@ export class GuildMessageService {
     throw new Error('GuildMessage not found');
   }
 
-  async remove(id: number): Promise<GuildMessage> | null {
+  async remove(id: string): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
       await this.guildMessageRepository.findOne({
-        where: { guild_id: id },
+        where: { messageId: id },
       });
 
     if (guildMessage) {

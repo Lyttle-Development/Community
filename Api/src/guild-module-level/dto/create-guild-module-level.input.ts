@@ -6,22 +6,22 @@ export class CreateGuildModuleLevelInput {
   enabled: boolean;
 
   @Field(() => Int)
-  leveling_multiplier: number;
+  levelingMultiplier: number;
 
   @Field(() => Int, {
     nullable: true,
   })
-  announcement_channel_id?: number;
+  announcementChannelId?: number;
 
   @Field(() => Int, { nullable: true })
-  leaderboard_channel_id?: number;
+  leaderboardChannelId?: number;
 
   @Field(() => Int, { nullable: true })
-  leaderboard_last_week: number;
+  leaderboardLastWeek: number;
 
   @Field(() => Boolean)
   nicknames: boolean;
 
   @Field(() => Date)
-  last_leaderboard: Date;
+  lastLeaderboard: Date;
 }

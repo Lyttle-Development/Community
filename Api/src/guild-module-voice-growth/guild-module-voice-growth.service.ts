@@ -28,23 +28,23 @@ export class GuildModuleVoiceGrowthService {
     return this.guildModuleVoiceGrowthRepository.find();
   }
 
-  findOne(id: number): Promise<GuildModuleVoiceGrowth> {
+  findOne(id: string): Promise<GuildModuleVoiceGrowth> {
     return this.guildModuleVoiceGrowthRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
   }
 
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput,
   ): Promise<GuildModuleVoiceGrowth> | null {
     const guildModuleVoiceGrowth: GuildModuleVoiceGrowth =
       await this.guildModuleVoiceGrowthRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleVoiceGrowth) {
       return this.guildModuleVoiceGrowthRepository.save({
@@ -55,10 +55,10 @@ export class GuildModuleVoiceGrowthService {
     throw new Error('GuildModuleVoiceGrowth not found');
   }
 
-  async remove(id: number): Promise<GuildModuleVoiceGrowth> | null {
+  async remove(id: string): Promise<GuildModuleVoiceGrowth> | null {
     const guildModuleVoiceGrowth: GuildModuleVoiceGrowth =
       await this.guildModuleVoiceGrowthRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleVoiceGrowth) {
       return this.guildModuleVoiceGrowthRepository.remove(

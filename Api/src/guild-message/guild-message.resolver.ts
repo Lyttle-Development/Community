@@ -31,13 +31,13 @@ export class GuildMessageResolver {
   }
 
   @Query(() => GuildMessage)
-  findOne(@Args('id', { type: () => Int }) id: number): Promise<GuildMessage> {
+  findOne(@Args('id', { type: () => Int }) id: string): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 
   @ResolveField(() => Guild)
   guild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
-    return this.guildMessageService.getGuild(guildMessage.guild_id);
+    return this.guildMessageService.getGuild(guildMessage.guild.guildId);
   }
 
   @Mutation(() => GuildMessage)
@@ -53,7 +53,7 @@ export class GuildMessageResolver {
 
   @Mutation(() => GuildMessage)
   removeGuildMessage(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => Int }) id: string,
   ): Promise<GuildMessage> | null {
     return this.guildMessageService.remove(id);
   }

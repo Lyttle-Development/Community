@@ -6,10 +6,10 @@ export class CreateGuildModuleQotdInput {
   enabled: boolean;
 
   @Field(() => Int)
-  channel_id: number;
+  channelId: string;
 
   @Field(() => Int)
-  message_id: number;
+  messageId: string;
 
   @Field(() => Boolean)
   nicknames: boolean;

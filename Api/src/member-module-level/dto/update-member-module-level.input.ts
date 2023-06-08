@@ -6,8 +6,8 @@ export class UpdateMemberModuleLevelInput extends PartialType(
   CreateMemberModuleLevelInput,
 ) {
   @Field(() => Int)
-  guild_id: number;
+  guildId: string;
 
   @Field(() => Int)
-  user_id: number;
+  userId: string;
 }

@@ -4,31 +4,31 @@ import type { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
-import { ProfileService } from '../profile/profile.service';
-import type { CreateProfileInput } from '../profile/dto/create-profile.input';
-import type { Profile } from '../profile/entities/profile.entity';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import type { CreateUserProfileInput } from '../user-profile/dto/create-user-profile.input';
+import type { UserProfile } from '../user-profile/entities/user-profile.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @Inject(forwardRef(() => ProfileService))
-    private profileService: ProfileService,
+    @Inject(forwardRef(() => UserProfileService))
+    private profileService: UserProfileService,
   ) {}
 
   async create(createUserInput: CreateUserInput): Promise<User> {
-    const createProfileInput: CreateProfileInput = {
+    const createProfileInput: CreateUserProfileInput = {
       user_id: createUserInput.user_id,
       tokens: 0,
       tokens_used: 0,
     };
-    const profile: Profile = await this.profileService.create(
+    const userProfile: UserProfile = await this.profileService.create(
       createProfileInput,
     );
     const user: User = this.userRepository.create({
       ...createUserInput,
-      profile: profile,
+      userProfile: userProfile,
     });
     return this.userRepository.save(user);
   }
@@ -37,22 +37,22 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(id: string): Promise<User> {
     return this.userRepository.findOne({
-      where: { user_id: id },
+      where: { userId: id },
     });
   }
 
-  getProfile(id: number): Promise<Profile> {
+  getUserProfile(id: string): Promise<UserProfile> {
     return this.profileService.findOne(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateUserInput: UpdateUserInput,
   ): Promise<User> | null {
     const user: User = await this.userRepository.findOne({
-      where: { user_id: id },
+      where: { userId: id },
     });
     if (user) {
       return this.userRepository.save({ ...user, ...updateUserInput });
@@ -60,9 +60,9 @@ export class UserService {
     throw new Error('User not found');
   }
 
-  async remove(id: number): Promise<User> | null {
+  async remove(id: string): Promise<User> | null {
     const user: User = await this.userRepository.findOne({
-      where: { user_id: id },
+      where: { userId: id },
     });
     if (user) {
       return this.userRepository.remove(user);

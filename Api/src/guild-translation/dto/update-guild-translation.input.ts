@@ -6,5 +6,8 @@ export class UpdateGuildTranslationInput extends PartialType(
   CreateGuildTranslationInput,
 ) {
   @Field(() => Int)
-  id: number;
+  guildId: string;
+
+  @Field(() => Int)
+  key: string;
 }

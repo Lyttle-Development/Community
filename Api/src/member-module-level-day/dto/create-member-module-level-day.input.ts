@@ -3,29 +3,29 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 @InputType()
 export class CreateMemberModuleLevelDayInput {
   @Field(() => Int)
-  guild_id: number;
+  guildId: string;
 
   @Field(() => Int)
-  user_id: number;
+  userId: string;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_monday: number;
+  pointsMonday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_tuesday: number;
+  pointsTuesday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_wednesday: number;
+  pointsWednesday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_thursday: number;
+  pointsThursday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_friday: number;
+  pointsFriday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_saturday: number;
+  pointsSaturday: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  points_sunday: number;
+  pointsSunday: number;
 }
