@@ -90,26 +90,6 @@ model Guild {
 
 model GuildMessage {
   // Primary key information
-  guild_id BigInt
-
-  // Relations
-  guild Guild @relation(fields: [guild_id], references: [guild_id])
-
-  // Values
-  key   String
-  value String
-
-  // Date information
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-
-  // Refactors
-  @@id([guild_id, key])
-  @@map("guild__message")
-}
-
-model GuildTranslation {
-  // Primary key information
   id Int @id @default(autoincrement())
 
   // Relations
@@ -125,6 +105,26 @@ model GuildTranslation {
   updated_at DateTime @default(now()) @updatedAt
 
   // Refactors
+  @@map("guild__message")
+}
+
+model GuildTranslation {
+  // Primary key information
+  guild_id BigInt
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  key   String
+  value String
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@id([guild_id, key])
   @@map("guild__translation")
 }
 
