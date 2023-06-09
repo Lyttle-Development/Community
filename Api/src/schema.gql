@@ -142,9 +142,11 @@ type GuildAction {
   key: String!
   values: String!
   executed: Boolean!
+  guildId: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
   guild: Guild!
+  getGuild: Guild!
 }
 
 type Guild {
@@ -206,6 +208,7 @@ type Query {
   findOne(guildId: Int!): MemberModuleLevelDay!
   findAllByGuild(guildId: Int!): [Member!]!
   guildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
+  guildActions: [GuildAction!]!
   guildAction(id: Int!): GuildAction!
   guildModuleBirthday(id: Int!): GuildModuleBirthday!
   guildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
@@ -392,8 +395,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686314187425
-  callStart: Timestamp! = 1686314187425
+  cooldownTime: Timestamp! = 1686314970982
+  callStart: Timestamp! = 1686314970982
   points: Int! = 0
 }
 
@@ -402,8 +405,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686314187425
-  callStart: Timestamp = 1686314187425
+  cooldownTime: Timestamp = 1686314970982
+  callStart: Timestamp = 1686314970982
   points: Int = 0
 }
 
@@ -443,13 +446,17 @@ input UpdateGuildModuleVoiceGrowthChildInput {
 }
 
 input CreateGuildActionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  key: String!
+  values: String!
+  executed: Boolean!
+  guildId: Int!
 }
 
 input UpdateGuildActionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  key: String
+  values: String
+  executed: Boolean
+  guildId: Int
   id: Int!
 }
 
