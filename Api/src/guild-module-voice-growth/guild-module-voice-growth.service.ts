@@ -39,12 +39,13 @@ export class GuildModuleVoiceGrowthService {
   }
 
   async update(
-    id: string,
+    guildId: string,
+    channelId: string,
     updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput,
   ): Promise<GuildModuleVoiceGrowth> | null {
     const guildModuleVoiceGrowth: GuildModuleVoiceGrowth =
       await this.guildModuleVoiceGrowthRepository.findOne({
-        where: { guildId: id },
+        where: { guildId, channelId },
       });
     if (guildModuleVoiceGrowth) {
       return this.guildModuleVoiceGrowthRepository.save({

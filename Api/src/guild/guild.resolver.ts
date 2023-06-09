@@ -43,7 +43,7 @@ export class GuildResolver {
   updateGuild(
     @Args('updateGuildInput') updateGuildInput: UpdateGuildInput,
   ): Promise<Guild> {
-    return this.guildService.update(updateGuildInput.id, updateGuildInput);
+    return this.guildService.update(updateGuildInput.guildId, updateGuildInput);
   }
 
   @Mutation(() => Guild)

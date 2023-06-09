@@ -62,8 +62,8 @@ export class MemberService {
   async update(updateMemberInput: UpdateMemberInput): Promise<Member> | null {
     const member: Member = await this.memberRepository.findOne({
       where: {
-        userId: updateMemberInput.user_id,
-        guildId: updateMemberInput.guild_id,
+        userId: updateMemberInput.userId,
+        guildId: updateMemberInput.guildId,
       },
     });
     if (member) {

@@ -6,5 +6,5 @@ export class UpdateGuildModuleVoiceGrowthInput extends PartialType(
   CreateGuildModuleVoiceGrowthInput,
 ) {
   @Field(() => Int)
-  guildId: string;
+  id: number;
 }

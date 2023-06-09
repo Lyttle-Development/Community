@@ -264,33 +264,35 @@ type Mutation {
 }
 
 input CreateGuildInput {
+  guildId: Int!
   enabled: Boolean!
 }
 
 input UpdateGuildInput {
+  guildId: Int
   enabled: Boolean
-  guildId: Int!
 }
 
 input CreateGuildModuleLevelInput {
+  guildId: String!
   enabled: Boolean!
   levelingMultiplier: Int!
-  announcementChannelId: Int
-  leaderboardChannelId: Int
+  announcementChannelId: String
+  leaderboardChannelId: String
   leaderboardLastWeek: Int
   nicknames: Boolean!
   lastLeaderboard: Timestamp!
 }
 
 input UpdateGuildModuleLevelInput {
+  guildId: String
   enabled: Boolean
   levelingMultiplier: Int
-  announcementChannelId: Int
-  leaderboardChannelId: Int
+  announcementChannelId: String
+  leaderboardChannelId: String
   leaderboardLastWeek: Int
   nicknames: Boolean
   lastLeaderboard: Timestamp
-  guildId: Int!
 }
 
 input CreateGuildModuleQotdInput {
@@ -348,6 +350,7 @@ input UpdateMemberInput {
 
 input CreateGuildModuleVoiceGrowthInput {
   channelId: Int!
+  guildId: Int!
   enabled: Boolean! = false
   preset: String
   prefix: String
@@ -356,11 +359,12 @@ input CreateGuildModuleVoiceGrowthInput {
 
 input UpdateGuildModuleVoiceGrowthInput {
   channelId: Int
+  guildId: Int
   enabled: Boolean = false
   preset: String
   prefix: String
   manual: Boolean = false
-  guildId: Int!
+  id: Int!
 }
 
 input CreateUserInput {
@@ -388,8 +392,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686226767993
-  callStart: Timestamp! = 1686226767993
+  cooldownTime: Timestamp! = 1686314187425
+  callStart: Timestamp! = 1686314187425
   points: Int! = 0
 }
 
@@ -398,8 +402,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686226767993
-  callStart: Timestamp = 1686226767993
+  cooldownTime: Timestamp = 1686314187425
+  callStart: Timestamp = 1686314187425
   points: Int = 0
 }
 

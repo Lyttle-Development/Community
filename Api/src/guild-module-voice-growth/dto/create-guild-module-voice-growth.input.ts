@@ -5,6 +5,9 @@ export class CreateGuildModuleVoiceGrowthInput {
   @Field(() => Int)
   channelId: string;
 
+  @Field(() => Int)
+  guildId: string;
+
   @Field(() => Boolean, { defaultValue: false })
   enabled: boolean;
 

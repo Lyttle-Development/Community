@@ -56,7 +56,8 @@ export class GuildModuleVoiceGrowthResolver {
     updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput,
   ) {
     return this.guildModuleVoiceGrowthService.update(
-      updateGuildModuleVoiceGrowthInput.id,
+      updateGuildModuleVoiceGrowthInput.guildId,
+      updateGuildModuleVoiceGrowthInput.channelId,
       updateGuildModuleVoiceGrowthInput,
     );
   }

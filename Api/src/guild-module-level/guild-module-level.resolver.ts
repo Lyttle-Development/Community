@@ -36,7 +36,7 @@ export class GuildModuleLevelResolver {
     updateGuildModuleLevelInput: UpdateGuildModuleLevelInput,
   ): Promise<GuildModuleLevel> | null {
     return this.guildModuleLevelService.update(
-      updateGuildModuleLevelInput.guild_id,
+      updateGuildModuleLevelInput.guildId,
       updateGuildModuleLevelInput,
     );
   }

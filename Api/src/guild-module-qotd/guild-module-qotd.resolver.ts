@@ -36,7 +36,7 @@ export class GuildModuleQotdResolver {
     updateGuildModuleQotdInput: UpdateGuildModuleQotdInput,
   ): Promise<GuildModuleQotd> | null {
     return this.guildModuleQotdService.update(
-      updateGuildModuleQotdInput.id,
+      updateGuildModuleQotdInput.guildId,
       updateGuildModuleQotdInput,
     );
   }
