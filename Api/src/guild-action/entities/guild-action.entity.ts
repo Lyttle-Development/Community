@@ -29,6 +29,10 @@ export class GuildAction {
   @Field(() => Boolean)
   executed: boolean;
 
+  @Column('bigint', { name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
+
   @Column('timestamp without time zone', {
     name: 'created_at',
     default: () => 'CURRENT_TIMESTAMP',
