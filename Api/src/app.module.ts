@@ -25,6 +25,8 @@ import { GuildActionModule } from './guild-action/guild-action.module';
 import { GuildModuleBirthdayModule } from './guild-module-birthday/guild-module-birthday.module';
 import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/guild-module-count-to-number.module';
 import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
+import { DiscordModule } from './discord/discord.module';
+import { Discord } from './discord/entities/discord.entity';
 
 @Module({
   imports: [
@@ -36,6 +38,7 @@ import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-modu
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
+        orphanedTypes: [Discord],
       },
     }),
     TypeOrmModule.forRootAsync({
@@ -72,6 +75,7 @@ import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-modu
     GuildModuleBirthdayModule,
     GuildModuleCountToNumberModule,
     GuildModuleEasterEggModule,
+    DiscordModule,
   ],
   controllers: [AppController],
   providers: [

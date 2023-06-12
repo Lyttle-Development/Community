@@ -155,6 +155,7 @@ type Guild {
   translations: [GuildTranslation!]!
   member: Member!
   members: [Member!]!
+  discord: Discord!
 }
 
 type GuildModuleQotd {
@@ -183,12 +184,24 @@ type User {
   profile: UserProfile!
 }
 
+type Discord {
+  guildId: String
+  userGuilds: [JSONObject!]!
+  guild: JSONObject!
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
 type Query {
   guilds: [Guild!]!
   guild(id: String!): Guild!
   findAll: [MemberModuleLevelDay!]!
   findOne(guildId: String!, userId: String!): MemberModuleLevelDay!
   findAllByGuild(guildId: String!): [Member!]!
+  discord: Discord!
   guildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
   guildActions: [GuildAction!]!
   guildAction(id: Int!): GuildAction!
@@ -377,8 +390,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686570797261
-  callStart: Timestamp! = 1686570797261
+  cooldownTime: Timestamp! = 1686581955658
+  callStart: Timestamp! = 1686581955658
   points: Int! = 0
 }
 
@@ -387,8 +400,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686570797261
-  callStart: Timestamp = 1686570797261
+  cooldownTime: Timestamp = 1686581955658
+  callStart: Timestamp = 1686581955658
   points: Int = 0
 }
 

@@ -17,10 +17,13 @@ export enum RoleEnum {
 
 export const ROLES_KEY = 'roles';
 
-export const CurrentUser = createParamDecorator(
+export const AuthorizationToken = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.user;
+    const request = ctx.getContext().req;
+    return (
+      request?.headers?.authorization ?? request?.cookies?.accessToken ?? null
+    );
   },
 );
 
