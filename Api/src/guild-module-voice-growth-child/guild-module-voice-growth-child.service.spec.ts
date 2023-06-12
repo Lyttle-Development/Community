@@ -9,7 +9,9 @@ describe('GuildModuleVoiceGrowthChildService', () => {
       providers: [GuildModuleVoiceGrowthChildService],
     }).compile();
 
-    service = module.get<GuildModuleVoiceGrowthChildService>(GuildModuleVoiceGrowthChildService);
+    service = module.get<GuildModuleVoiceGrowthChildService>(
+      GuildModuleVoiceGrowthChildService,
+    );
   });
 
   it('should be defined', () => {

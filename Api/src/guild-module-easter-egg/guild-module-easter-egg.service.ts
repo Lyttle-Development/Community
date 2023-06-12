@@ -16,7 +16,10 @@ export class GuildModuleEasterEggService {
     return `This action returns a #${id} guildModuleEasterEgg`;
   }
 
-  update(id: number, updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput) {
+  update(
+    id: number,
+    updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput,
+  ) {
     return `This action updates a #${id} guildModuleEasterEgg`;
   }
 

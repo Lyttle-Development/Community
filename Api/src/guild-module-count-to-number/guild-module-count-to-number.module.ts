@@ -3,6 +3,9 @@ import { GuildModuleCountToNumberService } from './guild-module-count-to-number.
 import { GuildModuleCountToNumberResolver } from './guild-module-count-to-number.resolver';
 
 @Module({
-  providers: [GuildModuleCountToNumberResolver, GuildModuleCountToNumberService]
+  providers: [
+    GuildModuleCountToNumberResolver,
+    GuildModuleCountToNumberService,
+  ],
 })
 export class GuildModuleCountToNumberModule {}

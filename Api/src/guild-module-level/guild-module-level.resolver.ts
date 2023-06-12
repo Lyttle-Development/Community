@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleLevelService } from './guild-module-level.service';
 import { GuildModuleLevel } from './entities/guild-module-level.entity';
 import { CreateGuildModuleLevelInput } from './dto/create-guild-module-level.input';
@@ -25,7 +25,7 @@ export class GuildModuleLevelResolver {
 
   @Query(() => GuildModuleLevel)
   findOne(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildModuleLevel> {
     return this.guildModuleLevelService.findOne(id);
   }
@@ -43,7 +43,7 @@ export class GuildModuleLevelResolver {
 
   @Mutation(() => GuildModuleLevel)
   removeGuildModuleLevel(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildModuleLevel> | null {
     return this.guildModuleLevelService.remove(id);
   }

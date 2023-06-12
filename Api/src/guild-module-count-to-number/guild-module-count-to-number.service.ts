@@ -4,7 +4,9 @@ import { UpdateGuildModuleCountToNumberInput } from './dto/update-guild-module-c
 
 @Injectable()
 export class GuildModuleCountToNumberService {
-  create(createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput) {
+  create(
+    createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput,
+  ) {
     return 'This action adds a new guildModuleCountToNumber';
   }
 
@@ -16,7 +18,10 @@ export class GuildModuleCountToNumberService {
     return `This action returns a #${id} guildModuleCountToNumber`;
   }
 
-  update(id: number, updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput) {
+  update(
+    id: number,
+    updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput,
+  ) {
     return `This action updates a #${id} guildModuleCountToNumber`;
   }
 

@@ -37,8 +37,8 @@ export class MemberModuleLevelDayResolver {
 
   @Query(() => MemberModuleLevelDay)
   findOne(
-    @Args('guildId', { type: () => Int }) guildId: string,
-    userId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
+    @Args('userId', { type: () => String }) userId: string,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }

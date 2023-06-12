@@ -4,7 +4,9 @@ import { UpdateGuildModuleVoiceGrowthChildInput } from './dto/update-guild-modul
 
 @Injectable()
 export class GuildModuleVoiceGrowthChildService {
-  create(createGuildModuleVoiceGrowthChildInput: CreateGuildModuleVoiceGrowthChildInput) {
+  create(
+    createGuildModuleVoiceGrowthChildInput: CreateGuildModuleVoiceGrowthChildInput,
+  ) {
     return 'This action adds a new guildModuleVoiceGrowthChild';
   }
 
@@ -16,7 +18,10 @@ export class GuildModuleVoiceGrowthChildService {
     return `This action returns a #${id} guildModuleVoiceGrowthChild`;
   }
 
-  update(id: number, updateGuildModuleVoiceGrowthChildInput: UpdateGuildModuleVoiceGrowthChildInput) {
+  update(
+    id: number,
+    updateGuildModuleVoiceGrowthChildInput: UpdateGuildModuleVoiceGrowthChildInput,
+  ) {
     return `This action updates a #${id} guildModuleVoiceGrowthChild`;
   }
 

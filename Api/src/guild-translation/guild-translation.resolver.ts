@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -34,14 +33,14 @@ export class GuildTranslationResolver {
 
   @Query(() => [GuildTranslation])
   findAllByGuild(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildTranslation[]> {
     return this.guildTranslationService.findAllByGuild(id);
   }
 
   @Query(() => GuildTranslation)
   findOne(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
     @Args('key', { type: () => String }) key: string,
   ): Promise<GuildTranslation> {
     return this.guildTranslationService.findOne(id, key);
@@ -62,7 +61,7 @@ export class GuildTranslationResolver {
 
   @Mutation(() => GuildTranslation)
   removeGuildTranslation(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildTranslation> | null {
     return this.guildTranslationService.remove(id);
   }

@@ -142,9 +142,11 @@ type GuildAction {
   key: String!
   values: String!
   executed: Boolean!
+  guildId: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
   guild: Guild!
+  getGuild: Guild!
 }
 
 type Guild {
@@ -201,11 +203,12 @@ type User {
 
 type Query {
   guilds: [Guild!]!
-  guild(id: Int!): Guild!
+  guild(id: String!): Guild!
   findAll: [MemberModuleLevelDay!]!
-  findOne(guildId: Int!): MemberModuleLevelDay!
-  findAllByGuild(guildId: Int!): [Member!]!
+  findOne(guildId: String!, userId: String!): MemberModuleLevelDay!
+  findAllByGuild(guildId: String!): [Member!]!
   guildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
+  guildActions: [GuildAction!]!
   guildAction(id: Int!): GuildAction!
   guildModuleBirthday(id: Int!): GuildModuleBirthday!
   guildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
@@ -215,34 +218,34 @@ type Query {
 type Mutation {
   createGuild(createGuildInput: CreateGuildInput!): Guild!
   updateGuild(updateGuildInput: UpdateGuildInput!): Guild!
-  removeGuild(id: Int!): Guild!
+  removeGuild(id: String!): Guild!
   createGuildModuleLevel(createGuildModuleLevelInput: CreateGuildModuleLevelInput!): GuildModuleLevel!
   updateGuildModuleLevel(updateGuildModuleLevelInput: UpdateGuildModuleLevelInput!): GuildModuleLevel!
-  removeGuildModuleLevel(id: Int!): GuildModuleLevel!
+  removeGuildModuleLevel(id: String!): GuildModuleLevel!
   createGuildModuleQotd(createGuildModuleQotdInput: CreateGuildModuleQotdInput!): GuildModuleQotd!
   updateGuildModuleQotd(updateGuildModuleQotdInput: UpdateGuildModuleQotdInput!): GuildModuleQotd!
-  removeGuildModuleQotd(id: Int!): GuildModuleQotd!
+  removeGuildModuleQotd(id: String!): GuildModuleQotd!
   createGuildMessage(createGuildMessageInput: CreateGuildMessageInput!): GuildMessage!
   updateGuildMessage(updateGuildMessageInput: UpdateGuildMessageInput!): GuildMessage!
-  removeGuildMessage(id: Int!): GuildMessage!
+  removeGuildMessage(id: String!): GuildMessage!
   createGuildTranslation(createGuildTranslationInput: CreateGuildTranslationInput!): GuildTranslation!
   updateGuildTranslation(updateGuildTranslationInput: UpdateGuildTranslationInput!): GuildTranslation!
-  removeGuildTranslation(id: Int!): GuildTranslation!
+  removeGuildTranslation(id: String!): GuildTranslation!
   createMember(createMemberInput: CreateMemberInput!): Member!
   updateMember(updateMemberInput: UpdateMemberInput!): Member!
-  removeMember(id: Int!): Member!
+  removeMember(id: String!): Member!
   createGuildModuleVoiceGrowth(createGuildModuleVoiceGrowthInput: CreateGuildModuleVoiceGrowthInput!): GuildModuleVoiceGrowth!
   updateGuildModuleVoiceGrowth(updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput!): GuildModuleVoiceGrowth!
-  removeGuildModuleVoiceGrowth(id: Int!): GuildModuleVoiceGrowth!
+  removeGuildModuleVoiceGrowth(id: String!): GuildModuleVoiceGrowth!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  removeUser(id: String!): User!
   createUserProfile(createUserProfileInput: CreateUserProfileInput!): UserProfile!
   updateUserProfile(updateUserProfileInput: UpdateUserProfileInput!): UserProfile!
-  removeUserProfile(id: Int!): UserProfile!
+  removeUserProfile(id: String!): UserProfile!
   createMemberModuleLevel(createMemberModuleLevelInput: CreateMemberModuleLevelInput!): MemberModuleLevel!
   updateMemberModuleLevel(updateMemberModuleLevelInput: UpdateMemberModuleLevelInput!): MemberModuleLevel!
-  removeMemberModuleLevel(id: Int!): MemberModuleLevel!
+  removeMemberModuleLevel(id: String!): MemberModuleLevel!
   createMemberModuleLevelDay(createMemberModuleLevelDayInput: CreateMemberModuleLevelDayInput!): MemberModuleLevelDay!
   updateMemberModuleLevelDay(updateMemberModuleLevelDayInput: UpdateMemberModuleLevelDayInput!): MemberModuleLevelDay!
   removeMemberModuleLevelDay(guildId: Int!): MemberModuleLevelDay!
@@ -392,8 +395,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686314500228
-  callStart: Timestamp! = 1686314500229
+  cooldownTime: Timestamp! = 1686566120298
+  callStart: Timestamp! = 1686566120298
   points: Int! = 0
 }
 
@@ -402,8 +405,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686314500228
-  callStart: Timestamp = 1686314500229
+  cooldownTime: Timestamp = 1686566120298
+  callStart: Timestamp = 1686566120298
   points: Int = 0
 }
 
@@ -443,13 +446,17 @@ input UpdateGuildModuleVoiceGrowthChildInput {
 }
 
 input CreateGuildActionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  key: String!
+  values: String!
+  executed: Boolean!
+  guildId: Int!
 }
 
 input UpdateGuildActionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  key: String
+  values: String
+  executed: Boolean
+  guildId: Int
   id: Int!
 }
 

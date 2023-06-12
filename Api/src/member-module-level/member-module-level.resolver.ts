@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -36,7 +35,7 @@ export class MemberModuleLevelResolver {
 
   @Query(() => MemberModuleLevel)
   findOne(
-    @Args('id', { type: () => Int }) guildId: string,
+    @Args('id', { type: () => String }) guildId: string,
     userId: string,
   ): Promise<MemberModuleLevel> {
     return this.memberModuleLevelService.findOne(guildId, userId);
@@ -75,7 +74,7 @@ export class MemberModuleLevelResolver {
 
   @Mutation(() => MemberModuleLevel)
   removeMemberModuleLevel(
-    @Args('id', { type: () => Int }) guildId: string,
+    @Args('id', { type: () => String }) guildId: string,
     userId: string,
   ): Promise<MemberModuleLevel> | null {
     return this.memberModuleLevelService.remove(guildId, userId);

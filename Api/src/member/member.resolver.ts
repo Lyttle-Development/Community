@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -33,15 +32,15 @@ export class MemberResolver {
 
   @Query(() => Member)
   findOne(
-    @Args('userId', { type: () => Int }) userId: string,
-    @Args('guildId', { type: () => Int }) guildId: string,
+    @Args('userId', { type: () => String }) userId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
   ): Promise<Member> {
     return this.memberService.findOne(userId, guildId);
   }
 
   @Query(() => [Member])
   findAllByGuild(
-    @Args('guildId', { type: () => Int }) guildId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
   ): Promise<Member[]> {
     return this.memberService.findAllByGuild(guildId);
   }
@@ -73,7 +72,7 @@ export class MemberResolver {
 
   @Mutation(() => Member)
   removeMember(
-    @Args('id', { type: () => Int }) guildId: string,
+    @Args('id', { type: () => String }) guildId: string,
     userId: string,
   ): Promise<Member> | null {
     return this.memberService.remove(guildId, userId);

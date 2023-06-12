@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -35,7 +34,7 @@ export class GuildResolver {
   }
 
   @Query(() => Guild, { name: 'guild' })
-  findOne(@Args('id', { type: () => Int }) id: string): Promise<Guild> {
+  findOne(@Args('id', { type: () => String }) id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
@@ -47,7 +46,7 @@ export class GuildResolver {
   }
 
   @Mutation(() => Guild)
-  removeGuild(@Args('id', { type: () => Int }) id: string): Promise<Guild> {
+  removeGuild(@Args('id', { type: () => String }) id: string): Promise<Guild> {
     return this.guildService.remove(id);
   }
 
