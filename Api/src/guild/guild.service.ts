@@ -44,57 +44,54 @@ export class GuildService {
     return this.guildRepository.find();
   }
 
-  findOne(id: number): Promise<Guild> {
+  findOne(id: string): Promise<Guild> {
     return this.guildRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
   }
 
-  getGuildModuleLevel(guild_id: number): Promise<GuildModuleLevel> {
-    return this.guildModuleLevelService.findOne(guild_id);
+  getGuildModuleLevel(guildId: string): Promise<GuildModuleLevel> {
+    return this.guildModuleLevelService.findOne(guildId);
   }
 
-  getGuildModuleQotd(guild_id: number): Promise<GuildModuleQotd> {
-    return this.guildModuleQotdService.findOne(guild_id);
+  getGuildModuleQotd(guildId: string): Promise<GuildModuleQotd> {
+    return this.guildModuleQotdService.findOne(guildId);
   }
 
-  getGuildMessage(guild_id: number, id: number): Promise<GuildMessage> {
-    return this.guildMessageService.findOneByGuildAndMessageId(guild_id, id);
+  getGuildMessage(id: string): Promise<GuildMessage> {
+    return this.guildMessageService.findOne(id);
   }
 
-  getGuildMessages(guild_id: number): Promise<GuildMessage[]> {
-    return this.guildMessageService.findAllByGuild(guild_id);
+  getGuildMessages(guildId: string): Promise<GuildMessage[]> {
+    return this.guildMessageService.findAllByGuild(guildId);
   }
 
-  getGuildModuleVoiceGrowth(guild_id: number): Promise<GuildModuleVoiceGrowth> {
-    return this.guildModuleVoiceGrowthService.findOne(guild_id);
+  getGuildModuleVoiceGrowth(guildId: string): Promise<GuildModuleVoiceGrowth> {
+    return this.guildModuleVoiceGrowthService.findOne(guildId);
   }
 
-  getGuildTranslation(
-    guild_id: number,
-    key: string,
-  ): Promise<GuildTranslation> {
-    return this.guildTranslationService.findOne(guild_id, key);
+  getGuildTranslation(guildId: string, key: string): Promise<GuildTranslation> {
+    return this.guildTranslationService.findOne(guildId, key);
   }
 
-  getGuildTranslations(guild_id: number): Promise<GuildTranslation[]> {
-    return this.guildTranslationService.findAllByGuild(guild_id);
+  getGuildTranslations(guildId: string): Promise<GuildTranslation[]> {
+    return this.guildTranslationService.findAllByGuild(guildId);
   }
 
-  getMembers(guild_id: number): Promise<Member[]> {
-    return this.memberService.findAllByGuild(guild_id);
+  getMembers(guildId: string): Promise<Member[]> {
+    return this.memberService.findAllByGuild(guildId);
   }
 
-  getMember(guild_id: number, user_id: number): Promise<Member> {
-    return this.memberService.findOne(user_id, guild_id);
+  getMember(guildId: string, userId: string): Promise<Member> {
+    return this.memberService.findOne(userId, guildId);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildInput: UpdateGuildInput,
   ): Promise<Guild> | null {
     const guild: Guild = await this.guildRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
     if (guild) {
       return this.guildRepository.save({
@@ -105,9 +102,9 @@ export class GuildService {
     throw new Error('Guild not found');
   }
 
-  async remove(id: number): Promise<Guild> | null {
+  async remove(id: string): Promise<Guild> | null {
     const guild: Guild = await this.guildRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
     if (guild) {
       return this.guildRepository.remove(guild);

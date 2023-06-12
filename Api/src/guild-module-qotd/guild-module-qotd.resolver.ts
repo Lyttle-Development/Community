@@ -25,7 +25,7 @@ export class GuildModuleQotdResolver {
 
   @Query(() => GuildModuleQotd)
   findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => Int }) id: string,
   ): Promise<GuildModuleQotd> {
     return this.guildModuleQotdService.findOne(id);
   }
@@ -36,14 +36,14 @@ export class GuildModuleQotdResolver {
     updateGuildModuleQotdInput: UpdateGuildModuleQotdInput,
   ): Promise<GuildModuleQotd> | null {
     return this.guildModuleQotdService.update(
-      updateGuildModuleQotdInput.id,
+      updateGuildModuleQotdInput.guildId,
       updateGuildModuleQotdInput,
     );
   }
 
   @Mutation(() => GuildModuleQotd)
   removeGuildModuleQotd(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => Int }) id: string,
   ): Promise<GuildModuleQotd> | null {
     return this.guildModuleQotdService.remove(id);
   }

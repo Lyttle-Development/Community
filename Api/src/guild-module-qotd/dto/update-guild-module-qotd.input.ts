@@ -6,5 +6,5 @@ export class UpdateGuildModuleQotdInput extends PartialType(
   CreateGuildModuleQotdInput,
 ) {
   @Field(() => Int)
-  id: number;
+  guildId: string;
 }

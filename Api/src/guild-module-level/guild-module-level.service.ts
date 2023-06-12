@@ -26,23 +26,23 @@ export class GuildModuleLevelService {
     return this.guildModuleLevelRepository.find();
   }
 
-  findOne(id: number): Promise<GuildModuleLevel> {
+  findOne(id: string): Promise<GuildModuleLevel> {
     return this.guildModuleLevelRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
   }
 
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildModuleLevelInput: UpdateGuildModuleLevelInput,
   ): Promise<GuildModuleLevel> | null {
     const guildModuleLevel: GuildModuleLevel =
       await this.guildModuleLevelRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleLevel) {
       return this.guildModuleLevelRepository.save({
@@ -53,10 +53,10 @@ export class GuildModuleLevelService {
     throw new Error('GuildModuleLevel not found');
   }
 
-  async remove(id: number): Promise<GuildModuleLevel> | null {
+  async remove(id: string): Promise<GuildModuleLevel> | null {
     const guildModuleLevel: GuildModuleLevel =
       await this.guildModuleLevelRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleLevel) {
       return this.guildModuleLevelRepository.remove(guildModuleLevel);

@@ -3,17 +3,17 @@
 # ------------------------------------------------------
 
 type GuildModuleLevel {
-  guild_id: Float!
-  guild: Guild!
+  guildId: String!
   enabled: Boolean!
-  leveling_multiplier: Int!
-  announcement_channel_id: Float
-  leaderboard_channel_id: Float
-  leaderboard_last_week: Float
+  levelingMultiplier: Int!
+  announcementChannelId: String
+  leaderboardChannelId: String
+  leaderboardLastWeek: Int
   nicknames: Boolean!
-  last_leaderboard: Timestamp!
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  lastLeaderboard: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
 }
 
 """
@@ -21,121 +21,146 @@ type GuildModuleLevel {
 """
 scalar Timestamp
 
-type GuildModuleQotd {
-  guild_id: Float!
-  guild: Guild!
-  enabled: Boolean!
-  channel_id: Float!
-  message_id: Float!
-  nicknames: Boolean!
-  created_at: Timestamp!
-  updated_at: Timestamp!
-}
-
 type GuildMessage {
   id: Int!
-  guild_id: Float!
+  channelId: String!
+  messageId: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
   guild: Guild!
-  channel_id: Float!
-  message_id: Float!
-  created_at: Timestamp!
-  updated_at: Timestamp!
 }
 
 type GuildTranslation {
-  guild_id: Float!
-  guild: Guild!
+  guildId: String!
   key: String!
   value: String!
-  created_at: Timestamp!
-  updated_at: Timestamp!
-}
-
-type Profile {
-  user_id: Float!
-  user: User!
-  tokens: Int!
-  tokens_used: Int!
-  created_at: Timestamp!
-  updated_at: Timestamp!
-}
-
-type User {
-  user_id: Float!
-  members: [Member!]!
-  profile: Profile!
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
 }
 
 type MemberModuleLevelDay {
-  guild_id: Float!
-  user_id: Float!
+  userId: String!
+  guildId: String!
+  pointsMonday: Int!
+  pointsTuesday: Int!
+  pointsWednesday: Int!
+  pointsThursday: Int!
+  pointsFriday: Int!
+  pointsSaturday: Int!
+  pointsSunday: Int!
+  points: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  memberModuleLevel: MemberModuleLevel!
   guild: Guild!
   member: Member!
-  points_monday: Int!
-  points_tuesday: Int!
-  points_wednesday: Int!
-  points_thursday: Int!
-  points_friday: Int!
-  points_saturday: Int!
-  points_sunday: Int!
-  points: Int!
-  created_at: Timestamp!
-  updated_at: Timestamp!
 }
 
 type MemberModuleLevel {
-  guild_id: Float!
-  user_id: Float!
-  guild: Guild!
-  member: Member!
-  memberModuleLevelDay: MemberModuleLevelDay!
-  spam_check: Int!
-  cooldown_count: Int!
-  cooldown_time: Timestamp!
-  call_start: Timestamp!
+  userId: String!
+  guildId: String!
+  spamCheck: Int!
+  cooldownCount: Int!
+  cooldownTime: Timestamp!
+  callStart: Timestamp!
   points: Float!
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  member: Member!
+  memberModuleLevelDay: MemberModuleLevelDay
+  guild: Guild!
 }
 
 type Member {
-  guild_id: Float!
-  user_id: Float!
-  guild: Guild!
-  user: User!
-  memberModuleLevel: MemberModuleLevel!
+  userId: String!
+  guildId: String!
   birthday: Int
   nickname: String
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+  memberModuleLevel: MemberModuleLevel
   getUser: User!
 }
 
+type GuildModuleVoiceGrowthChild {
+  channelId: Int!
+  guildId: Int!
+  name: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guildModuleVoiceGrowth: GuildModuleVoiceGrowth!
+}
+
 type GuildModuleVoiceGrowth {
-  guild_id: Float!
-  channel_id: Float!
-  guild: Guild!
+  channelId: String!
+  guildId: String!
   enabled: Boolean!
   preset: String
   prefix: String
   manual: Boolean!
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+  guildModuleVoiceGrowthChildren: [GuildModuleVoiceGrowthChild!]
+}
+
+type GuildModuleBirthday {
+  guildId: Int!
+  enabled: Boolean!
+  birthdayChannelId: Int
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+}
+
+type GuildModuleCountToNumber {
+  channelId: Int!
+  guildId: Int!
+  enabled: Boolean!
+  nextDate: Timestamp!
+  threadId: Int!
+  lastNumber: Int!
+  lastMemberId: Int!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+}
+
+type GuildModuleEasterEgg {
+  guildId: Int!
+  enabled: Boolean!
+  lastJoker: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+}
+
+type GuildAction {
+  id: Int!
+  key: String!
+  values: String!
+  executed: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
 }
 
 type Guild {
-  guild_id: Float!
-  members: [Member!]
-  guildTranslations: [GuildTranslation!]
-  guildModuleLevel: GuildModuleLevel
-  guildModuleQotd: GuildModuleQotd
-  guildModuleVoiceGrowth: GuildModuleVoiceGrowth
-  guildMessages: [GuildMessage!]
+  guildId: String!
   enabled: Boolean!
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guildActions: [GuildAction!]
+  guildMessages: [GuildMessage!]
+  guildModuleBirthday: GuildModuleBirthday
+  guildModuleCountToNumbers: [GuildModuleCountToNumber!]
+  guildModuleEasterEgg: GuildModuleEasterEgg
+  guildModuleLevel: GuildModuleLevel
+  guildModuleVoiceGrowths: [GuildModuleVoiceGrowth!]
+  guildTranslations: [GuildTranslation!]
+  members: [Member!]
   moduleLevel: GuildModuleLevel!
   moduleQotd: GuildModuleQotd!
   moduleVoiceGrowth: GuildModuleVoiceGrowth!
@@ -146,12 +171,45 @@ type Guild {
   member: Member!
 }
 
+type GuildModuleQotd {
+  guildId: String!
+  enabled: Boolean!
+  levelingMultiplier: Int!
+  messageId: String
+  channelId: String
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Guild!
+}
+
+type UserProfile {
+  userId: Int!
+  tokens: Float!
+  tokensUsed: Float!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  user: User!
+}
+
+type User {
+  userId: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  userProfile: UserProfile
+  profile: UserProfile!
+}
+
 type Query {
   guilds: [Guild!]!
   guild(id: Int!): Guild!
   findAll: [MemberModuleLevelDay!]!
   findOne(guildId: Int!): MemberModuleLevelDay!
   findAllByGuild(guildId: Int!): [Member!]!
+  guildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
+  guildAction(id: Int!): GuildAction!
+  guildModuleBirthday(id: Int!): GuildModuleBirthday!
+  guildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
+  guildModuleEasterEgg(id: Int!): GuildModuleEasterEgg!
 }
 
 type Mutation {
@@ -179,72 +237,89 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
-  createProfile(createProfileInput: CreateProfileInput!): Profile!
-  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
-  removeProfile(id: Int!): Profile!
+  createUserProfile(createUserProfileInput: CreateUserProfileInput!): UserProfile!
+  updateUserProfile(updateUserProfileInput: UpdateUserProfileInput!): UserProfile!
+  removeUserProfile(id: Int!): UserProfile!
   createMemberModuleLevel(createMemberModuleLevelInput: CreateMemberModuleLevelInput!): MemberModuleLevel!
   updateMemberModuleLevel(updateMemberModuleLevelInput: UpdateMemberModuleLevelInput!): MemberModuleLevel!
   removeMemberModuleLevel(id: Int!): MemberModuleLevel!
   createMemberModuleLevelDay(createMemberModuleLevelDayInput: CreateMemberModuleLevelDayInput!): MemberModuleLevelDay!
   updateMemberModuleLevelDay(updateMemberModuleLevelDayInput: UpdateMemberModuleLevelDayInput!): MemberModuleLevelDay!
   removeMemberModuleLevelDay(guildId: Int!): MemberModuleLevelDay!
+  createGuildModuleVoiceGrowthChild(createGuildModuleVoiceGrowthChildInput: CreateGuildModuleVoiceGrowthChildInput!): GuildModuleVoiceGrowthChild!
+  updateGuildModuleVoiceGrowthChild(updateGuildModuleVoiceGrowthChildInput: UpdateGuildModuleVoiceGrowthChildInput!): GuildModuleVoiceGrowthChild!
+  removeGuildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
+  createGuildAction(createGuildActionInput: CreateGuildActionInput!): GuildAction!
+  updateGuildAction(updateGuildActionInput: UpdateGuildActionInput!): GuildAction!
+  removeGuildAction(id: Int!): GuildAction!
+  createGuildModuleBirthday(createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput!): GuildModuleBirthday!
+  updateGuildModuleBirthday(updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput!): GuildModuleBirthday!
+  removeGuildModuleBirthday(id: Int!): GuildModuleBirthday!
+  createGuildModuleCountToNumber(createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput!): GuildModuleCountToNumber!
+  updateGuildModuleCountToNumber(updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput!): GuildModuleCountToNumber!
+  removeGuildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
+  createGuildModuleEasterEgg(createGuildModuleEasterEggInput: CreateGuildModuleEasterEggInput!): GuildModuleEasterEgg!
+  updateGuildModuleEasterEgg(updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput!): GuildModuleEasterEgg!
+  removeGuildModuleEasterEgg(id: Int!): GuildModuleEasterEgg!
 }
 
 input CreateGuildInput {
+  guildId: Int!
   enabled: Boolean!
 }
 
 input UpdateGuildInput {
+  guildId: Int
   enabled: Boolean
-  id: Int!
 }
 
 input CreateGuildModuleLevelInput {
+  guildId: String!
   enabled: Boolean!
-  leveling_multiplier: Int!
-  announcement_channel_id: Int
-  leaderboard_channel_id: Int
-  leaderboard_last_week: Int
+  levelingMultiplier: Int!
+  announcementChannelId: String
+  leaderboardChannelId: String
+  leaderboardLastWeek: Int
   nicknames: Boolean!
-  last_leaderboard: Timestamp!
+  lastLeaderboard: Timestamp!
 }
 
 input UpdateGuildModuleLevelInput {
+  guildId: String
   enabled: Boolean
-  leveling_multiplier: Int
-  announcement_channel_id: Int
-  leaderboard_channel_id: Int
-  leaderboard_last_week: Int
+  levelingMultiplier: Int
+  announcementChannelId: String
+  leaderboardChannelId: String
+  leaderboardLastWeek: Int
   nicknames: Boolean
-  last_leaderboard: Timestamp
-  id: Int!
+  lastLeaderboard: Timestamp
 }
 
 input CreateGuildModuleQotdInput {
   enabled: Boolean!
-  channel_id: Int!
-  message_id: Int!
+  channelId: Int!
+  messageId: Int!
   nicknames: Boolean!
 }
 
 input UpdateGuildModuleQotdInput {
   enabled: Boolean
-  channel_id: Int
-  message_id: Int
+  channelId: Int
+  messageId: Int
   nicknames: Boolean
-  id: Int!
+  guildId: Int!
 }
 
 input CreateGuildMessageInput {
-  guild_id: Int!
-  message_id: Int!
-  channel_id: Int!
+  guildId: Int!
+  messageId: Int!
+  channelId: Int!
 }
 
 input UpdateGuildMessageInput {
-  guild_id: Int
-  message_id: Int
-  channel_id: Int
+  guildId: Int
+  messageId: Int
+  channelId: Int
   id: Int!
 }
 
@@ -254,29 +329,28 @@ input CreateGuildTranslationInput {
 }
 
 input UpdateGuildTranslationInput {
-  key: String
+  key: Int!
   value: String
-  id: Int!
+  guildId: Int!
 }
 
 input CreateMemberInput {
-  guild_id: Int!
-  user_id: Int!
-  birthday_date: Timestamp
+  guildId: Int!
+  userId: Int!
   birthday: Int
   nickname: String
 }
 
 input UpdateMemberInput {
-  guild_id: Int!
-  user_id: Int!
-  birthday_date: Timestamp
+  guildId: Int
+  userId: Int
   birthday: Int
   nickname: String
 }
 
 input CreateGuildModuleVoiceGrowthInput {
-  channel_id: Int!
+  channelId: Int!
+  guildId: Int!
   enabled: Boolean! = false
   preset: String
   prefix: String
@@ -284,7 +358,8 @@ input CreateGuildModuleVoiceGrowthInput {
 }
 
 input UpdateGuildModuleVoiceGrowthInput {
-  channel_id: Int
+  channelId: Int
+  guildId: Int
   enabled: Boolean = false
   preset: String
   prefix: String
@@ -297,63 +372,116 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  user_id: Int
-  id: Int!
+  user_id: Int!
 }
 
-input CreateProfileInput {
+input CreateUserProfileInput {
   user_id: Int!
   tokens: Int!
   tokens_used: Int!
 }
 
-input UpdateProfileInput {
+input UpdateUserProfileInput {
   user_id: Int
   tokens: Int
   tokens_used: Int
-  id: Int!
 }
 
 input CreateMemberModuleLevelInput {
-  guild_id: Int!
-  user_id: Int!
-  spam_check: Int! = 0
-  cooldown_count: Int! = 0
-  cooldown_time: Timestamp! = 1686563754663
-  call_start: Timestamp! = 1686563754663
+  guildId: Int!
+  userId: Int!
+  spamCheck: Int! = 0
+  cooldownCount: Int! = 0
+  cooldownTime: Timestamp! = 1686314500228
+  callStart: Timestamp! = 1686314500229
   points: Int! = 0
 }
 
 input UpdateMemberModuleLevelInput {
-  guild_id: Int!
-  user_id: Int!
-  spam_check: Int = 0
-  cooldown_count: Int = 0
-  cooldown_time: Timestamp = 1686563754663
-  call_start: Timestamp = 1686563754663
+  guildId: Int!
+  userId: Int!
+  spamCheck: Int = 0
+  cooldownCount: Int = 0
+  cooldownTime: Timestamp = 1686314500228
+  callStart: Timestamp = 1686314500229
   points: Int = 0
 }
 
 input CreateMemberModuleLevelDayInput {
-  guild_id: Int!
-  user_id: Int!
-  points_monday: Int! = 0
-  points_tuesday: Int! = 0
-  points_wednesday: Int! = 0
-  points_thursday: Int! = 0
-  points_friday: Int! = 0
-  points_saturday: Int! = 0
-  points_sunday: Int! = 0
+  guildId: Int!
+  userId: Int!
+  pointsMonday: Int! = 0
+  pointsTuesday: Int! = 0
+  pointsWednesday: Int! = 0
+  pointsThursday: Int! = 0
+  pointsFriday: Int! = 0
+  pointsSaturday: Int! = 0
+  pointsSunday: Int! = 0
 }
 
 input UpdateMemberModuleLevelDayInput {
-  guild_id: Int!
-  user_id: Int!
-  points_monday: Int = 0
-  points_tuesday: Int = 0
-  points_wednesday: Int = 0
-  points_thursday: Int = 0
-  points_friday: Int = 0
-  points_saturday: Int = 0
-  points_sunday: Int = 0
+  guildId: Int!
+  userId: Int!
+  pointsMonday: Int = 0
+  pointsTuesday: Int = 0
+  pointsWednesday: Int = 0
+  pointsThursday: Int = 0
+  pointsFriday: Int = 0
+  pointsSaturday: Int = 0
+  pointsSunday: Int = 0
+}
+
+input CreateGuildModuleVoiceGrowthChildInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleVoiceGrowthChildInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildActionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildActionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildModuleBirthdayInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleBirthdayInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildModuleCountToNumberInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleCountToNumberInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateGuildModuleEasterEggInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateGuildModuleEasterEggInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

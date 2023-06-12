@@ -37,8 +37,8 @@ export class MemberModuleLevelDayResolver {
 
   @Query(() => MemberModuleLevelDay)
   findOne(
-    @Args('guildId', { type: () => Int }) guildId: number,
-    userId: number,
+    @Args('guildId', { type: () => Int }) guildId: string,
+    userId: string,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }
@@ -46,7 +46,7 @@ export class MemberModuleLevelDayResolver {
   @ResolveField(() => Guild)
   guild(@Parent() memberModuleLevelDay: MemberModuleLevelDay): Promise<Guild> {
     return this.memberModuleLevelDayService.getGuild(
-      memberModuleLevelDay.guild_id,
+      memberModuleLevelDay.guildId,
     );
   }
 
@@ -55,8 +55,8 @@ export class MemberModuleLevelDayResolver {
     @Parent() memberModuleLevelDay: MemberModuleLevelDay,
   ): Promise<Member> {
     return this.memberModuleLevelDayService.getMember(
-      memberModuleLevelDay.guild_id,
-      memberModuleLevelDay.user_id,
+      memberModuleLevelDay.guildId,
+      memberModuleLevelDay.userId,
     );
   }
 
@@ -72,7 +72,7 @@ export class MemberModuleLevelDayResolver {
 
   @Mutation(() => MemberModuleLevelDay)
   removeMemberModuleLevelDay(
-    @Args('guildId', { type: () => Int }) guildId: number,
+    @Args('guildId', { type: () => Int }) guildId: string,
     userId1: number,
   ): Promise<MemberModuleLevelDay> | null {
     return this.memberModuleLevelDayService.remove(guildId, userId1);

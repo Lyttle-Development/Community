@@ -1,74 +1,81 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Member } from '../../member/entities/member.entity';
-import { Guild } from '../../guild/entities/guild.entity';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
+import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
 
-@Entity('member__module__level__day')
+@Index(
+  'member__module__level__day_user_id_guild_id_key',
+  ['guildId', 'userId'],
+  { unique: true },
+)
+@Index('member__module__level__day_pkey', ['guildId', 'userId'], {
+  unique: true,
+})
+@Entity('member__module__level__day', { schema: 'public' })
 @ObjectType()
 export class MemberModuleLevelDay {
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'user_id' })
+  @Field(() => String)
+  userId: string;
 
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  user_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
+  @Column('integer', { name: 'points_monday', default: () => '0' })
+  @Field(() => Int)
+  pointsMonday: number;
 
-  @OneToOne(() => Member, (member: Member) => member.user_id)
-  @Field(() => Member)
-  member: Member;
+  @Column('integer', { name: 'points_tuesday', default: () => '0' })
+  @Field(() => Int)
+  pointsTuesday: number;
 
-  // Values
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_monday: number;
+  @Column('integer', { name: 'points_wednesday', default: () => '0' })
+  @Field(() => Int)
+  pointsWednesday: number;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_tuesday: number;
+  @Column('integer', { name: 'points_thursday', default: () => '0' })
+  @Field(() => Int)
+  pointsThursday: number;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_wednesday: number;
+  @Column('integer', { name: 'points_friday', default: () => '0' })
+  @Field(() => Int)
+  pointsFriday: number;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_thursday: number;
+  @Column('integer', { name: 'points_saturday', default: () => '0' })
+  @Field(() => Int)
+  pointsSaturday: number;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_friday: number;
+  @Column('integer', { name: 'points_sunday', default: () => '0' })
+  @Field(() => Int)
+  pointsSunday: number;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_saturday: number;
-
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  points_sunday: number;
-
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
+  @Column('integer', { name: 'points', default: () => '0' })
+  @Field(() => Int)
   points: number;
 
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  updatedAt: Date;
+
+  @OneToOne(
+    () => MemberModuleLevel,
+    (memberModuleLevel) => memberModuleLevel.memberModuleLevelDay,
+    { onDelete: 'RESTRICT', onUpdate: 'CASCADE' },
+  )
+  @JoinColumn([
+    { name: 'user_id', referencedColumnName: 'userId' },
+    { name: 'guild_id', referencedColumnName: 'guildId' },
+  ])
+  @Field(() => MemberModuleLevel)
+  memberModuleLevel: MemberModuleLevel;
 }

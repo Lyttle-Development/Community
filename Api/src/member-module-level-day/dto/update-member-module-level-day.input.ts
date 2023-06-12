@@ -6,8 +6,8 @@ export class UpdateMemberModuleLevelDayInput extends PartialType(
   CreateMemberModuleLevelDayInput,
 ) {
   @Field(() => Int)
-  guild_id: number;
+  guildId: string;
 
   @Field(() => Int)
-  user_id: number;
+  userId: string;
 }
