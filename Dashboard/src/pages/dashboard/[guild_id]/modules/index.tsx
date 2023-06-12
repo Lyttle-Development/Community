@@ -41,7 +41,7 @@ function Page() {
   useEffect(() => {
     if (!authorized) return;
     void refetch();
-  }, [authorized]);
+  }, [authorized, guildId]);
 
   // Update selected guild id from context
   useEffect(() => {
