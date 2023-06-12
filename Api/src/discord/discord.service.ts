@@ -28,12 +28,15 @@ export class DiscordService {
   async getUserGuilds(token: string): Promise<object[]> {
     if (!token) return null;
 
-    const result = await fetch('https://discord.com/api/users/@me/guilds', {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${token}`,
+    const result = await fetch(
+      'https://discord.com/api/users/@me/guilds?with_counts=true',
+      {
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     return (await result.json()) ?? [];
   }

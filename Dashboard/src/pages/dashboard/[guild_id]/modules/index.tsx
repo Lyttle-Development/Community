@@ -49,7 +49,6 @@ function Page() {
     if (!authorized) return;
     if (!data) return;
 
-    console.log(data);
     const lvls = data.guild.moduleLevel ?? {};
 
     // Get modules
@@ -57,13 +56,9 @@ function Page() {
       getLevelsConfig({
         guildId,
         enabled: lvls.enabled ?? false,
-        levelsId: lvls.guildId ?? null,
-        nicknameId: lvls.guildId ?? null,
         nicknameActive: lvls.nicknames ?? false,
         announcementId: lvls.announcementChannelId ?? null,
-        announcementActive: typeof lvls.announcementChannelId === 'string',
         leaderboardId: lvls.leaderboardChannelId ?? null,
-        leaderboardActive: typeof lvls.leaderboardChannelId === 'string',
       }),
       getBirthdaysConfig(guildId),
       // getDynamicVoiceConfig(guildId),

@@ -36,13 +36,9 @@ const msgLeaderboardDescription = getMessage(pfx + 'leaderboard.description');
 export interface GetLevelsConfigProps {
   guildId: string;
   enabled: boolean;
-  levelsId: string | null;
-  nicknameId: string | null;
   nicknameActive: boolean;
   announcementId: string | null;
-  announcementActive: boolean;
   leaderboardId: string | null;
-  leaderboardActive: boolean;
 }
 
 // Config:

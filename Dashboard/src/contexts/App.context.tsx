@@ -4,6 +4,23 @@ import { getMessage } from '@lyttledev-dashboard/utils';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { useWindowSize } from '@lyttledev-dashboard/hooks/useWindowSize';
 import { Constants } from '@lyttledev-dashboard/constants';
+import { gql, useQuery } from '@apollo/client';
+
+export interface GuildInfo {
+  id?: string;
+  name?: string;
+  icon?: string;
+}
+
+const GuildQuery = gql`
+  query guild($guildId: String!) {
+    guild(id: $guildId) {
+      discord {
+        guild
+      }
+    }
+  }
+`;
 
 export type Change = string | number | boolean | null;
 
@@ -42,6 +59,7 @@ export interface AppContextInterface {
   setMainNavOpen: (state: boolean) => void;
   toggleMainNav: () => void;
   selectedGuildId: string | null;
+  selectedGuild: GuildInfo;
   setSelectedGuildId: (guildId: string | null) => void;
   pageTitle: string;
   setPageTitle: (title: string) => void;
@@ -108,9 +126,27 @@ export function AppProvider({ children }: AppContextProps) {
     localChanges ? JSON.parse(localChanges) : {},
   );
 
+  const [selectedGuild, setSelectedGuild] = useState<GuildInfo>({});
+  const { data: guildData, refetch } = useQuery(GuildQuery, {
+    variables: { guildId: selectedGuildId },
+  });
+
+  useEffect(() => {
+    const getIcon = (guild: { id: string; icon: string }) =>
+      `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`;
+    const guild = guildData?.guild?.discord?.guild ?? null;
+    if (!guild) return;
+    setSelectedGuild({
+      id: guild?.id,
+      name: guild?.name,
+      icon: getIcon(guild),
+    });
+  }, [guildData]);
+
   useEffect(() => {
     const guildChanges = storage.get(localGuildChanges) ?? null;
     setChanges(guildChanges ? JSON.parse(guildChanges) : {});
+    if (selectedGuildId && selectedGuild.id !== selectedGuildId) void refetch();
   }, [selectedGuildId]);
 
   useEffect(() => {
@@ -191,6 +227,7 @@ export function AppProvider({ children }: AppContextProps) {
         toggleMainNav,
         setSelectedGuildId,
         selectedGuildId,
+        selectedGuild,
         pageTitle,
         setPageTitle,
         mobile,

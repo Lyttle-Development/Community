@@ -24,7 +24,6 @@ export function TipCard({ title, description, tipKey, onClose }: TipCardProps) {
   const onDismiss = () => {
     if (description === null) return;
     const newTipCard = { ...tipCard, [tipKey]: description };
-    console.log(newTipCard, tipKey);
     setTipCard(newTipCard);
     storage.set('tip-card', JSON.stringify(newTipCard));
     if (onClose) onClose();

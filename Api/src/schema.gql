@@ -146,15 +146,15 @@ type Guild {
   enabled: Boolean!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  moduleLevel: GuildModuleLevel!
-  moduleQotd: GuildModuleQotd!
-  moduleVoiceGrowth: GuildModuleVoiceGrowth!
-  message: GuildMessage!
-  messages: [GuildMessage!]!
-  translation: GuildTranslation!
-  translations: [GuildTranslation!]!
-  member: Member!
-  members: [Member!]!
+  moduleLevel: GuildModuleLevel
+  moduleQotd: GuildModuleQotd
+  moduleVoiceGrowth: GuildModuleVoiceGrowth
+  message: GuildMessage
+  messages: [GuildMessage!]
+  translation: GuildTranslation
+  translations: [GuildTranslation!]
+  member: Member
+  members: [Member!]
   discord: Discord!
 }
 
@@ -390,8 +390,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686581955658
-  callStart: Timestamp! = 1686581955658
+  cooldownTime: Timestamp! = 1686596224646
+  callStart: Timestamp! = 1686596224646
   points: Int! = 0
 }
 
@@ -400,8 +400,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686581955658
-  callStart: Timestamp = 1686581955658
+  cooldownTime: Timestamp = 1686596224646
+  callStart: Timestamp = 1686596224646
   points: Int = 0
 }
 

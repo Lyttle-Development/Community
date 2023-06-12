@@ -61,12 +61,12 @@ export function MainNav({ mobile }: MainNavProps) {
       // Update id
       setSelectedGuild({
         id: guildId,
-        name: 'Lyttle Dev',
-        avatar: '/media/images/placeholder.png',
+        name: app?.selectedGuild.name ?? '',
+        avatar: app?.selectedGuild.icon ?? '',
         show: true,
       });
     }, 800);
-  }, [app?.selectedGuildId]);
+  }, [app?.selectedGuild]);
 
   const closeMenu = () => {
     app?.setMainNavOpen(false);
@@ -97,7 +97,7 @@ export function MainNav({ mobile }: MainNavProps) {
                 width={30}
                 height={30}
               />
-              <p>{selectedGuild.name}</p>
+              <p className={styles.selected}>{selectedGuild.name}</p>
             </section>
             <ul
               className={`${styles['server-menu']} ${
@@ -106,13 +106,13 @@ export function MainNav({ mobile }: MainNavProps) {
             >
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}`}
-                route={'/dashboard/[id]'}
+                route={'/dashboard/[guild_id]'}
               >
                 {labelOverview}
               </MainNavItem>
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}/modules`}
-                route={'/dashboard/[id]/modules'}
+                route={'/dashboard/[guild_id]/modules'}
               >
                 {labelModules}
               </MainNavItem>

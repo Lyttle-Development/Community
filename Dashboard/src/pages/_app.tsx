@@ -7,7 +7,6 @@ import './../styles/global.scss';
 import { AppProvider } from '@lyttledev-dashboard/contexts/App.context';
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from '@lyttledev-dashboard/lib/apollo-client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -18,18 +17,13 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-// Create a client
-const queryClient = new QueryClient();
-
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <ApolloProvider client={apolloClient}>
-      <QueryClientProvider client={queryClient}>
-        <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
-      </QueryClientProvider>
+      <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
     </ApolloProvider>
   );
 }

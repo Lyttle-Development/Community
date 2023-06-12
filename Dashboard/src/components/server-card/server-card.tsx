@@ -4,43 +4,51 @@ import Image from 'next/image';
 import styles from './server-card.module.scss';
 import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
-import { useState } from 'react';
 
-export interface ServerCardProps {
-  active?: boolean;
+export interface Server {
+  id: string;
+  name: string | null;
+  icon: string | null;
+  setup: boolean;
+  active: boolean | null;
+  members: number;
+  modulesEnabled: number;
 }
 
-export function ServerCard({ active }: ServerCardProps) {
-  const [a, setA] = useState(active ?? false);
-  const isNew = active === undefined;
+export type Servers = Server[];
 
+export type ServerCardProps = Server;
+
+export function ServerCard({
+  id,
+  name,
+  icon,
+  setup,
+  active,
+  members,
+  modulesEnabled,
+}: ServerCardProps) {
   // Messages
   const pfx = componentsPrefix + 'server-card.';
-  const msgStaffMembers = getMessage(pfx + 'staff-members');
+  // const msgStaffMembers = getMessage(pfx + 'staff-members');
   const msgModules = getMessage(pfx + 'modules');
   const msgMembers = getMessage(pfx + 'members');
   const msgSetup = getMessage(pfx + 'setup');
   const msgSetupButton = getMessage(pfx + 'setup-button');
 
-  // Values
-  const guildImage = '/media/images/placeholder.png';
-  const guildName = active ? 'LyttleDev' : 'KneegHub';
-  const guildId = active ? '874234773969715230' : '874234773969716230';
-  const staffMembers = 8;
-  const modules = 12;
-  const members = 245;
+  if (!icon) return null;
 
-  if (isNew) {
+  if (!setup) {
     return (
       <article className={styles.card}>
         <Image
           className={styles.avatar}
-          src={guildImage}
-          alt={`Avatar of the ${guildName} server`}
+          src={icon}
+          alt={`Avatar of the ${name} server`}
           width={100}
           height={100}
         />
-        <h2>{guildName}</h2>
+        <h2 className={styles.title}>{name}</h2>
         <p>{msgSetup}</p>
         <Component.Button
           color={ButtonColors.orange}
@@ -53,31 +61,28 @@ export function ServerCard({ active }: ServerCardProps) {
   }
 
   return (
-    <Component.Link
-      href={`/dashboard/${guildId}/modules`}
-      className={styles.card}
-    >
+    <Component.Link href={`/dashboard/${id}/modules`} className={styles.card}>
       <Image
         className={styles.avatar}
-        src={guildImage}
-        alt={`Avatar of the ${guildName} server`}
+        src={icon}
+        alt={`Avatar of the ${name} server`}
         width={100}
         height={100}
       />
-      <h2>{guildName}</h2>
+      <h2>{name}</h2>
       <ul className={styles.about}>
-        <li className={styles.business}>
-          <span>{staffMembers}</span> {msgStaffMembers}
-        </li>
+        {/* <li className={styles.business}>*/}
+        {/*  <span>{staffMembers}</span> {msgStaffMembers}*/}
+        {/* </li>*/}
         <li className={styles.stacks}>
-          <span>{modules}</span> {msgModules}
+          <span>{modulesEnabled}</span> {msgModules}
         </li>
         <li className={styles.person}>
           <span>{members}</span> {msgMembers}
         </li>
       </ul>
       <Component.LightSwitch
-        active={active}
+        active={active ?? false}
         // Todo: Toggle server / add to actions for graphql
         onClick={(e) => alert('Switched!')}
         color={SCSSPrimaryColors.orange}
