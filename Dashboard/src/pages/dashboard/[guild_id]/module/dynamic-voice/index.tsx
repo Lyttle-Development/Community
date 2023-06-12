@@ -43,8 +43,6 @@ export const getDynamicVoiceConfig = (
     description: msgDescription,
     extendable: true,
     id: moduleId,
-    // Todo: Add dynamic voice disable function
-    onClick: (...e) => console.log(e),
     route: `/dashboard/${guildId}/module/dynamic-voice`,
     subItems,
   };

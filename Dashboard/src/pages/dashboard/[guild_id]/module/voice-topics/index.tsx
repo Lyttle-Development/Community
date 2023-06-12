@@ -48,8 +48,6 @@ export const getVoiceTopicsConfig = (
     description: msgDescription,
     extendable: true,
     id: moduleId,
-    // Todo: Add voice topic disable function
-    onClick: (...e) => console.log(e),
     route: `/dashboard/${guildId}/module/voice-topics`,
     subItems,
   };
