@@ -6,6 +6,7 @@ import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { logout } from '@lyttledev-dashboard/hooks/useAuth';
 
 interface SelectedGuild {
   id: string;
@@ -44,8 +45,7 @@ export function MainNav({ mobile }: MainNavProps) {
     : `${prefix} ${prefix}--closed`;
 
   const signOut = () => {
-    // Todo: Add logout functionality
-    window.alert('Currently not implemented!');
+    logout();
   };
 
   // Update selected guild id

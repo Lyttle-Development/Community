@@ -13,12 +13,9 @@ import { Request } from 'express';
 export enum RoleEnum {
   Public = 'public',
   User = 'user',
-  Moderator = 'moderator',
-  Admin = 'admin',
 }
 
 export const ROLES_KEY = 'roles';
-export const Roles = (...roles: RoleEnum[]) => SetMetadata(ROLES_KEY, roles);
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
@@ -39,10 +36,9 @@ export class DiscordGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    let requiredRoles = this.reflector.getAllAndOverride<RoleEnum[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
+    const requiredRoles: RoleEnum[] = this.reflector.getAllAndOverride<
+      RoleEnum[]
+    >(ROLES_KEY, [context.getHandler(), context.getClass()]);
 
     if (requiredRoles && requiredRoles.includes(RoleEnum.Public)) {
       return true;
@@ -54,7 +50,7 @@ export class DiscordGuard implements CanActivate {
       const ctx = GqlExecutionContext.create(context);
       request = ctx.getContext().req;
     }
-    const token = this.extractTokenFromHeader(request);
+    const token = this.getTokenFromRequest(request);
 
     if (!token) return false;
 
@@ -64,11 +60,10 @@ export class DiscordGuard implements CanActivate {
       },
     });
 
-    const valid = tokenResponseData.status === 200;
-    return valid;
+    return tokenResponseData.status === 200;
   }
 
-  private extractTokenFromHeader(request: Request): string | null {
+  private getTokenFromRequest(request: Request): string | null {
     return (
       request?.headers?.authorization ?? request?.cookies?.accessToken ?? null
     );
