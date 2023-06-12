@@ -3,11 +3,11 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 @InputType()
 export class CreateGuildMessageInput {
   @Field(() => Int)
-  guild_id: number;
+  guildId: string;
 
   @Field(() => Int)
-  message_id: number;
+  messageId: string;
 
   @Field(() => Int)
-  channel_id: number;
+  channelId: string;
 }

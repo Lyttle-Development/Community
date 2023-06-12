@@ -8,7 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
+import { UserProfileModule } from './user-profile/user-profile.module';
 import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 import { GuildMessageModule } from './guild-message/guild-message.module';
 import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
@@ -21,6 +21,11 @@ import { DiscordOauthModule } from './auth/discord-oauth.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { DiscordGuard } from './auth/discord.guard';
+import { GuildModuleVoiceGrowthChildModule } from './guild-module-voice-growth-child/guild-module-voice-growth-child.module';
+import { GuildActionModule } from './guild-action/guild-action.module';
+import { GuildModuleBirthdayModule } from './guild-module-birthday/guild-module-birthday.module';
+import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/guild-module-count-to-number.module';
+import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
 
 @Module({
   imports: [
@@ -54,7 +59,7 @@ import { DiscordGuard } from './auth/discord.guard';
     GuildModule,
     MemberModule,
     UserModule,
-    ProfileModule,
+    UserProfileModule,
     GuildTranslationModule,
     GuildMessageModule,
     GuildModuleLevelModule,
@@ -63,6 +68,11 @@ import { DiscordGuard } from './auth/discord.guard';
     MemberModuleLevelDayModule,
     GuildModuleVoiceGrowthModule,
     DiscordOauthModule,
+    GuildModuleVoiceGrowthChildModule,
+    GuildActionModule,
+    GuildModuleBirthdayModule,
+    GuildModuleCountToNumberModule,
+    GuildModuleEasterEggModule,
   ],
   controllers: [AppController],
   providers: [

@@ -2,26 +2,29 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleLevelInput {
+  @Field(() => String)
+  guildId: string;
+
   @Field(() => Boolean)
   enabled: boolean;
 
   @Field(() => Int)
-  leveling_multiplier: number;
+  levelingMultiplier: number;
 
-  @Field(() => Int, {
+  @Field(() => String, {
     nullable: true,
   })
-  announcement_channel_id?: number;
+  announcementChannelId?: string;
+
+  @Field(() => String, { nullable: true })
+  leaderboardChannelId?: string;
 
   @Field(() => Int, { nullable: true })
-  leaderboard_channel_id?: number;
-
-  @Field(() => Int, { nullable: true })
-  leaderboard_last_week: number;
+  leaderboardLastWeek: number;
 
   @Field(() => Boolean)
   nicknames: boolean;
 
   @Field(() => Date)
-  last_leaderboard: Date;
+  lastLeaderboard: Date;
 }

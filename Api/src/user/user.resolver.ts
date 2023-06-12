@@ -11,7 +11,7 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { Profile } from '../profile/entities/profile.entity';
+import { UserProfile } from '../user-profile/entities/user-profile.entity';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -30,13 +30,13 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
+  findOne(@Args('id', { type: () => Int }) id: string): Promise<User> {
     return this.userService.findOne(id);
   }
 
-  @ResolveField(() => User)
-  profile(@Parent() user: User): Promise<Profile> {
-    return this.userService.getProfile(user.user_id);
+  @ResolveField(() => UserProfile)
+  profile(@Parent() user: User): Promise<UserProfile> {
+    return this.userService.getUserProfile(user.userId);
   }
 
   // currently not implemented
@@ -44,12 +44,12 @@ export class UserResolver {
   updateUser(
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ): Promise<User> | null {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+    return this.userService.update(updateUserInput.user_id, updateUserInput);
   }
 
   @Mutation(() => User)
   removeUser(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => Int }) id: string,
   ): Promise<User> | null {
     return this.userService.remove(id);
   }

@@ -5,5 +5,5 @@ import { Column } from 'typeorm';
 export class CreateUserInput {
   @Column()
   @Field(() => Int)
-  user_id: number;
+  user_id: string;
 }

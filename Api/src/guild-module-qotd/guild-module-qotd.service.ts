@@ -26,23 +26,23 @@ export class GuildModuleQotdService {
     return this.guildModuleQotdRepository.find();
   }
 
-  findOne(id: number): Promise<GuildModuleQotd> {
+  findOne(id: string): Promise<GuildModuleQotd> {
     return this.guildModuleQotdRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
   }
 
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildModuleQotdInput: UpdateGuildModuleQotdInput,
   ): Promise<GuildModuleQotd> | null {
     const guildModuleQotd: GuildModuleQotd =
       await this.guildModuleQotdRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleQotd) {
       return this.guildModuleQotdRepository.save({
@@ -53,10 +53,10 @@ export class GuildModuleQotdService {
     throw new Error('GuildModuleQotd not found');
   }
 
-  async remove(id: number): Promise<GuildModuleQotd> | null {
+  async remove(id: string): Promise<GuildModuleQotd> | null {
     const guildModuleQotd: GuildModuleQotd =
       await this.guildModuleQotdRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildModuleQotd) {
       return this.guildModuleQotdRepository.remove(guildModuleQotd);

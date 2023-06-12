@@ -6,5 +6,5 @@ export class UpdateGuildMessageInput extends PartialType(
   CreateGuildMessageInput,
 ) {
   @Field(() => Int)
-  id: number;
+  id: string;
 }
