@@ -33,44 +33,50 @@ const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 const msgLeaderboardTitle = getMessage(pfx + 'leaderboard.title');
 const msgLeaderboardDescription = getMessage(pfx + 'leaderboard.description');
 
+export interface GetLevelsConfigProps {
+  guildId: string;
+  enabled: boolean;
+  levelsId: string | null;
+  nicknameId: string | null;
+  nicknameActive: boolean;
+  announcementId: string | null;
+  announcementActive: boolean;
+  leaderboardId: string | null;
+  leaderboardActive: boolean;
+}
+
 // Config:
-export const getLevelsConfig = (
-  guildId: string,
-  enabled = false,
-  levelsId: string | null = null,
-  nicknameId: string | null = null,
-  nicknameActive = false,
-  announcementId: string | null = null,
-  announcementActive = false,
-  leaderboardId: string | null = null,
-  leaderboardActive = false,
-): CardModule => ({
+export const getLevelsConfig = ({
+  guildId,
+  enabled,
+  nicknameActive,
+  announcementId,
+  leaderboardId,
+}: GetLevelsConfigProps): CardModule => ({
   active: enabled,
   title: msgTitle,
   description: msgDescription,
-  id: levelsId,
-  // Todo: Add levels disable function
-  onClick: (...e) => console.log(e),
+  id: changeKeys.modulesLevels.key,
   route: `/dashboard/${guildId}/module/levels`,
   subItems: [
     {
-      id: nicknameId,
+      id: changeKeys.modulesLevelsNickname.key,
       route: `/dashboard/${guildId}/module/levels#nickname`,
       active: nicknameActive,
       title: msgNicknameTitle,
       description: msgNicknameDescription,
     },
     {
-      id: announcementId,
+      id: changeKeys.modulesLevelsAnnouncement.key,
       route: `/dashboard/${guildId}/module/levels#announcement`,
-      active: announcementActive,
+      active: typeof announcementId === 'string',
       title: msgAnnouncementTitle,
       description: msgAnnouncementDescription,
     },
     {
-      id: leaderboardId,
+      id: changeKeys.modulesLevelsLeaderboard.key,
       route: `/dashboard/${guildId}/module/levels#leaderboard`,
-      active: leaderboardActive,
+      active: typeof leaderboardId === 'string',
       title: msgLeaderboardTitle,
       description: msgLeaderboardDescription,
     },

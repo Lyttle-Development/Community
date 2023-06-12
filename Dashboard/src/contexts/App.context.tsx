@@ -165,8 +165,18 @@ export function AppProvider({ children }: AppContextProps) {
       }
     }
 
-    // Set changes.
-    setChanges(newChanges);
+    const filteredChanges: Changes = checkDuplicateChanges(newChanges);
+    setChanges(filteredChanges);
+  };
+
+  const checkDuplicateChanges = (newChanges: Changes): Changes => {
+    const filteredChanges: Changes = {};
+    Object.keys(newChanges).forEach((key) => {
+      if (newChanges[key].original !== newChanges[key].current) {
+        filteredChanges[key] = newChanges[key];
+      }
+    });
+    return filteredChanges;
   };
 
   useEffect(() => {

@@ -48,15 +48,11 @@ export function SettingCard({
     value: Change,
     store = null,
   ) => {
-    if (value === initial) {
-      app?.change({ remove: key });
-      return;
-    }
     app?.change({
       update: {
         key,
-        value: value,
-        initial: initial,
+        value,
+        initial,
         store,
       },
     });

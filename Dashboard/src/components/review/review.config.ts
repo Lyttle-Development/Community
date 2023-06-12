@@ -9,6 +9,26 @@ export interface ChangeKeys {
 }
 
 export const changeKeys: ChangeKeys = {
+  modulesLevels: {
+    title: 'Levels module',
+    key: 'modules.levels',
+    url: (id: string) => `/dashboard/${id}/modules#levels`,
+  },
+  modulesLevelsNickname: {
+    title: 'Nickname module',
+    key: 'modules.levels.nickname',
+    url: (id: string) => `/dashboard/${id}/modules#levels`,
+  },
+  modulesLevelsAnnouncement: {
+    title: 'Announcement module',
+    key: 'modules.levels.announcement',
+    url: (id: string) => `/dashboard/${id}/modules#levels`,
+  },
+  modulesLevelsLeaderboard: {
+    title: 'Leaderboard module',
+    key: 'modules.levels.leaderboard',
+    url: (id: string) => `/dashboard/${id}/modules#levels`,
+  },
   moduleLevelLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',
