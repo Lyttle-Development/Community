@@ -70,7 +70,6 @@ export class MemberModuleLevel {
     { name: 'user_id', referencedColumnName: 'userId' },
     { name: 'guild_id', referencedColumnName: 'guildId' },
   ])
-  @Field(() => Member)
   member: Member;
 
   @OneToOne(
@@ -78,6 +77,5 @@ export class MemberModuleLevel {
     (memberModuleLevelDay) => memberModuleLevelDay.memberModuleLevel,
     { nullable: true },
   )
-  @Field(() => MemberModuleLevelDay, { nullable: true })
   memberModuleLevelDay: MemberModuleLevelDay;
 }

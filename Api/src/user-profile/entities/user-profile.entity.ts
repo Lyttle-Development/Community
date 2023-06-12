@@ -45,6 +45,5 @@ export class UserProfile {
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'userId' }])
-  @Field(() => User)
   user: User;
 }

@@ -37,6 +37,5 @@ export class GuildTranslation {
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
-  @Field(() => Guild)
   guild: Guild;
 }

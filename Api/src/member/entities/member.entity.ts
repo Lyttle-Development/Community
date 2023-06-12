@@ -50,7 +50,6 @@ export class Member {
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
-  @Field(() => Guild)
   guild: Guild;
 
   @OneToOne(
@@ -58,6 +57,5 @@ export class Member {
     (memberModuleLevel) => memberModuleLevel.member,
     { nullable: true },
   )
-  @Field(() => MemberModuleLevel, { nullable: true })
   memberModuleLevel: MemberModuleLevel;
 }

@@ -39,13 +39,11 @@ export class Guild {
   @OneToMany(() => GuildAction, (guildAction) => guildAction.guild, {
     nullable: true,
   })
-  @Field(() => [GuildAction], { nullable: true })
   guildActions: GuildAction[];
 
   @OneToMany(() => GuildMessage, (guildMessage) => guildMessage.guild, {
     nullable: true,
   })
-  @Field(() => [GuildMessage], { nullable: true })
   guildMessages: GuildMessage[];
 
   @OneToOne(
@@ -53,7 +51,6 @@ export class Guild {
     (guildModuleBirthday) => guildModuleBirthday.guild,
     { nullable: true },
   )
-  @Field(() => GuildModuleBirthday, { nullable: true })
   guildModuleBirthday: GuildModuleBirthday;
 
   @OneToMany(
@@ -61,7 +58,6 @@ export class Guild {
     (guildModuleCountToNumber) => guildModuleCountToNumber.guild,
     { nullable: true },
   )
-  @Field(() => [GuildModuleCountToNumber], { nullable: true })
   guildModuleCountToNumbers: GuildModuleCountToNumber[];
 
   @OneToOne(
@@ -69,7 +65,6 @@ export class Guild {
     (guildModuleEasterEgg) => guildModuleEasterEgg.guild,
     { nullable: true },
   )
-  @Field(() => GuildModuleEasterEgg, { nullable: true })
   guildModuleEasterEgg: GuildModuleEasterEgg;
 
   @OneToOne(
@@ -77,7 +72,6 @@ export class Guild {
     (guildModuleLevel) => guildModuleLevel.guild,
     { nullable: true },
   )
-  @Field(() => GuildModuleLevel, { nullable: true })
   guildModuleLevel: GuildModuleLevel;
 
   @OneToMany(
@@ -85,7 +79,6 @@ export class Guild {
     (guildModuleVoiceGrowth) => guildModuleVoiceGrowth.guild,
     { nullable: true },
   )
-  @Field(() => [GuildModuleVoiceGrowth], { nullable: true })
   guildModuleVoiceGrowths: GuildModuleVoiceGrowth[];
 
   @OneToMany(
@@ -93,10 +86,8 @@ export class Guild {
     (guildTranslation) => guildTranslation.guild,
     { nullable: true },
   )
-  @Field(() => [GuildTranslation], { nullable: true })
   guildTranslations: GuildTranslation[];
 
   @OneToMany(() => Member, (member) => member.guild, { nullable: true })
-  @Field(() => [Member], { nullable: true })
   members: Member[];
 }

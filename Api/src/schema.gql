@@ -13,7 +13,6 @@ type GuildModuleLevel {
   lastLeaderboard: Timestamp!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
 }
 
 """
@@ -52,7 +51,6 @@ type MemberModuleLevelDay {
   points: Int!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  memberModuleLevel: MemberModuleLevel!
   guild: Guild!
   member: Member!
 }
@@ -67,9 +65,9 @@ type MemberModuleLevel {
   points: Float!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  member: Member!
-  memberModuleLevelDay: MemberModuleLevelDay
+  memberModuleLevelDay: MemberModuleLevelDay!
   guild: Guild!
+  member: Member!
 }
 
 type Member {
@@ -80,8 +78,8 @@ type Member {
   createdAt: Timestamp!
   updatedAt: Timestamp!
   guild: Guild!
-  memberModuleLevel: MemberModuleLevel
   getUser: User!
+  memberModuleLevel: MemberModuleLevel!
 }
 
 type GuildModuleVoiceGrowthChild {
@@ -90,7 +88,6 @@ type GuildModuleVoiceGrowthChild {
   name: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guildModuleVoiceGrowth: GuildModuleVoiceGrowth!
 }
 
 type GuildModuleVoiceGrowth {
@@ -103,7 +100,6 @@ type GuildModuleVoiceGrowth {
   createdAt: Timestamp!
   updatedAt: Timestamp!
   guild: Guild!
-  guildModuleVoiceGrowthChildren: [GuildModuleVoiceGrowthChild!]
 }
 
 type GuildModuleBirthday {
@@ -112,7 +108,6 @@ type GuildModuleBirthday {
   birthdayChannelId: Int
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
 }
 
 type GuildModuleCountToNumber {
@@ -125,7 +120,6 @@ type GuildModuleCountToNumber {
   lastMemberId: Int!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
 }
 
 type GuildModuleEasterEgg {
@@ -134,7 +128,6 @@ type GuildModuleEasterEgg {
   lastJoker: Timestamp!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
 }
 
 type GuildAction {
@@ -145,7 +138,6 @@ type GuildAction {
   guildId: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
   getGuild: Guild!
 }
 
@@ -154,15 +146,6 @@ type Guild {
   enabled: Boolean!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guildActions: [GuildAction!]
-  guildMessages: [GuildMessage!]
-  guildModuleBirthday: GuildModuleBirthday
-  guildModuleCountToNumbers: [GuildModuleCountToNumber!]
-  guildModuleEasterEgg: GuildModuleEasterEgg
-  guildModuleLevel: GuildModuleLevel
-  guildModuleVoiceGrowths: [GuildModuleVoiceGrowth!]
-  guildTranslations: [GuildTranslation!]
-  members: [Member!]
   moduleLevel: GuildModuleLevel!
   moduleQotd: GuildModuleQotd!
   moduleVoiceGrowth: GuildModuleVoiceGrowth!
@@ -171,6 +154,7 @@ type Guild {
   translation: GuildTranslation!
   translations: [GuildTranslation!]!
   member: Member!
+  members: [Member!]!
 }
 
 type GuildModuleQotd {
@@ -181,7 +165,6 @@ type GuildModuleQotd {
   channelId: String
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  guild: Guild!
 }
 
 type UserProfile {
@@ -197,7 +180,6 @@ type User {
   userId: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  userProfile: UserProfile
   profile: UserProfile!
 }
 
@@ -395,8 +377,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686566120298
-  callStart: Timestamp! = 1686566120298
+  cooldownTime: Timestamp! = 1686568811013
+  callStart: Timestamp! = 1686568811013
   points: Int! = 0
 }
 
@@ -405,8 +387,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686566120298
-  callStart: Timestamp = 1686566120298
+  cooldownTime: Timestamp = 1686568811013
+  callStart: Timestamp = 1686568811013
   points: Int = 0
 }
 

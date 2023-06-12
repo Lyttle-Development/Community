@@ -44,6 +44,5 @@ export class GuildModuleVoiceGrowthChild {
     { name: 'master_id', referencedColumnName: 'channelId' },
     { name: 'guild_id', referencedColumnName: 'guildId' },
   ])
-  @Field(() => GuildModuleVoiceGrowth)
   guildModuleVoiceGrowth: GuildModuleVoiceGrowth;
 }

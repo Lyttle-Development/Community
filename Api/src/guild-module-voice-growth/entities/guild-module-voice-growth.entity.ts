@@ -59,7 +59,6 @@ export class GuildModuleVoiceGrowth {
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
-  @Field(() => Guild)
   guild: Guild;
 
   @OneToMany(
@@ -68,6 +67,5 @@ export class GuildModuleVoiceGrowth {
       guildModuleVoiceGrowthChild.guildModuleVoiceGrowth,
     { nullable: true },
   )
-  @Field(() => [GuildModuleVoiceGrowthChild], { nullable: true })
   guildModuleVoiceGrowthChildren: GuildModuleVoiceGrowthChild[];
 }
