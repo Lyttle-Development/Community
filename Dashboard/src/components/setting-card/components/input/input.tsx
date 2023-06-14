@@ -1,11 +1,11 @@
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
-import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { Component } from '@lyttledev-dashboard/components';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './input.module.scss';
 import { ChangeEvent } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
+import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface SettingCardInputItemVariables {
   variable: string;
