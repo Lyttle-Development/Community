@@ -10,8 +10,23 @@ export async function createGuildStat(
   valueInt = 0,
   groupKey: string | null = null,
 ): Promise<GuildStat> {
-  return prismaClient.guildStat.create({
-    data: {
+  return prismaClient.guildStat.upsert({
+    where: {
+      guild_id_key_day: {
+        guild_id: BigInt(guildId),
+        key,
+        day,
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      key,
+      day,
+      group_key: groupKey,
+      value,
+      value_int: valueInt,
+    },
+    update: {
       guild_id: BigInt(guildId),
       key,
       day,
@@ -132,6 +147,40 @@ export async function incrementGuildStat(
     data: {
       value_int: {
         increment: valueInt,
+      },
+    },
+  });
+}
+
+export async function getAllGuildStatsCaches() {
+  return prismaClient.guildStat.findMany({
+    where: {
+      day: -2,
+    },
+  });
+}
+
+export async function findOneGuildStatsByGuildAndKey(
+  guildId: string,
+  key: string,
+): Promise<GuildStat> {
+  return prismaClient.guildStat.findFirst({
+    where: {
+      guild_id: BigInt(guildId),
+      key,
+      day: {
+        not: -2,
+      },
+    },
+  });
+}
+
+export function removeOutdatedGuildStats() {
+  return prismaClient.guildStat.deleteMany({
+    where: {
+      updated_at: {
+        // Not updated in the last week (7 days)
+        lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
       },
     },
   });

@@ -1,8 +1,7 @@
 import { actionPrefix } from './index';
 import { Client } from 'discord.js';
 import { deployCommands } from '../../utils/deploy-commands';
-import { executor } from '../../utils';
-import { startupStatsQueue } from '../../utils/queue/stats-queue';
+import { executor, startupStatsQueue } from '../../utils';
 import { triggerDailyStats } from '../../modules';
 
 // This file's prefix
