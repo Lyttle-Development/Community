@@ -14,7 +14,7 @@ export async function onClientReady(client: Client): Promise<void> {
   const actions: Promise<() => void>[] = [
     executor(prefix + 'deployCommands', deployCommands),
     executor(prefix + 'startupStatsQueue', startupStatsQueue),
-    executor(prefix + 'triggerDailyStats', () => triggerDailyStats()),
+    executor(prefix + 'triggerDailyStats', triggerDailyStats),
   ];
 
   // If no actions, return
