@@ -27,6 +27,7 @@ import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/g
 import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
 import { DiscordModule } from './discord/discord.module';
 import { Discord } from './discord/entities/discord.entity';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -76,6 +77,7 @@ import { Discord } from './discord/entities/discord.entity';
     GuildModuleCountToNumberModule,
     GuildModuleEasterEggModule,
     DiscordModule,
+    OpenaiModule,
   ],
   controllers: [AppController],
   providers: [
