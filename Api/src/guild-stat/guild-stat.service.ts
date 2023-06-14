@@ -19,4 +19,16 @@ export class GuildStatService {
       },
     });
   }
+
+  async findAllByGroup(
+    guildId: string,
+    groupKey: string,
+  ): Promise<GuildStat[]> {
+    return this.guildStatRepository.find({
+      where: {
+        guildId,
+        groupKey,
+      },
+    });
+  }
 }
