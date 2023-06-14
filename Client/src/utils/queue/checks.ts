@@ -1,3 +1,5 @@
-import { checkTodayChange } from '../../modules/Activity/birth-day/check-today-change';
+import { triggerBirthday } from '../../modules/Activity/birth-day/check-today-change';
+import { checkNewDay } from './checks/daily';
 
-export const checks = [checkTodayChange];
+export const checks = [checkNewDay];
+export const dailyChecks = [triggerBirthday];

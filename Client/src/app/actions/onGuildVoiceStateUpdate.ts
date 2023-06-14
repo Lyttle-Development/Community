@@ -4,10 +4,11 @@ import { VoiceState } from 'discord.js';
 import { GuildMember, LevelEvent, VoiceEvent } from '../../types';
 import {
   checkDynamicChannels,
+  checkVoiceTopicChannels,
   createEvent,
+  triggerActivityStat,
   triggerCallEvent,
 } from '../../modules';
-import { checkVoiceTopicChannels } from '../../modules/Communication/voice-topics/check-channels';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildVoiceStateUpdate.';
@@ -23,6 +24,7 @@ export async function onGuildVoiceStateUpdate(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(
       prefix + 'levelEvent',
       createEvent,

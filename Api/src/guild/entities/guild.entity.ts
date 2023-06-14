@@ -9,6 +9,7 @@ import { GuildModuleBirthday } from '../../guild-module-birthday/entities/guild-
 import { GuildModuleCountToNumber } from '../../guild-module-count-to-number/entities/guild-module-count-to-number.entity';
 import { GuildModuleEasterEgg } from '../../guild-module-easter-egg/entities/guild-module-easter-egg.entity';
 import { GuildAction } from '../../guild-action/entities/guild-action.entity';
+import { GuildStat } from '../../guild-stat/entities/guild-stat.entity';
 
 @Index('guild_pkey', ['guildId'], { unique: true })
 @Entity('guild', { schema: 'public' })
@@ -87,6 +88,11 @@ export class Guild {
     { nullable: true },
   )
   guildTranslations: GuildTranslation[];
+
+  @OneToMany(() => GuildStat, (guildTranslation) => guildTranslation.guild, {
+    nullable: true,
+  })
+  guildStats: GuildStat[];
 
   @OneToMany(() => Member, (member) => member.guild, { nullable: true })
   members: Member[];

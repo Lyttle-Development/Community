@@ -4,11 +4,16 @@ import { GuildMember, VoiceEvent } from '../../../types';
 import {
   getOrCreateGuildModuleLevel,
   getOrCreateMemberModuleLevel,
+  incrementGuildStat,
   setMemberModuleLevelValue,
 } from '../../../database/handlers';
 import { EVENT_PRICES } from './constants';
 import { givePoints } from './give-points';
 import { bootdate } from '../../../main';
+
+export interface GuildMemberWithChannelId extends GuildMember {
+  channelId: string;
+}
 
 const CallTimeLimit = 24 * 60 * 60 * 1000;
 
@@ -23,11 +28,16 @@ const CallTimeLimit = 24 * 60 * 60 * 1000;
  * @param voiceEvent
  */
 export async function triggerCallEvent(
-  guildMember: GuildMember,
+  _guildMember: GuildMember,
   oldState: VoiceState,
   newState: VoiceState,
   voiceEvent: VoiceEvent,
 ): Promise<void> {
+  const guildMember: GuildMemberWithChannelId = {
+    ..._guildMember,
+    channelId: oldState.channelId ?? newState.channelId,
+  };
+
   // Destructure guildMember
   const { guildId } = guildMember;
 
@@ -83,11 +93,11 @@ export async function triggerCallEvent(
  * @param newState
  */
 async function groupCheck(
-  guildMember: GuildMember,
+  guildMember: GuildMemberWithChannelId,
   oldState: VoiceState,
   newState: VoiceState,
 ): Promise<boolean> {
-  const { guildId, userId } = guildMember;
+  const { guildId, userId, channelId } = guildMember;
   const oldChannel = oldState.channel;
   const newChannel = newState.channel;
 
@@ -106,7 +116,7 @@ async function groupCheck(
       // Don't reset the user who triggered the event.
       if (member.id !== userId) {
         // Reset the other member.
-        await reset({ guildId, userId: member.id });
+        await reset({ guildId, userId: member.id, channelId });
       }
     }
     // Return pass.
@@ -155,16 +165,16 @@ const memberCheck = async (
   return (beforeMute && !afterMute) || (!beforeMute && !afterMute);
 };
 
-async function reset(guildMember: GuildMember): Promise<void> {
+async function reset(guildMember: GuildMemberWithChannelId): Promise<void> {
   // Get variables for reset.
   const { guildId, userId } = guildMember;
   // Reset the call_start.
   await setMemberModuleLevelValue(guildId, userId, { call_start: new Date() });
 }
 
-async function give(guildMember: GuildMember): Promise<boolean> {
+async function give(guildMember: GuildMemberWithChannelId): Promise<boolean> {
   // Get variables for give.
-  const { guildId, userId } = guildMember;
+  const { guildId, userId, channelId } = guildMember;
 
   // Get the memberModuleLevel database record.
   const db_MemberModuleLevel = await getOrCreateMemberModuleLevel(
@@ -210,6 +220,17 @@ async function give(guildMember: GuildMember): Promise<boolean> {
   await givePoints(pointsReward, { guildId, userId });
   // Reset the user.
   await reset(guildMember);
+
+  // Increment the call_time.
+  const day = new Date().getDay();
+  await incrementGuildStat(
+    guildId,
+    channelId,
+    day,
+    timeBetween,
+    'voiceChannelsCallTime',
+  );
+
   // Return pass.
   return true;
 }

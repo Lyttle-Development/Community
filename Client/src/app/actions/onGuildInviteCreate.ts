@@ -2,7 +2,7 @@ import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { Invite } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
-import { createEvent } from '../../modules';
+import { createEvent, triggerActivityStat } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInviteCreate.';
@@ -16,6 +16,7 @@ export async function onGuildInviteCreate(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(
       prefix + 'levelEvent',
       createEvent,
