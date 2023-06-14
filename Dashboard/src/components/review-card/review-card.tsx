@@ -1,4 +1,4 @@
-import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { ReviewCartComponents } from '@lyttledev-dashboard/components/review-card/components';
 
 export interface ReviewCardProps {
