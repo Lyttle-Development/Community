@@ -37,21 +37,13 @@ function Page() {
   const [fetch, { data, refetch }] = useLazyQuery(modulesQuery);
 
   useEffect(() => {
-    console.log(
-      data?.guild?.guildId,
-      guildId,
-      data?.guild?.guildId === guildId,
-    );
-    console.log('upd');
     if (!authorized) return;
     if (typeof guildId !== 'string') return;
     if (!data?.guild?.guildId && guildId) {
-      console.log('fetch');
       void fetch({ variables: { id: guildId } });
       return;
     }
     if (guildId === data?.guild?.guildId) return;
-    console.log('refetch');
     void refetch({ variables: { id: guildId } });
   }, [authorized, guildId]);
 
