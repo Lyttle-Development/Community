@@ -17,6 +17,7 @@ import { GuildTranslation } from '../guild-translation/entities/guild-translatio
 import { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { Discord } from '../discord/entities/discord.entity';
+import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -99,5 +100,10 @@ export class GuildResolver {
   @ResolveField(() => Discord)
   discord(@Parent() guild: Guild): Discord {
     return this.guildService.getDiscord(guild.guildId);
+  }
+
+  @ResolveField(() => GuildStatResolved)
+  stats(@Parent() guild: Guild): GuildStatResolved {
+    return this.guildService.getStats(guild.guildId);
   }
 }
