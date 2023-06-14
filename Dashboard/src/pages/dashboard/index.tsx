@@ -4,51 +4,21 @@ import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useEffect, useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
 import { Servers } from '@lyttledev-dashboard/components/server-card';
-
-const guildsQuery = gql`
-  query guilds {
-    guilds {
-      guildId
-      enabled
-      moduleLevel {
-        enabled
-      }
-      moduleVoiceGrowth {
-        enabled
-      }
-    }
-    discord {
-      userGuilds
-    }
-  }
-`;
+import { useUserGuilds } from '@lyttledev-dashboard/hooks/useUserGuilds';
+import { getModulesEnabled } from '@lyttledev-dashboard/utils/modules-enabled';
 
 function Page() {
   const authorized = useAuth();
   const title = usePage(pagesPrefix + 'dashboard.title');
+  const { data, guilds, ownedGuilds, moderateGuilds } = useUserGuilds();
   const [servers, setServers] = useState<Servers>([]);
 
-  const { data, refetch } = useQuery(guildsQuery);
-
   useEffect(() => {
-    if (!authorized) return;
-    void refetch();
-  }, [authorized]);
-
-  useEffect(() => {
-    if (!data) return;
+    if (!data || !data.guilds) return;
     const setupServers: Servers = [];
     const getIcon = (guild: { id: string; icon: string }) =>
       `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`;
-
-    const getModulesEnabled = (guild: any) => {
-      let modulesEnabled = 0;
-      if (guild?.moduleLevel?.enabled) ++modulesEnabled;
-      if (guild?.moduleVoiceGrowth?.enabled) ++modulesEnabled;
-      return modulesEnabled;
-    };
 
     for (const guild of data.guilds) {
       setupServers.push({
@@ -61,16 +31,6 @@ function Page() {
         modulesEnabled: 0,
       });
     }
-
-    const ownedGuilds = data.discord.userGuilds.filter(
-      (guild: any) => guild.owner === true,
-    );
-
-    const moderateGuilds = data.discord.userGuilds.filter(
-      (guild: any) => guild.permissions === 2147483647 && guild.owner === false,
-    );
-
-    const guilds: any[] = [...ownedGuilds, ...moderateGuilds];
 
     const newServers: Servers = [];
     for (const server of setupServers) {
@@ -113,7 +73,7 @@ function Page() {
       });
     }
     setServers(newServers);
-  }, [data]);
+  }, [guilds]);
 
   if (!authorized) return null;
 

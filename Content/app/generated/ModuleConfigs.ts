@@ -84,6 +84,12 @@ export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
 export * as ModuleConfigDashboardPagesModulesTitle from '../../content/modules/Dashboard/pages/modules/title/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationActivity from '../../content/modules/Dashboard/pages/overview/recommendation/activity/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationBots from '../../content/modules/Dashboard/pages/overview/recommendation/bots/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationEvents from '../../content/modules/Dashboard/pages/overview/recommendation/events/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationMembers from '../../content/modules/Dashboard/pages/overview/recommendation/members/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationModules from '../../content/modules/Dashboard/pages/overview/recommendation/modules/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationStaff from '../../content/modules/Dashboard/pages/overview/recommendation/staff/config';
 export * as ModuleConfigDashboardPagesOverviewRecommendationTitle from '../../content/modules/Dashboard/pages/overview/recommendation/title/config';
 export * as ModuleConfigDashboardPagesOverviewTitle from '../../content/modules/Dashboard/pages/overview/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';

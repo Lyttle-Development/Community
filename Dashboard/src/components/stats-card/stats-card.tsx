@@ -28,10 +28,10 @@ export function StatsCard({
         <h3 className={styles.title}>{title}</h3>
         <h2 className={styles.value}>
           {value}
-          {change && change !== 0 && (
+          {!!change && change !== 0 && (
             <p className={styles.change}>
               {changeUnit}
-              {change}%
+              {change < 0 ? change * -1 : change}%
             </p>
           )}
         </h2>
