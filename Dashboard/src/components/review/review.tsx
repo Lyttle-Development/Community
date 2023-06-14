@@ -1,13 +1,11 @@
 import { StatsCardProps } from '@lyttledev-dashboard/components/stats-card';
 import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import styles from './review.module.scss';
-import {
-  ChangeObject,
-  useApp,
-} from '@lyttledev-dashboard/contexts/App.context';
+import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { changeKeysArray } from '@lyttledev-dashboard/components/review';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface ReviewProps {
   stats: StatsCardProps[];
