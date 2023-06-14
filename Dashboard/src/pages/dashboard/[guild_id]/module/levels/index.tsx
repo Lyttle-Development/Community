@@ -42,42 +42,58 @@ export interface GetLevelsConfigProps {
 }
 
 // Config:
-export const getLevelsConfig = ({
+export function getLevelsConfig({
   guildId,
   enabled,
   nicknameActive,
   announcementId,
   leaderboardId,
-}: GetLevelsConfigProps): CardModule => ({
-  active: enabled,
-  title: msgTitle,
-  description: msgDescription,
-  id: changeKeys.modulesLevels.key,
-  route: `/dashboard/${guildId}/module/levels`,
-  subItems: [
-    {
-      id: changeKeys.modulesLevelsNickname.key,
-      route: `/dashboard/${guildId}/module/levels#nickname`,
-      active: nicknameActive,
-      title: msgNicknameTitle,
-      description: msgNicknameDescription,
-    },
-    {
-      id: changeKeys.modulesLevelsAnnouncement.key,
-      route: `/dashboard/${guildId}/module/levels#announcement`,
-      active: typeof announcementId === 'string',
-      title: msgAnnouncementTitle,
-      description: msgAnnouncementDescription,
-    },
-    {
-      id: changeKeys.modulesLevelsLeaderboard.key,
-      route: `/dashboard/${guildId}/module/levels#leaderboard`,
-      active: typeof leaderboardId === 'string',
-      title: msgLeaderboardTitle,
-      description: msgLeaderboardDescription,
-    },
-  ],
-});
+}: GetLevelsConfigProps): CardModule {
+  const nicknameKey = nicknameActive
+    ? changeKeys.modulesLevelsNickname.key
+    : null;
+
+  const announcementActive = typeof announcementId === 'string';
+  const announcementKey = announcementActive
+    ? changeKeys.modulesLevelsAnnouncement.key
+    : null;
+
+  const leaderboardActive = typeof leaderboardId === 'string';
+  const leaderboardKey = leaderboardActive
+    ? changeKeys.modulesLevelsLeaderboard.key
+    : null;
+
+  return {
+    active: enabled,
+    title: msgTitle,
+    description: msgDescription,
+    id: changeKeys.modulesLevels.key,
+    route: `/dashboard/${guildId}/module/levels`,
+    subItems: [
+      {
+        id: nicknameKey,
+        route: `/dashboard/${guildId}/module/levels#nickname`,
+        active: nicknameActive,
+        title: msgNicknameTitle,
+        description: msgNicknameDescription,
+      },
+      {
+        id: announcementKey,
+        route: `/dashboard/${guildId}/module/levels#announcement`,
+        active: announcementActive,
+        title: msgAnnouncementTitle,
+        description: msgAnnouncementDescription,
+      },
+      {
+        id: leaderboardKey,
+        route: `/dashboard/${guildId}/module/levels#leaderboard`,
+        active: leaderboardActive,
+        title: msgLeaderboardTitle,
+        description: msgLeaderboardDescription,
+      },
+    ],
+  };
+}
 
 // Level up
 const keyLevelUp = 'Activity.levels.event.level-up';
