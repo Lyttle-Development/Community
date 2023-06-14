@@ -92,7 +92,7 @@ export function MainNav({ mobile }: MainNavProps) {
             >
               <Image
                 className={styles.avatar}
-                src={selectedGuild.avatar}
+                src={selectedGuild?.avatar || '/media/images/placeholder.png'}
                 alt={`Avatar of server ${selectedGuild.name}.`}
                 width={30}
                 height={30}
