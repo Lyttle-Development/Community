@@ -3,7 +3,10 @@ import { preventSpam } from './prevent-spam';
 import { checkCooldown } from './check-cooldown';
 import { triggerEvent } from './trigger-event';
 import { EVENT_PRICES } from './constants';
-import { getOrCreateGuildModuleLevel } from '../../../database/handlers';
+import {
+  getOrCreateGuildModuleLevel,
+  incrementGuildStat,
+} from '../../../database/handlers';
 
 export let timesEventsCreatedSinceLastRestart = 0;
 
@@ -26,6 +29,10 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   // If the levels module is not enabled, stop here.
   if (!db_GuildModuleLevel.enabled) return;
 
+  // Increment the event counter.
+  const day = new Date().getDay();
+  await incrementGuildStat(guildId, 'eventsCreated', day, 1, 'eventsCreated');
+
   // Check if user is spamming.
   const { isSpamming, db_MemberModuleLevel } = await preventSpam(guildMember);
   if (isSpamming) return;
@@ -33,6 +40,15 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   // Check if the user is in cooldown.
   const { inCooldown } = await checkCooldown(guildMember, db_MemberModuleLevel);
   if (inCooldown) return;
+
+  // Increment the event counter.
+  await incrementGuildStat(
+    guildId,
+    'eventsTriggered',
+    day,
+    1,
+    'eventsTriggered',
+  );
 
   // Create the event.
   const price = EVENT_PRICES[event];

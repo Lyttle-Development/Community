@@ -100,7 +100,7 @@ export async function incrementGuildStat(
     key,
     day,
     null,
-    valueInt,
+    0,
     groupKey,
   );
   const db_GuildStat__Cache = await getOrCreateGuildStat(
@@ -108,14 +108,14 @@ export async function incrementGuildStat(
     key,
     -2,
     null,
-    valueInt,
+    0,
   );
 
   // If the stat wasn't updated in the last 24 hours, reset it back to 0.
-  if (db_GuildStat.updated_at.getTime() < Date.now() - 86400000) {
+  if (db_GuildStat?.updated_at?.getTime() < Date.now() - 86400000) {
     const value =
-      db_GuildStat__Cache.updated_at.getTime() > Date.now() - 86400000
-        ? db_GuildStat__Cache.value_int
+      db_GuildStat__Cache?.updated_at?.getTime() > Date.now() - 86400000
+        ? db_GuildStat__Cache?.value_int
         : 0;
     await setGuildStat(guildId, key, day, null, value, groupKey);
     await setGuildStat(guildId, key, -2, null, 0);

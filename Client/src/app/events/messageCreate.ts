@@ -2,6 +2,7 @@ import type { Message } from 'discord.js';
 import { GuildMember } from '../../types/app/GuildMember';
 import { onGuildMessageCreate, onPrivateMessageCreate } from '../actions';
 import { checkGuildEnabled } from '../../utils';
+import { incrementGuildStat } from '../../database/handlers';
 
 async function messageCreate(message: Message): Promise<void> {
   // If the message is from a bot, ignore it
@@ -29,6 +30,16 @@ async function messageCreate(message: Message): Promise<void> {
 
   const guildEnabled = await checkGuildEnabled(guildMember);
   if (!guildEnabled) return;
+
+  // Increment the guild stat
+  const day = new Date().getDay();
+  await incrementGuildStat(
+    guildMember.guildId,
+    message.channelId,
+    day,
+    1,
+    'textChannelMessages',
+  );
 
   // Fire actions
   await onGuildMessageCreate(guildMember, message);
