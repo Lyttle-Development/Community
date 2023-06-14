@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -30,7 +29,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  findOne(@Args('id', { type: () => Int }) id: string): Promise<User> {
+  findOne(@Args('id', { type: () => String }) id: string): Promise<User> {
     return this.userService.findOne(id);
   }
 
@@ -49,7 +48,7 @@ export class UserResolver {
 
   @Mutation(() => User)
   removeUser(
-    @Args('id', { type: () => Int }) id: string,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<User> | null {
     return this.userService.remove(id);
   }

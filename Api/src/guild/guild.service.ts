@@ -16,6 +16,8 @@ import { MemberService } from '../member/member.service';
 import type { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guild-module-voice-growth.service';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
+import { Discord } from '../discord/entities/discord.entity';
+import { DiscordService } from '../discord/discord.service';
 
 @Injectable()
 export class GuildService {
@@ -34,6 +36,8 @@ export class GuildService {
     private memberService: MemberService,
     @Inject(forwardRef(() => GuildModuleVoiceGrowthService))
     private guildModuleVoiceGrowthService: GuildModuleVoiceGrowthService,
+    @Inject(forwardRef(() => DiscordService))
+    private discordService: DiscordService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -110,5 +114,9 @@ export class GuildService {
       return this.guildRepository.remove(guild);
     }
     throw new Error('Guild not found');
+  }
+
+  getDiscord(guildId: string): Discord {
+    return this.discordService.create(guildId);
   }
 }

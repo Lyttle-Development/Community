@@ -6,6 +6,7 @@ import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { logout } from '@lyttledev-dashboard/hooks/useAuth';
 
 interface SelectedGuild {
   id: string;
@@ -44,8 +45,7 @@ export function MainNav({ mobile }: MainNavProps) {
     : `${prefix} ${prefix}--closed`;
 
   const signOut = () => {
-    // Todo: Add logout functionality
-    window.alert('Currently not implemented!');
+    logout();
   };
 
   // Update selected guild id
@@ -61,12 +61,12 @@ export function MainNav({ mobile }: MainNavProps) {
       // Update id
       setSelectedGuild({
         id: guildId,
-        name: 'Lyttle Dev',
-        avatar: '/media/images/placeholder.png',
+        name: app?.selectedGuild.name ?? '',
+        avatar: app?.selectedGuild.icon ?? '',
         show: true,
       });
     }, 800);
-  }, [app?.selectedGuildId]);
+  }, [app?.selectedGuild]);
 
   const closeMenu = () => {
     app?.setMainNavOpen(false);
@@ -92,12 +92,12 @@ export function MainNav({ mobile }: MainNavProps) {
             >
               <Image
                 className={styles.avatar}
-                src={selectedGuild.avatar}
+                src={selectedGuild?.avatar || '/media/images/placeholder.png'}
                 alt={`Avatar of server ${selectedGuild.name}.`}
                 width={30}
                 height={30}
               />
-              <p>{selectedGuild.name}</p>
+              <p className={styles.selected}>{selectedGuild.name}</p>
             </section>
             <ul
               className={`${styles['server-menu']} ${
@@ -106,13 +106,13 @@ export function MainNav({ mobile }: MainNavProps) {
             >
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}`}
-                route={'/dashboard/[id]'}
+                route={'/dashboard/[guild_id]'}
               >
                 {labelOverview}
               </MainNavItem>
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}/modules`}
-                route={'/dashboard/[id]/modules'}
+                route={'/dashboard/[guild_id]/modules'}
               >
                 {labelModules}
               </MainNavItem>

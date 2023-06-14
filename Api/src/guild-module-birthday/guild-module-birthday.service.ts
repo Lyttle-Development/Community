@@ -16,7 +16,10 @@ export class GuildModuleBirthdayService {
     return `This action returns a #${id} guildModuleBirthday`;
   }
 
-  update(id: number, updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput) {
+  update(
+    id: number,
+    updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput,
+  ) {
     return `This action updates a #${id} guildModuleBirthday`;
   }
 

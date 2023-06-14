@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleCountToNumberService } from './guild-module-count-to-number.service';
 import { GuildModuleCountToNumber } from './entities/guild-module-count-to-number.entity';
 import { CreateGuildModuleCountToNumberInput } from './dto/create-guild-module-count-to-number.input';
@@ -6,11 +6,18 @@ import { UpdateGuildModuleCountToNumberInput } from './dto/update-guild-module-c
 
 @Resolver(() => GuildModuleCountToNumber)
 export class GuildModuleCountToNumberResolver {
-  constructor(private readonly guildModuleCountToNumberService: GuildModuleCountToNumberService) {}
+  constructor(
+    private readonly guildModuleCountToNumberService: GuildModuleCountToNumberService,
+  ) {}
 
   @Mutation(() => GuildModuleCountToNumber)
-  createGuildModuleCountToNumber(@Args('createGuildModuleCountToNumberInput') createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput) {
-    return this.guildModuleCountToNumberService.create(createGuildModuleCountToNumberInput);
+  createGuildModuleCountToNumber(
+    @Args('createGuildModuleCountToNumberInput')
+    createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput,
+  ) {
+    return this.guildModuleCountToNumberService.create(
+      createGuildModuleCountToNumberInput,
+    );
   }
 
   @Query(() => [GuildModuleCountToNumber], { name: 'guildModuleCountToNumber' })
@@ -24,8 +31,14 @@ export class GuildModuleCountToNumberResolver {
   }
 
   @Mutation(() => GuildModuleCountToNumber)
-  updateGuildModuleCountToNumber(@Args('updateGuildModuleCountToNumberInput') updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput) {
-    return this.guildModuleCountToNumberService.update(updateGuildModuleCountToNumberInput.id, updateGuildModuleCountToNumberInput);
+  updateGuildModuleCountToNumber(
+    @Args('updateGuildModuleCountToNumberInput')
+    updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput,
+  ) {
+    return this.guildModuleCountToNumberService.update(
+      updateGuildModuleCountToNumberInput.id,
+      updateGuildModuleCountToNumberInput,
+    );
   }
 
   @Mutation(() => GuildModuleCountToNumber)

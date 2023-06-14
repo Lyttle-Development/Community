@@ -1,8 +1,8 @@
-import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
 import styles from './boolean.module.scss';
 import { changeKeysArray } from '@lyttledev-dashboard/components/review';
 import { Component } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface BooleanReviewCardProps {
   changeKey: string;

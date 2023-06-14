@@ -445,6 +445,30 @@ export const ModuleMarkdown = {
       },
       overview: {
         recommendation: {
+          activity: {
+            content: 'Activity',
+            documentation: '',
+          },
+          bots: {
+            content: 'Bots',
+            documentation: '',
+          },
+          events: {
+            content: 'Events',
+            documentation: '',
+          },
+          members: {
+            content: 'Members',
+            documentation: '',
+          },
+          modules: {
+            content: 'Modules',
+            documentation: '',
+          },
+          staff: {
+            content: 'Staff',
+            documentation: '',
+          },
           title: {
             content: 'Recommendation by ChatGPT',
             documentation: '',

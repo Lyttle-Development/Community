@@ -1,4 +1,4 @@
-import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { diffLines } from 'diff';
 import styles from './select.module.scss';
 import { changeKeysArray } from '@lyttledev-dashboard/components/review';

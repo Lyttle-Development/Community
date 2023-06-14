@@ -60,6 +60,5 @@ export class GuildModuleLevel {
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
-  @Field(() => Guild)
   guild: Guild;
 }

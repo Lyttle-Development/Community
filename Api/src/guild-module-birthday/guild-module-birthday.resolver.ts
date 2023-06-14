@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleBirthdayService } from './guild-module-birthday.service';
 import { GuildModuleBirthday } from './entities/guild-module-birthday.entity';
 import { CreateGuildModuleBirthdayInput } from './dto/create-guild-module-birthday.input';
@@ -6,11 +6,18 @@ import { UpdateGuildModuleBirthdayInput } from './dto/update-guild-module-birthd
 
 @Resolver(() => GuildModuleBirthday)
 export class GuildModuleBirthdayResolver {
-  constructor(private readonly guildModuleBirthdayService: GuildModuleBirthdayService) {}
+  constructor(
+    private readonly guildModuleBirthdayService: GuildModuleBirthdayService,
+  ) {}
 
   @Mutation(() => GuildModuleBirthday)
-  createGuildModuleBirthday(@Args('createGuildModuleBirthdayInput') createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput) {
-    return this.guildModuleBirthdayService.create(createGuildModuleBirthdayInput);
+  createGuildModuleBirthday(
+    @Args('createGuildModuleBirthdayInput')
+    createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput,
+  ) {
+    return this.guildModuleBirthdayService.create(
+      createGuildModuleBirthdayInput,
+    );
   }
 
   @Query(() => [GuildModuleBirthday], { name: 'guildModuleBirthday' })
@@ -24,8 +31,14 @@ export class GuildModuleBirthdayResolver {
   }
 
   @Mutation(() => GuildModuleBirthday)
-  updateGuildModuleBirthday(@Args('updateGuildModuleBirthdayInput') updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput) {
-    return this.guildModuleBirthdayService.update(updateGuildModuleBirthdayInput.id, updateGuildModuleBirthdayInput);
+  updateGuildModuleBirthday(
+    @Args('updateGuildModuleBirthdayInput')
+    updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput,
+  ) {
+    return this.guildModuleBirthdayService.update(
+      updateGuildModuleBirthdayInput.id,
+      updateGuildModuleBirthdayInput,
+    );
   }
 
   @Mutation(() => GuildModuleBirthday)

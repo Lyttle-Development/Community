@@ -76,6 +76,5 @@ export class MemberModuleLevelDay {
     { name: 'user_id', referencedColumnName: 'userId' },
     { name: 'guild_id', referencedColumnName: 'guildId' },
   ])
-  @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
 }

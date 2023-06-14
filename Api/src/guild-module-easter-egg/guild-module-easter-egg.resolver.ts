@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleEasterEggService } from './guild-module-easter-egg.service';
 import { GuildModuleEasterEgg } from './entities/guild-module-easter-egg.entity';
 import { CreateGuildModuleEasterEggInput } from './dto/create-guild-module-easter-egg.input';
@@ -6,11 +6,18 @@ import { UpdateGuildModuleEasterEggInput } from './dto/update-guild-module-easte
 
 @Resolver(() => GuildModuleEasterEgg)
 export class GuildModuleEasterEggResolver {
-  constructor(private readonly guildModuleEasterEggService: GuildModuleEasterEggService) {}
+  constructor(
+    private readonly guildModuleEasterEggService: GuildModuleEasterEggService,
+  ) {}
 
   @Mutation(() => GuildModuleEasterEgg)
-  createGuildModuleEasterEgg(@Args('createGuildModuleEasterEggInput') createGuildModuleEasterEggInput: CreateGuildModuleEasterEggInput) {
-    return this.guildModuleEasterEggService.create(createGuildModuleEasterEggInput);
+  createGuildModuleEasterEgg(
+    @Args('createGuildModuleEasterEggInput')
+    createGuildModuleEasterEggInput: CreateGuildModuleEasterEggInput,
+  ) {
+    return this.guildModuleEasterEggService.create(
+      createGuildModuleEasterEggInput,
+    );
   }
 
   @Query(() => [GuildModuleEasterEgg], { name: 'guildModuleEasterEgg' })
@@ -24,8 +31,14 @@ export class GuildModuleEasterEggResolver {
   }
 
   @Mutation(() => GuildModuleEasterEgg)
-  updateGuildModuleEasterEgg(@Args('updateGuildModuleEasterEggInput') updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput) {
-    return this.guildModuleEasterEggService.update(updateGuildModuleEasterEggInput.id, updateGuildModuleEasterEggInput);
+  updateGuildModuleEasterEgg(
+    @Args('updateGuildModuleEasterEggInput')
+    updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput,
+  ) {
+    return this.guildModuleEasterEggService.update(
+      updateGuildModuleEasterEggInput.id,
+      updateGuildModuleEasterEggInput,
+    );
   }
 
   @Mutation(() => GuildModuleEasterEgg)

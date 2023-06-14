@@ -33,49 +33,67 @@ const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 const msgLeaderboardTitle = getMessage(pfx + 'leaderboard.title');
 const msgLeaderboardDescription = getMessage(pfx + 'leaderboard.description');
 
+export interface GetLevelsConfigProps {
+  guildId: string;
+  enabled: boolean;
+  nicknameActive: boolean;
+  announcementId: string | null;
+  leaderboardId: string | null;
+}
+
 // Config:
-export const getLevelsConfig = (
-  guildId: string,
-  enabled = false,
-  levelsId: string | null = null,
-  nicknameId: string | null = null,
-  nicknameActive = false,
-  announcementId: string | null = null,
-  announcementActive = false,
-  leaderboardId: string | null = null,
-  leaderboardActive = false,
-): CardModule => ({
-  active: enabled,
-  title: msgTitle,
-  description: msgDescription,
-  id: levelsId,
-  // Todo: Add levels disable function
-  onClick: (...e) => console.log(e),
-  route: `/dashboard/${guildId}/module/levels`,
-  subItems: [
-    {
-      id: nicknameId,
-      route: `/dashboard/${guildId}/module/levels#nickname`,
-      active: nicknameActive,
-      title: msgNicknameTitle,
-      description: msgNicknameDescription,
-    },
-    {
-      id: announcementId,
-      route: `/dashboard/${guildId}/module/levels#announcement`,
-      active: announcementActive,
-      title: msgAnnouncementTitle,
-      description: msgAnnouncementDescription,
-    },
-    {
-      id: leaderboardId,
-      route: `/dashboard/${guildId}/module/levels#leaderboard`,
-      active: leaderboardActive,
-      title: msgLeaderboardTitle,
-      description: msgLeaderboardDescription,
-    },
-  ],
-});
+export function getLevelsConfig({
+  guildId,
+  enabled,
+  nicknameActive,
+  announcementId,
+  leaderboardId,
+}: GetLevelsConfigProps): CardModule {
+  const nicknameKey = nicknameActive
+    ? changeKeys.modulesLevelsNickname.key
+    : null;
+
+  const announcementActive = typeof announcementId === 'string';
+  const announcementKey = announcementActive
+    ? changeKeys.modulesLevelsAnnouncement.key
+    : null;
+
+  const leaderboardActive = typeof leaderboardId === 'string';
+  const leaderboardKey = leaderboardActive
+    ? changeKeys.modulesLevelsLeaderboard.key
+    : null;
+
+  return {
+    active: enabled,
+    title: msgTitle,
+    description: msgDescription,
+    id: changeKeys.modulesLevels.key,
+    route: `/dashboard/${guildId}/module/levels`,
+    subItems: [
+      {
+        id: nicknameKey,
+        route: `/dashboard/${guildId}/module/levels#nickname`,
+        active: nicknameActive,
+        title: msgNicknameTitle,
+        description: msgNicknameDescription,
+      },
+      {
+        id: announcementKey,
+        route: `/dashboard/${guildId}/module/levels#announcement`,
+        active: announcementActive,
+        title: msgAnnouncementTitle,
+        description: msgAnnouncementDescription,
+      },
+      {
+        id: leaderboardKey,
+        route: `/dashboard/${guildId}/module/levels#leaderboard`,
+        active: leaderboardActive,
+        title: msgLeaderboardTitle,
+        description: msgLeaderboardDescription,
+      },
+    ],
+  };
+}
 
 // Level up
 const keyLevelUp = 'Activity.levels.event.level-up';

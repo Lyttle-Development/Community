@@ -36,8 +36,6 @@ export const getBirthdaysConfig = (
   title: msgTitle,
   description: msgDescription,
   id: moduleId,
-  // Todo: Add birthday disable function
-  onClick: (...e) => console.log(e),
   route: `/dashboard/${guildId}/module/birthdays`,
   subItems: [
     {

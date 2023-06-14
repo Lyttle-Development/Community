@@ -7,10 +7,15 @@ describe('GuildModuleVoiceGrowthChildResolver', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GuildModuleVoiceGrowthChildResolver, GuildModuleVoiceGrowthChildService],
+      providers: [
+        GuildModuleVoiceGrowthChildResolver,
+        GuildModuleVoiceGrowthChildService,
+      ],
     }).compile();
 
-    resolver = module.get<GuildModuleVoiceGrowthChildResolver>(GuildModuleVoiceGrowthChildResolver);
+    resolver = module.get<GuildModuleVoiceGrowthChildResolver>(
+      GuildModuleVoiceGrowthChildResolver,
+    );
   });
 
   it('should be defined', () => {

@@ -3,6 +3,9 @@ import { GuildModuleVoiceGrowthChildService } from './guild-module-voice-growth-
 import { GuildModuleVoiceGrowthChildResolver } from './guild-module-voice-growth-child.resolver';
 
 @Module({
-  providers: [GuildModuleVoiceGrowthChildResolver, GuildModuleVoiceGrowthChildService]
+  providers: [
+    GuildModuleVoiceGrowthChildResolver,
+    GuildModuleVoiceGrowthChildService,
+  ],
 })
 export class GuildModuleVoiceGrowthChildModule {}

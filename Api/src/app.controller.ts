@@ -7,19 +7,20 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as ExpressRequest, Response } from 'express';
 import { DiscordValidateResponse } from './auth/discord-oauth.strategy';
 import { Public } from './auth/discord.guard';
+import * as process from 'process';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(@Res() res: Response) {
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'You are authorized to access this resource',
+    });
   }
 
   @Public()
@@ -31,7 +32,7 @@ export class AppController {
     res.cookie('accessToken', user.accessToken);
     res.cookie('refreshToken', user.refreshToken);
 
-    return res.redirect('/');
+    return res.redirect(process.env.CLIENT_URI);
   }
 
   @Public()

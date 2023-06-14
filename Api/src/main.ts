@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import type { INestApplication } from '@nestjs/common';
-import { environment } from '../utils';
 import cookieParser from 'cookie-parser';
+import * as process from 'process';
 
 async function bootstrap(): Promise<void> {
   const app: INestApplication = await NestFactory.create(AppModule);
@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
   });
   app.use(cookieParser());
 
-  await app.listen(environment.PORT);
+  await app.listen(process.env.PORT);
 }
 
 void bootstrap();

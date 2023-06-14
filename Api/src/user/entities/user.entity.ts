@@ -27,6 +27,5 @@ export class User {
   @OneToOne(() => UserProfile, (userProfile) => userProfile.user, {
     nullable: true,
   })
-  @Field(() => UserProfile, { nullable: true })
   userProfile: UserProfile;
 }
