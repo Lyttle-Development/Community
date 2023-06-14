@@ -18,6 +18,8 @@ import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guil
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { Discord } from '../discord/entities/discord.entity';
 import { DiscordService } from '../discord/discord.service';
+import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
+import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
 
 @Injectable()
 export class GuildService {
@@ -38,6 +40,8 @@ export class GuildService {
     private guildModuleVoiceGrowthService: GuildModuleVoiceGrowthService,
     @Inject(forwardRef(() => DiscordService))
     private discordService: DiscordService,
+    @Inject(forwardRef(() => GuildStatResolvedService))
+    private guildStatResolvedService: GuildStatResolvedService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -118,5 +122,9 @@ export class GuildService {
 
   getDiscord(guildId: string): Discord {
     return this.discordService.create(guildId);
+  }
+
+  getStats(guildId: string): GuildStatResolved {
+    return this.guildStatResolvedService.create(guildId);
   }
 }
