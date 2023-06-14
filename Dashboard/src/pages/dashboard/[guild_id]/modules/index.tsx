@@ -7,7 +7,7 @@ import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/dashboard/[guild_
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 
 const modulesQuery = gql`
@@ -34,13 +34,25 @@ function Page() {
   const title = usePage(pagesPrefix + 'modules.title');
   const [modules, setModules] = useState<CardModules>([]);
 
-  const { data, refetch } = useQuery(modulesQuery, {
-    variables: { id: guildId },
-  });
+  const [fetch, { data, refetch }] = useLazyQuery(modulesQuery);
 
   useEffect(() => {
+    console.log(
+      data?.guild?.guildId,
+      guildId,
+      data?.guild?.guildId === guildId,
+    );
+    console.log('upd');
     if (!authorized) return;
-    void refetch();
+    if (typeof guildId !== 'string') return;
+    if (!data?.guild?.guildId && guildId) {
+      console.log('fetch');
+      void fetch({ variables: { id: guildId } });
+      return;
+    }
+    if (guildId === data?.guild?.guildId) return;
+    console.log('refetch');
+    void refetch({ variables: { id: guildId } });
   }, [authorized, guildId]);
 
   // Update selected guild id from context
