@@ -71,7 +71,7 @@ export function Snackbar() {
   const msgResettingCancel = getMessage(pfx + 'resetting.cancel');
   const msgResettingReset = getMessage(pfx + 'resetting.reset');
 
-  if (router.pathname === '/dashboard/[id]/review') {
+  if (router.pathname === '/dashboard/[guild_id]/review') {
     if (hasChanges) setHasChanges(false);
   }
   return (
