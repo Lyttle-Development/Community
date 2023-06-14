@@ -25,6 +25,23 @@ export class DiscordService {
     return (await result.json()) ?? {};
   }
 
+  async getGuildChannels(guildId: string): Promise<object[]> {
+    if (!guildId) return null;
+
+    const botToken = process.env.BOT_TOKEN;
+    const result = await fetch(
+      `https://discord.com/api/guilds/${guildId}/channels`,
+      {
+        method: 'GET',
+        headers: {
+          authorization: `Bot ${botToken}`,
+        },
+      },
+    );
+
+    return (await result.json()) ?? [];
+  }
+
   async getUserGuilds(token: string): Promise<object[]> {
     if (!token) return null;
 

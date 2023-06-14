@@ -22,4 +22,9 @@ export class DiscordResolver {
   guild(@Parent() discord: Discord): Promise<object> {
     return this.discordService.getGuild(discord.guildId);
   }
+
+  @ResolveField(() => [GraphQLJSONObject])
+  guildChannels(@Parent() discord: Discord): Promise<object[]> {
+    return this.discordService.getGuildChannels(discord.guildId);
+  }
 }
