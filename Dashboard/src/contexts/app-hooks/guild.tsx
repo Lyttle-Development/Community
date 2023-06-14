@@ -30,7 +30,13 @@ export function useGuild(
     storage.set('selectedGuildId', guildId ?? '');
   };
 
-  const [selectedGuild, setSelectedGuild] = useState<GuildInfo>({});
+  const selectedGuildIdFromStorage = storage.get('selectedGuildId') ?? '{}';
+  const selectedGuildIdFromStorageParsed = JSON.parse(
+    selectedGuildIdFromStorage,
+  );
+  const [selectedGuild, setSelectedGuild] = useState<GuildInfo>(
+    selectedGuildIdFromStorageParsed,
+  );
   const [fetch, { data: guildData }] = useLazyQuery(GuildQuery);
 
   useEffect(() => {
@@ -38,11 +44,13 @@ export function useGuild(
       `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`;
     const guild = guildData?.guild?.discord?.guild ?? null;
     if (!guild) return;
-    setSelectedGuild({
+    const _guild = {
       id: guild?.id,
       name: guild?.name,
       icon: getIcon(guild),
-    });
+    };
+    setSelectedGuild(_guild);
+    storage.set('selectedGuild', JSON.stringify(_guild));
   }, [guildData]);
 
   useEffect(() => {
