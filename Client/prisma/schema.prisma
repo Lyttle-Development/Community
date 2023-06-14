@@ -72,6 +72,7 @@ model Guild {
   guild__module__easter_egg      GuildModuleEasterEgg?
   guild__module__count_to_number GuildModuleCountToNumber[]
   guild__module__voice_growth    GuildModuleVoiceGrowth[]
+  GuildStat                      GuildStat[]
 
   // Values
   enabled Boolean @default(true)
@@ -126,6 +127,29 @@ model GuildTranslation {
   // Refactors
   @@id([guild_id, key])
   @@map("guild__translation")
+}
+
+model GuildStat {
+  // Primary key information
+  guild_id BigInt
+  key      String
+  day      Int
+
+  // Relations
+  guild Guild @relation(fields: [guild_id], references: [guild_id])
+
+  // Values
+  group_key String?
+  value     String?
+  value_int Int     @default(0)
+
+  // Date information
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Refactors
+  @@id([guild_id, key, day])
+  @@map("guild__stat")
 }
 
 model GuildAction {
