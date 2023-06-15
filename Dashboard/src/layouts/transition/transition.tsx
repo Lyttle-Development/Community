@@ -24,7 +24,11 @@ export function Transition({ children }: TransitionProps) {
         timeout={TIMEOUT}
         onEnter={(node: HTMLElement) => {
           gsap.set(node, { autoAlpha: 0 });
-          gsap.to(node, { autoAlpha: 1, duration: gsapDuration * 3 });
+          gsap.to(node, {
+            autoAlpha: 1,
+            duration: gsapDuration * 3,
+            delay: gsapDuration * 2,
+          });
         }}
         onExit={(node: HTMLElement) => {
           gsap.to(node, { autoAlpha: 0, duration: gsapDuration });

@@ -8,11 +8,26 @@ import { Servers } from '@lyttledev-dashboard/components/server-card';
 import { useUserGuilds } from '@lyttledev-dashboard/hooks/useUserGuilds';
 import { getModulesEnabled } from '@lyttledev-dashboard/utils/modules-enabled';
 
+const mockups = 50;
+const mockupServers: Servers = [];
+for (let i = 0; i < mockups; i++) {
+  mockupServers.push({
+    id: '0',
+    name: 'Loading Servers!',
+    icon: '/media/images/placeholder.png',
+    setup: false,
+    active: null,
+    members: 0,
+    staffMembers: 0,
+    modulesEnabled: 0,
+  });
+}
+
 function Page() {
   const authorized = useAuth();
   const title = usePage(pagesPrefix + 'dashboard.title');
   const { data, guilds, ownedGuilds, moderateGuilds } = useUserGuilds();
-  const [servers, setServers] = useState<Servers>([]);
+  const [servers, setServers] = useState<Servers>(mockupServers);
 
   useEffect(() => {
     if (!data || !data.guilds) return;
