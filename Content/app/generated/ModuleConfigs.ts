@@ -77,6 +77,7 @@ export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementTitle from '../../
 export * as ModuleConfigDashboardPagesModuleLevelsDescription from '../../content/modules/Dashboard/pages/module/levels/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardDescription from '../../content/modules/Dashboard/pages/module/levels/leaderboard/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardTitle from '../../content/modules/Dashboard/pages/module/levels/leaderboard/title/config';
+export * as ModuleConfigDashboardPagesModuleLevelsModule from '../../content/modules/Dashboard/pages/module/levels/module/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameDescription from '../../content/modules/Dashboard/pages/module/levels/nickname/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameTitle from '../../content/modules/Dashboard/pages/module/levels/nickname/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modules/Dashboard/pages/module/levels/title/config';

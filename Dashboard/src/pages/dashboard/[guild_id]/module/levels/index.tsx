@@ -13,6 +13,11 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { changeKeys } from '@lyttledev-dashboard/components/review';
+import { gql, useLazyQuery } from '@apollo/client';
+import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { findTranslation } from '@lyttledev-dashboard/utils/find-translation';
+import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -95,6 +100,10 @@ export function getLevelsConfig({
   };
 }
 
+// Level Module
+const keyLevel = 'Dashboard.pages.module.levels.module';
+const msgLevel = getDocumentation(keyLevel);
+
 // Level up
 const keyLevelUp = 'Activity.levels.event.level-up';
 const msgLevelUp = getDocumentation(keyLevelUp);
@@ -109,57 +118,84 @@ const varNickname = getVariables(
   ContentConfigs.ModuleConfigActivityLevelsTxtNickname,
 );
 
+const levelsQuery = gql`
+  query GetLevels($guildId: String!) {
+    guild(id: $guildId) {
+      guildId
+      moduleLevel {
+        enabled
+        nicknames
+        leaderboardChannelId
+        announcementChannelId
+      }
+      translations {
+        key
+        value
+      }
+      discord {
+        guildChannels
+        guildTextChannels
+      }
+    }
+  }
+`;
+
 function Page() {
+  const authorized = useAuth();
+  const guildId = useGuild();
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
+  const [fetch, { data }] = useLazyQuery(levelsQuery);
 
   useEffect(() => {
+    if (!authorized || !guildId) return;
+    if (!data) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+    if (data.guild.guildId !== guildId) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+    console.log(data);
+
+    const settingLevel = new CreateSettingCard()
+      .id('0')
+      .title(msgLevel.title)
+      .description(msgLevel.description)
+      .enabled(
+        data?.guild?.moduleLevel?.enabled ?? false,
+        changeKeys.modulesLevels.key,
+      )
+      .build();
+
     const settingLevelUp = new CreateSettingCard()
       .id('0')
       .title(msgLevelUp.title)
       .description(msgLevelUp.description)
-      .enabled(false, changeKeys.moduleLevelLevelUp.key)
+      .enabled(
+        data?.guild?.moduleLevel?.announcementChannelId !== null,
+        changeKeys.moduleLevelLevelUp.key,
+      )
       .addSubItem((subItem) =>
         subItem.select((select) =>
           select //
             .key(changeKeys.moduleLevelLevelUpChannel.key)
-            .title('Channel')
-            .value('')
-            .options([
-              {
-                key: { title: 'General', description: '#off-topic' },
-                value: '0',
-              },
-              { key: { title: 'General', description: '#roles' }, value: '1' },
-              {
-                key: { title: 'Voice Channels', description: '#select-vc' },
-                value: '2',
-              },
-              {
-                key: { title: 'Voice Channels', description: '#no-mic' },
-                value: '3',
-              },
-              {
-                key: { title: 'Voice Channels', description: '#commands' },
-                value: '4',
-              },
-              // { key: '1', value: '1' },
-              // { key: '2', value: '2' },
-              // { key: '3', value: '3' },
-              // { key: '4', value: '4' },
-              // { key: '5', value: '5' },
-              // { key: '6', value: '6' },
-              // { key: '7', value: '7' },
-            ]),
+            .title('Channel') // Todo: Translate
+            .value(data?.guild?.moduleLevel?.announcementChannelId)
+            .options(
+              getChannelOptions(
+                data?.guild?.discord?.guildChannels ?? [],
+                data?.guild?.discord?.guildTextChannels ?? [],
+              ),
+            ),
         ),
       )
       .addSubItem((subItem) =>
         subItem.textarea((textarea) =>
           textarea //
             .key(changeKeys.moduleLevelLevelUpText.key)
-            .value(
-              'Wow\nSooo many\nlines!\nis this real?\nwhoep\noep!Yeyeyeye\nLol....',
-            )
+            .value(findTranslation(data?.guild?.translations, keyLevelUp))
             .defaultKey(keyLevelUp)
             .variables(varLevelUp),
         ),
@@ -170,19 +206,23 @@ function Page() {
       .id('0')
       .title(msgNickname.title)
       .description(msgNickname.description)
-      .enabled(true, changeKeys.moduleLevelNickname.key)
+      .enabled(
+        data?.guild?.moduleLevel?.nicknames ?? false,
+        changeKeys.moduleLevelNickname.key,
+      )
       .addSubItem((subItem) =>
         subItem.input((input) =>
           input //
             .key(changeKeys.moduleLevelNicknameText.key)
+            .value(findTranslation(data?.guild?.translations, keyNickname))
             .defaultKey(keyNickname)
             .variables(varNickname),
         ),
       )
       .build();
 
-    setSettings([settingLevelUp, settingNickname]);
-  }, []);
+    setSettings([settingLevel, settingLevelUp, settingNickname]);
+  }, [authorized, guildId, data]);
 
   return (
     <>

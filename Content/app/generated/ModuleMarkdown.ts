@@ -403,6 +403,10 @@ export const ModuleMarkdown = {
               documentation: '',
             },
           },
+          module: {
+            content: '',
+            documentation: 'Leveling Module\nEnable or disable it.',
+          },
           nickname: {
             description: {
               content: 'Enable nicknaming your users with their level.',
