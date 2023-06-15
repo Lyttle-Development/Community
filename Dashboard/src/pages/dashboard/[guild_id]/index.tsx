@@ -128,7 +128,7 @@ function Page() {
               title: msgMembers,
               value: totalMembers,
               change: membersChange || 0,
-              changeNote: ' Other',
+              changeNote: ' other',
               total: totalMembersPercent || 0,
             },
             {
@@ -136,7 +136,7 @@ function Page() {
               value: staff,
               change: staffChange || 0,
               total: staffPercent || 0,
-              changeNote: ' Other',
+              changeNote: ' non staff',
               color: StatsCardColors.Orange,
             },
             {
@@ -144,7 +144,7 @@ function Page() {
               value: bots,
               change: botsChange || 0,
               total: botsPercent || 0,
-              changeNote: ' Other',
+              changeNote: ' non bot',
               color: StatsCardColors.Yellow,
             },
             {
@@ -166,7 +166,7 @@ function Page() {
               title: msgActivity,
               value: activity,
               change: activityChange || 0,
-              changeNote: ' expected',
+              changeNote: ' usually',
               total: activityPercent || 0,
               color: StatsCardColors.Yellow,
             },
