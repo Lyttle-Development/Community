@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useMainNav } from '@lyttledev-dashboard/contexts/app-hooks/main-nav';
 import {
   ChangeProps,
@@ -67,7 +67,11 @@ export function AppProvider({ children }: AppContextProps) {
   const {
     mobile,
     setMobile, //
-  } = useMobile(mainNavOpen, setMainNavOpen, initialized, setIsInitialized);
+  } = useMobile(mainNavOpen, setMainNavOpen, initialized);
+
+  useEffect(() => {
+    if (!initialized) setIsInitialized(new Date());
+  }, []);
 
   return (
     <AppContext.Provider

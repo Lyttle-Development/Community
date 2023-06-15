@@ -14,12 +14,12 @@ export const changeKeys: ChangeKeys = {
     key: 'modules.levels',
     url: (id: string) => `/dashboard/${id}/modules#levels`,
   },
-  moduleLevelLevelUp: {
+  moduleLevelsLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
   },
-  moduleLevelLevelUpText: {
+  moduleLevelsLevelUpText: {
     title: 'Level up event text',
     key: 'module.level.level-up.text',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,

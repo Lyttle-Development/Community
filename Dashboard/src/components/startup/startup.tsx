@@ -20,9 +20,10 @@ export function Startup({ mobile }: StartupProps) {
   useEffect(() => {
     if (startup === null) return;
     if (!startup) {
-      setMainNavOpen(true);
       setHide(true);
       setHidden(true);
+      if (mobile) return;
+      setMainNavOpen(true);
       return;
     }
 

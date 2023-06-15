@@ -146,6 +146,7 @@ function Page() {
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
   const [fetch, { data }] = useLazyQuery(levelsQuery);
+  console.log(data);
 
   useEffect(() => {
     if (!authorized || !guildId) return;
@@ -157,7 +158,6 @@ function Page() {
       void fetch({ variables: { guildId } });
       return;
     }
-    console.log(data);
 
     const settingLevel = new CreateSettingCard()
       .id('0')
@@ -180,7 +180,7 @@ function Page() {
       .addSubItem((subItem) =>
         subItem.select((select) =>
           select //
-            .key(changeKeys.moduleLevelLevelUpChannel.key)
+            .key(changeKeys.moduleLevelsAnnouncement.key)
             .title('Channel') // Todo: Translate
             .value(data?.guild?.moduleLevel?.announcementChannelId)
             .options(
@@ -223,6 +223,8 @@ function Page() {
 
     setSettings([settingLevel, settingLevelUp, settingNickname]);
   }, [authorized, guildId, data]);
+
+  console.log(settings);
 
   return (
     <>
