@@ -1,8 +1,14 @@
 import { GuildMember } from '../../../types';
 import { incrementGuildStat } from '../../../database/handlers';
+import { todayInt } from '../../../utils/queue/check-types/utils/daily';
 
 export async function triggerActivityStat(guildMember: GuildMember) {
   // Increment the guild stat
-  const day = new Date().getDay();
-  await incrementGuildStat(guildMember.guildId, 'activity', day, 1, 'activity');
+  await incrementGuildStat(
+    guildMember.guildId,
+    'activity',
+    todayInt,
+    1,
+    'activity',
+  );
 }

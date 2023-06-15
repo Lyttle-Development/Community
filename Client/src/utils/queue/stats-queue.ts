@@ -43,10 +43,11 @@ import {
   xpCommandsRanAfterLastRestart,
   xpFromContextMenuRanAfterLastRestart,
 } from '../../modules';
-import { formatNumber, getDiscordTime } from '../helpers';
+import { formatNumber, getDayString, getDiscordTime } from '../helpers';
 import { setBirthDayCache } from '../../modules/Activity/birth-day/set-birth-day-modal';
 import { birthdaysSetSinceLastRestart } from '../../modules/Activity/birth-day/set-birth-day-buttons';
 import { birthdayCommandsRanAfterLastRestart } from '../../modules/Activity/birth-day';
+import { todayInt } from './check-types/utils/daily';
 
 let statsQueueStarted = false;
 
@@ -109,6 +110,10 @@ function sendStatsToQueue() {
   const totalAuditLogs = mostRecentAuditLogs.length;
   const totalBirthDaysBeingSet = Object.keys(setBirthDayCache).length;
 
+  // get online time in hours
+  const onlineTime =
+    Math.floor(((Date.now() - bootdate.getTime()) / 1000 / 60 / 60) * 100) /
+    100;
   // The message:
   const message =
     //
@@ -116,7 +121,9 @@ function sendStatsToQueue() {
 
 **General**:
 > - **Booted**: <t:${boot}:R>
+> - **Online**: \`${onlineTime} hours\`
 > - **Guilds**: \`${totalGuilds}\`
+> - **Today**: \`${todayInt} (${getDayString(todayInt)})\`
 
 **Queue**:
 > - **Total item queued**: \`${totalQueues}\`

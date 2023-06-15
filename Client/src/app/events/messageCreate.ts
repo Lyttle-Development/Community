@@ -3,6 +3,7 @@ import { GuildMember } from '../../types/app/GuildMember';
 import { onGuildMessageCreate, onPrivateMessageCreate } from '../actions';
 import { checkGuildEnabled } from '../../utils';
 import { incrementGuildStat } from '../../database/handlers';
+import { todayInt } from '../../utils/queue/check-types/utils/daily';
 
 async function messageCreate(message: Message): Promise<void> {
   // If the message is from a bot, ignore it
@@ -32,11 +33,10 @@ async function messageCreate(message: Message): Promise<void> {
   if (!guildEnabled) return;
 
   // Increment the guild stat
-  const day = new Date().getDay();
   await incrementGuildStat(
     guildMember.guildId,
     message.channelId,
-    day,
+    todayInt,
     1,
     'textChannelMessages',
   );

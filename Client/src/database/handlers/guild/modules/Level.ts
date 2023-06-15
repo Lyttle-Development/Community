@@ -3,7 +3,7 @@ import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../guild';
 
 export async function createGuildModuleLevel(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleLevel> {
   return prismaClient.guildModuleLevel.create({
     data: {
@@ -13,7 +13,7 @@ export async function createGuildModuleLevel(
 }
 
 export async function findSingleGuildModuleLevel(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleLevel> {
   return prismaClient.guildModuleLevel.findUnique({
     where: {
@@ -23,7 +23,7 @@ export async function findSingleGuildModuleLevel(
 }
 
 export async function getOrCreateGuildModuleLevel(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleLevel> {
   await getOrCreateGuild(guildId);
   return (
@@ -33,7 +33,7 @@ export async function getOrCreateGuildModuleLevel(
 }
 
 export async function getGuildModuleLevel(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleLevel> {
   await getOrCreateGuild(guildId);
   return findSingleGuildModuleLevel(guildId);
@@ -41,7 +41,7 @@ export async function getGuildModuleLevel(
 
 export async function setGuildModuleLevel(
   guildId: string,
-  data: Prisma.GuildModuleLevelUpdateInput
+  data: Prisma.GuildModuleLevelUpdateInput,
 ): Promise<GuildModuleLevel> {
   await getOrCreateGuildModuleLevel(guildId);
 

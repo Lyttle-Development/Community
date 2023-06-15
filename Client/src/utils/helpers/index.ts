@@ -7,3 +7,4 @@ export * from './set-number-length';
 export * from './sleep';
 export * from './sort-object';
 export * from './test';
+export * from './get-day-string';

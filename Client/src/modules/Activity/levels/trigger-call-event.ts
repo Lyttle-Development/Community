@@ -10,6 +10,7 @@ import {
 import { EVENT_PRICES } from './constants';
 import { givePoints } from './give-points';
 import { bootdate } from '../../../main';
+import { todayInt } from '../../../utils/queue/check-types/utils/daily';
 
 export interface GuildMemberWithChannelId extends GuildMember {
   channelId: string;
@@ -222,11 +223,10 @@ async function give(guildMember: GuildMemberWithChannelId): Promise<boolean> {
   await reset(guildMember);
 
   // Increment the call_time.
-  const day = new Date().getDay();
   await incrementGuildStat(
     guildId,
     channelId,
-    day,
+    todayInt,
     timeBetween,
     'voiceChannelsCallTime',
   );

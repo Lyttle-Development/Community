@@ -95,31 +95,8 @@ export async function incrementGuildStat(
   valueInt = 0,
   groupKey: string | null = null,
 ): Promise<GuildStat> {
-  const db_GuildStat = await getOrCreateGuildStat(
-    guildId,
-    key,
-    day,
-    null,
-    0,
-    groupKey,
-  );
-  const db_GuildStat__Cache = await getOrCreateGuildStat(
-    guildId,
-    key,
-    -2,
-    null,
-    0,
-  );
-
-  // If the stat wasn't updated in the last 24 hours, reset it back to 0.
-  if (db_GuildStat?.updated_at?.getTime() < Date.now() - 86400000) {
-    const value =
-      db_GuildStat__Cache?.updated_at?.getTime() > Date.now() - 86400000
-        ? db_GuildStat__Cache?.value_int
-        : 0;
-    await setGuildStat(guildId, key, day, null, value, groupKey);
-    await setGuildStat(guildId, key, -2, null, 0);
-  }
+  await getOrCreateGuildStat(guildId, key, day, null, 0, groupKey);
+  await getOrCreateGuildStat(guildId, key, -2, null, 0);
 
   return prismaClient.guildStat.update({
     where: {
@@ -132,6 +109,29 @@ export async function incrementGuildStat(
     data: {
       value_int: {
         increment: valueInt,
+      },
+    },
+  });
+}
+
+export async function getAllGuildStatsCaches() {
+  return prismaClient.guildStat.findMany({
+    where: {
+      day: -2,
+    },
+  });
+}
+
+export async function findOneGuildStatsByGuildAndKey(
+  guildId: string,
+  key: string,
+): Promise<GuildStat> {
+  return prismaClient.guildStat.findFirst({
+    where: {
+      guild_id: BigInt(guildId),
+      key,
+      day: {
+        not: -2,
       },
     },
   });
