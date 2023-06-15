@@ -18,7 +18,7 @@ export function findSingleMember(
 ): Promise<Member> {
   return prismaClient.member.findUnique({
     where: {
-      guild_id_user_id: {
+      user_id_guild_id: {
         guild_id: BigInt(guildId),
         user_id: BigInt(userId),
       },
