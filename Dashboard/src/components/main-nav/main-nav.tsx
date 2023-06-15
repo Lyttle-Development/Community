@@ -36,7 +36,7 @@ export function MainNav({ mobile }: MainNavProps) {
   const labelHome = getMessage(pfx + 'home');
   const labelLogout = getMessage(pfx + 'logout');
   const labelModules = getMessage(pfx + 'modules');
-  const labelProfile = getMessage(pfx + 'profile');
+  // const labelProfile = getMessage(pfx + 'profile'); // TODO: Add profile
   const labelOverview = getMessage(pfx + 'overview');
 
   const prefix = 'main-nav';
@@ -82,7 +82,8 @@ export function MainNav({ mobile }: MainNavProps) {
           <ul>
             <MainNavItem href={'/'}>{labelHome}</MainNavItem>
             <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
-            <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>
+            {/* // Currently disabled, will be added in the future! // */}
+            {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
           </ul>
           <article>
             <section
