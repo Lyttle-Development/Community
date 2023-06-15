@@ -39,14 +39,16 @@ export class DiscordService {
       },
     );
 
-    return (await result.json()) ?? [];
+    const guildChannels = (await result.json()) ?? [];
+    if (!guildChannels || !Array.isArray(guildChannels)) return [];
+    return guildChannels;
   }
 
   async getGuildCategoryChannels(guildId: string): Promise<object[]> {
     if (!guildId) return null;
 
     const guildChannels = await this.getGuildChannels(guildId);
-    if (!guildChannels) return null;
+    if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter((channel: any) => channel.type === 4);
   }
@@ -55,7 +57,7 @@ export class DiscordService {
     if (!guildId) return null;
 
     const guildChannels = await this.getGuildChannels(guildId);
-    if (!guildChannels) return null;
+    if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter((channel: any) => channel.type === 0);
   }
@@ -64,7 +66,7 @@ export class DiscordService {
     if (!guildId) return null;
 
     const guildChannels = await this.getGuildChannels(guildId);
-    if (!guildChannels) return null;
+    if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter((channel: any) => channel.type === 2);
   }
