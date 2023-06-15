@@ -12,6 +12,7 @@ export interface Server {
   setup: boolean;
   active: boolean | null;
   members: number;
+  staffMembers: number;
   modulesEnabled: number;
 }
 
@@ -26,11 +27,12 @@ export function ServerCard({
   setup,
   active,
   members,
+  staffMembers,
   modulesEnabled,
 }: ServerCardProps) {
   // Messages
   const pfx = componentsPrefix + 'server-card.';
-  // const msgStaffMembers = getMessage(pfx + 'staff-members');
+  const msgStaffMembers = getMessage(pfx + 'staff-members');
   const msgModules = getMessage(pfx + 'modules');
   const msgMembers = getMessage(pfx + 'members');
   const msgSetup = getMessage(pfx + 'setup');
@@ -71,9 +73,9 @@ export function ServerCard({
       />
       <h2>{name}</h2>
       <ul className={styles.about}>
-        {/* <li className={styles.business}>*/}
-        {/*  <span>{staffMembers}</span> {msgStaffMembers}*/}
-        {/* </li>*/}
+        <li className={styles.business}>
+          <span>{staffMembers}</span> {msgStaffMembers}
+        </li>
         <li className={styles.stacks}>
           <span>{modulesEnabled}</span> {msgModules}
         </li>

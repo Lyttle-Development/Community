@@ -28,6 +28,7 @@ function Page() {
         setup: true,
         active: guild.enabled,
         members: 0,
+        staffMembers: 0,
         modulesEnabled: 0,
       });
     }
@@ -52,12 +53,16 @@ function Page() {
       const serverIndex = guildIds.findIndex((srv: string) => guild.id === srv);
 
       if (serverIndex > -1) {
+        const apiGuild = data.guilds.find(
+          (srv: any) => srv.guildId === guild.id,
+        );
         const server = newServers[serverIndex];
         if (!server) continue;
         server.name = guild.name;
         server.icon = getIcon(guild);
         server.members = guild.approximate_member_count;
-        server.modulesEnabled = getModulesEnabled(data.guilds[serverIndex]);
+        server.staffMembers = apiGuild.stats?.staffMembers ?? 0;
+        server.modulesEnabled = getModulesEnabled(apiGuild);
         newServers[serverIndex] = server;
         continue;
       }
@@ -69,6 +74,7 @@ function Page() {
         setup: false,
         active: null,
         members: guild.approximate_member_count,
+        staffMembers: 0,
         modulesEnabled: 0,
       });
     }

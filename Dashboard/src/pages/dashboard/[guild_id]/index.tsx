@@ -7,7 +7,6 @@ import { getMessage } from '@lyttledev-dashboard/utils';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { gql, useLazyQuery } from '@apollo/client';
-import { useUserGuilds } from '@lyttledev-dashboard/hooks/useUserGuilds';
 import { getModulesEnabled } from '@lyttledev-dashboard/utils/modules-enabled';
 import { Constants } from '@lyttledev-dashboard/constants';
 
@@ -22,6 +21,15 @@ const GuildQuery = gql`
       moduleVoiceGrowth {
         enabled
       }
+      stats {
+        staffMembers
+        bots
+        eventsTriggered
+        activity
+      }
+      discord {
+        guild
+      }
     }
   }
 `;
@@ -29,17 +37,16 @@ const GuildQuery = gql`
 function Page() {
   const guildId = useGuild();
   const title = usePage(pagesPrefix + 'overview.title');
-  const { guilds } = useUserGuilds();
   const [recommendation, setRecommendation] = useState<string | null>(null);
 
   const pfx = pagesPrefix + 'overview.recommendation.';
   const msgRecommendation = getMessage(pfx + 'title');
   const msgMembers = getMessage(pfx + 'members');
-  // const msgStaff = getMessage(pfx + 'staff');
-  // const msgBots = getMessage(pfx + 'bots');
+  const msgStaff = getMessage(pfx + 'staff');
+  const msgBots = getMessage(pfx + 'bots');
   const msgModules = getMessage(pfx + 'modules');
-  // const msgEvents = getMessage(pfx + 'events');
-  // const msgActivity = getMessage(pfx + 'activity');
+  const msgEvents = getMessage(pfx + 'events');
+  const msgActivity = getMessage(pfx + 'activity');
 
   useEffect(() => {
     setTimeout(() => {
@@ -58,20 +65,53 @@ function Page() {
     void fetch({ variables: { guildId } });
   }, [guildId]);
 
-  const members =
-    guilds?.find((m: any) => m.id === guildId)?.approximate_member_count ?? 0;
-  const totalMembers = guilds?.reduce(
-    (acc: number, m: any) => acc + m?.approximate_member_count ?? acc,
-    0,
-  );
-  const membersPercent = totalMembers
-    ? Math.round((members / totalMembers) * 100)
-    : 0;
+  const members = data?.guild?.discord?.guild?.approximate_member_count || 0;
 
   const modulesEnabled = getModulesEnabled(data?.guild);
   const modulesPercent = modulesEnabled
     ? Math.round((modulesEnabled / Constants.totalModules) * 100)
     : 0;
+
+  const staff = data?.guild?.stats?.staffMembers || 0;
+  let staffPercent = Math.round((staff / members) * 100 * 100) / 100;
+  if (staffPercent > 10) {
+    staffPercent = Math.round(staffPercent);
+  }
+
+  const bots = data?.guild?.stats?.bots || 0;
+  let botsPercent = Math.round((bots / members) * 100 * 100) / 100;
+  if (botsPercent > 10) {
+    botsPercent = Math.round(botsPercent);
+  }
+
+  const totalMembers = members - (staff + bots);
+  let totalMembersPercent =
+    Math.round((totalMembers / members) * 100 * 100) / 100;
+  if (totalMembersPercent >= 10) {
+    totalMembersPercent = Math.round(totalMembersPercent);
+  }
+
+  const activity = data?.guild?.stats?.activity || 0;
+  const expectedUserActivity = members * Constants.expectedUserActivity;
+  let activityPercent =
+    Math.round((activity / expectedUserActivity) * 100 * 100) / 100;
+  if (activityPercent > 10) {
+    activityPercent = Math.round(activityPercent);
+  }
+
+  const events = data?.guild?.stats?.eventsTriggered || 0;
+  let eventsPercent = Math.round((events / activity) * 100 * 100) / 100;
+  if (eventsPercent > 10) {
+    eventsPercent = Math.round(eventsPercent);
+  }
+
+  const membersChange = staff + bots;
+  const staffChange = members + bots;
+  const botsChange = members + staff;
+
+  const modulesChange = modulesEnabled - Constants.totalModules;
+  const eventsChange = activity - events;
+  const activityChange = activity - expectedUserActivity;
 
   return (
     <>
@@ -86,45 +126,50 @@ function Page() {
           stats={[
             {
               title: msgMembers,
-              value: members,
-              change: 0,
-              total: membersPercent,
+              value: totalMembers,
+              change: membersChange || 0,
+              changeNote: ' Other',
+              total: totalMembersPercent || 0,
             },
-            // {
-            //   title: msgStaff,
-            //   value: 100,
-            //   change: 0,
-            //   total: 100,
-            //   color: StatsCardColors.Orange,
-            // },
-            // {
-            //   title: msgBots,
-            //   value: 100,
-            //   change: 0,
-            //   total: 100,
-            //   color: StatsCardColors.Yellow,
-            // },
+            {
+              title: msgStaff,
+              value: staff,
+              change: staffChange || 0,
+              total: staffPercent || 0,
+              changeNote: ' Other',
+              color: StatsCardColors.Orange,
+            },
+            {
+              title: msgBots,
+              value: bots,
+              change: botsChange || 0,
+              total: botsPercent || 0,
+              changeNote: ' Other',
+              color: StatsCardColors.Yellow,
+            },
             {
               title: msgModules,
               value: modulesEnabled,
-              change: 0,
-              total: modulesPercent,
+              change: modulesChange || 0,
+              changeNote: ' missing',
+              total: modulesPercent || 0,
+            },
+            {
+              title: msgEvents,
+              value: events,
+              change: eventsChange || 0,
+              changeNote: ' other',
+              total: eventsPercent || 0,
+              color: StatsCardColors.Orange,
+            },
+            {
+              title: msgActivity,
+              value: activity,
+              change: activityChange || 0,
+              changeNote: ' expected',
+              total: activityPercent || 0,
               color: StatsCardColors.Yellow,
             },
-            // {
-            //   title: msgEvents,
-            //   value: 100,
-            //   change: 0,
-            //   total: 100,
-            //   color: StatsCardColors.Orange,
-            // },
-            // {
-            //   title: msgActivity,
-            //   value: 100,
-            //   change: 0,
-            //   total: 100,
-            //   color: StatsCardColors.Yellow,
-            // },
           ]}
         ></Component.Stats>
       </Component.Container>

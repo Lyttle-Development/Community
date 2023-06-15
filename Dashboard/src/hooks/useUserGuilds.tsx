@@ -13,6 +13,9 @@ const guildsQuery = gql`
       moduleVoiceGrowth {
         enabled
       }
+      stats {
+        staffMembers
+      }
     }
     discord {
       userGuilds
