@@ -55,17 +55,17 @@ export function getLevelsConfig({
   leaderboardId,
 }: GetLevelsConfigProps): CardModule {
   const nicknameKey = nicknameActive
-    ? changeKeys.modulesLevelsNickname.key
+    ? changeKeys.moduleLevelsNickname.key
     : null;
 
   const announcementActive = typeof announcementId === 'string';
   const announcementKey = announcementActive
-    ? changeKeys.modulesLevelsAnnouncement.key
+    ? changeKeys.moduleLevelsAnnouncement.key
     : null;
 
   const leaderboardActive = typeof leaderboardId === 'string';
   const leaderboardKey = leaderboardActive
-    ? changeKeys.modulesLevelsLeaderboard.key
+    ? changeKeys.moduleLevelsLeaderboard.key
     : null;
 
   return {
@@ -175,7 +175,7 @@ function Page() {
       .description(msgLevelUp.description)
       .enabled(
         data?.guild?.moduleLevel?.announcementChannelId !== null,
-        changeKeys.moduleLevelLevelUp.key,
+        changeKeys.moduleLevelsAnnouncement.key,
       )
       .addSubItem((subItem) =>
         subItem.select((select) =>
@@ -194,7 +194,7 @@ function Page() {
       .addSubItem((subItem) =>
         subItem.textarea((textarea) =>
           textarea //
-            .key(changeKeys.moduleLevelLevelUpText.key)
+            .key(changeKeys.moduleLevelsLevelUpText.key)
             .value(findTranslation(data?.guild?.translations, keyLevelUp))
             .defaultKey(keyLevelUp)
             .variables(varLevelUp),
@@ -208,12 +208,12 @@ function Page() {
       .description(msgNickname.description)
       .enabled(
         data?.guild?.moduleLevel?.nicknames ?? false,
-        changeKeys.moduleLevelNickname.key,
+        changeKeys.moduleLevelsNickname.key,
       )
       .addSubItem((subItem) =>
         subItem.input((input) =>
           input //
-            .key(changeKeys.moduleLevelNicknameText.key)
+            .key(changeKeys.moduleLevelsNicknameText.key)
             .value(findTranslation(data?.guild?.translations, keyNickname))
             .defaultKey(keyNickname)
             .variables(varNickname),

@@ -14,21 +14,6 @@ export const changeKeys: ChangeKeys = {
     key: 'modules.levels',
     url: (id: string) => `/dashboard/${id}/modules#levels`,
   },
-  modulesLevelsNickname: {
-    title: 'Nickname module',
-    key: 'modules.levels.nickname',
-    url: (id: string) => `/dashboard/${id}/modules#levels`,
-  },
-  modulesLevelsAnnouncement: {
-    title: 'Announcement module',
-    key: 'modules.levels.announcement',
-    url: (id: string) => `/dashboard/${id}/modules#levels`,
-  },
-  modulesLevelsLeaderboard: {
-    title: 'Leaderboard module',
-    key: 'modules.levels.leaderboard',
-    url: (id: string) => `/dashboard/${id}/modules#levels`,
-  },
   moduleLevelLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',
@@ -39,17 +24,22 @@ export const changeKeys: ChangeKeys = {
     key: 'module.level.level-up.text',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
   },
-  moduleLevelLevelUpChannel: {
-    title: 'Level up event channel',
-    key: 'module.level.level-up.channel',
-    url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
+  moduleLevelsAnnouncement: {
+    title: 'Level up announcement channel',
+    key: 'modules.levels.announcement',
+    url: (id: string) => `/dashboard/${id}/modules/levels#level-up`,
   },
-  moduleLevelNickname: {
+  moduleLevelsLeaderboard: {
+    title: 'Leaderboard module',
+    key: 'modules.levels.leaderboard',
+    url: (id: string) => `/dashboard/${id}/modules/levels#leaderboard`,
+  },
+  moduleLevelsNickname: {
     title: 'Nickname module',
     key: 'module.level.nickname',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
   },
-  moduleLevelNicknameText: {
+  moduleLevelsNicknameText: {
     title: 'Nickname module text',
     key: 'module.level.nickname.text',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
@@ -69,6 +59,6 @@ export const changeKeys: ChangeKeys = {
     key: 'module.birthday.text',
     url: (id: string) => `/dashboard/${id}/module/birthdays#text`,
   },
-};
+} as const;
 
 export const changeKeysArray = Object.values(changeKeys);

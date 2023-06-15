@@ -85,11 +85,11 @@ export function MainNav({ mobile }: MainNavProps) {
             {/* // Currently disabled, will be added in the future! // */}
             {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
           </ul>
-          <article>
+          <article className={'main-nav__guild'}>
             <section
               className={`${styles.guild} ${
-                !selectedGuild.show && styles.hide
-              }`}
+                (!selectedGuild.show || !selectedGuild?.avatar) && styles.hide
+              } main-nav__guild__item`}
             >
               <Image
                 className={styles.avatar}
@@ -102,8 +102,9 @@ export function MainNav({ mobile }: MainNavProps) {
             </section>
             <ul
               className={`${styles['server-menu']} ${
-                selectedGuild.id === '0' && styles.hide
-              }`}
+                (selectedGuild.id === '0' || !selectedGuild?.avatar) &&
+                styles.hide
+              } server-menu`}
             >
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}`}
