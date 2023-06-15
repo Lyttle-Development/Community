@@ -42,6 +42,33 @@ export class DiscordService {
     return (await result.json()) ?? [];
   }
 
+  async getGuildCategoryChannels(guildId: string): Promise<object[]> {
+    if (!guildId) return null;
+
+    const guildChannels = await this.getGuildChannels(guildId);
+    if (!guildChannels) return null;
+
+    return guildChannels.filter((channel: any) => channel.type === 4);
+  }
+
+  async getGuildTextChannels(guildId: string): Promise<object[]> {
+    if (!guildId) return null;
+
+    const guildChannels = await this.getGuildChannels(guildId);
+    if (!guildChannels) return null;
+
+    return guildChannels.filter((channel: any) => channel.type === 0);
+  }
+
+  async getGuildVoiceChannels(guildId: string): Promise<object[]> {
+    if (!guildId) return null;
+
+    const guildChannels = await this.getGuildChannels(guildId);
+    if (!guildChannels) return null;
+
+    return guildChannels.filter((channel: any) => channel.type === 2);
+  }
+
   async getUserGuilds(token: string): Promise<object[]> {
     if (!token) return null;
 

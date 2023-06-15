@@ -27,4 +27,19 @@ export class DiscordResolver {
   guildChannels(@Parent() discord: Discord): Promise<object[]> {
     return this.discordService.getGuildChannels(discord.guildId);
   }
+
+  @ResolveField(() => [GraphQLJSONObject])
+  guildCategoryChannels(@Parent() discord: Discord): Promise<object[]> {
+    return this.discordService.getGuildCategoryChannels(discord.guildId);
+  }
+
+  @ResolveField(() => [GraphQLJSONObject])
+  guildTextChannels(@Parent() discord: Discord): Promise<object[]> {
+    return this.discordService.getGuildTextChannels(discord.guildId);
+  }
+
+  @ResolveField(() => [GraphQLJSONObject])
+  guildVoiceChannels(@Parent() discord: Discord): Promise<object[]> {
+    return this.discordService.getGuildVoiceChannels(discord.guildId);
+  }
 }
