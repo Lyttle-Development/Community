@@ -106,8 +106,8 @@ function Page() {
   }
 
   const membersChange = staff + bots;
-  const staffChange = members + bots;
-  const botsChange = members + staff;
+  const staffChange = totalMembers + bots;
+  const botsChange = totalMembers + staff;
 
   const modulesChange = modulesEnabled - Constants.totalModules;
   const eventsChange = activity - events;
