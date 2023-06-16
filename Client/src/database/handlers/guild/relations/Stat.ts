@@ -136,3 +136,14 @@ export async function findOneGuildStatsByGuildAndKey(
     },
   });
 }
+
+export function removeOutdatedGuildStats() {
+  return prismaClient.guildStat.deleteMany({
+    where: {
+      updated_at: {
+        // Not updated in the last week (7 days)
+        lt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
+      },
+    },
+  });
+}

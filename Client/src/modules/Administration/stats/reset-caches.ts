@@ -1,6 +1,7 @@
 import {
   findOneGuildStatsByGuildAndKey,
   getAllGuildStatsCaches,
+  removeOutdatedGuildStats,
   setGuildStat,
 } from '../../../database/handlers';
 
@@ -14,4 +15,6 @@ export async function resetCaches() {
     await setGuildStat(guildId, key, todayInt, value, value_int, group_key);
     await setGuildStat(guildId, key, -2, null, 0);
   }
+
+  await removeOutdatedGuildStats();
 }
