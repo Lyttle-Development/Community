@@ -19,8 +19,6 @@ export function checkNewDay(): void {
 
   // Trigger new day
   for (const check of dailyChecks) {
-    if (!check) continue;
-    if (typeof check !== 'function') continue;
     queue(QueueBacklogType.BACKGROUND, check);
   }
 }
