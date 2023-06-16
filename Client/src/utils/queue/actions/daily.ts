@@ -5,8 +5,6 @@ import {
   queueAt,
   QueueBacklogType,
 } from '../';
-import { log } from '../../log';
-import { LogType } from '../../../types';
 
 type Action = () => void | Promise<void>;
 
@@ -41,7 +39,6 @@ function createQueueAtDate(
 
   // Queue the check
   const queueAction = () => {
-    log(LogType.INFO, 'Queueing actions for next day.');
     // Loop through all actions
     for (const action of actions) {
       // Queue the action
