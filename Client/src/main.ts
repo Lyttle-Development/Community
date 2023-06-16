@@ -3,7 +3,6 @@ import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
 import { createExtensions } from './utils/extensions';
 import { LogType } from './types';
-import { setLocalStorageDay } from './utils/queue/check-types/utils/daily';
 
 createExtensions();
 
@@ -78,7 +77,6 @@ eventFiles.forEach((file, i) => {
 client.login(environment.BOT_TOKEN).then(() => log(LogType.INFO, 'running'));
 
 export const bootdate = new Date();
-setLocalStorageDay();
 initQueue();
 
 export default client;

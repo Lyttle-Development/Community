@@ -1,6 +1,6 @@
-import { log } from '../log';
-import { LogType } from '../../types';
-import { checks } from './checks';
+import { log } from '../../log';
+import { LogType } from '../../../types';
+import { checks } from '../checks';
 
 export const checksActive: boolean[] = checks.map(() => false);
 export let doingChecks = false;

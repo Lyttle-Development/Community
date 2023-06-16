@@ -7,7 +7,6 @@ import {
   getOrCreateGuildModuleLevel,
   incrementGuildStat,
 } from '../../../database/handlers';
-import { todayInt } from '../../../utils/queue/check-types/utils/daily';
 
 export let timesEventsCreatedSinceLastRestart = 0;
 
@@ -31,6 +30,7 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   if (!db_GuildModuleLevel.enabled) return;
 
   // Increment the event counter.
+  const todayInt = new Date().getDay();
   await incrementGuildStat(
     guildId,
     'eventsCreated',

@@ -3,9 +3,9 @@ import {
   getAllGuildStatsCaches,
   setGuildStat,
 } from '../../../database/handlers';
-import { todayInt } from '../../../utils/queue/check-types/utils/daily';
 
 export async function resetCaches() {
+  const todayInt = new Date().getDay();
   const db_GuildStats = await getAllGuildStatsCaches();
 
   for (const { guild_id, key, value, value_int } of db_GuildStats) {
