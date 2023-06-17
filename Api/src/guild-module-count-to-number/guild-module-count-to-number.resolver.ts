@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GuildModuleCountToNumberService } from './guild-module-count-to-number.service';
 import { GuildModuleCountToNumber } from './entities/guild-module-count-to-number.entity';
 import { CreateGuildModuleCountToNumberInput } from './dto/create-guild-module-count-to-number.input';
@@ -14,19 +14,21 @@ export class GuildModuleCountToNumberResolver {
   createGuildModuleCountToNumber(
     @Args('createGuildModuleCountToNumberInput')
     createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput,
-  ) {
+  ): Promise<GuildModuleCountToNumber> {
     return this.guildModuleCountToNumberService.create(
       createGuildModuleCountToNumberInput,
     );
   }
 
   @Query(() => [GuildModuleCountToNumber], { name: 'guildModuleCountToNumber' })
-  findAll() {
+  findAll(): Promise<GuildModuleCountToNumber[]> {
     return this.guildModuleCountToNumberService.findAll();
   }
 
   @Query(() => GuildModuleCountToNumber, { name: 'guildModuleCountToNumber' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<GuildModuleCountToNumber> {
     return this.guildModuleCountToNumberService.findOne(id);
   }
 
@@ -34,15 +36,17 @@ export class GuildModuleCountToNumberResolver {
   updateGuildModuleCountToNumber(
     @Args('updateGuildModuleCountToNumberInput')
     updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput,
-  ) {
+  ): Promise<GuildModuleCountToNumber> | null {
     return this.guildModuleCountToNumberService.update(
-      updateGuildModuleCountToNumberInput.id,
+      updateGuildModuleCountToNumberInput.guildId,
       updateGuildModuleCountToNumberInput,
     );
   }
 
   @Mutation(() => GuildModuleCountToNumber)
-  removeGuildModuleCountToNumber(@Args('id', { type: () => Int }) id: number) {
+  removeGuildModuleCountToNumber(
+    @Args('id', { type: () => String }) id: string,
+  ): Promise<GuildModuleCountToNumber> | null {
     return this.guildModuleCountToNumberService.remove(id);
   }
 }

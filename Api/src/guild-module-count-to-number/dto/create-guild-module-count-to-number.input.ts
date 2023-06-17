@@ -1,7 +1,15 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class CreateGuildModuleCountToNumberInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  guildId: string;
+
+  @Field(() => String)
+  channelId: string;
+
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 }
