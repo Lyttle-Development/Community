@@ -3,8 +3,8 @@ import { messageDevs } from '../helpers';
 import { ALLOWED_REQUESTS_SECOND } from '../../../constants';
 import { LogType } from '../../types';
 import { log } from '../log';
-import { checkActionsQueue } from './actions-queue';
-import { triggerChecks } from './trigger-checks';
+import { checkActionsQueue, triggerChecks } from './';
+import { queueInitialized } from './checks/queue-initialized'; // don't shorten, it will fail startup
 
 // Weather the queue is active or not
 let queueActive = false;
@@ -90,6 +90,11 @@ export function initQueue() {
 
   // Set the queue to active
   queueActive = true;
+
+  // Do all init queue actions
+  for (const action of queueInitialized) {
+    action();
+  }
 }
 
 /**

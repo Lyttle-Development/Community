@@ -15,8 +15,18 @@ export async function createGuildModuleVoiceGrowth(
   guildId: string,
   channelId: string,
 ): Promise<GuildModuleVoiceGrowth> {
-  return prismaClient.guildModuleVoiceGrowth.create({
-    data: {
+  return prismaClient.guildModuleVoiceGrowth.upsert({
+    where: {
+      guild_id_channel_id: {
+        guild_id: BigInt(guildId),
+        channel_id: BigInt(channelId),
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      channel_id: BigInt(channelId),
+    },
+    update: {
       guild_id: BigInt(guildId),
       channel_id: BigInt(channelId),
     },

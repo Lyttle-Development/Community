@@ -234,6 +234,10 @@ export const ModuleMarkdown = {
         },
       },
       review: {
+        confirm: {
+          content: 'Click to confirm!',
+          documentation: '',
+        },
         submit: {
           content: 'Save changes',
           documentation: '',
@@ -402,6 +406,10 @@ export const ModuleMarkdown = {
               content: 'Leaderboard',
               documentation: '',
             },
+          },
+          module: {
+            content: '',
+            documentation: 'Leveling Module\nEnable or disable it.',
           },
           nickname: {
             description: {

@@ -108,5 +108,9 @@ export function useChanges(localSelectedGuildId: string | null) {
     return filteredChanges;
   };
 
-  return { setChanges, localGuildChanges, changes, change };
+  const resetChanges = () => {
+    setChanges({});
+  };
+
+  return { setChanges, localGuildChanges, resetChanges, changes, change };
 }

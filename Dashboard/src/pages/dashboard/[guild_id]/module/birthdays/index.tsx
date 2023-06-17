@@ -26,27 +26,42 @@ const msgDescription = getMessage(pfx + 'description');
 const msgAnnouncementTitle = getMessage(pfx + 'announcement.title');
 const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 
+export interface GetLevelsConfigProps {
+  guildId: string;
+  announcementChannelId: string | null;
+}
+
 // Config:
-export const getBirthdaysConfig = (
-  guildId: string,
-  moduleId: string | null = null,
-  announcementChannelId: string | null = null,
-): CardModule => ({
-  active: null,
-  title: msgTitle,
-  description: msgDescription,
-  id: moduleId,
-  route: `/dashboard/${guildId}/module/birthdays`,
-  subItems: [
-    {
-      id: announcementChannelId,
-      route: `/dashboard/${guildId}/module/birthdays#announcement`,
-      active: true,
-      title: msgAnnouncementTitle,
-      description: msgAnnouncementDescription,
-    },
-  ],
-});
+export function getBirthdaysConfig({
+  guildId,
+  announcementChannelId = null,
+}: GetLevelsConfigProps): CardModule {
+  const announcementActive =
+    typeof announcementChannelId === 'string' ? true : null;
+
+  const moduleKey = announcementActive ? changeKeys.moduleBirthday.key : null;
+
+  const announcementKey = announcementActive
+    ? changeKeys.moduleBirthdayChannel.key
+    : null;
+
+  return {
+    active: announcementActive,
+    title: msgTitle,
+    description: msgDescription,
+    id: moduleKey,
+    route: `/dashboard/${guildId}/module/birthdays`,
+    subItems: [
+      {
+        id: announcementKey,
+        route: `/dashboard/${guildId}/module/birthdays#announcement`,
+        active: announcementActive,
+        title: msgAnnouncementTitle,
+        description: msgAnnouncementDescription,
+      },
+    ],
+  };
+}
 
 // Level up
 const keyBday = 'Activity.birth-day.txt.announcement';

@@ -10,10 +10,10 @@ import {
   ThreadChannel,
   User,
 } from 'discord.js';
-import client, { isReady } from '../../main';
-import { queue as sendQueue, QueueBacklogType } from './queue';
-import { queueMessage } from './messages-queue';
-import { sleep } from '../helpers';
+import client, { isReady } from '../main';
+import { queue as sendQueue, QueueBacklogType } from './queue/queue';
+import { queueMessage } from './queue/messages-queue';
+import { sleep } from './helpers';
 
 /**
  * Send a message to a target.

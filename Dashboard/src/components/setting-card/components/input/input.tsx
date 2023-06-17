@@ -48,7 +48,7 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
   };
 
   // Check if using default
-  const usingDefault = defaultMessage === changes[key]?.current;
+  const usingDefault = defaultMessage === (changes[key]?.current ?? value);
 
   // Render component.
   return (

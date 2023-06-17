@@ -1,6 +1,6 @@
-import { checks } from './checks';
-import { log } from '../log';
-import { LogType } from '../../types';
+import { log } from '../../log';
+import { LogType } from '../../../types';
+import { checks } from '../checks';
 
 export const checksActive: boolean[] = checks.map(() => false);
 export let doingChecks = false;
@@ -19,6 +19,10 @@ export function triggerChecks() {
 
   // Loop through checks
   for (const check of checks) {
+    // Check if check is valid
+    if (!check) continue;
+    if (typeof check !== 'function') continue;
+
     // Create action
     const action = async () => {
       // Copy index

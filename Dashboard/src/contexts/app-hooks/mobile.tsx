@@ -6,7 +6,6 @@ export function useMobile(
   mainNavOpen: boolean,
   setMainNavOpen: React.Dispatch<React.SetStateAction<boolean>>,
   initialized: Date | null,
-  setIsInitialized: React.Dispatch<React.SetStateAction<Date | null>>,
 ) {
   const windowSize = useWindowSize();
   const [mobile, setMobile] = useState<boolean>(true);
@@ -17,7 +16,6 @@ export function useMobile(
       : true;
 
     if (!windowSize?.width) return;
-    if (!initialized) setIsInitialized(new Date());
 
     if (isMobile !== mobile) {
       setMobile(isMobile);
@@ -31,7 +29,9 @@ export function useMobile(
   }, [windowSize, mobile]);
 
   useEffect(() => {
-    if (mobile && mainNavOpen) setMainNavOpen(false);
+    if (mobile && mainNavOpen) {
+      setMainNavOpen(false);
+    }
   }, []);
 
   return {

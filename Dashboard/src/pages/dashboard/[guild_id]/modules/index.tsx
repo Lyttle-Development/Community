@@ -64,7 +64,7 @@ function Page() {
         announcementId: lvls.announcementChannelId ?? null,
         leaderboardId: lvls.leaderboardChannelId ?? null,
       }),
-      getBirthdaysConfig(guildId),
+      getBirthdaysConfig({ guildId, announcementChannelId: '0' }), // Todo get from db
       // getDynamicVoiceConfig(guildId),
       // getVoiceTopicsConfig(guildId),
     ]);

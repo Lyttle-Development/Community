@@ -7,8 +7,19 @@ export async function createGuildTranslation(
   key: string,
   value: string,
 ): Promise<GuildTranslation> {
-  return prismaClient.guildTranslation.create({
-    data: {
+  return prismaClient.guildTranslation.upsert({
+    where: {
+      guild_id_key: {
+        guild_id: BigInt(guildId),
+        key,
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      key,
+      value,
+    },
+    update: {
       guild_id: BigInt(guildId),
       key,
       value,

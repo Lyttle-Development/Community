@@ -44,6 +44,7 @@ export * as ModuleConfigDashboardComponentsMainNavLabelOverview from '../../cont
 export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
 export * as ModuleConfigDashboardComponentsModuleCardSetupButton from '../../content/modules/Dashboard/components/module-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsModuleCardTitlePrefix from '../../content/modules/Dashboard/components/module-card/title-prefix/config';
+export * as ModuleConfigDashboardComponentsReviewConfirm from '../../content/modules/Dashboard/components/review/confirm/config';
 export * as ModuleConfigDashboardComponentsReviewSubmit from '../../content/modules/Dashboard/components/review/submit/config';
 export * as ModuleConfigDashboardComponentsReviewTitle from '../../content/modules/Dashboard/components/review/title/config';
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
@@ -77,6 +78,7 @@ export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementTitle from '../../
 export * as ModuleConfigDashboardPagesModuleLevelsDescription from '../../content/modules/Dashboard/pages/module/levels/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardDescription from '../../content/modules/Dashboard/pages/module/levels/leaderboard/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardTitle from '../../content/modules/Dashboard/pages/module/levels/leaderboard/title/config';
+export * as ModuleConfigDashboardPagesModuleLevelsModule from '../../content/modules/Dashboard/pages/module/levels/module/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameDescription from '../../content/modules/Dashboard/pages/module/levels/nickname/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameTitle from '../../content/modules/Dashboard/pages/module/levels/nickname/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modules/Dashboard/pages/module/levels/title/config';

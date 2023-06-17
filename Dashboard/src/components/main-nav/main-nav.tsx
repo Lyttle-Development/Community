@@ -36,7 +36,7 @@ export function MainNav({ mobile }: MainNavProps) {
   const labelHome = getMessage(pfx + 'home');
   const labelLogout = getMessage(pfx + 'logout');
   const labelModules = getMessage(pfx + 'modules');
-  const labelProfile = getMessage(pfx + 'profile');
+  // const labelProfile = getMessage(pfx + 'profile'); // TODO: Add profile
   const labelOverview = getMessage(pfx + 'overview');
 
   const prefix = 'main-nav';
@@ -82,13 +82,14 @@ export function MainNav({ mobile }: MainNavProps) {
           <ul>
             <MainNavItem href={'/'}>{labelHome}</MainNavItem>
             <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
-            <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>
+            {/* // Currently disabled, will be added in the future! // */}
+            {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
           </ul>
-          <article>
+          <article className={'main-nav__guild'}>
             <section
               className={`${styles.guild} ${
-                !selectedGuild.show && styles.hide
-              }`}
+                (!selectedGuild.show || !selectedGuild?.avatar) && styles.hide
+              } main-nav__guild__item`}
             >
               <Image
                 className={styles.avatar}
@@ -101,8 +102,9 @@ export function MainNav({ mobile }: MainNavProps) {
             </section>
             <ul
               className={`${styles['server-menu']} ${
-                selectedGuild.id === '0' && styles.hide
-              }`}
+                (selectedGuild.id === '0' || !selectedGuild?.avatar) &&
+                styles.hide
+              } server-menu`}
             >
               <MainNavItem
                 href={`/dashboard/${selectedGuild.id}`}

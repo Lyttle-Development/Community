@@ -8,11 +8,26 @@ import { Servers } from '@lyttledev-dashboard/components/server-card';
 import { useUserGuilds } from '@lyttledev-dashboard/hooks/useUserGuilds';
 import { getModulesEnabled } from '@lyttledev-dashboard/utils/modules-enabled';
 
+const mockups = 50;
+const mockupServers: Servers = [];
+for (let i = 0; i < mockups; i++) {
+  mockupServers.push({
+    id: '0',
+    name: 'Loading Servers!',
+    icon: '/media/images/placeholder.png',
+    setup: false,
+    active: null,
+    members: 0,
+    staffMembers: 0,
+    modulesEnabled: 0,
+  });
+}
+
 function Page() {
   const authorized = useAuth();
   const title = usePage(pagesPrefix + 'dashboard.title');
   const { data, guilds, ownedGuilds, moderateGuilds } = useUserGuilds();
-  const [servers, setServers] = useState<Servers>([]);
+  const [servers, setServers] = useState<Servers>(mockupServers);
 
   useEffect(() => {
     if (!data || !data.guilds) return;
@@ -28,6 +43,7 @@ function Page() {
         setup: true,
         active: guild.enabled,
         members: 0,
+        staffMembers: 0,
         modulesEnabled: 0,
       });
     }
@@ -52,12 +68,16 @@ function Page() {
       const serverIndex = guildIds.findIndex((srv: string) => guild.id === srv);
 
       if (serverIndex > -1) {
+        const apiGuild = data.guilds.find(
+          (srv: any) => srv.guildId === guild.id,
+        );
         const server = newServers[serverIndex];
         if (!server) continue;
         server.name = guild.name;
         server.icon = getIcon(guild);
         server.members = guild.approximate_member_count;
-        server.modulesEnabled = getModulesEnabled(data.guilds[serverIndex]);
+        server.staffMembers = apiGuild.stats?.staffMembers ?? 0;
+        server.modulesEnabled = getModulesEnabled(apiGuild);
         newServers[serverIndex] = server;
         continue;
       }
@@ -69,6 +89,7 @@ function Page() {
         setup: false,
         active: null,
         members: guild.approximate_member_count,
+        staffMembers: 0,
         modulesEnabled: 0,
       });
     }

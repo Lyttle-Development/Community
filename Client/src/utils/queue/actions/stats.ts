@@ -2,23 +2,23 @@ import {
   ALLOWED_REQUESTS_SECOND,
   SEND_STATS_INTERVAL,
   STATS_CHANNEL_ID,
-} from '../../../constants';
-import { sendMessage } from './messages';
-import { bootdate, client } from '../../main';
+} from '../../../../constants';
+import { sendMessage } from '../../messages';
+import { bootdate, client } from '../../../main';
 import {
   queueBacklog,
   QueueBacklogType,
   queueFree,
   totalQueues,
-} from './queue';
-import { actionsCurrentlyBeingExecuted, actionsInQueue } from './actions-queue';
-import { messageQueueChannels } from './messages-queue';
+} from '../queue';
+import { actionsCurrentlyBeingExecuted, actionsInQueue } from '../triggers';
+import { messageQueueChannels } from '../messages-queue';
 import {
   rateLimitCache,
   rateLimitLimited,
   rateLimitTotalChecks,
-} from '../rate-limit';
-import { executorModules } from '../executer';
+} from '../../rate-limit';
+import { executorModules } from '../../executer';
 import {
   channelsBeingChecked,
   mostRecentAuditLogs,
@@ -42,11 +42,11 @@ import {
   voiceTopicChildCreationCache,
   xpCommandsRanAfterLastRestart,
   xpFromContextMenuRanAfterLastRestart,
-} from '../../modules';
-import { formatNumber, getDiscordTime } from '../helpers';
-import { setBirthDayCache } from '../../modules/Activity/birth-day/set-birth-day-modal';
-import { birthdaysSetSinceLastRestart } from '../../modules/Activity/birth-day/set-birth-day-buttons';
-import { birthdayCommandsRanAfterLastRestart } from '../../modules/Activity/birth-day';
+} from '../../../modules';
+import { formatNumber, getDayString, getDiscordTime } from '../../helpers';
+import { setBirthDayCache } from '../../../modules/Activity/birth-day/set-birth-day-modal';
+import { birthdaysSetSinceLastRestart } from '../../../modules/Activity/birth-day/set-birth-day-buttons';
+import { birthdayCommandsRanAfterLastRestart } from '../../../modules/Activity/birth-day';
 
 let statsQueueStarted = false;
 
@@ -109,6 +109,12 @@ function sendStatsToQueue() {
   const totalAuditLogs = mostRecentAuditLogs.length;
   const totalBirthDaysBeingSet = Object.keys(setBirthDayCache).length;
 
+  // get online time in hours
+  const onlineTime =
+    Math.floor(((Date.now() - bootdate.getTime()) / 1000 / 60 / 60) * 100) /
+    100;
+  const todayInt = new Date().getDay();
+
   // The message:
   const message =
     //
@@ -116,7 +122,9 @@ function sendStatsToQueue() {
 
 **General**:
 > - **Booted**: <t:${boot}:R>
+> - **Online**: \`${onlineTime} hours\`
 > - **Guilds**: \`${totalGuilds}\`
+> - **Today**: \`${todayInt} (${getDayString(todayInt)})\`
 
 **Queue**:
 > - **Total item queued**: \`${totalQueues}\`

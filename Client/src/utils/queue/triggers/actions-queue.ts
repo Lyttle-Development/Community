@@ -2,11 +2,11 @@ import {
   deleteAllExecutedGuildActions,
   findAllGuildActions,
   setGuildActionAsExecuted,
-} from '../../database/handlers';
-import { queue, QueueBacklogType } from './queue';
-import { log } from '../log';
-import { LogType } from '../../types';
-import { createVoiceTopicChannel } from '../../modules';
+} from '../../../database/handlers';
+import { queue, QueueBacklogType } from '../queue';
+import { log } from '../../log';
+import { LogType } from '../../../types';
+import { createVoiceTopicChannel } from '../../../modules';
 
 // Action type interface
 interface ActionQueueTypes {

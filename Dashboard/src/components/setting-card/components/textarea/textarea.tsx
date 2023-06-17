@@ -48,7 +48,7 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   };
 
   // Check if using default
-  const usingDefault = defaultMessage === changes[key]?.current;
+  const usingDefault = defaultMessage === (changes[key]?.current ?? value);
 
   // Render component.
   return (

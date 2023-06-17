@@ -3,8 +3,14 @@ import type { User } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 
 export function createUser(userId: string): Promise<User> {
-  return prismaClient.user.create({
-    data: {
+  return prismaClient.user.upsert({
+    where: {
+      user_id: BigInt(userId),
+    },
+    create: {
+      user_id: BigInt(userId),
+    },
+    update: {
       user_id: BigInt(userId),
     },
   });
@@ -24,7 +30,7 @@ export async function getOrCreateUser(userId: string): Promise<User> {
 
 export async function setUserValue(
   userId: string,
-  data: Prisma.UserUpdateInput
+  data: Prisma.UserUpdateInput,
 ): Promise<User> {
   await getOrCreateUser(userId);
 
@@ -38,7 +44,7 @@ export async function setUserValue(
 
 export async function findEveryUser(
   userId: string,
-  data: Prisma.UserWhereInput
+  data: Prisma.UserWhereInput,
 ): Promise<User[]> {
   return prismaClient.user.findMany({
     where: {

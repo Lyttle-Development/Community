@@ -222,11 +222,11 @@ async function give(guildMember: GuildMemberWithChannelId): Promise<boolean> {
   await reset(guildMember);
 
   // Increment the call_time.
-  const day = new Date().getDay();
+  const todayInt = new Date().getDay();
   await incrementGuildStat(
     guildId,
     channelId,
-    day,
+    todayInt,
     timeBetween,
     'voiceChannelsCallTime',
   );

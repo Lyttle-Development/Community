@@ -13,6 +13,9 @@ const guildsQuery = gql`
       moduleVoiceGrowth {
         enabled
       }
+      stats {
+        staffMembers
+      }
     }
     discord {
       userGuilds
@@ -37,7 +40,9 @@ export function useUserGuilds() {
     setOwnedGuilds(_ownedGuilds);
 
     const _moderateGuilds = data?.discord?.userGuilds?.filter(
-      (guild: any) => guild.permissions === 2147483647 && guild.owner === false,
+      // Not owner and has admin perms
+      (guild: any) =>
+        guild.owner === false && (guild.permissions & 0x8) === 0x8,
     );
     setModerateGuilds(_moderateGuilds);
 

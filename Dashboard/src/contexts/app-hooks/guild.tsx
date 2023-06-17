@@ -31,9 +31,11 @@ export function useGuild(
   };
 
   const selectedGuildIdFromStorage = storage.get('selectedGuildId') ?? '{}';
-  const selectedGuildIdFromStorageParsed = JSON.parse(
-    selectedGuildIdFromStorage,
-  );
+  const selectedGuildIdFromStorageParsed =
+    // Prevent undefined from being parsed
+    selectedGuildIdFromStorage && selectedGuildIdFromStorage !== 'undefined'
+      ? JSON.parse(selectedGuildIdFromStorage)
+      : {};
   const [selectedGuild, setSelectedGuild] = useState<GuildInfo>(
     selectedGuildIdFromStorageParsed,
   );
@@ -54,12 +56,20 @@ export function useGuild(
   }, [guildData]);
 
   useEffect(() => {
+    // Get guild changes from storage
     const guildChanges = storage.get(localGuildChanges) ?? null;
+    // Set guild changes
     setChanges(guildChanges ? JSON.parse(guildChanges) : {});
+
+    // Check if we have a valid guild id
+    if (!selectedGuildId) return;
+
+    // Check if the guild id changes
     if (
       (selectedGuildId && selectedGuild.id !== selectedGuildId) ||
       !guildData
     ) {
+      // Fetch new guild data
       void fetch({
         variables: { guildId: selectedGuildId },
       });

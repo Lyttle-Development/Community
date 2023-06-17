@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useMainNav } from '@lyttledev-dashboard/contexts/app-hooks/main-nav';
 import {
   ChangeProps,
@@ -12,18 +12,19 @@ import {
 import { storage } from '@lyttledev-dashboard/utils';
 
 export interface AppContextInterface {
-  mainNavOpen: boolean;
-  setMainNavOpen: (state: boolean) => void;
-  toggleMainNav: () => void;
-  selectedGuildId: string | null;
-  selectedGuild: GuildInfo;
-  setSelectedGuildId: (guildId: string | null) => void;
-  pageTitle: string;
-  setPageTitle: (title: string) => void;
-  mobile: boolean;
-  setMobile: (state: boolean) => void;
-  changes: Changes;
   change: (props: ChangeProps) => void;
+  changes: Changes;
+  mainNavOpen: boolean;
+  mobile: boolean;
+  pageTitle: string;
+  resetChanges: () => void;
+  selectedGuild: GuildInfo;
+  selectedGuildId: string | null;
+  setMainNavOpen: (state: boolean) => void;
+  setMobile: (state: boolean) => void;
+  setPageTitle: (title: string) => void;
+  setSelectedGuildId: (guildId: string | null) => void;
+  toggleMainNav: () => void;
 }
 
 export type AppContextType = AppContextInterface | null;
@@ -44,9 +45,9 @@ export function AppProvider({ children }: AppContextProps) {
     changes,
     change,
     setChanges,
+    resetChanges,
     localGuildChanges, //
   } = useChanges(localSelectedGuildId);
-
   const {
     selectedGuildId,
     setSelectedGuildId,
@@ -67,23 +68,28 @@ export function AppProvider({ children }: AppContextProps) {
   const {
     mobile,
     setMobile, //
-  } = useMobile(mainNavOpen, setMainNavOpen, initialized, setIsInitialized);
+  } = useMobile(mainNavOpen, setMainNavOpen, initialized);
+
+  useEffect(() => {
+    if (!initialized) setIsInitialized(new Date());
+  }, []);
 
   return (
     <AppContext.Provider
       value={{
-        mainNavOpen,
-        setMainNavOpen,
-        toggleMainNav,
-        setSelectedGuildId,
-        selectedGuildId,
-        selectedGuild,
-        pageTitle,
-        setPageTitle,
-        mobile,
-        setMobile,
-        changes,
         change,
+        changes,
+        mainNavOpen,
+        mobile,
+        pageTitle,
+        resetChanges,
+        selectedGuild,
+        selectedGuildId,
+        setMainNavOpen,
+        setMobile,
+        setPageTitle,
+        setSelectedGuildId,
+        toggleMainNav,
       }}
     >
       {initialized && children}

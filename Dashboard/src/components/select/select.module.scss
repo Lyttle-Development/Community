@@ -44,20 +44,25 @@
     }
 
     .value {
-      color: v.$color-text;
+      margin: auto 0;
       font-size: 1.6rem;
       padding: 1rem 3.5rem 1rem 1.8rem;
+      border-bottom: v.$color-primary solid .01rem;
+      gap: .5rem;
+      display: block;
       overflow: hidden;
       text-overflow: ellipsis;
-      border-bottom: v.$color-primary solid .01rem;
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
+      width: 100%;
+
+      * {
+        display: block;
+      }
 
       .value__title {
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: v.$color-text;
         margin-top: -.35rem;
+        padding-bottom: .3rem;
       }
 
       .value__description {
@@ -79,6 +84,10 @@
         padding: 1rem 1.8rem;
         transition: background-color .2s ease-in-out;
 
+        &.option--active {
+          background-color: transparentize(v.$color-primary, .5)
+        }
+
         &.option--with-description {
           display: flex;
           flex-direction: column;
@@ -95,7 +104,7 @@
           color: v.$color-text-dark;
         }
 
-        &:hover {
+        &:hover:not(.option--active) {
           background-color: transparentize(v.$color-primary, .7)
         }
 
@@ -140,7 +149,11 @@
 
     .options {
       .option {
-        &:hover {
+        &.option--active {
+          background-color: transparentize(v.$color-primary-yellow, .5)
+        }
+
+        &:hover:not(.option--active) {
           background-color: transparentize(v.$color-primary-yellow, .7);
         }
 
@@ -163,7 +176,11 @@
 
     .options {
       .option {
-        &:hover {
+        &.option--active {
+          background-color: transparentize(v.$color-primary-orange, .5)
+        }
+
+        &:hover:not(.option--active) {
           background-color: transparentize(v.$color-primary-orange, .7);
         }
 
