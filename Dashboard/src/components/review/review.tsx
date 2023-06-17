@@ -51,6 +51,7 @@ export function Review() {
     await mutate();
     app?.resetChanges();
     await router.push(`/dashboard/${guildId}/modules`);
+    await router.reload();
   };
 
   const msgReview = getMessage(componentsPrefix + 'review.title');
