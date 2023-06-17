@@ -91,6 +91,10 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
 };
 
 export const reviewBuilderInfo: reviewBuilderInfo = {
+  [changeKeys.server.key]: {
+    query: reviewBuilderMutations.updateGuild,
+    variable: 'enabled',
+  },
   [changeKeys.modulesLevels.key]: {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',

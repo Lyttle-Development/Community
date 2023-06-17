@@ -10,6 +10,11 @@ export interface ChangeKeys {
 }
 
 export const changeKeys: ChangeKeys = {
+  server: {
+    title: 'Server',
+    key: 'server',
+    url: (id: string) => `/dashboard/${id}`,
+  },
   modulesLevels: {
     title: 'Levels module',
     key: 'modules.levels',
