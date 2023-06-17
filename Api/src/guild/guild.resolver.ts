@@ -18,6 +18,7 @@ import { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { Discord } from '../discord/entities/discord.entity';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenAi } from '../openAi/entities/openAi.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -105,5 +106,10 @@ export class GuildResolver {
   @ResolveField(() => GuildStatResolved)
   stats(@Parent() guild: Guild): GuildStatResolved {
     return this.guildService.getStats(guild.guildId);
+  }
+
+  @ResolveField(() => OpenAi)
+  openAi(@Parent() guild: Guild): OpenAi {
+    return this.guildService.getOpenAi(guild.guildId);
   }
 }

@@ -20,6 +20,8 @@ import { Discord } from '../discord/entities/discord.entity';
 import { DiscordService } from '../discord/discord.service';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenAiService } from '../openAi/openAi.service';
+import { OpenAi } from '../openAi/entities/openAi.entity';
 
 @Injectable()
 export class GuildService {
@@ -42,6 +44,8 @@ export class GuildService {
     private discordService: DiscordService,
     @Inject(forwardRef(() => GuildStatResolvedService))
     private guildStatResolvedService: GuildStatResolvedService,
+    @Inject(forwardRef(() => OpenAiService))
+    private openaiService: OpenAiService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -132,5 +136,9 @@ export class GuildService {
 
   getStats(guildId: string): GuildStatResolved {
     return this.guildStatResolvedService.create(guildId);
+  }
+
+  getOpenAi(guildId: string): OpenAi {
+    return this.openaiService.create(guildId);
   }
 }

@@ -133,15 +133,15 @@ export class GuildStatResolvedService {
 
     const result = await this.guildStatService.findAllByGroup(
       guildId,
-      'textChannelMessages',
+      'voiceChannelsCallTime',
     );
 
-    return result.reduce(
-      (acc, curr) => ({
+    return result.reduce((acc, curr) => {
+      const oldValue = acc[curr.key] ?? 0;
+      return {
         ...acc,
-        [curr.key]: curr.valueInt,
-      }),
-      {},
-    );
+        [curr.key]: oldValue + curr.valueInt,
+      };
+    }, {});
   }
 }

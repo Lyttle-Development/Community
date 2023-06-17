@@ -2,7 +2,7 @@ import { Layout } from '@lyttledev-dashboard/layouts';
 import { Component } from '@lyttledev-dashboard/components';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
@@ -34,10 +34,20 @@ const GuildQuery = gql`
   }
 `;
 
+const OpenAiQuery = gql`
+  query OpenAiQuery($guildId: String!) {
+    guild(id: $guildId) {
+      guildId
+      openAi {
+        recommendation
+      }
+    }
+  }
+`;
+
 function Page() {
   const guildId = useGuild();
   const title = usePage(pagesPrefix + 'overview.title');
-  const [recommendation, setRecommendation] = useState<string | null>(null);
 
   const pfx = pagesPrefix + 'overview.recommendation.';
   const msgRecommendation = getMessage(pfx + 'title');
@@ -48,21 +58,23 @@ function Page() {
   const msgEvents = getMessage(pfx + 'events');
   const msgActivity = getMessage(pfx + 'activity');
 
-  useEffect(() => {
-    setTimeout(() => {
-      setRecommendation(
-        'After some deep analysis, we recommend you to, handle this and handle that. That way you can imrove that while tweaking this. While tweaking that you could do that meaning it could fix what and when it does it can whathever you want. So, do it. Do it now. Whenever you can, want or will do. While it still can. Doing it while you can is the best way to do it.',
-      );
-    }, 5000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setRecommendation(
+  //       'After some deep analysis, we recommend you to, handle this and handle that. That way you can imrove that while tweaking this. While tweaking that you could do that meaning it could fix what and when it does it can whathever you want. So, do it. Do it now. Whenever you can, want or will do. While it still can. Doing it while you can is the best way to do it.',
+  //     );
+  //   }, 5000);
+  // }, []);
 
   const [fetch, { data }] = useLazyQuery(GuildQuery);
+  const [fetchOpenAi, { data: dataOpenAi }] = useLazyQuery(OpenAiQuery);
 
   useEffect(() => {
     if (!guildId) return;
     if (data?.guild?.guildId === guildId) return;
 
     void fetch({ variables: { guildId } });
+    void fetchOpenAi({ variables: { guildId } });
   }, [guildId]);
 
   const members = data?.guild?.discord?.guild?.approximate_member_count || 0;
@@ -119,7 +131,7 @@ function Page() {
       <Component.Container>
         <Component.TipCard
           title={msgRecommendation}
-          description={recommendation}
+          description={dataOpenAi?.guild?.openAi?.recommendation ?? null}
           tipKey={'overview.recommendation'}
         />
         <Component.Stats
