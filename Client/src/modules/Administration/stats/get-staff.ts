@@ -10,7 +10,7 @@ export async function getStaff(guild: Guild): Promise<void> {
   const staffMembers: Collection<string, GuildMember> =
     guild.members.cache.filter(
       (member: GuildMember) =>
-        member.permissions.has(PermissionsBitField.Flags.Administrator) &&
+        member.permissions.has(PermissionsBitField.Flags.KickMembers) &&
         !member.user.bot,
     );
   const staffMembersIds: string[] = staffMembers.map((member) => member.id);

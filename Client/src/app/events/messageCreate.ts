@@ -1,5 +1,5 @@
 import type { Message } from 'discord.js';
-import { GuildMember } from '../../types';
+import { GuildMember } from '../../types/app/GuildMember';
 import { onGuildMessageCreate, onPrivateMessageCreate } from '../actions';
 import { checkGuildEnabled } from '../../utils';
 import { incrementGuildStat } from '../../database/handlers';
@@ -32,11 +32,11 @@ async function messageCreate(message: Message): Promise<void> {
   if (!guildEnabled) return;
 
   // Increment the guild stat
-  const todayInt = new Date().getDay();
+  const day = new Date().getDay();
   await incrementGuildStat(
     guildMember.guildId,
     message.channelId,
-    todayInt,
+    day,
     1,
     'textChannelMessages',
   );
