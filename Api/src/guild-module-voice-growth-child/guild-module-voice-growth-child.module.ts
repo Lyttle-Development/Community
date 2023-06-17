@@ -1,14 +1,14 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { GuildModuleVoiceGrowthChildService } from './guild-module-voice-growth-child.service';
 import { GuildModuleVoiceGrowthChildResolver } from './guild-module-voice-growth-child.resolver';
-import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guild-module-voice-growth.service';
 import { GuildModuleVoiceGrowthChild } from './entities/guild-module-voice-growth-child.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GuildModuleVoiceGrowthModule } from '../guild-module-voice-growth/guild-module-voice-growth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([GuildModuleVoiceGrowthChild]),
-    forwardRef(() => GuildModuleVoiceGrowthService),
+    forwardRef(() => GuildModuleVoiceGrowthModule),
   ],
   providers: [
     GuildModuleVoiceGrowthChildResolver,
