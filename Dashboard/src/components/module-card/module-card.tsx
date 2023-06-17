@@ -58,30 +58,32 @@ export function ModuleCard({
         <h2 className={styles.title}>
           {msgTitlePrefix} {title}
         </h2>
-        {active !== null && setup && (
-          <Component.LightSwitch
-            active={(changes[id]?.current as boolean) ?? active}
-            onClick={(e) => onClick(active, id, e)}
-            color={SCSSPrimaryColors.yellow}
-            className={styles['switch']}
-          />
-        )}
-        {setup && (
-          <Component.IconButton
-            icon={IconButtonIcons.cog}
-            className={styles['cog']}
-            href={route}
-          />
-        )}
-        {active !== null && !setup && (
-          <Component.Button
-            color={ButtonColors.yellow}
-            href={route}
-            className={styles['setup-button']}
-          >
-            {msgSetupButton}
-          </Component.Button>
-        )}
+        <div className={styles['heading__actions']}>
+          {active !== null && setup && (
+            <Component.LightSwitch
+              active={(changes[id]?.current as boolean) ?? active}
+              onClick={(e) => onClick(active, id, e)}
+              color={SCSSPrimaryColors.yellow}
+              className={styles['switch']}
+            />
+          )}
+          {setup && (
+            <Component.IconButton
+              icon={IconButtonIcons.cog}
+              className={styles['cog']}
+              href={route}
+            />
+          )}
+          {active !== null && !setup && (
+            <Component.Button
+              color={ButtonColors.yellow}
+              href={route}
+              className={styles['setup-button']}
+            >
+              {msgSetupButton}
+            </Component.Button>
+          )}
+        </div>
       </div>
       <Component.Markdown className={styles.description}>
         {description}
