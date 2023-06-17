@@ -1,16 +1,19 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { DiscordService } from '../discord/discord.service';
-
-const { Configuration, OpenAIApi } = require('openai');
+import { Configuration, OpenAIApi } from 'openai';
+import { GuildStatService } from '../guild-stat/guild-stat.service';
+import { OpenAi } from './entities/openAi.entity';
 
 @Injectable()
-export class OpenaiService {
-  private openai: any;
+export class OpenAiService {
+  private openai: OpenAIApi;
 
   constructor(
     @Inject(forwardRef(() => GuildStatResolvedService))
     private guildStatResolvedService: GuildStatResolvedService,
+    @Inject(forwardRef(() => GuildStatService))
+    private guildStatService: GuildStatService,
     @Inject(forwardRef(() => DiscordService))
     private discordService: DiscordService,
   ) {
@@ -20,31 +23,53 @@ export class OpenaiService {
     this.openai = new OpenAIApi(configuration);
   }
 
-  async create(prompt, maxTokens: number = 0.25): Promise<string> {
-    const result = await this.openai.complete({
-      engine: 'gpt-3.5-turbo',
-      maxTokens,
-      temperature: 0.9,
-      topP: 1,
-      presencePenalty: 0,
-      frequencyPenalty: 0,
-      bestOf: 1,
-      n: 1,
-      stream: false,
-      stop: ['\n'],
-    });
-
-    return result.data.choices[0].text;
+  create(guildId: string | null = null): OpenAi {
+    return { guildId } as OpenAi;
   }
 
-  async createWithGuildStat(guildId: string): Promise<string> {
+  async createRecommendation(prompt, maxTokens = 100): Promise<string | null> {
+    const result = await this.openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: prompt,
+      max_tokens: maxTokens,
+    });
+
+    return result?.data?.choices[0]?.message?.content ?? null;
+  }
+
+  async getOrCreateRecommendation(guildId: string): Promise<string> {
+    const statKey = 'openAiRecommendation';
+    const guildStatOpenAiRecommendation = await this.guildStatService.findOne(
+      guildId,
+      statKey,
+      -1,
+    );
+
+    if (guildStatOpenAiRecommendation) {
+      return guildStatOpenAiRecommendation.value;
+    }
+    const newAiRecommendation = await this.createRecommendationWithGuildStat(
+      guildId,
+    );
+    if (newAiRecommendation) {
+      await this.guildStatService.createOrUpdate(
+        guildId,
+        statKey,
+        -1,
+        newAiRecommendation,
+      );
+    }
+    return newAiRecommendation ?? 'Try again later...';
+  }
+
+  async createRecommendationWithGuildStat(
+    guildId: string,
+  ): Promise<string | null> {
     const guildStatStaffMembers: number =
       await this.guildStatResolvedService.getStaffMembers(guildId);
     const guildStatBots: number = await this.guildStatResolvedService.getBots(
       guildId,
     );
-    const guildStatChannels: number =
-      await this.guildStatResolvedService.getChannels(guildId);
     const guildStatTextChannels: number =
       await this.guildStatResolvedService.getTextChannels(guildId);
     const guildStatVoiceChannels: number =
@@ -54,12 +79,37 @@ export class OpenaiService {
     const guildStatVoiceChannelsCallTime =
       await this.guildStatResolvedService.getVoiceChannelsCallTime(guildId);
     const guild = await this.discordService.getGuild(guildId);
+
     const prompt = [
       {
-        role: 'Discord bot trying to help maximize server activity',
-        text: `the server ${guild?.name} has ${guildStatStaffMembers} staff members, ${guildStatBots} bots, ${guildStatChannels} channels, ${guildStatTextChannels} text channels, ${guildStatVoiceChannels} voice channels, ${guildStatTextChannelsMessages} text channels messages, ${guildStatVoiceChannelsCallTime} voice channels call time, and ${guild?.approximate_member_count} members.`,
+        role: 'system',
+        content:
+          'Your a discord bot trying to summarize in a few sentences, how to improve the server.' +
+          '- One continues text' +
+          '- No bullet points',
+      },
+      {
+        role: 'user',
+        content: `Server name: ${guild?.name}
+Staff: ${guildStatStaffMembers}
+Bots: ${guildStatBots}
+Members: ${guild?.approximate_member_count}
+Text channels: ${guildStatTextChannels} 
+Messages per channel: 
+${Object.entries(guildStatTextChannelsMessages)
+  .map(([key, value], i) => ` - ${++i}: ${value}`)
+  .join('\n')}
+Voice channels: ${guildStatVoiceChannels}
+Time in voice channel (combined last week): 
+${Object.entries(guildStatVoiceChannelsCallTime)
+  .map(
+    ([, value], i) =>
+      ` - ${++i}: ${Math.round((value / 1000 / 60) * 100) / 100} min`,
+  )
+  .join('\n')}`,
       },
     ];
-    return await this.create(prompt);
+
+    return await this.createRecommendation(prompt);
   }
 }
