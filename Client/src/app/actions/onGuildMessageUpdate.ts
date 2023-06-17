@@ -2,7 +2,7 @@ import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { Message } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
-import { createEvent } from '../../modules';
+import { createEvent, triggerActivityStat } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildMessageUpdate.';
@@ -17,6 +17,7 @@ export async function onGuildMessageUpdate(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(
       prefix + 'levelEvent',
       createEvent,
