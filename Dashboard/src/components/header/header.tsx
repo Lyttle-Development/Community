@@ -32,8 +32,9 @@ export function Header({ mobile }: HeaderProps) {
         <section
           className={`${styles.navigation} ${mobile ? styles.hide : ''}`}
         >
-          <Component.Search />
-          <Component.Avatar />
+          {/* // Currently disabled, will be added in the future! // */}
+          {/* <Component.Search />*/}
+          {/* <Component.Avatar />*/}
         </section>
       </header>
     </Component.Container>

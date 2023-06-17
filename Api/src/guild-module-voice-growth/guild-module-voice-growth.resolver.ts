@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -36,7 +35,7 @@ export class GuildModuleVoiceGrowthResolver {
 
   @Query(() => GuildModuleVoiceGrowth)
   findOne(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildModuleVoiceGrowth> | null {
     return this.guildModuleVoiceGrowthService.findOne(id);
   }
@@ -46,7 +45,7 @@ export class GuildModuleVoiceGrowthResolver {
     @Parent() guildModuleVoiceGrowth: GuildModuleVoiceGrowth,
   ): Promise<Guild> {
     return this.guildModuleVoiceGrowthService.getGuild(
-      guildModuleVoiceGrowth.guild_id,
+      guildModuleVoiceGrowth.guildId,
     );
   }
 
@@ -56,14 +55,15 @@ export class GuildModuleVoiceGrowthResolver {
     updateGuildModuleVoiceGrowthInput: UpdateGuildModuleVoiceGrowthInput,
   ) {
     return this.guildModuleVoiceGrowthService.update(
-      updateGuildModuleVoiceGrowthInput.id,
+      updateGuildModuleVoiceGrowthInput.guildId,
+      updateGuildModuleVoiceGrowthInput.channelId,
       updateGuildModuleVoiceGrowthInput,
     );
   }
 
   @Mutation(() => GuildModuleVoiceGrowth)
   removeGuildModuleVoiceGrowth(
-    @Args('id', { type: () => Int }) id: number,
+    @Args('id', { type: () => String }) id: string,
   ): Promise<GuildModuleVoiceGrowth> | null {
     return this.guildModuleVoiceGrowthService.remove(id);
   }

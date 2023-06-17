@@ -1,12 +1,10 @@
 import { DiscordOauthGuard } from './discord-oauth.guard';
-import { DiscordOauthController } from './discord-oauth.controller';
-import { Module } from '@nestjs/common';
-import { JwtAuthModule } from './jwt-auth.module';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { GuildStatModule } from '../guild-stat/guild-stat.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), JwtAuthModule],
-  controllers: [DiscordOauthController],
+  imports: [ConfigModule.forRoot(), forwardRef(() => GuildStatModule)],
   providers: [DiscordOauthGuard],
 })
 export class DiscordOauthModule {}

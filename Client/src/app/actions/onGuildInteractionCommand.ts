@@ -2,7 +2,7 @@ import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { CommandInteraction } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
-import { createEvent, routeCommand } from '../../modules';
+import { createEvent, routeCommand, triggerActivityStat } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionCommand.';
@@ -16,6 +16,7 @@ export async function onGuildInteractionCommand(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(prefix + 'routeCommand', routeCommand, guildMember, interaction),
     executor(
       prefix + 'levelEvent',

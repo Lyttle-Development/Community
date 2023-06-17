@@ -1,46 +1,48 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
 
-@Entity('guild__message')
+@Index('guild__message_pkey', ['id'], { unique: true })
+@Entity('guild__message', { schema: 'public' })
 @ObjectType()
-// Primary key information
 export class GuildMessage {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   @Field(() => Int)
-  id: number;
+  id: string;
 
-  @Column({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { name: 'channel_id' })
+  @Field(() => String)
+  channelId: string;
 
-  // Relations
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
+  @Column('bigint', { name: 'message_id' })
+  @Field(() => String)
+  messageId: string;
+
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @ManyToOne(() => Guild, (guild) => guild.guildMessages, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
   guild: Guild;
-
-  // Values
-  @Column({ type: 'bigint' })
-  @Field(() => Float)
-  channel_id: number;
-
-  @Column({ type: 'bigint' })
-  @Field(() => Float)
-  message_id: number;
-
-  // Date information
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
 }

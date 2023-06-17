@@ -1,6 +1,7 @@
 export interface ChangeKey {
   title: string;
   key: string;
+  translationKey?: string;
   url: (id: string) => string;
 }
 
@@ -9,29 +10,41 @@ export interface ChangeKeys {
 }
 
 export const changeKeys: ChangeKeys = {
-  moduleLevelLevelUp: {
+  modulesLevels: {
+    title: 'Levels module',
+    key: 'modules.levels',
+    url: (id: string) => `/dashboard/${id}/modules#levels`,
+  },
+  moduleLevelsLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
   },
-  moduleLevelLevelUpText: {
+  moduleLevelsLevelUpText: {
     title: 'Level up event text',
     key: 'module.level.level-up.text',
+    translationKey: 'Activity.levels.event.level-up',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
   },
-  moduleLevelLevelUpChannel: {
-    title: 'Level up event channel',
-    key: 'module.level.level-up.channel',
-    url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
+  moduleLevelsAnnouncement: {
+    title: 'Level up announcement channel',
+    key: 'modules.levels.announcement',
+    url: (id: string) => `/dashboard/${id}/modules/levels#level-up`,
   },
-  moduleLevelNickname: {
+  moduleLevelsLeaderboard: {
+    title: 'Leaderboard module',
+    key: 'modules.levels.leaderboard',
+    url: (id: string) => `/dashboard/${id}/modules/levels#leaderboard`,
+  },
+  moduleLevelsNickname: {
     title: 'Nickname module',
     key: 'module.level.nickname',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
   },
-  moduleLevelNicknameText: {
+  moduleLevelsNicknameText: {
     title: 'Nickname module text',
     key: 'module.level.nickname.text',
+    translationKey: 'Activity.levels.txt.nickname',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
   },
   moduleBirthday: {
@@ -49,6 +62,7 @@ export const changeKeys: ChangeKeys = {
     key: 'module.birthday.text',
     url: (id: string) => `/dashboard/${id}/module/birthdays#text`,
   },
-};
+} as const;
 
-export const changeKeysArray = Object.values(changeKeys);
+export const changeKeysValuesArray = Object.values(changeKeys);
+export const changeKeysKeysArray = Object.keys(changeKeys);

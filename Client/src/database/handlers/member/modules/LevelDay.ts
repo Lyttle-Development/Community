@@ -4,10 +4,20 @@ import { getOrCreateMemberModuleLevel } from './level';
 
 export function createMemberModuleLevelDay(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevelDay> {
-  return prismaClient.memberModuleLevelDay.create({
-    data: {
+  return prismaClient.memberModuleLevelDay.upsert({
+    where: {
+      guild_id_user_id: {
+        guild_id: BigInt(guildId),
+        user_id: BigInt(userId),
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      user_id: BigInt(userId),
+    },
+    update: {
       guild_id: BigInt(guildId),
       user_id: BigInt(userId),
     },
@@ -16,7 +26,7 @@ export function createMemberModuleLevelDay(
 
 export function findSingleMemberModuleLevelDay(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevelDay> {
   return prismaClient.memberModuleLevelDay.findUnique({
     where: {
@@ -30,7 +40,7 @@ export function findSingleMemberModuleLevelDay(
 
 export async function getOrCreateMemberModuleLevelDay(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevelDay> {
   await getOrCreateMemberModuleLevel(guildId, userId);
 
@@ -43,7 +53,7 @@ export async function getOrCreateMemberModuleLevelDay(
 export async function setMemberModuleLevelDayValue(
   guildId: string,
   userId: string,
-  data: Prisma.MemberModuleLevelDayUpdateInput
+  data: Prisma.MemberModuleLevelDayUpdateInput,
 ): Promise<MemberModuleLevelDay> {
   await getOrCreateMemberModuleLevelDay(guildId, userId);
 
@@ -60,7 +70,7 @@ export async function setMemberModuleLevelDayValue(
 
 export async function resetMemberModuleLevelDayValues(
   guildId: string,
-  userId: string
+  userId: string,
 ): Promise<MemberModuleLevelDay> {
   await getOrCreateMemberModuleLevelDay(guildId, userId);
 
@@ -87,7 +97,7 @@ export async function incrementMemberModuleLevelDayValue(
   guildId: string,
   userId: string,
   column: keyof Prisma.MemberModuleLevelDayUpdateInput,
-  value: number
+  value: number,
 ): Promise<MemberModuleLevelDay> {
   await getOrCreateMemberModuleLevelDay(guildId, userId);
 
@@ -108,7 +118,7 @@ export async function incrementMemberModuleLevelDayValue(
 
 export async function get5TopWeeklyMembers(
   guildId: string,
-  date: Date
+  date: Date,
 ): Promise<MemberModuleLevelDay[]> {
   return prismaClient.memberModuleLevelDay.findMany({
     where: {

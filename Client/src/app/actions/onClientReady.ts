@@ -1,8 +1,7 @@
 import { actionPrefix } from './index';
 import { Client } from 'discord.js';
 import { deployCommands } from '../../utils/deploy-commands';
-import { executor } from '../../utils';
-import { startupStatsQueue } from '../../utils/queue/stats-queue';
+import { executor, startupStatsQueue } from '../../utils';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onClientReady.';

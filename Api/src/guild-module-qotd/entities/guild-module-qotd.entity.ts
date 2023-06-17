@@ -1,44 +1,49 @@
-import { Field, Float, ObjectType } from "@nestjs/graphql";
-import { Column, CreateDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { Guild } from "../../guild/entities/guild.entity";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
+import { Guild } from '../../guild/entities/guild.entity';
 
-// TODO: Check against real database (what is and is not nullable)
-@Entity('guild__module__qotd')
+@Index('guild__module__qotd_pkey', ['guildId'], { unique: true })
+@Entity('guild__module__qotd', { schema: 'public' })
 @ObjectType()
 export class GuildModuleQotd {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
-
-  // Values
-  @Column()
+  @Column('boolean', { name: 'enabled', default: () => 'false' })
   @Field(() => Boolean)
   enabled: boolean;
 
-  @Column({ type: 'bigint' })
-  @Field(() => Float)
-  channel_id: number;
+  @Column('integer', { name: 'leveling_multiplier', default: () => '8' })
+  @Field(() => Int)
+  levelingMultiplier: number;
 
-  @Column({ type: 'bigint' })
-  @Field(() => Float)
-  message_id: number;
+  @Column('bigint', { name: 'announcement_channel_id', nullable: true })
+  @Field(() => String, { nullable: true })
+  messageId: string | null;
 
-  @Column()
-  @Field(() => Boolean)
-  nicknames: boolean;
+  @Column('bigint', { name: 'leaderboard_channel_id', nullable: true })
+  @Field(() => String, { nullable: true })
+  channelId: string | null;
 
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  updatedAt: Date;
+
+  @OneToOne(() => Guild, (guild) => guild.guildModuleLevel, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
+  guild: Guild;
 }

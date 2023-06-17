@@ -1,40 +1,31 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
-import {
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Member } from '../../member/entities/member.entity';
-import { Profile } from '../../profile/entities/profile.entity';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, OneToOne } from 'typeorm';
+import { UserProfile } from '../../user-profile/entities/user-profile.entity';
 
-@Entity('user')
+@Index('user_pkey', ['userId'], { unique: true })
+@Entity('user', { schema: 'public' })
 @ObjectType()
 export class User {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  user_id: number;
+  @Column('bigint', { primary: true, name: 'user_id' })
+  @Field(() => String)
+  userId: string;
 
-  // Relations
-  @OneToMany(() => Member, (member: Member) => member.guild_id, {
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @OneToOne(() => UserProfile, (userProfile) => userProfile.user, {
     nullable: true,
   })
-  @Field(() => [Member])
-  members: Member[];
-
-  @OneToOne(() => Profile, { onDelete: 'CASCADE' })
-  @Field(() => Profile)
-  profile: Profile;
-
-  // Date information
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
+  userProfile: UserProfile;
 }

@@ -1,7 +1,7 @@
 import { LogType } from '../types';
 import { setNumberLength } from './helpers';
-import { sendMessage } from './queue';
 import { BOT_LOG_CHANNEL_ID } from '../../constants';
+import { sendMessage } from './';
 
 export function log(type: LogType, ...messages) {
   // Get variables

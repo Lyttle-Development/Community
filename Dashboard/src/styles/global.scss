@@ -24,6 +24,13 @@
   margin-left: v.$main-nav-width;
 }
 
+.default-layout.no-startup {
+    .default-layout__content,
+    .main-nav {
+        transition: none;
+    }
+}
+
 // Stop page from scrolling when main nav is open
 .default-layout.main-nav--open.mobile > section {
   max-height: 100vh;

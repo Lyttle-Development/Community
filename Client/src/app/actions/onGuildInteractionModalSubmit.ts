@@ -2,7 +2,7 @@ import { actionPrefix } from './index';
 import { ModalSubmitInteraction } from 'discord.js';
 import { GuildMember } from '../../types';
 import { executor, limit } from '../../utils';
-import { routeModalSubmit } from '../../modules';
+import { routeModalSubmit, triggerActivityStat } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionModalSubmit.';
@@ -16,6 +16,7 @@ export async function onGuildInteractionModalSubmit(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(
       prefix + 'routeModalSubmit',
       routeModalSubmit,

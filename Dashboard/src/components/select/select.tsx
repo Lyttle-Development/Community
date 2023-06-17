@@ -165,6 +165,8 @@ export function Select({
                     typeof option.key === 'string'
                       ? ''
                       : styles['option--with-description']
+                  } ${
+                    option.value === selectValue && styles['option--active']
                   }`}
                   onClick={() => handleChange(option.value)}
                 >

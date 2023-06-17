@@ -3,13 +3,10 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 @InputType()
 export class CreateMemberInput {
   @Field(() => Int)
-  guild_id: number;
+  guildId: string;
 
   @Field(() => Int)
-  user_id: number;
-
-  @Field(() => Date, { nullable: true })
-  birthday_date: Date;
+  userId: string;
 
   @Field(() => Int, { nullable: true })
   birthday: number;
