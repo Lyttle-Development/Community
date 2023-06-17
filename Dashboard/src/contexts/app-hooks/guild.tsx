@@ -62,7 +62,7 @@ export function useGuild(
     setChanges(guildChanges ? JSON.parse(guildChanges) : {});
 
     // Check if we have a valid guild id
-    if (!selectedGuildId || !selectedGuild?.id) return;
+    if (!selectedGuildId) return;
 
     // Check if the guild id changes
     if (
