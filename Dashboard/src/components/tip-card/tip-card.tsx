@@ -37,7 +37,7 @@ export function TipCard({ title, description, tipKey, onClose }: TipCardProps) {
       <section className={`${styles.message} tip-card__message`}>
         <p className={`${styles.description} ${!description && styles.mocks}`}>
           {description ? (
-            <Component.Markdown>{description}</Component.Markdown>
+            description
           ) : (
             <>
               <span className={`${styles.mock} ${styles['mock-1']}`} />
