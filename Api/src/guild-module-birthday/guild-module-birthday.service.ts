@@ -1,29 +1,75 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateGuildModuleBirthdayInput } from './dto/create-guild-module-birthday.input';
 import { UpdateGuildModuleBirthdayInput } from './dto/update-guild-module-birthday.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { GuildModuleBirthday } from './entities/guild-module-birthday.entity';
+import { Repository } from 'typeorm';
+import { GuildService } from '../guild/guild.service';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Injectable()
 export class GuildModuleBirthdayService {
-  create(createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput) {
-    return 'This action adds a new guildModuleBirthday';
+  constructor(
+    @InjectRepository(GuildModuleBirthday)
+    private guildModuleBirthdayRepository: Repository<GuildModuleBirthday>,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
+  ) {}
+
+  async create(
+    createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput,
+  ): Promise<GuildModuleBirthday> | null {
+    const guild: Guild = await this.guildService.findOne(
+      createGuildModuleBirthdayInput.guildId,
+    );
+    if (!guild) {
+      return null;
+    }
+    return this.guildModuleBirthdayRepository.save({
+      ...createGuildModuleBirthdayInput,
+      guild,
+    });
   }
 
-  findAll() {
-    return `This action returns all guildModuleBirthday`;
+  findAll(): Promise<GuildModuleBirthday[]> {
+    return this.guildModuleBirthdayRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guildModuleBirthday`;
+  findOne(id: string): Promise<GuildModuleBirthday> {
+    return this.guildModuleBirthdayRepository.findOne({
+      where: { guildId: id },
+    });
   }
 
-  update(
-    id: number,
+  getGuild(id: string): Promise<Guild> {
+    return this.guildService.findOne(id);
+  }
+
+  async update(
+    id: string,
     updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput,
-  ) {
-    return `This action updates a #${id} guildModuleBirthday`;
+  ): Promise<GuildModuleBirthday> | null {
+    const guildModuleBirthday: GuildModuleBirthday =
+      await this.guildModuleBirthdayRepository.findOne({
+        where: { guildId: id },
+      });
+    if (guildModuleBirthday) {
+      return this.guildModuleBirthdayRepository.save({
+        ...guildModuleBirthday,
+        ...updateGuildModuleBirthdayInput,
+      });
+    }
+    return null;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleBirthday`;
+  async remove(id: string): Promise<GuildModuleBirthday> | null {
+    const guildModuleBirthday: GuildModuleBirthday =
+      await this.guildModuleBirthdayRepository.findOne({
+        where: { guildId: id },
+      });
+    if (guildModuleBirthday) {
+      return this.guildModuleBirthdayRepository.remove(guildModuleBirthday);
+    }
+    return null;
   }
 }
