@@ -39,8 +39,8 @@ export class GuildModuleVoiceGrowthChildResolver {
     name: 'guildModuleVoiceGrowthChild',
   })
   findOne(
-    @Args('id', { type: () => String }) guildId: string,
-    @Args('id', { type: () => String }) channelId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
+    @Args('channelId', { type: () => String }) channelId: string,
   ): Promise<GuildModuleVoiceGrowthChild> {
     return this.guildModuleVoiceGrowthChildService.findOne(guildId, channelId);
   }
@@ -68,8 +68,8 @@ export class GuildModuleVoiceGrowthChildResolver {
 
   @Mutation(() => GuildModuleVoiceGrowthChild)
   removeGuildModuleVoiceGrowthChild(
-    @Args('id', { type: () => String }) guildId: string,
-    @Args('id', { type: () => String }) channelId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
+    @Args('channelId', { type: () => String }) channelId: string,
   ): Promise<GuildModuleVoiceGrowthChild> {
     return this.guildModuleVoiceGrowthChildService.remove(guildId, channelId);
   }
