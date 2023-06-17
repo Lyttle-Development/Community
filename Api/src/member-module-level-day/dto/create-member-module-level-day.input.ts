@@ -2,10 +2,10 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateMemberModuleLevelDayInput {
-  @Field(() => Int)
+  @Field(() => String)
   guildId: string;
 
-  @Field(() => Int)
+  @Field(() => String)
   userId: string;
 
   @Field(() => Int, { defaultValue: 0 })

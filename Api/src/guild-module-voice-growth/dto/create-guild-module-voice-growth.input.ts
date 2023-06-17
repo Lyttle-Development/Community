@@ -1,11 +1,11 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleVoiceGrowthInput {
-  @Field(() => Int)
+  @Field(() => String)
   channelId: string;
 
-  @Field(() => Int)
+  @Field(() => String)
   guildId: string;
 
   @Field(() => Boolean, { defaultValue: false })

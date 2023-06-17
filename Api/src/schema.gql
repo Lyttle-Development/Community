@@ -281,12 +281,12 @@ type Mutation {
 }
 
 input CreateGuildInput {
-  guildId: Int!
+  guildId: String!
   enabled: Boolean!
 }
 
 input UpdateGuildInput {
-  guildId: Int
+  guildId: String
   enabled: Boolean
 }
 
@@ -314,29 +314,29 @@ input UpdateGuildModuleLevelInput {
 
 input CreateGuildModuleQotdInput {
   enabled: Boolean!
-  channelId: Int!
-  messageId: Int!
+  channelId: String!
+  messageId: String!
   nicknames: Boolean!
 }
 
 input UpdateGuildModuleQotdInput {
   enabled: Boolean
-  channelId: Int
-  messageId: Int
+  channelId: String
+  messageId: String
   nicknames: Boolean
   guildId: Int!
 }
 
 input CreateGuildMessageInput {
-  guildId: Int!
-  messageId: Int!
-  channelId: Int!
+  guildId: String!
+  messageId: String!
+  channelId: String!
 }
 
 input UpdateGuildMessageInput {
-  guildId: Int
-  messageId: Int
-  channelId: Int
+  guildId: String
+  messageId: String
+  channelId: String
   id: Int!
 }
 
@@ -352,22 +352,22 @@ input UpdateGuildTranslationInput {
 }
 
 input CreateMemberInput {
-  guildId: Int!
-  userId: Int!
+  guildId: String!
+  userId: String!
   birthday: Int
   nickname: String
 }
 
 input UpdateMemberInput {
-  guildId: Int
-  userId: Int
+  guildId: String
+  userId: String
   birthday: Int
   nickname: String
 }
 
 input CreateGuildModuleVoiceGrowthInput {
-  channelId: Int!
-  guildId: Int!
+  channelId: String!
+  guildId: String!
   enabled: Boolean! = false
   preset: String
   prefix: String
@@ -375,8 +375,8 @@ input CreateGuildModuleVoiceGrowthInput {
 }
 
 input UpdateGuildModuleVoiceGrowthInput {
-  channelId: Int
-  guildId: Int
+  channelId: String
+  guildId: String
   enabled: Boolean = false
   preset: String
   prefix: String
@@ -385,7 +385,7 @@ input UpdateGuildModuleVoiceGrowthInput {
 }
 
 input CreateUserInput {
-  user_id: Int!
+  user_id: String!
 }
 
 input UpdateUserInput {
@@ -393,24 +393,24 @@ input UpdateUserInput {
 }
 
 input CreateUserProfileInput {
-  user_id: Int!
+  user_id: String!
   tokens: Int!
   tokens_used: Int!
 }
 
 input UpdateUserProfileInput {
-  user_id: Int
+  user_id: String
   tokens: Int
   tokens_used: Int
 }
 
 input CreateMemberModuleLevelInput {
-  guildId: Int!
-  userId: Int!
+  guildId: String!
+  userId: String!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1687013331252
-  callStart: Timestamp! = 1687013331252
+  cooldownTime: Timestamp! = 1687014326498
+  callStart: Timestamp! = 1687014326498
   points: Int! = 0
 }
 
@@ -419,14 +419,14 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1687013331252
-  callStart: Timestamp = 1687013331252
+  cooldownTime: Timestamp = 1687014326498
+  callStart: Timestamp = 1687014326498
   points: Int = 0
 }
 
 input CreateMemberModuleLevelDayInput {
-  guildId: Int!
-  userId: Int!
+  guildId: String!
+  userId: String!
   pointsMonday: Int! = 0
   pointsTuesday: Int! = 0
   pointsWednesday: Int! = 0
@@ -463,24 +463,24 @@ input CreateGuildActionInput {
   key: String!
   values: String!
   executed: Boolean!
-  guildId: Int!
+  guildId: String!
 }
 
 input UpdateGuildActionInput {
   key: String
   values: String
   executed: Boolean
-  guildId: Int
+  guildId: String
   id: Int!
 }
 
 input CreateGuildModuleBirthdayInput {
-  guildId: Int!
+  guildId: String!
   enabled: Boolean!
 }
 
 input UpdateGuildModuleBirthdayInput {
-  guildId: Int
+  guildId: String
   enabled: Boolean
 }
 
