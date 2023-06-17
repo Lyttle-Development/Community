@@ -7,27 +7,55 @@ import { getMessage } from '@lyttledev-dashboard/utils';
 import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { reviewBuilder } from '@lyttledev-dashboard/components/review/review.builder';
+import { useEffect, useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
 export interface ReviewProps {
   stats: StatsCardProps[];
 }
 
+const initialMutation = 'mutation { updateGuild { id } }';
+
 export function Review() {
   const app = useApp();
   const guildId = app?.selectedGuildId ?? '';
   const changes: [string, ChangeObject][] = Object.entries(app?.changes ?? {});
+  const [confirm, setConfirm] = useState(false);
+  const [mutation, setMutation] = useState<string>(initialMutation);
+  const router = useRouter();
 
-  if (changes.length < 1) return null;
+  const _mutation = reviewBuilder(guildId, changes);
+  const mutationGQL = gql(_mutation ?? mutation ?? initialMutation);
+  const [mutate, { loading }] = useMutation(mutationGQL);
 
-  const submitChanges = () => {
-    // TODO: Submit changes
-    window.alert('Changes submitted!');
+  useEffect(() => {
+    if (!_mutation) return;
+    setMutation(_mutation);
+  }, [_mutation]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (confirm) {
+      timeout = setTimeout(() => setConfirm(false), 2000);
+    }
+    return () => clearTimeout(timeout);
+  }, [confirm]);
+
+  if (!loading && changes.length < 1) {
+    void router.push(`/dashboard/${guildId}/modules`);
+    return null;
+  }
+
+  const submitChanges = async () => {
+    await mutate();
+    app?.resetChanges();
+    await router.push(`/dashboard/${guildId}/modules`);
   };
-
-  console.log(reviewBuilder(guildId, changes));
 
   const msgReview = getMessage(componentsPrefix + 'review.title');
   const msgSubmit = getMessage(componentsPrefix + 'review.submit');
+  const msgConfirm = getMessage(componentsPrefix + 'review.confirm');
 
   return (
     <>
@@ -56,12 +84,22 @@ export function Review() {
           );
         })}
       </ul>
-      <Component.Button
-        text={msgSubmit}
-        color={ButtonColors.orange}
-        onClick={submitChanges}
-        className={styles.submit}
-      />
+      {mutation && !loading && !confirm && (
+        <Component.Button
+          text={msgSubmit}
+          color={ButtonColors.orange}
+          onClick={() => setConfirm(true)}
+          className={styles.submit}
+        />
+      )}
+      {mutation && !loading && confirm && (
+        <Component.Button
+          text={msgConfirm}
+          color={ButtonColors.purple}
+          onClick={submitChanges}
+          className={styles.submit}
+        />
+      )}
     </>
   );
 }

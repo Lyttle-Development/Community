@@ -234,6 +234,10 @@ export const ModuleMarkdown = {
         },
       },
       review: {
+        confirm: {
+          content: 'Click to confirm!',
+          documentation: '',
+        },
         submit: {
           content: 'Save changes',
           documentation: '',

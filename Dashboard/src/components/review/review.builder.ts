@@ -186,6 +186,7 @@ export function reviewBuilder(
 }
 
 function buildQuery(query: ReviewBuilderQuery) {
+  if (Object.keys(query).length < 1) return null;
   let queryString = 'mutation {';
 
   for (const key in query) {
