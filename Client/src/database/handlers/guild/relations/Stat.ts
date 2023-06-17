@@ -10,8 +10,23 @@ export async function createGuildStat(
   valueInt = 0,
   groupKey: string | null = null,
 ): Promise<GuildStat> {
-  return prismaClient.guildStat.create({
-    data: {
+  return prismaClient.guildStat.upsert({
+    where: {
+      guild_id_key_day: {
+        guild_id: BigInt(guildId),
+        key,
+        day,
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      key,
+      day,
+      group_key: groupKey,
+      value,
+      value_int: valueInt,
+    },
+    update: {
       guild_id: BigInt(guildId),
       key,
       day,

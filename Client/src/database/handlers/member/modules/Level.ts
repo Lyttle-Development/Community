@@ -6,8 +6,18 @@ export function createMemberModuleLevel(
   guildId: string,
   userId: string,
 ): Promise<MemberModuleLevel> {
-  return prismaClient.memberModuleLevel.create({
-    data: {
+  return prismaClient.memberModuleLevel.upsert({
+    where: {
+      guild_id_user_id: {
+        guild_id: BigInt(guildId),
+        user_id: BigInt(userId),
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      user_id: BigInt(userId),
+    },
+    update: {
       guild_id: BigInt(guildId),
       user_id: BigInt(userId),
     },

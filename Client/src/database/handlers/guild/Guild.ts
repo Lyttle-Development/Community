@@ -2,8 +2,14 @@ import { prismaClient } from '../../prisma';
 import type { Guild } from '@prisma/client';
 
 export function createGuild(guildId: string): Promise<Guild> {
-  return prismaClient.guild.create({
-    data: {
+  return prismaClient.guild.upsert({
+    where: {
+      guild_id: BigInt(guildId),
+    },
+    create: {
+      guild_id: BigInt(guildId),
+    },
+    update: {
       guild_id: BigInt(guildId),
     },
   });

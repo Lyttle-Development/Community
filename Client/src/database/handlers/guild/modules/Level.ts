@@ -5,8 +5,14 @@ import { getOrCreateGuild } from '../guild';
 export async function createGuildModuleLevel(
   guildId: string,
 ): Promise<GuildModuleLevel> {
-  return prismaClient.guildModuleLevel.create({
-    data: {
+  return prismaClient.guildModuleLevel.upsert({
+    where: {
+      guild_id: BigInt(guildId),
+    },
+    create: {
+      guild_id: BigInt(guildId),
+    },
+    update: {
       guild_id: BigInt(guildId),
     },
   });
