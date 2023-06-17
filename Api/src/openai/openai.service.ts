@@ -20,10 +20,9 @@ export class OpenaiService {
     this.openai = new OpenAIApi(configuration);
   }
 
-  async create(prompt: string, maxTokens: number = 0.25): Promise<string> {
+  async create(prompt, maxTokens: number = 0.25): Promise<string> {
     const result = await this.openai.complete({
-      engine: 'davinci',
-      prompt,
+      engine: 'gpt-3.5-turbo',
       maxTokens,
       temperature: 0.9,
       topP: 1,
@@ -54,8 +53,13 @@ export class OpenaiService {
       await this.guildStatResolvedService.getTextChannelsMessages(guildId);
     const guildStatVoiceChannelsCallTime =
       await this.guildStatResolvedService.getVoiceChannelsCallTime(guildId);
-    const prompt = ``;
-    const result = await this.create(prompt);
-    return result;
+    const guild = await this.discordService.getGuild(guildId);
+    const prompt = [
+      {
+        role: 'Discord bot trying to help maximize server activity',
+        text: `the server ${guild?.name} has ${guildStatStaffMembers} staff members, ${guildStatBots} bots, ${guildStatChannels} channels, ${guildStatTextChannels} text channels, ${guildStatVoiceChannels} voice channels, ${guildStatTextChannelsMessages} text channels messages, ${guildStatVoiceChannelsCallTime} voice channels call time, and ${guild?.approximate_member_count} members.`,
+      },
+    ];
+    return await this.create(prompt);
   }
 }
