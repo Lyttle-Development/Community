@@ -188,8 +188,13 @@ type User {
 type Discord {
   guildId: String
   userGuilds: [JSONObject!]!
+  memberGuilds: [JSONObject!]!
+  dashboardUserGuilds: [JSONObject!]!
   guild: JSONObject!
   guildChannels: [JSONObject!]!
+  guildCategoryChannels: [JSONObject!]!
+  guildTextChannels: [JSONObject!]!
+  guildVoiceChannels: [JSONObject!]!
 }
 
 """
@@ -280,12 +285,12 @@ type Mutation {
 }
 
 input CreateGuildInput {
-  guildId: Int!
+  guildId: String!
   enabled: Boolean!
 }
 
 input UpdateGuildInput {
-  guildId: Int
+  guildId: String
   enabled: Boolean
 }
 
@@ -340,14 +345,15 @@ input UpdateGuildMessageInput {
 }
 
 input CreateGuildTranslationInput {
+  guildId: String!
   key: String!
   value: String!
 }
 
 input UpdateGuildTranslationInput {
-  key: Int!
+  guildId: String
+  key: String
   value: String
-  guildId: Int!
 }
 
 input CreateMemberInput {
@@ -408,8 +414,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686764965444
-  callStart: Timestamp! = 1686764965444
+  cooldownTime: Timestamp! = 1687025526146
+  callStart: Timestamp! = 1687025526146
   points: Int! = 0
 }
 
@@ -418,8 +424,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686764965444
-  callStart: Timestamp = 1686764965444
+  cooldownTime: Timestamp = 1687025526146
+  callStart: Timestamp = 1687025526146
   points: Int = 0
 }
 

@@ -3,7 +3,7 @@ import type { CreateGuildInput } from './dto/create-guild.input';
 import type { UpdateGuildInput } from './dto/update-guild.input';
 import { Guild } from './entities/guild.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { GuildModuleLevelService } from '../guild-module-level/guild-module-level.service';
 import type { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
 import type { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
@@ -50,6 +50,12 @@ export class GuildService {
 
   findAll(): Promise<Guild[]> {
     return this.guildRepository.find();
+  }
+
+  findAllByGuildIds(guildIds: string[]): Promise<Guild[]> {
+    return this.guildRepository.find({
+      where: { guildId: In(guildIds) },
+    });
   }
 
   findOne(id: string): Promise<Guild> {
