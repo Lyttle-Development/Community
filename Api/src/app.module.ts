@@ -30,6 +30,7 @@ import { Discord } from './discord/entities/discord.entity';
 import { GuildStatModule } from './guild-stat/guild-stat.module';
 import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
 import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -81,6 +82,7 @@ import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-res
     DiscordModule,
     GuildStatModule,
     GuildStatResolvedModule,
+    OpenaiModule,
   ],
   controllers: [AppController],
   providers: [

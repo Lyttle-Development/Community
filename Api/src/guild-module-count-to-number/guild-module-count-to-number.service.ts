@@ -1,31 +1,73 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateGuildModuleCountToNumberInput } from './dto/create-guild-module-count-to-number.input';
 import { UpdateGuildModuleCountToNumberInput } from './dto/update-guild-module-count-to-number.input';
+import { GuildModuleCountToNumber } from './entities/guild-module-count-to-number.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { GuildService } from '../guild/guild.service';
+import { Repository } from 'typeorm';
+import { Guild } from '../guild/entities/guild.entity';
 
 @Injectable()
 export class GuildModuleCountToNumberService {
-  create(
+  constructor(
+    @InjectRepository(GuildModuleCountToNumber)
+    private guildModuleCountToNumberRepository: Repository<GuildModuleCountToNumber>,
+    @Inject(forwardRef(() => GuildService))
+    private guildService: GuildService,
+  ) {}
+
+  async create(
     createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput,
   ) {
-    return 'This action adds a new guildModuleCountToNumber';
+    const guild: Guild = await this.guildService.findOne(
+      createGuildModuleCountToNumberInput.guildId,
+    );
+    if (!guild) {
+      return null;
+    }
+    return this.guildModuleCountToNumberRepository.save({
+      ...createGuildModuleCountToNumberInput,
+      guild,
+    });
   }
 
-  findAll() {
-    return `This action returns all guildModuleCountToNumber`;
+  findAll(): Promise<GuildModuleCountToNumber[]> {
+    return this.guildModuleCountToNumberRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guildModuleCountToNumber`;
+  findOne(id: string): Promise<GuildModuleCountToNumber> {
+    return this.guildModuleCountToNumberRepository.findOne({
+      where: { guildId: id },
+    });
   }
 
-  update(
-    id: number,
+  async update(
+    id: string,
     updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput,
-  ) {
-    return `This action updates a #${id} guildModuleCountToNumber`;
+  ): Promise<GuildModuleCountToNumber> | null {
+    const guildModuleCountToNumber: GuildModuleCountToNumber =
+      await this.guildModuleCountToNumberRepository.findOne({
+        where: { guildId: id },
+      });
+    if (guildModuleCountToNumber) {
+      return this.guildModuleCountToNumberRepository.save({
+        ...guildModuleCountToNumber,
+        ...updateGuildModuleCountToNumberInput,
+      });
+    }
+    return null;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} guildModuleCountToNumber`;
+  async remove(id: string): Promise<GuildModuleCountToNumber> | null {
+    const guildModuleCountToNumber: GuildModuleCountToNumber =
+      await this.guildModuleCountToNumberRepository.findOne({
+        where: { guildId: id },
+      });
+    if (guildModuleCountToNumber) {
+      return this.guildModuleCountToNumberRepository.remove(
+        guildModuleCountToNumber,
+      );
+    }
+    return null;
   }
 }

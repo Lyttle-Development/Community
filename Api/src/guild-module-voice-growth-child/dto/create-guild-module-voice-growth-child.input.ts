@@ -1,7 +1,13 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateGuildModuleVoiceGrowthChildInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  channelId: string;
+
+  @Field(() => String)
+  guildId: string;
+
+  @Field(() => String)
+  name: string;
 }

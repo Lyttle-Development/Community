@@ -1,7 +1,12 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class CreateGuildModuleBirthdayInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  guildId: string;
+
+  @Column()
+  @Field(() => Boolean)
+  enabled: boolean;
 }
