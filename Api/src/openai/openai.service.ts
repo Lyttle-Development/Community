@@ -12,7 +12,7 @@ export class OpenaiService {
     @Inject(forwardRef(() => GuildStatResolvedService))
     private guildStatResolvedService: GuildStatResolvedService,
     @Inject(forwardRef(() => DiscordService))
-    private DiscordService: DiscordService,
+    private discordService: DiscordService,
   ) {
     const configuration = new Configuration({
       apiKey: process.env.OPENAI_API_KEY,
