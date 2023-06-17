@@ -1,5 +1,5 @@
 import styles from './boolean.module.scss';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review';
+import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 import { Component } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
@@ -21,7 +21,8 @@ export function BooleanReviewCard({
   }
 
   const title =
-    changeKeysArray.find((item) => item.key === changeKey)?.title ?? 'Unknown';
+    changeKeysValuesArray.find((item) => item.key === changeKey)?.title ??
+    'Unknown';
 
   const statusText = change.current ? 'was enabled' : 'was disabled';
 

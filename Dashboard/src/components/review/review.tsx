@@ -4,8 +4,9 @@ import styles from './review.module.scss';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review';
+import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
+import { reviewBuilder } from '@lyttledev-dashboard/components/review/review.builder';
 
 export interface ReviewProps {
   stats: StatsCardProps[];
@@ -23,6 +24,8 @@ export function Review() {
     window.alert('Changes submitted!');
   };
 
+  console.log(reviewBuilder(guildId, changes));
+
   const msgReview = getMessage(componentsPrefix + 'review.title');
   const msgSubmit = getMessage(componentsPrefix + 'review.submit');
 
@@ -31,7 +34,7 @@ export function Review() {
       <h1 className={styles.title}>{msgReview}</h1>
       <ul className={styles.review}>
         {changes.map(([key, change], i) => {
-          const hrefFunc = changeKeysArray.find(
+          const hrefFunc = changeKeysValuesArray.find(
             (item) => item.key === key,
           )?.url;
 

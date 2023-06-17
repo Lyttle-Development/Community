@@ -1,6 +1,7 @@
 export interface ChangeKey {
   title: string;
   key: string;
+  translationKey?: string;
   url: (id: string) => string;
 }
 
@@ -22,6 +23,7 @@ export const changeKeys: ChangeKeys = {
   moduleLevelsLevelUpText: {
     title: 'Level up event text',
     key: 'module.level.level-up.text',
+    translationKey: 'Activity.levels.event.level-up',
     url: (id: string) => `/dashboard/${id}/module/levels#level-up`,
   },
   moduleLevelsAnnouncement: {
@@ -42,6 +44,7 @@ export const changeKeys: ChangeKeys = {
   moduleLevelsNicknameText: {
     title: 'Nickname module text',
     key: 'module.level.nickname.text',
+    translationKey: 'Activity.levels.txt.nickname',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
   },
   moduleBirthday: {
@@ -61,4 +64,5 @@ export const changeKeys: ChangeKeys = {
   },
 } as const;
 
-export const changeKeysArray = Object.values(changeKeys);
+export const changeKeysValuesArray = Object.values(changeKeys);
+export const changeKeysKeysArray = Object.keys(changeKeys);

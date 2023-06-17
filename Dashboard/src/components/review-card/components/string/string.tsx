@@ -1,7 +1,7 @@
 import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { diffLines } from 'diff';
 import styles from './string.module.scss';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review';
+import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 
 export interface StringReviewCardProps {
   changeKey: string;
@@ -31,7 +31,8 @@ export function StringReviewCard({ changeKey, change }: StringReviewCardProps) {
   );
 
   const title =
-    changeKeysArray.find((item) => item.key === changeKey)?.title ?? 'Unknown';
+    changeKeysValuesArray.find((item) => item.key === changeKey)?.title ??
+    'Unknown';
 
   return (
     <article className={styles.card}>
