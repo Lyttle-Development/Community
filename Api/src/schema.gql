@@ -108,6 +108,7 @@ type GuildModuleBirthday {
   birthdayChannelId: Int
   createdAt: Timestamp!
   updatedAt: Timestamp!
+  guild: Guild!
 }
 
 type GuildModuleCountToNumber {
@@ -223,8 +224,8 @@ type Query {
   guildModuleVoiceGrowthChild(id: Int!): GuildModuleVoiceGrowthChild!
   guildActions: [GuildAction!]!
   guildAction(id: Int!): GuildAction!
-  guildModuleBirthday(id: Int!): GuildModuleBirthday!
-  guildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
+  guildModuleBirthday(id: String!): GuildModuleBirthday!
+  guildModuleCountToNumber(id: String!): GuildModuleCountToNumber!
   guildModuleEasterEgg(id: Int!): GuildModuleEasterEgg!
 }
 
@@ -270,10 +271,10 @@ type Mutation {
   removeGuildAction(id: Int!): GuildAction!
   createGuildModuleBirthday(createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput!): GuildModuleBirthday!
   updateGuildModuleBirthday(updateGuildModuleBirthdayInput: UpdateGuildModuleBirthdayInput!): GuildModuleBirthday!
-  removeGuildModuleBirthday(id: Int!): GuildModuleBirthday!
+  removeGuildModuleBirthday(id: String!): GuildModuleBirthday!
   createGuildModuleCountToNumber(createGuildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput!): GuildModuleCountToNumber!
   updateGuildModuleCountToNumber(updateGuildModuleCountToNumberInput: UpdateGuildModuleCountToNumberInput!): GuildModuleCountToNumber!
-  removeGuildModuleCountToNumber(id: Int!): GuildModuleCountToNumber!
+  removeGuildModuleCountToNumber(id: String!): GuildModuleCountToNumber!
   createGuildModuleEasterEgg(createGuildModuleEasterEggInput: CreateGuildModuleEasterEggInput!): GuildModuleEasterEgg!
   updateGuildModuleEasterEgg(updateGuildModuleEasterEggInput: UpdateGuildModuleEasterEggInput!): GuildModuleEasterEgg!
   removeGuildModuleEasterEgg(id: Int!): GuildModuleEasterEgg!
@@ -408,8 +409,8 @@ input CreateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1686764965444
-  callStart: Timestamp! = 1686764965444
+  cooldownTime: Timestamp! = 1687013331252
+  callStart: Timestamp! = 1687013331252
   points: Int! = 0
 }
 
@@ -418,8 +419,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1686764965444
-  callStart: Timestamp = 1686764965444
+  cooldownTime: Timestamp = 1687013331252
+  callStart: Timestamp = 1687013331252
   points: Int = 0
 }
 
@@ -474,25 +475,25 @@ input UpdateGuildActionInput {
 }
 
 input CreateGuildModuleBirthdayInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guildId: Int!
+  enabled: Boolean!
 }
 
 input UpdateGuildModuleBirthdayInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  guildId: Int
+  enabled: Boolean
 }
 
 input CreateGuildModuleCountToNumberInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  guildId: String!
+  channelId: String!
+  enabled: Boolean!
 }
 
 input UpdateGuildModuleCountToNumberInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  guildId: String
+  channelId: String
+  enabled: Boolean
 }
 
 input CreateGuildModuleEasterEggInput {
