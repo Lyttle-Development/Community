@@ -30,8 +30,14 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   if (!db_GuildModuleLevel.enabled) return;
 
   // Increment the event counter.
-  const day = new Date().getDay();
-  await incrementGuildStat(guildId, 'eventsCreated', day, 1, 'eventsCreated');
+  const todayInt = new Date().getDay();
+  await incrementGuildStat(
+    guildId,
+    'eventsCreated',
+    todayInt,
+    1,
+    'eventsCreated',
+  );
 
   // Check if user is spamming.
   const { isSpamming, db_MemberModuleLevel } = await preventSpam(guildMember);
@@ -45,7 +51,7 @@ export async function createEvent(event: LevelEvent, guildMember: GuildMember) {
   await incrementGuildStat(
     guildId,
     'eventsTriggered',
-    day,
+    todayInt,
     1,
     'eventsTriggered',
   );

@@ -1,1 +1,26 @@
-{}
+{
+  "action.onClientReady.deployCommands": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onClientReady.startupStatsQueue": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onClientReady.triggerDailyStats": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.presenceUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.ready": {
+    "enabled": true,
+    "errors": 0
+  }
+}
