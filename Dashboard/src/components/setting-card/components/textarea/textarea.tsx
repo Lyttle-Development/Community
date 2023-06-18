@@ -1,4 +1,3 @@
-import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { ChangeEvent } from 'react';
@@ -6,6 +5,7 @@ import { Component } from '@lyttledev-dashboard/components';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './textarea.module.scss';
 import { getMessage } from '@lyttledev-dashboard/utils';
+import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface SettingCardTextareaItemVariables {
   variable: string;
@@ -48,7 +48,7 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   };
 
   // Check if using default
-  const usingDefault = defaultMessage === changes[key]?.current;
+  const usingDefault = defaultMessage === (changes[key]?.current ?? value);
 
   // Render component.
   return (

@@ -3,12 +3,22 @@ import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../Guild';
 
 export async function createGuildAction(
+  id: number,
   guildId: string,
   key: string,
   values: string,
 ): Promise<GuildAction> {
-  return prismaClient.guildAction.create({
-    data: {
+  return prismaClient.guildAction.upsert({
+    where: {
+      id,
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      key,
+      values,
+    },
+    update: {
+      id,
       guild_id: BigInt(guildId),
       key,
       values,
@@ -41,7 +51,7 @@ export async function getOrCreateGuildAction(
   await getOrCreateGuild(guildId);
   return (
     (await findSingleGuildAction(id)) ??
-    (await createGuildAction(guildId, key, values))
+    (await createGuildAction(id, guildId, key, values))
   );
 }
 

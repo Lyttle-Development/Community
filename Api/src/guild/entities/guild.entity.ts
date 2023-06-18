@@ -1,79 +1,99 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { GuildModuleLevel } from '../../guild-module-level/entities/guild-module-level.entity';
-import { GuildModuleQotd } from '../../guild-module-qotd/entities/guild-module-qotd.entity';
 import { GuildMessage } from '../../guild-message/entities/guild-message.entity';
 import { GuildTranslation } from '../../guild-translation/entities/guild-translation.entity';
 import { Member } from '../../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
+import { GuildModuleBirthday } from '../../guild-module-birthday/entities/guild-module-birthday.entity';
+import { GuildModuleCountToNumber } from '../../guild-module-count-to-number/entities/guild-module-count-to-number.entity';
+import { GuildModuleEasterEgg } from '../../guild-module-easter-egg/entities/guild-module-easter-egg.entity';
+import { GuildAction } from '../../guild-action/entities/guild-action.entity';
+import { GuildStat } from '../../guild-stat/entities/guild-stat.entity';
 
-@Entity('guild')
+@Index('guild_pkey', ['guildId'], { unique: true })
+@Entity('guild', { schema: 'public' })
 @ObjectType()
 export class Guild {
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  // - Members
-  @OneToMany(() => Member, (member: Member) => member.guild_id, {
-    nullable: true,
-  })
-  @Field(() => [Member], { nullable: true })
-  members?: Member[];
-
-  // - Cache
-  @OneToMany(
-    () => GuildTranslation,
-    (guildTranslation: GuildTranslation) => guildTranslation.guild_id,
-    { nullable: true },
-  )
-  @Field(() => [GuildTranslation], { nullable: true })
-  guildTranslations?: GuildTranslation[];
-
-  // - Modules
-  @OneToOne(() => GuildModuleLevel, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => GuildModuleLevel, { nullable: true })
-  guildModuleLevel?: GuildModuleLevel;
-
-  @OneToOne(() => GuildModuleQotd, { onDelete: 'CASCADE', nullable: true })
-  @Field(() => GuildModuleQotd, { nullable: true })
-  guildModuleQotd?: GuildModuleQotd;
-
-  @OneToOne(() => GuildModuleVoiceGrowth, {
-    onDelete: 'CASCADE',
-    nullable: true,
-  })
-  @Field(() => GuildModuleVoiceGrowth, { nullable: true })
-  guildModuleVoiceGrowth?: GuildModuleVoiceGrowth;
-
-  @OneToMany(
-    () => GuildMessage,
-    (guildMessage: GuildMessage) => guildMessage.guild_id,
-    { nullable: true },
-  )
-  @Field(() => [GuildMessage], { nullable: true })
-  guildMessages?: GuildMessage[];
-
-  // Values
-  @Column()
+  @Column('boolean', { name: 'enabled', default: () => 'true' })
   @Field(() => Boolean)
   enabled: boolean;
 
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  updatedAt: Date;
+
+  @OneToMany(() => GuildAction, (guildAction) => guildAction.guild, {
+    nullable: true,
+  })
+  guildActions: GuildAction[];
+
+  @OneToMany(() => GuildMessage, (guildMessage) => guildMessage.guild, {
+    nullable: true,
+  })
+  guildMessages: GuildMessage[];
+
+  @OneToOne(
+    () => GuildModuleBirthday,
+    (guildModuleBirthday) => guildModuleBirthday.guild,
+    { nullable: true },
+  )
+  guildModuleBirthday: GuildModuleBirthday;
+
+  @OneToMany(
+    () => GuildModuleCountToNumber,
+    (guildModuleCountToNumber) => guildModuleCountToNumber.guild,
+    { nullable: true },
+  )
+  guildModuleCountToNumbers: GuildModuleCountToNumber[];
+
+  @OneToOne(
+    () => GuildModuleEasterEgg,
+    (guildModuleEasterEgg) => guildModuleEasterEgg.guild,
+    { nullable: true },
+  )
+  guildModuleEasterEgg: GuildModuleEasterEgg;
+
+  @OneToOne(
+    () => GuildModuleLevel,
+    (guildModuleLevel) => guildModuleLevel.guild,
+    { nullable: true },
+  )
+  guildModuleLevel: GuildModuleLevel;
+
+  @OneToMany(
+    () => GuildModuleVoiceGrowth,
+    (guildModuleVoiceGrowth) => guildModuleVoiceGrowth.guild,
+    { nullable: true },
+  )
+  guildModuleVoiceGrowths: GuildModuleVoiceGrowth[];
+
+  @OneToMany(
+    () => GuildTranslation,
+    (guildTranslation) => guildTranslation.guild,
+    { nullable: true },
+  )
+  guildTranslations: GuildTranslation[];
+
+  @OneToMany(() => GuildStat, (guildTranslation) => guildTranslation.guild, {
+    nullable: true,
+  })
+  guildStats: GuildStat[];
+
+  @OneToMany(() => Member, (member) => member.guild, { nullable: true })
+  members: Member[];
 }

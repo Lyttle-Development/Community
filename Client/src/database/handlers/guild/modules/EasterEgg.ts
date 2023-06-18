@@ -4,17 +4,23 @@ import { Prisma } from '@prisma/client';
 import { getOrCreateGuild } from '../Guild';
 
 export async function createGuildModuleEasterEgg(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleEasterEgg> {
-  return prismaClient.guildModuleEasterEgg.create({
-    data: {
+  return prismaClient.guildModuleEasterEgg.upsert({
+    where: {
+      guild_id: BigInt(guildId),
+    },
+    create: {
+      guild_id: BigInt(guildId),
+    },
+    update: {
       guild_id: BigInt(guildId),
     },
   });
 }
 
 export async function findSingleGuildModuleEasterEgg(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleEasterEgg> {
   return prismaClient.guildModuleEasterEgg.findUnique({
     where: {
@@ -24,7 +30,7 @@ export async function findSingleGuildModuleEasterEgg(
 }
 
 export async function getOrCreateGuildModuleEasterEgg(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleEasterEgg> {
   await getOrCreateGuild(guildId);
   return (
@@ -34,7 +40,7 @@ export async function getOrCreateGuildModuleEasterEgg(
 }
 
 export async function getGuildModuleEasterEgg(
-  guildId: string
+  guildId: string,
 ): Promise<GuildModuleEasterEgg> {
   await getOrCreateGuild(guildId);
   return findSingleGuildModuleEasterEgg(guildId);
@@ -42,7 +48,7 @@ export async function getGuildModuleEasterEgg(
 
 export async function setGuildModuleEasterEgg(
   guildId: string,
-  data: Prisma.GuildModuleEasterEggUpdateInput
+  data: Prisma.GuildModuleEasterEggUpdateInput,
 ): Promise<GuildModuleEasterEgg> {
   await getOrCreateGuildModuleEasterEgg(guildId);
 

@@ -1,6 +1,5 @@
 import {
   Args,
-  Int,
   Mutation,
   Parent,
   Query,
@@ -33,34 +32,34 @@ export class MemberResolver {
 
   @Query(() => Member)
   findOne(
-    @Args('userId', { type: () => Int }) userId: number,
-    @Args('guildId', { type: () => Int }) guildId: number,
+    @Args('userId', { type: () => String }) userId: string,
+    @Args('guildId', { type: () => String }) guildId: string,
   ): Promise<Member> {
     return this.memberService.findOne(userId, guildId);
   }
 
   @Query(() => [Member])
   findAllByGuild(
-    @Args('guildId', { type: () => Int }) guildId: number,
+    @Args('guildId', { type: () => String }) guildId: string,
   ): Promise<Member[]> {
     return this.memberService.findAllByGuild(guildId);
   }
 
   @ResolveField(() => Guild)
   guild(@Parent() member: Member): Promise<Guild> {
-    return this.memberService.getGuild(member.guild_id);
+    return this.memberService.getGuild(member.guildId);
   }
 
   @ResolveField(() => User)
   getUser(@Parent() member: Member): Promise<User> {
-    return this.memberService.getUser(member.user_id);
+    return this.memberService.getUser(member.userId);
   }
 
   @ResolveField(() => MemberModuleLevel)
   memberModuleLevel(@Parent() member: Member): Promise<MemberModuleLevel> {
     return this.memberService.getMemberModuleLevel(
-      member.guild_id,
-      member.user_id,
+      member.guildId,
+      member.userId,
     );
   }
 
@@ -73,8 +72,8 @@ export class MemberResolver {
 
   @Mutation(() => Member)
   removeMember(
-    @Args('id', { type: () => Int }) guildId: number,
-    userId: number,
+    @Args('id', { type: () => String }) guildId: string,
+    userId: string,
   ): Promise<Member> | null {
     return this.memberService.remove(guildId, userId);
   }

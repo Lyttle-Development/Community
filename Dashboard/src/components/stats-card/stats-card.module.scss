@@ -27,7 +27,6 @@
       color: v.$color-text;
       display: inline-flex;
       flex-direction: column;
-      align-items: flex-end;
 
       .change {
         font-size: 1rem;
@@ -48,6 +47,151 @@
       left: 50%;
       transform: translate(-50%, -50%);
       position: absolute;
+    }
+
+    &:before {
+      opacity: .05;
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      display: block;
+      background: linear-gradient(270deg, black 50%, transparent 0), // (0, next procent is + 3.6 or 18 for 5%)
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--5:before  {
+      background: linear-gradient(288deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--10:before  {
+      background: linear-gradient(306deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--15:before  {
+      background: linear-gradient(324deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--20:before  {
+      background: linear-gradient(342deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--25:before  {
+      background: linear-gradient(360deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--30:before  {
+      background: linear-gradient(18deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--35:before  {
+      background: linear-gradient(36deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--40:before  {
+      background: linear-gradient(54deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--45:before  {
+      background: linear-gradient(72deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--50:before  {
+      background: linear-gradient(90deg, black 50%, transparent 0),
+      linear-gradient(to left, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--55:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(108deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--60:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(126deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--65:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(144deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--70:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(162deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--75:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(180deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--80:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(198deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--85:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(216deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--90:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(234deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--95:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(252deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
+    }
+
+    &.total--100:before  {
+      transform: rotate(180deg);
+      background: linear-gradient(270deg, white 50%, transparent 0),
+      linear-gradient(to right, white 50%, transparent 0),
+      black;
     }
   }
 }

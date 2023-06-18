@@ -1,7 +1,6 @@
-import { QueueBacklogType, sendMessage } from '../queue';
+import { environment, QueueBacklogType, sendMessage } from '../';
 import client from '../../main';
 import { ALLOWED_MESSAGE_LENGTH, DEV_IDS } from '../../../constants';
-import { environment } from '../environment';
 
 // Last error message, to prevent spamming the devs
 const cache = {

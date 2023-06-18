@@ -1,23 +1,50 @@
-import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
-import { getMessage } from '@lyttledev-dashboard/utils';
 import styles from './server-card-grid.module.scss';
+import { useEffect, useState } from 'react';
+import { Component } from '@lyttledev-dashboard/components';
 
-export function ServerCardGrid() {
-  const msgInputPlaceholder = getMessage(
-    componentsPrefix + 'search.input-placeholder',
-  );
+interface ServerCardGridProps {
+  servers: any[];
+}
+
+export function ServerCardGrid({ servers }: ServerCardGridProps) {
+  const [refrech, setRefrech] = useState(true);
+  const [items, setItems] = useState(<></>);
+
+  const setList = () => {
+    const list = (
+      <>
+        {servers.map((server, i) => (
+          <Component.ServerCard key={i} {...server} />
+        ))}
+      </>
+    );
+    setItems(list);
+  };
+
+  useEffect(() => {
+    if (refrech) {
+      const timeout = setTimeout(() => {
+        setList();
+        setRefrech(false);
+      }, 800);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+    setRefrech(true);
+    const timeout = setTimeout(() => {
+      setList();
+      setRefrech(false);
+    }, 800);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [servers]);
 
   return (
-    <section className={styles.grid}>
-      {[...Array(2)].map((_, i) => (
-        <Component.ServerCard key={i} active={true} />
-      ))}
-      {[...Array(5)].map((_, i) => (
-        <Component.ServerCard key={i} active={false} />
-      ))}
-      {[...Array(18)].map((_, i) => (
-        <Component.ServerCard key={i} />
-      ))}
+    <section className={`${styles.grid} ${refrech && styles.hide}`}>
+      {items}
     </section>
   );
 }

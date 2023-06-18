@@ -26,28 +26,19 @@ export class GuildMessageService {
     return this.guildMessageRepository.find();
   }
 
-  findAllByGuild(id: number): Promise<GuildMessage[]> {
+  findAllByGuild(guildId: string): Promise<GuildMessage[]> {
     return this.guildMessageRepository.find({
-      where: { guild_id: id },
+      where: { guild: { guildId } },
     });
   }
 
   findOne(id: number): Promise<GuildMessage> {
     return this.guildMessageRepository.findOne({
-      where: { guild_id: id },
+      where: { id },
     });
   }
 
-  findOneByGuildAndMessageId(
-    guildId: number,
-    messageId: number,
-  ): Promise<GuildMessage> {
-    return this.guildMessageRepository.findOne({
-      where: { guild_id: guildId, message_id: messageId },
-    });
-  }
-
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
@@ -57,7 +48,7 @@ export class GuildMessageService {
   ): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
       await this.guildMessageRepository.findOne({
-        where: { guild_id: id },
+        where: { id },
       });
 
     if (guildMessage) {
@@ -72,7 +63,7 @@ export class GuildMessageService {
   async remove(id: number): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
       await this.guildMessageRepository.findOne({
-        where: { guild_id: id },
+        where: { id },
       });
 
     if (guildMessage) {

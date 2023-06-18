@@ -234,6 +234,10 @@ export const ModuleMarkdown = {
         },
       },
       review: {
+        confirm: {
+          content: 'Click to confirm!',
+          documentation: '',
+        },
         submit: {
           content: 'Save changes',
           documentation: '',
@@ -403,6 +407,10 @@ export const ModuleMarkdown = {
               documentation: '',
             },
           },
+          module: {
+            content: '',
+            documentation: 'Leveling Module\nEnable or disable it.',
+          },
           nickname: {
             description: {
               content: 'Enable nicknaming your users with their level.',
@@ -445,6 +453,30 @@ export const ModuleMarkdown = {
       },
       overview: {
         recommendation: {
+          activity: {
+            content: 'Activity',
+            documentation: '',
+          },
+          bots: {
+            content: 'Bots',
+            documentation: '',
+          },
+          events: {
+            content: 'Events',
+            documentation: '',
+          },
+          members: {
+            content: 'Members',
+            documentation: '',
+          },
+          modules: {
+            content: 'Modules',
+            documentation: '',
+          },
+          staff: {
+            content: 'Staff',
+            documentation: '',
+          },
           title: {
             content: 'Recommendation by ChatGPT',
             documentation: '',

@@ -1,54 +1,71 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Column,
-  CreateDateColumn,
   Entity,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
+import { GuildModuleVoiceGrowthChild } from '../../guild-module-voice-growth-child/entities/guild-module-voice-growth-child.entity';
 
-@Entity('guild__module__voice_growth')
+@Index('guild__module__voice_growth_pkey', ['channelId', 'guildId'], {
+  unique: true,
+})
+@Entity('guild__module__voice_growth', { schema: 'public' })
 @ObjectType()
 export class GuildModuleVoiceGrowth {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'channel_id' })
+  @Field(() => String)
+  channelId: string;
 
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  channel_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
-
-  // Values
-  @Column({ default: false })
-  @Field(() => Boolean, { defaultValue: false })
+  @Column('boolean', { name: 'enabled', default: () => 'false' })
+  @Field(() => Boolean)
   enabled: boolean;
 
-  @Column({ nullable: true })
+  @Column('text', { name: 'preset', nullable: true })
   @Field(() => String, { nullable: true })
-  preset: string;
+  preset: string | null;
 
-  @Column({ nullable: true })
+  @Column('text', { name: 'prefix', nullable: true })
   @Field(() => String, { nullable: true })
-  prefix: string;
+  prefix: string | null;
 
-  @Column({ default: false })
-  @Field(() => Boolean, { defaultValue: false })
+  @Column('boolean', { name: 'manual', default: () => 'false' })
+  @Field(() => Boolean)
   manual: boolean;
 
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  updatedAt: Date;
+
+  @ManyToOne(() => Guild, (guild) => guild.guildModuleVoiceGrowths, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
+  guild: Guild;
+
+  @OneToMany(
+    () => GuildModuleVoiceGrowthChild,
+    (guildModuleVoiceGrowthChild) =>
+      guildModuleVoiceGrowthChild.guildModuleVoiceGrowth,
+    { nullable: true },
+  )
+  guildModuleVoiceGrowthChildren: GuildModuleVoiceGrowthChild[];
 }

@@ -8,8 +8,20 @@ export async function createGuildModuleVoiceGrowthChild(
   masterId: string,
   name: string,
 ): Promise<GuildModuleVoiceGrowthChild> {
-  return prismaClient.guildModuleVoiceGrowthChild.create({
-    data: {
+  return prismaClient.guildModuleVoiceGrowthChild.upsert({
+    where: {
+      guild_id_channel_id: {
+        guild_id: BigInt(guildId),
+        channel_id: BigInt(channelId),
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      channel_id: BigInt(channelId),
+      master_id: BigInt(masterId),
+      name,
+    },
+    update: {
       guild_id: BigInt(guildId),
       channel_id: BigInt(channelId),
       master_id: BigInt(masterId),
