@@ -2,6 +2,7 @@ import { storage } from '@lyttledev-dashboard/utils';
 import React, { useEffect, useState } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 import { Changes } from '@lyttledev-dashboard/contexts/app-hooks/changes';
+import { useAppAuth } from '@lyttledev-dashboard/contexts/app-hooks/auth';
 
 export interface GuildInfo {
   id?: string;
@@ -24,6 +25,7 @@ export function useGuild(
   localGuildChanges: string,
   localSelectedGuildId: string | null,
 ) {
+  const authorized = useAppAuth();
   const [selectedGuildId, _setSelectedGuildId] = useState(localSelectedGuildId);
   const setSelectedGuildId = (guildId: string | null) => {
     _setSelectedGuildId(guildId);
@@ -69,12 +71,13 @@ export function useGuild(
       (selectedGuildId && selectedGuild.id !== selectedGuildId) ||
       !guildData
     ) {
+      if (!authorized) return;
       // Fetch new guild data
       void fetch({
         variables: { guildId: selectedGuildId },
       });
     }
-  }, [selectedGuildId]);
+  }, [selectedGuildId, authorized]);
 
   return {
     selectedGuildId,
