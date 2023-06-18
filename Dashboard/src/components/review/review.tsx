@@ -27,7 +27,6 @@ export function Review() {
 
   // Get the mutation from the review builder
   const reviewBuilderMutation = reviewBuilder(guildId, changes);
-  console.log(reviewBuilderMutation);
   // Create the GQL mutation
   const mutationGQL = gql(reviewBuilderMutation ?? mutation ?? initialMutation);
   // Create the mutation hook
