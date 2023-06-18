@@ -3,7 +3,7 @@ import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-reso
 import { DiscordService } from '../discord/discord.service';
 import { Configuration, OpenAIApi } from 'openai';
 import { GuildStatService } from '../guild-stat/guild-stat.service';
-import { OpenAi } from './entities/openAi.entity';
+import { OpenAi } from './entities/open-ai.entity';
 
 @Injectable()
 export class OpenAiService {

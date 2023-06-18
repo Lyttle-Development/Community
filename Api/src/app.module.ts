@@ -27,11 +27,11 @@ import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/g
 import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
 import { DiscordModule } from './discord/discord.module';
 import { Discord } from './discord/entities/discord.entity';
-import { OpenAiModule } from './openAi/openAi.module';
+import { OpenAiModule } from './open-ai/open-ai.module';
 import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
 import { GuildStatModule } from './guild-stat/guild-stat.module';
 import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
-import { OpenAi } from './openAi/entities/openAi.entity';
+import { OpenAi } from './open-ai/entities/open-ai.entity';
 
 @Module({
   imports: [
