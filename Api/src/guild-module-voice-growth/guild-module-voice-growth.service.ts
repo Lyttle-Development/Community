@@ -62,6 +62,9 @@ export class GuildModuleVoiceGrowthService {
       prefix: updateGuildModuleVoiceGrowthInput.prefix,
       manual: updateGuildModuleVoiceGrowthInput.manual,
     };
+    return this.guildModuleVoiceGrowthRepository.save(
+      guildModuleVoiceGrowthInput,
+    );
   }
 
   async remove(id: string): Promise<GuildModuleVoiceGrowth> | null {

@@ -63,6 +63,9 @@ export class GuildModuleVoiceGrowthChildService {
         channelId,
         name: updateGuildModuleVoiceGrowthChildInput.name,
       };
+    return this.guildModuleVoiceGrowthChildRepository.save(
+      guildModuleVoiceGrowthChildInput,
+    );
   }
 
   async remove(
