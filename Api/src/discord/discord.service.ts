@@ -12,8 +12,14 @@ import {
 import { DashboardServer, DashboardServers, getIcon } from './utils';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { GuildModuleLevelService } from '../guild-module-level/guild-module-level.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
+// Discord API URL, this to follow the api types.
 export const DiscordApiBaseUrl = 'https://discord.com/api/v10' as const;
+
+// in milliseconds (10 seconds)
+const cacheTime = 10 * 1000;
 
 @Injectable()
 export class DiscordService {
@@ -24,6 +30,7 @@ export class DiscordService {
     private guildStatResolvedService: GuildStatResolvedService,
     @Inject(forwardRef(() => GuildModuleLevelService))
     private guildModuleLevelService: GuildModuleLevelService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   create(guildId: string | null = null): Discord {
@@ -32,6 +39,10 @@ export class DiscordService {
 
   async getGuild(guildId: string): Promise<APIGuild> {
     if (!guildId) return null;
+
+    const cacheKey = `discord:guild:${guildId}`;
+    const cachedGuild = await this.cacheManager.get(cacheKey);
+    if (cachedGuild) return cachedGuild as APIGuild;
 
     const botToken = process.env.BOT_TOKEN;
     const result = await fetch(
@@ -44,13 +55,20 @@ export class DiscordService {
       },
     );
 
-    return ((await result.json()) ?? {}) as APIGuild;
+    const guild = ((await result.json()) ?? {}) as APIGuild;
+    await this.cacheManager.set(cacheKey, guild, cacheTime);
+
+    return guild;
   }
 
   async getGuildChannels(
     guildId: string,
   ): Promise<RESTGetAPIGuildChannelsResult> {
     if (!guildId) return null;
+
+    const cacheKey = `discord:guild:${guildId}:channels`;
+    const cachedGuild = await this.cacheManager.get(cacheKey);
+    if (cachedGuild) return cachedGuild as RESTGetAPIGuildChannelsResult;
 
     const botToken = process.env.BOT_TOKEN;
     const result = await fetch(
@@ -65,10 +83,9 @@ export class DiscordService {
 
     const guildChannels = ((await result.json()) ??
       []) as RESTGetAPIGuildChannelsResult;
-    if (!guildChannels || !Array.isArray(guildChannels)) {
-      return [] as RESTGetAPIGuildChannelsResult;
-    }
-    return guildChannels as RESTGetAPIGuildChannelsResult;
+    await this.cacheManager.set(cacheKey, guildChannels, cacheTime);
+
+    return guildChannels;
   }
 
   async getGuildCategoryChannels(
@@ -115,6 +132,10 @@ export class DiscordService {
   ): Promise<RESTGetAPICurrentUserGuildsResult> {
     if (!token) return null;
 
+    const cacheKey = `discord:user:${token}:guilds`;
+    const cachedGuilds = await this.cacheManager.get(cacheKey);
+    if (cachedGuilds) return cachedGuilds as RESTGetAPICurrentUserGuildsResult;
+
     const result = await fetch(
       `${DiscordApiBaseUrl}/users/@me/guilds?with_counts=true`,
       {
@@ -125,7 +146,10 @@ export class DiscordService {
       },
     );
 
-    return ((await result.json()) ?? []) as RESTGetAPICurrentUserGuildsResult;
+    const guilds = ((await result.json()) ??
+      []) as RESTGetAPICurrentUserGuildsResult;
+    await this.cacheManager.set(cacheKey, guilds, cacheTime);
+    return guilds;
   }
 
   async getUserPermittedGuildsSeparate(token: string): Promise<{
