@@ -28,12 +28,14 @@ const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 
 export interface GetLevelsConfigProps {
   guildId: string;
+  enabled: boolean;
   announcementChannelId: string | null;
 }
 
 // Config:
 export function getBirthdaysConfig({
   guildId,
+  enabled,
   announcementChannelId = null,
 }: GetLevelsConfigProps): CardModule {
   const announcementActive =
@@ -46,7 +48,7 @@ export function getBirthdaysConfig({
     : null;
 
   return {
-    active: announcementActive,
+    active: enabled,
     title: msgTitle,
     description: msgDescription,
     id: moduleKey,
