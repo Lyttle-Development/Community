@@ -56,7 +56,13 @@ export class GuildModuleVoiceGrowthChildService {
         ...updateGuildModuleVoiceGrowthChildInput,
       });
     }
-    return null;
+    // If the guildModuleVoiceGrowthChild doesn't exist, create it
+    const guildModuleVoiceGrowthChildInput: CreateGuildModuleVoiceGrowthChildInput =
+      {
+        guildId,
+        channelId,
+        name: updateGuildModuleVoiceGrowthChildInput.name,
+      };
   }
 
   async remove(
