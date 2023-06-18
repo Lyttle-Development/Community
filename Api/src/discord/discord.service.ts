@@ -18,8 +18,8 @@ import { Cache } from 'cache-manager';
 // Discord API URL, this to follow the api types.
 export const DiscordApiBaseUrl = 'https://discord.com/api/v10' as const;
 
-// in milliseconds (10 seconds)
-const cacheTime = 10 * 1000;
+// in milliseconds (30 seconds)
+const cacheTime = 30 * 1000;
 
 @Injectable()
 export class DiscordService {
