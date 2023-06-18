@@ -59,7 +59,13 @@ export class GuildModuleBirthdayService {
         ...updateGuildModuleBirthdayInput,
       });
     }
-    return null;
+
+    // If the guildModuleBirthday doesn't exist, create it
+    const createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput = {
+      guildId: id,
+      enabled: updateGuildModuleBirthdayInput.enabled,
+    };
+    return this.create(createGuildModuleBirthdayInput);
   }
 
   async remove(id: string): Promise<GuildModuleBirthday> | null {
