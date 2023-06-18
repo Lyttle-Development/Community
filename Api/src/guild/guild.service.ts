@@ -84,7 +84,7 @@ export class GuildService {
     return this.guildModuleQotdService.findOne(guildId);
   }
 
-  getGuildMessage(id: string): Promise<GuildMessage> {
+  getGuildMessage(id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 

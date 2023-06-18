@@ -74,14 +74,14 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
     variables: {
       guildId: QueryVariableType.String,
       enabled: QueryVariableType.Boolean,
-      channelId: QueryVariableType.String,
+      birthdayChannelId: QueryVariableType.String,
     },
   },
-  createGuildTranslation: {
-    name: 'createGuildTranslation',
+  updateGuildTranslation: {
+    name: 'updateGuildTranslation',
     requiresGuildId: true,
     translation: true,
-    variablesName: 'createGuildTranslationInput',
+    variablesName: 'updateGuildTranslationInput',
     variables: {
       guildId: QueryVariableType.String,
       key: QueryVariableType.String,
@@ -104,10 +104,14 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     variable: 'enabled',
   },
   [changeKeys.moduleLevelsLevelUpText.key]: {
-    query: reviewBuilderMutations.createGuildTranslation,
+    query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
   [changeKeys.moduleLevelsAnnouncement.key]: {
+    query: reviewBuilderMutations.updateGuildModuleLevel,
+    variable: 'enabled',
+  },
+  [changeKeys.moduleLevelsAnnouncementChannel.key]: {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'announcementChannelId',
     booleanNull: true,
@@ -122,7 +126,7 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     variable: 'nicknames',
   },
   [changeKeys.moduleLevelsNicknameText.key]: {
-    query: reviewBuilderMutations.createGuildTranslation,
+    query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
   [changeKeys.moduleBirthday.key]: {
@@ -131,11 +135,11 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
   },
   [changeKeys.moduleBirthdayChannel.key]: {
     query: reviewBuilderMutations.updateGuildModuleBirthday,
-    variable: 'channelId',
+    variable: 'birthdayChannelId',
     booleanNull: true,
   },
   [changeKeys.moduleBirthdayText.key]: {
-    query: reviewBuilderMutations.createGuildTranslation,
+    query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
 };
@@ -179,6 +183,7 @@ export function reviewBuilder(
 
     // If the query requires a guild id, add it
     const value = change.current;
+    console.log(value);
 
     // If the value is null, continue the loop.
     if (value === null) continue;
@@ -198,7 +203,7 @@ export function reviewBuilder(
     }
 
     // If the query is a translation, add the key
-    if (builderInfo.query.translation) {
+    if (builderInfo?.query?.translation) {
       // Find the key
       const key = changeKeysValuesArray.find(
         (c) => c.key === changeKey,
@@ -210,7 +215,7 @@ export function reviewBuilder(
     // Modifications when booleanNull is true
     if (builderInfo?.booleanNull) {
       // Explicit false, not null, undefined or etc...
-      if (value === false) {
+      if (value === false || value === '') {
         // Set the variable to null
         query[queryName].variables[builderInfo.variable] = null;
       }
@@ -237,6 +242,7 @@ function buildQuery(queries: ReviewBuilderQuery) {
 
   // Build the query string
   let queryString = 'mutation {';
+  let ind = 1;
 
   // Loop through the queries
   for (const key in queries) {
@@ -262,7 +268,8 @@ function buildQuery(queries: ReviewBuilderQuery) {
     const name = query.name.split('__')[0];
 
     // Add the query to the query string
-    queryString += `\n  ${name}(${query.variablesName}: { ${variablesString} }) { __typename }`;
+    queryString += `\n  u${ind}: ${name}(${query.variablesName}: { ${variablesString} }) { __typename }`;
+    ++ind;
   }
 
   // Close the query string

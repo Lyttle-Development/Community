@@ -45,17 +45,17 @@ export function getBirthdaysConfig({
   const announcementActive =
     typeof announcementChannelId === 'string' ? true : null;
 
-  const moduleKey = announcementActive ? changeKeys.moduleBirthday.key : null;
-
   const announcementKey = announcementActive
     ? changeKeys.moduleBirthdayChannel.key
     : null;
+
+  const setup = !(!enabled && !announcementActive);
 
   return {
     active: enabled,
     title: msgTitle,
     description: msgDescription,
-    id: moduleKey,
+    id: setup ? changeKeys.moduleBirthday.key : null,
     route: `/dashboard/${guildId}/module/birthdays`,
     subItems: [
       {
@@ -127,7 +127,7 @@ function Page() {
           select //
             .key(changeKeys.moduleBirthdayChannel.key)
             .title('Channel') // Todo: Translate
-            .value(data?.guild?.moduleBirthday?.announcementChannelId)
+            .value(data?.guild?.moduleBirthday?.birthdayChannelId)
             .options(
               getChannelOptions(
                 data?.guild?.discord?.guildChannels ?? [],
