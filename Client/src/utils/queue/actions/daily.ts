@@ -1,10 +1,6 @@
-import {
-  dailyChecks,
-  internationalDailyChecks,
-  queue,
-  queueAt,
-  QueueBacklogType,
-} from '../';
+import { queue, queueAt, QueueBacklogType } from '../';
+import { dailyChecks } from '../checks/daily';
+import { internationalDailyChecks } from '../checks/international-daily';
 
 type Action = () => void | Promise<void>;
 
