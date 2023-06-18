@@ -27,10 +27,11 @@ import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/g
 import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
 import { DiscordModule } from './discord/discord.module';
 import { Discord } from './discord/entities/discord.entity';
+import { OpenAiModule } from './openAi/openAi.module';
+import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
 import { GuildStatModule } from './guild-stat/guild-stat.module';
 import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
-import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
-import { OpenaiModule } from './openai/openai.module';
+import { OpenAi } from './openAi/entities/openAi.entity';
 
 @Module({
   imports: [
@@ -42,7 +43,7 @@ import { OpenaiModule } from './openai/openai.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
-        orphanedTypes: [Discord, GuildStatResolved],
+        orphanedTypes: [Discord, GuildStatResolved, OpenAi],
       },
     }),
     TypeOrmModule.forRootAsync({
@@ -82,7 +83,7 @@ import { OpenaiModule } from './openai/openai.module';
     DiscordModule,
     GuildStatModule,
     GuildStatResolvedModule,
-    OpenaiModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
   providers: [

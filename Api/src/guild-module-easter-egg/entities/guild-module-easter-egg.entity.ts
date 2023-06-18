@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
 
@@ -7,7 +7,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 @ObjectType()
 export class GuildModuleEasterEgg {
   @Column('bigint', { primary: true, name: 'guild_id' })
-  @Field(() => Int)
+  @Field(() => String)
   guildId: string;
 
   @Column('boolean', { name: 'enabled', default: () => 'false' })

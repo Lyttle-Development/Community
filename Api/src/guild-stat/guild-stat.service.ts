@@ -20,6 +20,27 @@ export class GuildStatService {
     });
   }
 
+  async createOrUpdate(
+    guildId: string,
+    key: string,
+    day: number,
+    value: string,
+  ): Promise<GuildStat> {
+    const guildStat = await this.findOne(guildId, key, day);
+
+    if (guildStat) {
+      guildStat.value = value;
+      return this.guildStatRepository.save(guildStat);
+    }
+
+    return this.guildStatRepository.save({
+      guildId,
+      key,
+      day,
+      value,
+    });
+  }
+
   async findAllByGroup(
     guildId: string,
     groupKey: string,

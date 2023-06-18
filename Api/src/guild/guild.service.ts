@@ -20,6 +20,10 @@ import { Discord } from '../discord/entities/discord.entity';
 import { DiscordService } from '../discord/discord.service';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenAiService } from '../openAi/openAi.service';
+import { OpenAi } from '../openAi/entities/openAi.entity';
+import { GuildModuleBirthdayService } from '../guild-module-birthday/guild-module-birthday.service';
+import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Injectable()
 export class GuildService {
@@ -28,6 +32,8 @@ export class GuildService {
     private guildRepository: Repository<Guild>,
     @Inject(forwardRef(() => GuildModuleLevelService))
     private guildModuleLevelService: GuildModuleLevelService,
+    @Inject(forwardRef(() => GuildModuleBirthdayService))
+    private guildModuleBirthdayService: GuildModuleBirthdayService,
     @Inject(forwardRef(() => GuildModuleQotdService))
     private guildModuleQotdService: GuildModuleQotdService,
     @Inject(forwardRef(() => GuildMessageService))
@@ -42,6 +48,8 @@ export class GuildService {
     private discordService: DiscordService,
     @Inject(forwardRef(() => GuildStatResolvedService))
     private guildStatResolvedService: GuildStatResolvedService,
+    @Inject(forwardRef(() => OpenAiService))
+    private openaiService: OpenAiService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -68,11 +76,15 @@ export class GuildService {
     return this.guildModuleLevelService.findOne(guildId);
   }
 
+  getGuildModuleBirthday(guildId: string): Promise<GuildModuleBirthday> {
+    return this.guildModuleBirthdayService.findOne(guildId);
+  }
+
   getGuildModuleQotd(guildId: string): Promise<GuildModuleQotd> {
     return this.guildModuleQotdService.findOne(guildId);
   }
 
-  getGuildMessage(id: string): Promise<GuildMessage> {
+  getGuildMessage(id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 
@@ -132,5 +144,9 @@ export class GuildService {
 
   getStats(guildId: string): GuildStatResolved {
     return this.guildStatResolvedService.create(guildId);
+  }
+
+  getOpenAi(guildId: string): OpenAi {
+    return this.openaiService.create(guildId);
   }
 }

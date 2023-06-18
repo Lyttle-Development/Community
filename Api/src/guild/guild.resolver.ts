@@ -18,6 +18,8 @@ import { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { Discord } from '../discord/entities/discord.entity';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenAi } from '../openAi/entities/openAi.entity';
+import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -57,6 +59,11 @@ export class GuildResolver {
     return this.guildService.getGuildModuleLevel(guild.guildId);
   }
 
+  @ResolveField(() => GuildModuleBirthday, { nullable: true })
+  moduleBirthday(@Parent() guild: Guild): Promise<GuildModuleBirthday> {
+    return this.guildService.getGuildModuleBirthday(guild.guildId);
+  }
+
   @ResolveField(() => GuildModuleQotd, { nullable: true })
   moduleQotd(@Parent() guild: Guild): Promise<GuildModuleQotd> {
     return this.guildService.getGuildModuleQotd(guild.guildId);
@@ -68,7 +75,7 @@ export class GuildResolver {
   }
 
   @ResolveField(() => GuildMessage, { nullable: true })
-  message(id: string): Promise<GuildMessage> {
+  message(id: number): Promise<GuildMessage> {
     return this.guildService.getGuildMessage(id);
   }
 
@@ -105,5 +112,10 @@ export class GuildResolver {
   @ResolveField(() => GuildStatResolved)
   stats(@Parent() guild: Guild): GuildStatResolved {
     return this.guildService.getStats(guild.guildId);
+  }
+
+  @ResolveField(() => OpenAi)
+  openAi(@Parent() guild: Guild): OpenAi {
+    return this.guildService.getOpenAi(guild.guildId);
   }
 }

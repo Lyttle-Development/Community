@@ -20,6 +20,7 @@
   "dependencies": {
     "@apollo/server": "^4.5.0",
     "@nestjs/apollo": "^11.0.4",
+    "@nestjs/cache-manager": "^2.0.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.0.0",
@@ -31,6 +32,7 @@
     "cookie-parser": "^1.4.6",
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",
+    "openai": "^3.3.0",
     "passport": "^0.6.0",
     "passport-discord": "^0.1.4",
     "passport-jwt": "^4.0.1",

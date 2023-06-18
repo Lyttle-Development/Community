@@ -50,7 +50,16 @@ export class GuildModuleLevelService {
         ...updateGuildModuleLevelInput,
       });
     }
-    throw new Error('GuildModuleLevel not found');
+    // If the guildModuleLevel doesn't exist, create it
+    const guildModuleLevelInput: CreateGuildModuleLevelInput = {
+      guildId: id,
+      enabled: updateGuildModuleLevelInput.enabled,
+      levelingMultiplier: updateGuildModuleLevelInput.levelingMultiplier,
+      leaderboardChannelId: updateGuildModuleLevelInput.leaderboardChannelId,
+      leaderboardLastWeek: updateGuildModuleLevelInput.leaderboardLastWeek,
+      nicknames: updateGuildModuleLevelInput.nicknames,
+      lastLeaderboard: updateGuildModuleLevelInput.lastLeaderboard,
+    };
   }
 
   async remove(id: string): Promise<GuildModuleLevel> | null {

@@ -53,7 +53,14 @@ export class GuildTranslationService {
       await this.guildTranslationRepository.save(guildTranslation);
       return guildTranslation;
     }
-    throw new Error('GuildTranslation not found');
+    // if guildTranslation is null, create a new one
+    const newGuildTranslation: GuildTranslation =
+      await this.guildTranslationRepository.create({
+        guildId: updateGuildTranslationInput.guildId,
+        key: updateGuildTranslationInput.key,
+        value: updateGuildTranslationInput.value,
+      });
+    return this.guildTranslationRepository.save(newGuildTranslation);
   }
 
   async remove(id: string): Promise<GuildTranslation> | null {

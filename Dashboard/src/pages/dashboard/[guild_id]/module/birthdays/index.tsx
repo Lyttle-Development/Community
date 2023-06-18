@@ -14,6 +14,10 @@ import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { changeKeys } from '@lyttledev-dashboard/components/review';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { gql, useLazyQuery } from '@apollo/client';
+import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
+import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
+import { findTranslation } from '@lyttledev-dashboard/utils/find-translation';
 
 // Variables:
 const pfx = pagesPrefix + 'module.birthdays.';
@@ -28,28 +32,30 @@ const msgAnnouncementDescription = getMessage(pfx + 'announcement.description');
 
 export interface GetLevelsConfigProps {
   guildId: string;
+  enabled: boolean;
   announcementChannelId: string | null;
 }
 
 // Config:
 export function getBirthdaysConfig({
   guildId,
+  enabled,
   announcementChannelId = null,
 }: GetLevelsConfigProps): CardModule {
   const announcementActive =
     typeof announcementChannelId === 'string' ? true : null;
 
-  const moduleKey = announcementActive ? changeKeys.moduleBirthday.key : null;
-
   const announcementKey = announcementActive
     ? changeKeys.moduleBirthdayChannel.key
     : null;
 
+  const setup = !(!enabled && !announcementActive);
+
   return {
-    active: announcementActive,
+    active: enabled,
     title: msgTitle,
     description: msgDescription,
-    id: moduleKey,
+    id: setup ? changeKeys.moduleBirthday.key : null,
     route: `/dashboard/${guildId}/module/birthdays`,
     subItems: [
       {
@@ -70,37 +76,71 @@ const varBday = getVariables(
   ContentConfigs.ModuleConfigActivityLevelsEventLevelUp,
 );
 
+const birthdayQuery = gql`
+  query GetBirthday($guildId: String!) {
+    guild(id: $guildId) {
+      guildId
+      moduleBirthday {
+        enabled
+        birthdayChannelId
+      }
+      translations {
+        key
+        value
+      }
+      discord {
+        guildChannels
+        guildTextChannels
+      }
+    }
+  }
+`;
+
 function Page() {
-  useGuild();
+  const authorized = useAuth();
+  const guildId = useGuild();
   const title = usePage(pagesPrefix + 'module.levels.title');
   const [settings, setSettings] = useState<CardSettings | null>(null);
+  const [fetch, { data }] = useLazyQuery(birthdayQuery);
 
   useEffect(() => {
+    if (!authorized || !guildId) return;
+    if (!data) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+    if (data?.guild?.guildId !== guildId) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+
     const settingBday = new CreateSettingCard()
       .id('0')
       .title(msgBday.title)
       .description(msgBday.description)
-      .enabled(false, changeKeys.moduleBirthday.key)
+      .enabled(
+        data?.guild?.moduleBirthday?.enabled ?? false,
+        changeKeys.moduleBirthday.key,
+      )
       .addSubItem((subItem) =>
         subItem.select((select) =>
           select //
             .key(changeKeys.moduleBirthdayChannel.key)
-            .title('Channel')
-            .value('')
-            .options([
-              {
-                // todo; get real channels?!
-                key: { title: 'General', description: '#off-topic' },
-                value: '0',
-              },
-              { key: { title: 'General', description: '#roles' }, value: '1' },
-            ]),
+            .title('Channel') // Todo: Translate
+            .value(data?.guild?.moduleBirthday?.birthdayChannelId)
+            .options(
+              getChannelOptions(
+                data?.guild?.discord?.guildChannels ?? [],
+                data?.guild?.discord?.guildTextChannels ?? [],
+              ),
+            ),
         ),
       )
       .addSubItem((subItem) =>
         subItem.textarea((textarea) =>
           textarea //
             .key(changeKeys.moduleBirthdayText.key)
+            .value(findTranslation(data?.guild?.translations, keyBday))
             .defaultKey(keyBday)
             .variables(varBday),
         ),
@@ -108,7 +148,7 @@ function Page() {
       .build();
 
     setSettings([settingBday]);
-  }, []);
+  }, [authorized, guildId, data]);
 
   return (
     <>

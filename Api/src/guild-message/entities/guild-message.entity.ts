@@ -15,7 +15,7 @@ import { Guild } from '../../guild/entities/guild.entity';
 export class GuildMessage {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   @Field(() => Int)
-  id: string;
+  id: number;
 
   @Column('bigint', { name: 'channel_id' })
   @Field(() => String)

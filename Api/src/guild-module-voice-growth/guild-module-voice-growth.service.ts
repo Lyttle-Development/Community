@@ -53,7 +53,18 @@ export class GuildModuleVoiceGrowthService {
         ...updateGuildModuleVoiceGrowthInput,
       });
     }
-    throw new Error('GuildModuleVoiceGrowth not found');
+    // If the guildModuleVoiceGrowth doesn't exist, create it
+    const guildModuleVoiceGrowthInput: CreateGuildModuleVoiceGrowthInput = {
+      guildId,
+      channelId,
+      enabled: updateGuildModuleVoiceGrowthInput.enabled,
+      preset: updateGuildModuleVoiceGrowthInput.preset,
+      prefix: updateGuildModuleVoiceGrowthInput.prefix,
+      manual: updateGuildModuleVoiceGrowthInput.manual,
+    };
+    return this.guildModuleVoiceGrowthRepository.save(
+      guildModuleVoiceGrowthInput,
+    );
   }
 
   async remove(id: string): Promise<GuildModuleVoiceGrowth> | null {

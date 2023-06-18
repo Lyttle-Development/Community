@@ -32,7 +32,7 @@ export class GuildMessageService {
     });
   }
 
-  findOne(id: string): Promise<GuildMessage> {
+  findOne(id: number): Promise<GuildMessage> {
     return this.guildMessageRepository.findOne({
       where: { id },
     });
@@ -43,7 +43,7 @@ export class GuildMessageService {
   }
 
   async update(
-    id: string,
+    id: number,
     updateGuildMessageInput: UpdateGuildMessageInput,
   ): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
@@ -60,7 +60,7 @@ export class GuildMessageService {
     throw new Error('GuildMessage not found');
   }
 
-  async remove(id: string): Promise<GuildMessage> | null {
+  async remove(id: number): Promise<GuildMessage> | null {
     const guildMessage: GuildMessage =
       await this.guildMessageRepository.findOne({
         where: { id },

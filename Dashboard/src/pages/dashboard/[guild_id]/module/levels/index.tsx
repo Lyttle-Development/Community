@@ -68,11 +68,18 @@ export function getLevelsConfig({
     ? changeKeys.moduleLevelsLeaderboard.key
     : null;
 
+  const setup = !(
+    !enabled &&
+    !nicknameActive &&
+    !announcementActive &&
+    !leaderboardActive
+  );
+
   return {
     active: enabled,
     title: msgTitle,
     description: msgDescription,
-    id: changeKeys.modulesLevels.key,
+    id: setup ? changeKeys.modulesLevels.key : null,
     route: `/dashboard/${guildId}/module/levels`,
     subItems: [
       {
@@ -89,13 +96,13 @@ export function getLevelsConfig({
         title: msgAnnouncementTitle,
         description: msgAnnouncementDescription,
       },
-      {
-        id: leaderboardKey,
-        route: `/dashboard/${guildId}/module/levels#leaderboard`,
-        active: leaderboardActive,
-        title: msgLeaderboardTitle,
-        description: msgLeaderboardDescription,
-      },
+      // {
+      //   id: leaderboardKey,
+      //   route: `/dashboard/${guildId}/module/levels#leaderboard`,
+      //   active: leaderboardActive,
+      //   title: msgLeaderboardTitle,
+      //   description: msgLeaderboardDescription,
+      // },
     ],
   };
 }
@@ -179,7 +186,7 @@ function Page() {
       .addSubItem((subItem) =>
         subItem.select((select) =>
           select //
-            .key(changeKeys.moduleLevelsAnnouncement.key)
+            .key(changeKeys.moduleLevelsAnnouncementChannel.key)
             .title('Channel') // Todo: Translate
             .value(data?.guild?.moduleLevel?.announcementChannelId)
             .options(

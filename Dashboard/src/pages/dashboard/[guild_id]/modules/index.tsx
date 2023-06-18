@@ -15,7 +15,6 @@ const modulesQuery = gql`
     guild(id: $id) {
       guildId
       moduleLevel {
-        guildId
         enabled
         levelingMultiplier
         announcementChannelId
@@ -23,6 +22,10 @@ const modulesQuery = gql`
         leaderboardLastWeek
         nicknames
         lastLeaderboard
+      }
+      moduleBirthday {
+        enabled
+        birthdayChannelId
       }
     }
   }
@@ -54,6 +57,7 @@ function Page() {
     if (!data) return;
 
     const lvls = data.guild.moduleLevel ?? {};
+    const bday = data.guild.moduleBirthday ?? {};
 
     // Get modules
     setModules([
@@ -64,7 +68,11 @@ function Page() {
         announcementId: lvls.announcementChannelId ?? null,
         leaderboardId: lvls.leaderboardChannelId ?? null,
       }),
-      getBirthdaysConfig({ guildId, announcementChannelId: '0' }), // Todo get from db
+      getBirthdaysConfig({
+        guildId,
+        enabled: bday.enabled ?? false,
+        announcementChannelId: bday.birthdayChannelId ?? null,
+      }),
       // getDynamicVoiceConfig(guildId),
       // getVoiceTopicsConfig(guildId),
     ]);

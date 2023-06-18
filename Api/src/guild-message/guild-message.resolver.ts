@@ -1,5 +1,6 @@
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -30,9 +31,7 @@ export class GuildMessageResolver {
   }
 
   @Query(() => GuildMessage)
-  findOne(
-    @Args('id', { type: () => String }) id: string,
-  ): Promise<GuildMessage> {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<GuildMessage> {
     return this.guildMessageService.findOne(id);
   }
 
@@ -54,7 +53,7 @@ export class GuildMessageResolver {
 
   @Mutation(() => GuildMessage)
   removeGuildMessage(
-    @Args('id', { type: () => String }) id: string,
+    @Args('id', { type: () => Int }) id: number,
   ): Promise<GuildMessage> | null {
     return this.guildMessageService.remove(id);
   }
