@@ -50,7 +50,13 @@ export class GuildModuleQotdService {
         ...updateGuildModuleQotdInput,
       });
     }
-    throw new Error('GuildModuleQotd not found');
+    // If the guildModuleQotd doesn't exist, create it
+    const guildModuleQotdInput: CreateGuildModuleQotdInput = {
+      channelId: id,
+      enabled: updateGuildModuleQotdInput.enabled,
+      messageId: updateGuildModuleQotdInput.messageId,
+      nicknames: updateGuildModuleQotdInput.nicknames,
+    };
   }
 
   async remove(id: string): Promise<GuildModuleQotd> | null {

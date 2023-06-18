@@ -55,7 +55,15 @@ export class GuildModuleCountToNumberService {
         ...updateGuildModuleCountToNumberInput,
       });
     }
-    return null;
+    // If the guildModuleCountT0Number doesn't exist, create it
+    const guildModuleCountToNumberInput: CreateGuildModuleCountToNumberInput = {
+      guildId: id,
+      channelId: updateGuildModuleCountToNumberInput.channelId,
+      enabled: updateGuildModuleCountToNumberInput.enabled,
+    };
+    return this.guildModuleCountToNumberRepository.create(
+      guildModuleCountToNumberInput,
+    );
   }
 
   async remove(id: string): Promise<GuildModuleCountToNumber> | null {
