@@ -1,64 +1,64 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
 
-@Entity('guild__module__level')
+@Index('guild__module__level_pkey', ['guildId'], { unique: true })
+@Entity('guild__module__level', { schema: 'public' })
 @ObjectType()
 export class GuildModuleLevel {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
-
-  // Values
-  @Column()
-  @Field(() => Boolean, { defaultValue: false })
+  @Column('boolean', { name: 'enabled', default: () => 'false' })
+  @Field(() => Boolean)
   enabled: boolean;
 
-  @Column()
-  @Field(() => Int, { defaultValue: 8 })
-  leveling_multiplier: number;
+  @Column('integer', { name: 'leveling_multiplier', default: () => '8' })
+  @Field(() => Int)
+  levelingMultiplier: number;
 
-  @Column({ type: 'bigint', nullable: true })
-  @Field(() => Float, {
-    nullable: true,
-  })
-  announcement_channel_id?: number;
+  @Column('bigint', { name: 'announcement_channel_id', nullable: true })
+  @Field(() => String, { nullable: true })
+  announcementChannelId: string | null;
 
-  @Column({ type: 'bigint', nullable: true })
-  @Field(() => Float, { nullable: true })
-  leaderboard_channel_id?: number;
+  @Column('bigint', { name: 'leaderboard_channel_id', nullable: true })
+  @Field(() => String, { nullable: true })
+  leaderboardChannelId: string | null;
 
-  @Column({ nullable: true })
-  @Field(() => Float, { nullable: true })
-  leaderboard_last_week: number;
+  @Column('integer', { name: 'leaderboard_last_week', nullable: true })
+  @Field(() => Int, { nullable: true })
+  leaderboardLastWeek: number | null;
 
-  @Column()
-  @Field(() => Boolean, { defaultValue: false })
+  @Column('boolean', { name: 'nicknames', default: () => 'false' })
+  @Field(() => Boolean)
   nicknames: boolean;
 
-  @Column()
-  @Field(() => Date, { defaultValue: new Date() })
-  last_leaderboard: Date;
-
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'last_leaderboard',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  lastLeaderboard: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  createdAt: Date;
+
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @OneToOne(() => Guild, (guild) => guild.guildModuleLevel, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
+  guild: Guild;
 }

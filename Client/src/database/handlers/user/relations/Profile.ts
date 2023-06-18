@@ -3,15 +3,21 @@ import { prismaClient } from '../../../prisma';
 import { getOrCreateUser } from '../User';
 
 export async function createUserProfile(userId: string): Promise<UserProfile> {
-  return prismaClient.userProfile.create({
-    data: {
+  return prismaClient.userProfile.upsert({
+    where: {
+      user_id: BigInt(userId),
+    },
+    create: {
+      user_id: BigInt(userId),
+    },
+    update: {
       user_id: BigInt(userId),
     },
   });
 }
 
 export async function findSingleUserProfile(
-  userId: string
+  userId: string,
 ): Promise<UserProfile> {
   return prismaClient.userProfile.findUnique({
     where: {
@@ -21,7 +27,7 @@ export async function findSingleUserProfile(
 }
 
 export async function getOrCreateUserProfile(
-  userId: string
+  userId: string,
 ): Promise<UserProfile> {
   await getOrCreateUser(userId);
   return (
@@ -36,7 +42,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile> {
 
 export async function setUserProfile(
   userId: string,
-  data: Prisma.UserProfileUpdateInput
+  data: Prisma.UserProfileUpdateInput,
 ): Promise<UserProfile> {
   await getOrCreateUserProfile(userId);
 

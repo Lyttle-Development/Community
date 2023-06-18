@@ -1,12 +1,13 @@
 import { Component } from '@lyttledev-dashboard/components';
 import styles from './setting-card.module.scss';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
-import { Change, useApp } from '@lyttledev-dashboard/contexts/App.context';
+import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardComponents } from '@lyttledev-dashboard/components/setting-card/components';
 import { SettingCardInputItem } from '@lyttledev-dashboard/components/setting-card/components/input';
 import { SettingCardTextareaItem } from '@lyttledev-dashboard/components/setting-card/components/textarea';
 import { SettingCardSelectItem } from '@lyttledev-dashboard/components/setting-card/components/select';
 import { useEffect, useState } from 'react';
+import { Change } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export type SettingCardSubItem =
   | SettingCardTextareaItem
@@ -48,15 +49,11 @@ export function SettingCard({
     value: Change,
     store = null,
   ) => {
-    if (value === initial) {
-      app?.change({ remove: key });
-      return;
-    }
     app?.change({
       update: {
         key,
-        value: value,
-        initial: initial,
+        value,
+        initial,
         store,
       },
     });

@@ -25,6 +25,13 @@
   }
 }
 
+.selected {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
 .closer {
   position: fixed;
   top: 0;
@@ -58,6 +65,7 @@
   height: 1.5rem;
   overflow: hidden;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .logo {

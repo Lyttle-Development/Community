@@ -37,7 +37,7 @@ export class GuildMessageResolver {
 
   @ResolveField(() => Guild)
   guild(@Parent() guildMessage: GuildMessage): Promise<Guild> {
-    return this.guildMessageService.getGuild(guildMessage.guild_id);
+    return this.guildMessageService.getGuild(guildMessage.guild.guildId);
   }
 
   @Mutation(() => GuildMessage)

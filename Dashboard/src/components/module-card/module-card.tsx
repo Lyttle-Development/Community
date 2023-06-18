@@ -4,6 +4,7 @@ import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
+import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 
 export interface ModuleCardItem {
   id: string | null;
@@ -16,7 +17,6 @@ export interface ModuleCardItem {
 export interface ModuleCardProps extends ModuleCardItem {
   extendable?: boolean;
   subItems?: ModuleCardItem[];
-  onClick: (subItem: boolean, id: string | null, active: boolean) => void;
 }
 
 export function ModuleCard({
@@ -24,13 +24,29 @@ export function ModuleCard({
   description,
   route,
   active,
-  onClick,
   subItems,
   id,
   extendable = false,
 }: ModuleCardProps) {
   // Check if the module is set up.
   const setup = id !== null;
+  const app = useApp();
+  const changes = app?.changes ?? {};
+
+  const onClick = (
+    initial: boolean | null,
+    key: string | null,
+    value: boolean,
+  ) => {
+    if (!key || !initial) return;
+    app?.change({
+      update: {
+        key,
+        value,
+        initial,
+      },
+    });
+  };
 
   const pfx = componentsPrefix + 'module-card.';
   const msgTitlePrefix = getMessage(pfx + 'title-prefix');
@@ -42,30 +58,32 @@ export function ModuleCard({
         <h2 className={styles.title}>
           {msgTitlePrefix} {title}
         </h2>
-        {active !== null && setup && (
-          <Component.LightSwitch
-            active={active}
-            onClick={() => onClick(false, id, !active)}
-            color={SCSSPrimaryColors.yellow}
-            className={styles['switch']}
-          />
-        )}
-        {setup && (
-          <Component.IconButton
-            icon={IconButtonIcons.cog}
-            className={styles['cog']}
-            href={route}
-          />
-        )}
-        {active !== null && !setup && (
-          <Component.Button
-            color={ButtonColors.yellow}
-            href={route}
-            className={styles['setup-button']}
-          >
-            {msgSetupButton}
-          </Component.Button>
-        )}
+        <div className={styles['heading__actions']}>
+          {active !== null && setup && (
+            <Component.LightSwitch
+              active={(changes[id]?.current as boolean) ?? active}
+              onClick={(e) => onClick(active, id, e)}
+              color={SCSSPrimaryColors.yellow}
+              className={styles['switch']}
+            />
+          )}
+          {setup && (
+            <Component.IconButton
+              icon={IconButtonIcons.cog}
+              className={styles['cog']}
+              href={route}
+            />
+          )}
+          {active !== null && !setup && (
+            <Component.Button
+              color={ButtonColors.yellow}
+              href={route}
+              className={styles['setup-button']}
+            >
+              {msgSetupButton}
+            </Component.Button>
+          )}
+        </div>
       </div>
       <Component.Markdown className={styles.description}>
         {description}
@@ -82,8 +100,12 @@ export function ModuleCard({
                   {item.id !== null && (
                     <>
                       <Component.LightSwitch
-                        active={item.active ?? false}
-                        onClick={() => onClick(true, item.id, !item.active)}
+                        active={
+                          (changes[item.id]?.current as boolean) ??
+                          item.active ??
+                          false
+                        }
+                        onClick={(e) => onClick(item.active, item.id, e)}
                         className={styles['sub-item__switch']}
                         color={SCSSPrimaryColors.yellow}
                       />

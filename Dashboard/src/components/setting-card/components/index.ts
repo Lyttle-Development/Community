@@ -4,7 +4,7 @@ import {
   SettingCardChange,
   SettingCardSubItem,
 } from '@lyttledev-dashboard/components/setting-card';
-import { Changes } from '@lyttledev-dashboard/contexts/App.context';
+import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export enum SettingCardSubItems {
   Input = 'Input',

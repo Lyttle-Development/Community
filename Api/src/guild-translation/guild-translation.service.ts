@@ -26,17 +26,17 @@ export class GuildTranslationService {
     return this.guildTranslationRepository.find();
   }
 
-  findAllByGuild(id: number): Promise<GuildTranslation[]> {
-    return this.guildTranslationRepository.find({ where: { guild_id: id } });
+  findAllByGuild(id: string): Promise<GuildTranslation[]> {
+    return this.guildTranslationRepository.find({ where: { guildId: id } });
   }
 
-  findOne(id: number, key: string): Promise<GuildTranslation> {
+  findOne(id: string, key: string): Promise<GuildTranslation> {
     return this.guildTranslationRepository.findOne({
-      where: { guild_id: id, key: key },
+      where: { guildId: id, key: key },
     });
   }
 
-  getGuild(id: number): Promise<Guild> {
+  getGuild(id: string): Promise<Guild> {
     return this.guildService.findOne(id);
   }
 
@@ -45,7 +45,7 @@ export class GuildTranslationService {
   ): Promise<GuildTranslation> {
     const guildTranslation: GuildTranslation =
       await this.guildTranslationRepository.findOne({
-        where: { guild_id: updateGuildTranslationInput.id },
+        where: { guildId: updateGuildTranslationInput.guildId },
       });
     if (guildTranslation) {
       guildTranslation.key = updateGuildTranslationInput.key;
@@ -53,13 +53,20 @@ export class GuildTranslationService {
       await this.guildTranslationRepository.save(guildTranslation);
       return guildTranslation;
     }
-    throw new Error('GuildTranslation not found');
+    // if guildTranslation is null, create a new one
+    const newGuildTranslation: GuildTranslation =
+      await this.guildTranslationRepository.create({
+        guildId: updateGuildTranslationInput.guildId,
+        key: updateGuildTranslationInput.key,
+        value: updateGuildTranslationInput.value,
+      });
+    return this.guildTranslationRepository.save(newGuildTranslation);
   }
 
-  async remove(id: number): Promise<GuildTranslation> | null {
+  async remove(id: string): Promise<GuildTranslation> | null {
     const guildTranslation: GuildTranslation =
       await this.guildTranslationRepository.findOne({
-        where: { guild_id: id },
+        where: { guildId: id },
       });
     if (guildTranslation) {
       await this.guildTranslationRepository.delete(guildTranslation);

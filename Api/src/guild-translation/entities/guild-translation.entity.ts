@@ -1,42 +1,41 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
 
-@Entity('guild__translation')
+@Index('guild__translation_pkey', ['guildId', 'key'], { unique: true })
+@Entity('guild__translation', { schema: 'public' })
 @ObjectType()
 export class GuildTranslation {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // relations
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
-
-  // Values
-  @PrimaryColumn({ type: 'text' })
+  @Column('text', { primary: true, name: 'key' })
   @Field(() => String)
   key: string;
 
-  @Column({ type: 'text' })
+  @Column('text', { name: 'value' })
   @Field(() => String)
   value: string;
 
-  // Date information
-  @CreateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @Field(() => Date)
-  updated_at: Date;
+  updatedAt: Date;
+
+  @ManyToOne(() => Guild, (guild) => guild.guildTranslations, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
+  guild: Guild;
 }
