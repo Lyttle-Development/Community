@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 
@@ -9,11 +9,11 @@ import { GuildModuleVoiceGrowth } from '../../guild-module-voice-growth/entities
 @ObjectType()
 export class GuildModuleVoiceGrowthChild {
   @Column('bigint', { primary: true, name: 'channel_id' })
-  @Field(() => Int)
+  @Field(() => String)
   channelId: string;
 
   @Column('bigint', { primary: true, name: 'guild_id' })
-  @Field(() => Int)
+  @Field(() => String)
   guildId: string;
 
   @Column('text', { name: 'name', default: () => "'unknown'" })

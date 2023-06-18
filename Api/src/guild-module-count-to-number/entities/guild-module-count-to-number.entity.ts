@@ -9,11 +9,11 @@ import { Guild } from '../../guild/entities/guild.entity';
 @ObjectType()
 export class GuildModuleCountToNumber {
   @Column('bigint', { primary: true, name: 'channel_id' })
-  @Field(() => Int)
+  @Field(() => String)
   channelId: string;
 
   @Column('bigint', { primary: true, name: 'guild_id' })
-  @Field(() => Int)
+  @Field(() => String)
   guildId: string;
 
   @Column('boolean', { name: 'enabled', default: () => 'false' })
