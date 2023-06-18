@@ -8,6 +8,7 @@ import styles from './server-card.module.scss';
 import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
+import { Constants } from '@lyttledev-dashboard/constants';
 
 export interface Server {
   id: string;
@@ -57,6 +58,10 @@ export function ServerCard({
     });
   };
 
+  const onSetup = () => {
+    window.location.href = Constants.getInviteBotUrl(id);
+  };
+
   if (!icon) return null;
 
   if (!setup) {
@@ -75,7 +80,7 @@ export function ServerCard({
           color={ButtonColors.orange}
           text={msgSetupButton}
           // Todo: Setup server
-          onClick={() => window.alert('Setup')}
+          onClick={onSetup}
         />
       </article>
     );
