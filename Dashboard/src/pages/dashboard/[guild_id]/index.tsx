@@ -58,14 +58,6 @@ function Page() {
   const msgEvents = getMessage(pfx + 'events');
   const msgActivity = getMessage(pfx + 'activity');
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setRecommendation(
-  //       'After some deep analysis, we recommend you to, handle this and handle that. That way you can imrove that while tweaking this. While tweaking that you could do that meaning it could fix what and when it does it can whathever you want. So, do it. Do it now. Whenever you can, want or will do. While it still can. Doing it while you can is the best way to do it.',
-  //     );
-  //   }, 5000);
-  // }, []);
-
   const [fetch, { data }] = useLazyQuery(GuildQuery);
   const [fetchOpenAi, { data: dataOpenAi }] = useLazyQuery(OpenAiQuery);
 
