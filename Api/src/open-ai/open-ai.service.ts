@@ -84,9 +84,10 @@ export class OpenAiService {
       {
         role: 'system',
         content:
-          'Your a discord bot trying to summarize in a few sentences, how to improve the server.' +
-          '- One continues text' +
-          '- No bullet points',
+          'Your a discord bot trying to summarize in a few sentences, how to improve the server.\n' +
+          'Rules:\n' +
+          '- One continues text\n' +
+          '- No bullet points\n',
       },
       {
         role: 'user',
