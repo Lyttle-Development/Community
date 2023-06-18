@@ -52,6 +52,7 @@
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
       width: 100%;
 
       * {
@@ -63,12 +64,20 @@
         color: v.$color-text;
         margin-top: -.35rem;
         padding-bottom: .3rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
       }
 
       .value__description {
         font-size: .8rem;
         color: v.$color-text-dark;
         margin-bottom: -.35rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
       }
     }
 
