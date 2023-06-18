@@ -75,7 +75,7 @@ export class GuildResolver {
   }
 
   @ResolveField(() => GuildMessage, { nullable: true })
-  message(id: string): Promise<GuildMessage> {
+  message(id: number): Promise<GuildMessage> {
     return this.guildService.getGuildMessage(id);
   }
 

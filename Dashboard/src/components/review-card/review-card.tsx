@@ -27,6 +27,16 @@ export function ReviewCard({ changeKey, change }: ReviewCardProps) {
     return <ReviewCartComponents.SelectReviewCard {...props} />;
   }
 
+  // If the type is a string, render the text review card. when the original is null
+  if (
+    typeof change.current === 'string' &&
+    change.original === null &&
+    change.store
+  ) {
+    change.original = '';
+    return <ReviewCartComponents.SelectReviewCard {...props} />;
+  }
+
   // If the type is a string, render the text review card.
   if (
     typeof change.current === 'boolean' &&
