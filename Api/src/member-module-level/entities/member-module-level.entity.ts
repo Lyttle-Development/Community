@@ -1,73 +1,81 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { MemberModuleLevelDay } from '../../member-module-level-day/entities/member-module-level-day.entity';
-import { Guild } from '../../guild/entities/guild.entity';
 import { Member } from '../../member/entities/member.entity';
 
-@Entity('member__module__level')
+@Index('member__module__level_pkey', ['guildId', 'userId'], { unique: true })
+@Index('member__module__level_user_id_guild_id_key', ['guildId', 'userId'], {
+  unique: true,
+})
+@Entity('member__module__level', { schema: 'public' })
 @ObjectType()
 export class MemberModuleLevel {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
+  @Column('bigint', { primary: true, name: 'user_id' })
+  @Field(() => String)
+  userId: string;
+
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
+
+  @Column('integer', { name: 'spam_check', default: () => '0' })
+  @Field(() => Int)
+  spamCheck: number;
+
+  @Column('integer', { name: 'cooldown_count', default: () => '0' })
+  @Field(() => Int)
+  cooldownCount: number;
+
+  @Column('timestamp without time zone', {
+    name: 'cooldown_time',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  cooldownTime: Date;
+
+  @Column('timestamp without time zone', {
+    name: 'call_start',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  callStart: Date;
+
+  @Column('double precision', {
+    name: 'points',
+    precision: 53,
+    default: () => '0',
+  })
   @Field(() => Float)
-  guild_id: number;
+  points: number;
 
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  user_id: number;
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  createdAt: Date;
 
-  // Relations
-  @OneToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
-  guild: Guild;
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  updatedAt: Date;
 
-  @OneToOne(() => Member, (user: Member) => user.user_id)
-  @Field(() => Member)
+  @OneToOne(() => Member, (member) => member.memberModuleLevel, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([
+    { name: 'user_id', referencedColumnName: 'userId' },
+    { name: 'guild_id', referencedColumnName: 'guildId' },
+  ])
   member: Member;
 
   @OneToOne(
     () => MemberModuleLevelDay,
-    (memberModuleLevelDay: MemberModuleLevelDay) =>
-      memberModuleLevelDay.guild_id,
+    (memberModuleLevelDay) => memberModuleLevelDay.memberModuleLevel,
+    { nullable: true },
   )
-  @Field(() => MemberModuleLevelDay)
   memberModuleLevelDay: MemberModuleLevelDay;
-
-  // Checks
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  spam_check: number;
-
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  cooldown_count: number;
-
-  @Column({ default: new Date() })
-  @Field(() => Date, { defaultValue: new Date() })
-  cooldown_time: Date;
-
-  @Column({ default: new Date() })
-  @Field(() => Date, { defaultValue: new Date() })
-  call_start: Date;
-
-  // Actual level data:
-  @Column({ default: 0, type: 'double precision' })
-  @Field(() => Float, { defaultValue: 0 })
-  points: number;
-
-  // Date information
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
 }

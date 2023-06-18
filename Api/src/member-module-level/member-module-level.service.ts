@@ -34,24 +34,24 @@ export class MemberModuleLevelService {
     return this.memberModuleLevelRepository.find();
   }
 
-  findOne(guildId: number, userId: number): Promise<MemberModuleLevel> {
+  findOne(guildId: string, userId: string): Promise<MemberModuleLevel> {
     return this.memberModuleLevelRepository.findOne({
-      where: { user_id: userId, guild_id: guildId },
+      where: { userId: userId, guildId: guildId },
     });
   }
 
   getMemberModuleLevelDay(
-    guildId: number,
-    userId: number,
+    guildId: string,
+    userId: string,
   ): Promise<MemberModuleLevelDay> {
     return this.memberModuleLevelDayService.findOne(guildId, userId);
   }
 
-  getGuild(guildId: number): Promise<Guild> {
+  getGuild(guildId: string): Promise<Guild> {
     return this.guildService.findOne(guildId);
   }
 
-  getMember(userId: number, guildId: number): Promise<Member> {
+  getMember(userId: string, guildId: string): Promise<Member> {
     return this.memberService.findOne(guildId, userId);
   }
 
@@ -61,8 +61,8 @@ export class MemberModuleLevelService {
     const memberModuleLevel: MemberModuleLevel =
       await this.memberModuleLevelRepository.findOne({
         where: {
-          guild_id: updateMemberModuleLevelInput.guild_id,
-          user_id: updateMemberModuleLevelInput.user_id,
+          guildId: updateMemberModuleLevelInput.guildId,
+          userId: updateMemberModuleLevelInput.userId,
         },
       });
     if (memberModuleLevel) {
@@ -75,14 +75,14 @@ export class MemberModuleLevelService {
   }
 
   async remove(
-    guildId: number,
-    userId: number,
+    guildId: string,
+    userId: string,
   ): Promise<MemberModuleLevel> | null {
     const memberModuleLevel: MemberModuleLevel =
       await this.memberModuleLevelRepository.findOne({
         where: {
-          guild_id: guildId,
-          user_id: userId,
+          guildId: guildId,
+          userId: userId,
         },
       });
     if (memberModuleLevel) {

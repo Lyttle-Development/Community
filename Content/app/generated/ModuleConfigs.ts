@@ -44,6 +44,7 @@ export * as ModuleConfigDashboardComponentsMainNavLabelOverview from '../../cont
 export * as ModuleConfigDashboardComponentsMainNavLabelProfile from '../../content/modules/Dashboard/components/main-nav/label-profile/config';
 export * as ModuleConfigDashboardComponentsModuleCardSetupButton from '../../content/modules/Dashboard/components/module-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsModuleCardTitlePrefix from '../../content/modules/Dashboard/components/module-card/title-prefix/config';
+export * as ModuleConfigDashboardComponentsReviewConfirm from '../../content/modules/Dashboard/components/review/confirm/config';
 export * as ModuleConfigDashboardComponentsReviewSubmit from '../../content/modules/Dashboard/components/review/submit/config';
 export * as ModuleConfigDashboardComponentsReviewTitle from '../../content/modules/Dashboard/components/review/title/config';
 export * as ModuleConfigDashboardComponentsSearchInputPlaceholder from '../../content/modules/Dashboard/components/search/input-placeholder/config';
@@ -77,6 +78,7 @@ export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementTitle from '../../
 export * as ModuleConfigDashboardPagesModuleLevelsDescription from '../../content/modules/Dashboard/pages/module/levels/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardDescription from '../../content/modules/Dashboard/pages/module/levels/leaderboard/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardTitle from '../../content/modules/Dashboard/pages/module/levels/leaderboard/title/config';
+export * as ModuleConfigDashboardPagesModuleLevelsModule from '../../content/modules/Dashboard/pages/module/levels/module/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameDescription from '../../content/modules/Dashboard/pages/module/levels/nickname/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameTitle from '../../content/modules/Dashboard/pages/module/levels/nickname/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modules/Dashboard/pages/module/levels/title/config';
@@ -84,6 +86,12 @@ export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';
 export * as ModuleConfigDashboardPagesModulesTitle from '../../content/modules/Dashboard/pages/modules/title/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationActivity from '../../content/modules/Dashboard/pages/overview/recommendation/activity/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationBots from '../../content/modules/Dashboard/pages/overview/recommendation/bots/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationEvents from '../../content/modules/Dashboard/pages/overview/recommendation/events/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationMembers from '../../content/modules/Dashboard/pages/overview/recommendation/members/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationModules from '../../content/modules/Dashboard/pages/overview/recommendation/modules/config';
+export * as ModuleConfigDashboardPagesOverviewRecommendationStaff from '../../content/modules/Dashboard/pages/overview/recommendation/staff/config';
 export * as ModuleConfigDashboardPagesOverviewRecommendationTitle from '../../content/modules/Dashboard/pages/overview/recommendation/title/config';
 export * as ModuleConfigDashboardPagesOverviewTitle from '../../content/modules/Dashboard/pages/overview/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';

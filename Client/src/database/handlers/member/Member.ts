@@ -4,8 +4,18 @@ import type { Member } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 
 export function createMember(guildId: string, userId: string): Promise<Member> {
-  return prismaClient.member.create({
-    data: {
+  return prismaClient.member.upsert({
+    where: {
+      guild_id_user_id: {
+        guild_id: BigInt(guildId),
+        user_id: BigInt(userId),
+      },
+    },
+    create: {
+      guild_id: BigInt(guildId),
+      user_id: BigInt(userId),
+    },
+    update: {
       guild_id: BigInt(guildId),
       user_id: BigInt(userId),
     },
@@ -18,7 +28,7 @@ export function findSingleMember(
 ): Promise<Member> {
   return prismaClient.member.findUnique({
     where: {
-      guild_id_user_id: {
+      user_id_guild_id: {
         guild_id: BigInt(guildId),
         user_id: BigInt(userId),
       },

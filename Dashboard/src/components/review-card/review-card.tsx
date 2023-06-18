@@ -1,5 +1,5 @@
-import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
 import { ReviewCartComponents } from '@lyttledev-dashboard/components/review-card/components';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface ReviewCardProps {
   changeKey: string;
@@ -24,6 +24,16 @@ export function ReviewCard({ changeKey, change }: ReviewCardProps) {
     typeof change.original === 'string' &&
     change.store
   ) {
+    return <ReviewCartComponents.SelectReviewCard {...props} />;
+  }
+
+  // If the type is a string, render the text review card. when the original is null
+  if (
+    typeof change.current === 'string' &&
+    change.original === null &&
+    change.store
+  ) {
+    change.original = '';
     return <ReviewCartComponents.SelectReviewCard {...props} />;
   }
 

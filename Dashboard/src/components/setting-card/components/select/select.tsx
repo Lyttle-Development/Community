@@ -1,10 +1,10 @@
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
-import { Changes } from '@lyttledev-dashboard/contexts/App.context';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { Component } from '@lyttledev-dashboard/components';
 import { SelectColor } from '@lyttledev-dashboard/components/select';
 import { useEffect, useState } from 'react';
 import styles from './select.module.scss';
+import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
 
 export interface SettingCardSelectItemOptions {
   key: string | { title: string; description: string };

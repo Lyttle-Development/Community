@@ -2,7 +2,11 @@ import { executor, limit } from '../../utils';
 import { actionPrefix } from './index';
 import { ContextMenuCommandInteraction } from 'discord.js';
 import { GuildMember, LevelEvent } from '../../types';
-import { createEvent, routeContextMenuCommand } from '../../modules';
+import {
+  createEvent,
+  routeContextMenuCommand,
+  triggerActivityStat,
+} from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildInteractionContextMenuCommand.';
@@ -16,6 +20,7 @@ export async function onGuildInteractionContextMenuCommand(
 
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
+    executor(prefix + 'activity', triggerActivityStat, guildMember),
     executor(
       prefix + 'routeContextMenuCommand',
       routeContextMenuCommand,

@@ -3,7 +3,7 @@ import type { CreateGuildInput } from './dto/create-guild.input';
 import type { UpdateGuildInput } from './dto/update-guild.input';
 import { Guild } from './entities/guild.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { GuildModuleLevelService } from '../guild-module-level/guild-module-level.service';
 import type { GuildModuleLevel } from '../guild-module-level/entities/guild-module-level.entity';
 import type { GuildModuleQotd } from '../guild-module-qotd/entities/guild-module-qotd.entity';
@@ -16,6 +16,14 @@ import { MemberService } from '../member/member.service';
 import type { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowthService } from '../guild-module-voice-growth/guild-module-voice-growth.service';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
+import { Discord } from '../discord/entities/discord.entity';
+import { DiscordService } from '../discord/discord.service';
+import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
+import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { OpenAiService } from '../openAi/openAi.service';
+import { OpenAi } from '../openAi/entities/openAi.entity';
+import { GuildModuleBirthdayService } from '../guild-module-birthday/guild-module-birthday.service';
+import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Injectable()
 export class GuildService {
@@ -24,6 +32,8 @@ export class GuildService {
     private guildRepository: Repository<Guild>,
     @Inject(forwardRef(() => GuildModuleLevelService))
     private guildModuleLevelService: GuildModuleLevelService,
+    @Inject(forwardRef(() => GuildModuleBirthdayService))
+    private guildModuleBirthdayService: GuildModuleBirthdayService,
     @Inject(forwardRef(() => GuildModuleQotdService))
     private guildModuleQotdService: GuildModuleQotdService,
     @Inject(forwardRef(() => GuildMessageService))
@@ -34,6 +44,12 @@ export class GuildService {
     private memberService: MemberService,
     @Inject(forwardRef(() => GuildModuleVoiceGrowthService))
     private guildModuleVoiceGrowthService: GuildModuleVoiceGrowthService,
+    @Inject(forwardRef(() => DiscordService))
+    private discordService: DiscordService,
+    @Inject(forwardRef(() => GuildStatResolvedService))
+    private guildStatResolvedService: GuildStatResolvedService,
+    @Inject(forwardRef(() => OpenAiService))
+    private openaiService: OpenAiService,
   ) {}
 
   create(createGuildInput: CreateGuildInput): Promise<Guild> {
@@ -44,57 +60,64 @@ export class GuildService {
     return this.guildRepository.find();
   }
 
-  findOne(id: number): Promise<Guild> {
-    return this.guildRepository.findOne({
-      where: { guild_id: id },
+  findAllByGuildIds(guildIds: string[]): Promise<Guild[]> {
+    return this.guildRepository.find({
+      where: { guildId: In(guildIds) },
     });
   }
 
-  getGuildModuleLevel(guild_id: number): Promise<GuildModuleLevel> {
-    return this.guildModuleLevelService.findOne(guild_id);
+  findOne(id: string): Promise<Guild> {
+    return this.guildRepository.findOne({
+      where: { guildId: id },
+    });
   }
 
-  getGuildModuleQotd(guild_id: number): Promise<GuildModuleQotd> {
-    return this.guildModuleQotdService.findOne(guild_id);
+  getGuildModuleLevel(guildId: string): Promise<GuildModuleLevel> {
+    return this.guildModuleLevelService.findOne(guildId);
   }
 
-  getGuildMessage(guild_id: number, id: number): Promise<GuildMessage> {
-    return this.guildMessageService.findOneByGuildAndMessageId(guild_id, id);
+  getGuildModuleBirthday(guildId: string): Promise<GuildModuleBirthday> {
+    return this.guildModuleBirthdayService.findOne(guildId);
   }
 
-  getGuildMessages(guild_id: number): Promise<GuildMessage[]> {
-    return this.guildMessageService.findAllByGuild(guild_id);
+  getGuildModuleQotd(guildId: string): Promise<GuildModuleQotd> {
+    return this.guildModuleQotdService.findOne(guildId);
   }
 
-  getGuildModuleVoiceGrowth(guild_id: number): Promise<GuildModuleVoiceGrowth> {
-    return this.guildModuleVoiceGrowthService.findOne(guild_id);
+  getGuildMessage(id: number): Promise<GuildMessage> {
+    return this.guildMessageService.findOne(id);
   }
 
-  getGuildTranslation(
-    guild_id: number,
-    key: string,
-  ): Promise<GuildTranslation> {
-    return this.guildTranslationService.findOne(guild_id, key);
+  getGuildMessages(guildId: string): Promise<GuildMessage[]> {
+    return this.guildMessageService.findAllByGuild(guildId);
   }
 
-  getGuildTranslations(guild_id: number): Promise<GuildTranslation[]> {
-    return this.guildTranslationService.findAllByGuild(guild_id);
+  getGuildModuleVoiceGrowth(guildId: string): Promise<GuildModuleVoiceGrowth> {
+    return this.guildModuleVoiceGrowthService.findOne(guildId);
   }
 
-  getMembers(guild_id: number): Promise<Member[]> {
-    return this.memberService.findAllByGuild(guild_id);
+  getGuildTranslation(guildId: string, key: string): Promise<GuildTranslation> {
+    return this.guildTranslationService.findOne(guildId, key);
   }
 
-  getMember(guild_id: number, user_id: number): Promise<Member> {
-    return this.memberService.findOne(user_id, guild_id);
+  getGuildTranslations(guildId: string): Promise<GuildTranslation[]> {
+    return this.guildTranslationService.findAllByGuild(guildId);
+  }
+
+  getMembers(guildId: string): Promise<Member[]> {
+    return this.memberService.findAllByGuild(guildId);
+  }
+
+  getMember(guildId: string, userId: string): Promise<Member> {
+    return this.memberService.findOne(userId, guildId);
   }
 
   async update(
-    id: number,
+    id: string,
     updateGuildInput: UpdateGuildInput,
   ): Promise<Guild> | null {
     const guild: Guild = await this.guildRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
     if (guild) {
       return this.guildRepository.save({
@@ -105,13 +128,25 @@ export class GuildService {
     throw new Error('Guild not found');
   }
 
-  async remove(id: number): Promise<Guild> | null {
+  async remove(id: string): Promise<Guild> | null {
     const guild: Guild = await this.guildRepository.findOne({
-      where: { guild_id: id },
+      where: { guildId: id },
     });
     if (guild) {
       return this.guildRepository.remove(guild);
     }
     throw new Error('Guild not found');
+  }
+
+  getDiscord(guildId: string): Discord {
+    return this.discordService.create(guildId);
+  }
+
+  getStats(guildId: string): GuildStatResolved {
+    return this.guildStatResolvedService.create(guildId);
+  }
+
+  getOpenAi(guildId: string): OpenAi {
+    return this.openaiService.create(guildId);
   }
 }

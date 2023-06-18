@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
@@ -8,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './guild/guild.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
-import { ProfileModule } from './profile/profile.module';
+import { UserProfileModule } from './user-profile/user-profile.module';
 import { GuildTranslationModule } from './guild-translation/guild-translation.module';
 import { GuildMessageModule } from './guild-message/guild-message.module';
 import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
@@ -18,13 +17,25 @@ import { MemberModuleLevelDayModule } from './member-module-level-day/member-mod
 import { GuildModuleVoiceGrowthModule } from './guild-module-voice-growth/guild-module-voice-growth.module';
 import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
 import { DiscordOauthModule } from './auth/discord-oauth.module';
-import { JwtAuthModule } from './auth/jwt-auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { DiscordGuard } from './auth/discord.guard';
+import { GuildModuleVoiceGrowthChildModule } from './guild-module-voice-growth-child/guild-module-voice-growth-child.module';
+import { GuildActionModule } from './guild-action/guild-action.module';
+import { GuildModuleBirthdayModule } from './guild-module-birthday/guild-module-birthday.module';
+import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/guild-module-count-to-number.module';
+import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
+import { DiscordModule } from './discord/discord.module';
+import { Discord } from './discord/entities/discord.entity';
+import { OpenAiModule } from './openAi/openAi.module';
+import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { GuildStatModule } from './guild-stat/guild-stat.module';
+import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
+import { OpenAi } from './openAi/entities/openAi.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    DiscordOauthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       playground: true,
@@ -32,6 +43,7 @@ import { ConfigModule } from '@nestjs/config';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
+        orphanedTypes: [Discord, GuildStatResolved, OpenAi],
       },
     }),
     TypeOrmModule.forRootAsync({
@@ -54,7 +66,7 @@ import { ConfigModule } from '@nestjs/config';
     GuildModule,
     MemberModule,
     UserModule,
-    ProfileModule,
+    UserProfileModule,
     GuildTranslationModule,
     GuildMessageModule,
     GuildModuleLevelModule,
@@ -62,9 +74,24 @@ import { ConfigModule } from '@nestjs/config';
     MemberModuleLevelModule,
     MemberModuleLevelDayModule,
     GuildModuleVoiceGrowthModule,
-    JwtAuthModule,
+    DiscordOauthModule,
+    GuildModuleVoiceGrowthChildModule,
+    GuildActionModule,
+    GuildModuleBirthdayModule,
+    GuildModuleCountToNumberModule,
+    GuildModuleEasterEggModule,
+    DiscordModule,
+    GuildStatModule,
+    GuildStatResolvedModule,
+    OpenAiModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DiscordOauthStrategy],
+  providers: [
+    DiscordOauthStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: DiscordGuard,
+    },
+  ],
 })
 export class AppModule {}

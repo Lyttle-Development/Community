@@ -1,59 +1,61 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  Index,
+  JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { Guild } from '../../guild/entities/guild.entity';
-import { User } from '../../user/entities/user.entity';
 import { MemberModuleLevel } from '../../member-module-level/entities/member-module-level.entity';
 
-@Entity('member')
+@Index('member_user_id_guild_id_key', ['guildId', 'userId'], { unique: true })
+@Index('member_pkey', ['guildId', 'userId'], { unique: true })
+@Entity('member', { schema: 'public' })
 @ObjectType()
 export class Member {
-  // Primary key information
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  guild_id: number;
+  @Column('bigint', { primary: true, name: 'user_id' })
+  @Field(() => String)
+  userId: string;
 
-  @PrimaryColumn({ type: 'bigint' })
-  @Field(() => Float)
-  user_id: number;
+  @Column('bigint', { primary: true, name: 'guild_id' })
+  @Field(() => String)
+  guildId: string;
 
-  // Relations
-  @ManyToOne(() => Guild, (guild: Guild) => guild.guild_id)
-  @Field(() => Guild)
+  @Column('integer', { name: 'birthday', nullable: true })
+  @Field(() => Int, { nullable: true })
+  birthday: number | null;
+
+  @Column('text', { name: 'nickname', nullable: true })
+  @Field(() => String, { nullable: true })
+  nickname: string | null;
+
+  @Column('timestamp without time zone', {
+    name: 'created_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @ManyToOne(() => Guild, (guild) => guild.members, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'guild_id', referencedColumnName: 'guildId' }])
   guild: Guild;
-
-  @ManyToOne(() => User, (user: User) => user.user_id)
-  @Field(() => User)
-  user: User;
 
   @OneToOne(
     () => MemberModuleLevel,
-    (memberModuleLevel: MemberModuleLevel) => memberModuleLevel.guild_id,
+    (memberModuleLevel) => memberModuleLevel.member,
+    { nullable: true },
   )
-  @Field(() => MemberModuleLevel)
   memberModuleLevel: MemberModuleLevel;
-
-  @Column({ nullable: true })
-  @Field(() => Int, { nullable: true })
-  birthday: number;
-
-  @Column({ nullable: true })
-  @Field(() => String, { nullable: true })
-  nickname: string;
-
-  // Date information
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
 }

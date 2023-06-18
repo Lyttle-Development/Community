@@ -1,7 +1,7 @@
-import { ChangeObject } from '@lyttledev-dashboard/contexts/App.context';
+import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { diffLines } from 'diff';
 import styles from './select.module.scss';
-import { changeKeysArray } from '@lyttledev-dashboard/components/review';
+import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 
 export interface SelectReviewCardProps {
   changeKey: string;
@@ -52,7 +52,7 @@ export function SelectReviewCard({ changeKey, change }: SelectReviewCardProps) {
     );
 
     const title =
-      changeKeysArray.find((item) => item.key === changeKey)?.title ??
+      changeKeysValuesArray.find((item) => item.key === changeKey)?.title ??
       'Unknown';
 
     return (
