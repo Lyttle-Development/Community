@@ -22,6 +22,8 @@ import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-reso
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
 import { OpenAiService } from '../openAi/openAi.service';
 import { OpenAi } from '../openAi/entities/openAi.entity';
+import { GuildModuleBirthdayService } from '../guild-module-birthday/guild-module-birthday.service';
+import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Injectable()
 export class GuildService {
@@ -30,6 +32,8 @@ export class GuildService {
     private guildRepository: Repository<Guild>,
     @Inject(forwardRef(() => GuildModuleLevelService))
     private guildModuleLevelService: GuildModuleLevelService,
+    @Inject(forwardRef(() => GuildModuleBirthdayService))
+    private guildModuleBirthdayService: GuildModuleBirthdayService,
     @Inject(forwardRef(() => GuildModuleQotdService))
     private guildModuleQotdService: GuildModuleQotdService,
     @Inject(forwardRef(() => GuildMessageService))
@@ -70,6 +74,10 @@ export class GuildService {
 
   getGuildModuleLevel(guildId: string): Promise<GuildModuleLevel> {
     return this.guildModuleLevelService.findOne(guildId);
+  }
+
+  getGuildModuleBirthday(guildId: string): Promise<GuildModuleBirthday> {
+    return this.guildModuleBirthdayService.findOne(guildId);
   }
 
   getGuildModuleQotd(guildId: string): Promise<GuildModuleQotd> {

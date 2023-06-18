@@ -19,6 +19,7 @@ import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/gu
 import { Discord } from '../discord/entities/discord.entity';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
 import { OpenAi } from '../openAi/entities/openAi.entity';
+import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Resolver(() => Guild)
 export class GuildResolver {
@@ -56,6 +57,11 @@ export class GuildResolver {
   @ResolveField(() => GuildModuleLevel, { nullable: true })
   moduleLevel(@Parent() guild: Guild): Promise<GuildModuleLevel> {
     return this.guildService.getGuildModuleLevel(guild.guildId);
+  }
+
+  @ResolveField(() => GuildModuleBirthday, { nullable: true })
+  moduleBirthday(@Parent() guild: Guild): Promise<GuildModuleBirthday> {
+    return this.guildService.getGuildModuleBirthday(guild.guildId);
   }
 
   @ResolveField(() => GuildModuleQotd, { nullable: true })
