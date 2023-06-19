@@ -14,7 +14,7 @@ async function bootstrap(): Promise<void> {
     });
   } else {
     app.enableCors({
-      origin: 'https://community.lyttledev.com/',
+      origin: 'https://community.lyttledev.com',
       credentials: true,
     });
   }
