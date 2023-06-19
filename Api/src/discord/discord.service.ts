@@ -83,6 +83,7 @@ export class DiscordService {
 
     const guildChannels = ((await result.json()) ??
       []) as RESTGetAPIGuildChannelsResult;
+    if (!guildChannels || !Array.isArray(guildChannels)) return [];
     await this.cacheManager.set(cacheKey, guildChannels, cacheTime);
 
     return guildChannels;

@@ -4,7 +4,7 @@ import {
   Prisma,
 } from '@prisma/client';
 import { prismaClient } from '../../../prisma';
-import { getOrCreateGuild } from '../guild';
+import { getOrCreateGuild } from '../Guild';
 import { delGuildModuleVoiceGrowthChilds } from './VoiceGrowthChild';
 
 export interface GuildModuleVoiceGrowthWithChilds

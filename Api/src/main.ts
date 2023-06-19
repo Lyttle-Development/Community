@@ -7,10 +7,18 @@ import * as process from 'process';
 async function bootstrap(): Promise<void> {
   const app: INestApplication = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: 'http://localhost:8080',
-    credentials: true,
-  });
+  if (process.env.NODE_ENV === 'development') {
+    app.enableCors({
+      origin: 'http://localhost:8080',
+      credentials: true,
+    });
+  } else {
+    app.enableCors({
+      origin: 'https://community.lyttledev.com',
+      credentials: true,
+    });
+  }
+
   app.use(cookieParser());
 
   await app.listen(process.env.PORT);

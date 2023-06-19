@@ -1,7 +1,7 @@
 import { prismaClient } from '../../../prisma';
 import type { GuildModuleCountToNumber } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import { getOrCreateGuild } from '../guild';
+import { getOrCreateGuild } from '../Guild';
 
 export async function createGuildModuleCountToNumber(
   guildId: string,

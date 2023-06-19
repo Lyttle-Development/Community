@@ -55,11 +55,13 @@ export class GuildModuleLevelService {
       guildId: id,
       enabled: updateGuildModuleLevelInput.enabled,
       levelingMultiplier: updateGuildModuleLevelInput.levelingMultiplier,
+      announcementChannelId: updateGuildModuleLevelInput.announcementChannelId,
       leaderboardChannelId: updateGuildModuleLevelInput.leaderboardChannelId,
       leaderboardLastWeek: updateGuildModuleLevelInput.leaderboardLastWeek,
       nicknames: updateGuildModuleLevelInput.nicknames,
       lastLeaderboard: updateGuildModuleLevelInput.lastLeaderboard,
     };
+    return this.guildModuleLevelRepository.save(guildModuleLevelInput);
   }
 
   async remove(id: string): Promise<GuildModuleLevel> | null {

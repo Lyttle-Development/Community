@@ -1,6 +1,6 @@
 import type { MemberModuleLevelDay, Prisma } from '@prisma/client';
 import { prismaClient } from '../../../prisma';
-import { getOrCreateMemberModuleLevel } from './level';
+import { getOrCreateMemberModuleLevel } from './Level';
 
 export function createMemberModuleLevelDay(
   guildId: string,

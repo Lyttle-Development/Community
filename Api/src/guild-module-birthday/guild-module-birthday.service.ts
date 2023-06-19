@@ -64,6 +64,7 @@ export class GuildModuleBirthdayService {
     const createGuildModuleBirthdayInput: CreateGuildModuleBirthdayInput = {
       guildId: id,
       enabled: updateGuildModuleBirthdayInput.enabled,
+      birthdayChannelId: updateGuildModuleBirthdayInput.birthdayChannelId,
     };
     return this.create(createGuildModuleBirthdayInput);
   }

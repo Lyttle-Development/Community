@@ -7,4 +7,7 @@ export class CreateGuildModuleBirthdayInput {
 
   @Field(() => Boolean)
   enabled: boolean;
+
+  @Field(() => String, { nullable: true })
+  birthdayChannelId: string;
 }
