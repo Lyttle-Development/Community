@@ -180,7 +180,7 @@ function Page() {
       .title(msgLevelUp.title)
       .description(msgLevelUp.description)
       .enabled(
-        data?.guild?.moduleLevel?.announcementChannelId !== null,
+        data?.guild?.moduleLevel?.announcementChannelId ?? false,
         changeKeys.moduleLevelsAnnouncement.key,
       )
       .addSubItem((subItem) =>
