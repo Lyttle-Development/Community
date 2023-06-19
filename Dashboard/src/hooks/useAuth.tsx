@@ -37,5 +37,5 @@ function clearCookie(name: string) {
 export function logout() {
   clearCookie('accessToken');
   clearCookie('refreshToken');
-  window.location.href = '/';
+  window.location.href = Constants.logoutUrl;
 }
