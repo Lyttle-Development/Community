@@ -62,7 +62,7 @@ export function ServerCard({
     window.location.href = Constants.getInviteBotUrl(id);
   };
 
-  if (!icon) return null;
+  if (!icon) icon = '/media/images/placeholder.png';
 
   if (!setup) {
     return (
