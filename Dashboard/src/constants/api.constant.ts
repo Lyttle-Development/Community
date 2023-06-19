@@ -3,6 +3,8 @@ export const graphQlUrl =
 
 export const loginUrl =
   process.env.NEXT_PUBLIC_LOGIN_URL || 'http://localhost:3000/auth/login';
+export const logoutUrl =
+  process.env.NEXT_PUBLIC_LOGOUT_URL || 'http://localhost:3000/auth/logout';
 export const loginReturnUrl =
   process.env.NEXT_PUBLIC_LOGIN_URL_RETURN ||
   'http://localhost:3000/auth/discord';

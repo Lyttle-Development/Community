@@ -32,7 +32,7 @@ export class AppController {
     res.cookie('accessToken', user.accessToken);
     res.cookie('refreshToken', user.refreshToken);
 
-    return res.redirect(process.env.CLIENT_URI);
+    return res.redirect(process.env.CLIENT_DASHBOARD_URI);
   }
 
   @Public()
@@ -40,6 +40,15 @@ export class AppController {
   @UseGuards(AuthGuard('discord'))
   async getLogin(@Res() res: Response) {
     return res.status(200).send('Redirecting...');
+  }
+
+  @Public()
+  @Get('auth/logout')
+  @UseGuards()
+  async logout(@Res() res: Response) {
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    return res.redirect(process.env.CLIENT_URI);
   }
 
   @Post('auth/login')
