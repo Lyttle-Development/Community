@@ -69,7 +69,7 @@ function Page() {
     void fetchOpenAi({ variables: { guildId } });
   }, [guildId]);
 
-  const members = data?.guild?.discord?.guild?.approximate_member_count || 0;
+  let members = data?.guild?.discord?.guild?.approximate_member_count || 0;
 
   const modulesEnabled = getModulesEnabled(data?.guild);
   const modulesPercent = modulesEnabled
@@ -77,18 +77,23 @@ function Page() {
     : 0;
 
   const staff = data?.guild?.stats?.staffMembers || 0;
+  const bots = data?.guild?.stats?.bots || 0;
+
+  if (members < staff + bots) members = staff + bots;
+
   let staffPercent = Math.round((staff / members) * 100 * 100) / 100;
   if (staffPercent > 10) {
     staffPercent = Math.round(staffPercent);
   }
 
-  const bots = data?.guild?.stats?.bots || 0;
   let botsPercent = Math.round((bots / members) * 100 * 100) / 100;
   if (botsPercent > 10) {
     botsPercent = Math.round(botsPercent);
   }
 
-  const totalMembers = members - (staff + bots);
+  let totalMembers = members - (staff + bots);
+  if (totalMembers < 0) totalMembers = 0;
+
   let totalMembersPercent =
     Math.round((totalMembers / members) * 100 * 100) / 100;
   if (totalMembersPercent >= 10) {

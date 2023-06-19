@@ -1,1 +1,1 @@
-The channel to send ones a week a leaderboard in.
+The channel where we send a leaderboard message once a week.

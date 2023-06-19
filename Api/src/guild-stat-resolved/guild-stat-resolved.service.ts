@@ -34,14 +34,14 @@ export class GuildStatResolvedService {
       'staffMembers',
       -1,
     );
-    return result.valueInt ?? 0;
+    return result?.valueInt ?? 0;
   }
 
   async getBots(guildId: string | null = null): Promise<number> {
     if (!guildId) return 0;
 
     const result = await this.guildStatService.findOne(guildId, 'bots', -1);
-    return result.valueInt ?? 0;
+    return result?.valueInt ?? 0;
   }
 
   async getEventsTriggered(guildId: string | null = null): Promise<number> {
@@ -52,7 +52,7 @@ export class GuildStatResolvedService {
       'eventsTriggered',
     );
 
-    return result.reduce((acc, curr) => acc + (curr.valueInt ?? 0), 0);
+    return result.reduce((acc, curr) => acc + (curr?.valueInt ?? 0), 0);
   }
 
   async getEventsCreated(guildId: string | null = null): Promise<number> {
@@ -63,7 +63,7 @@ export class GuildStatResolvedService {
       'eventsCreated',
     );
 
-    return result.reduce((acc, curr) => acc + (curr.valueInt ?? 0), 0);
+    return result.reduce((acc, curr) => acc + (curr?.valueInt ?? 0), 0);
   }
 
   async getActivity(guildId: string | null = null): Promise<number> {
@@ -74,7 +74,7 @@ export class GuildStatResolvedService {
       'activity',
     );
 
-    return result.reduce((acc, curr) => acc + (curr.valueInt ?? 0), 0);
+    return result.reduce((acc, curr) => acc + (curr?.valueInt ?? 0), 0);
   }
 
   async getChannels(guildId: string | null = null): Promise<number> {
@@ -82,7 +82,7 @@ export class GuildStatResolvedService {
 
     const result = await this.guildStatService.findOne(guildId, 'channels', -1);
 
-    return result.valueInt ?? 0;
+    return result?.valueInt ?? 0;
   }
 
   async getTextChannels(guildId: string | null = null): Promise<number> {
@@ -109,7 +109,7 @@ export class GuildStatResolvedService {
     return result.reduce(
       (acc, curr) => ({
         ...acc,
-        [curr.key]: curr.valueInt,
+        [curr.key]: curr?.valueInt,
       }),
       {},
     );
@@ -123,7 +123,7 @@ export class GuildStatResolvedService {
       'voiceChannels',
       -1,
     );
-    return result.valueInt ?? 0;
+    return result?.valueInt ?? 0;
   }
 
   async getVoiceChannelsCallTime(
@@ -140,7 +140,7 @@ export class GuildStatResolvedService {
       const oldValue = acc[curr.key] ?? 0;
       return {
         ...acc,
-        [curr.key]: oldValue + curr.valueInt,
+        [curr.key]: oldValue + curr?.valueInt ?? 0,
       };
     }, {});
   }

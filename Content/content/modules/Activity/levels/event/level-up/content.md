@@ -1,1 +1,1 @@
-{user} just advanced to {level} {unit}!
+{user} just advanced to level {level}!
