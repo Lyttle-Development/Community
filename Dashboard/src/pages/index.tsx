@@ -4,6 +4,7 @@ import { Component } from '@lyttledev-dashboard/components';
 import { dashboardPrefix, getMessage } from '@lyttledev-dashboard/utils';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
+import { Constants } from '@lyttledev-dashboard/constants';
 
 export const pagesPrefix = dashboardPrefix + 'pages.';
 
@@ -15,6 +16,13 @@ function Page() {
   const msgAdd = getMessage(pfx + 'add-button');
   const msgJoin = getMessage(pfx + 'join-button');
 
+  const openInvite = () => {
+    window.open('https://discord.gg/QfqFFPFFQZ', '_blank');
+  };
+  const openAdd = () => {
+    window.location.href = Constants.inviteBotUrl;
+  };
+
   return (
     <>
       <Component.Title>{title}</Component.Title>
@@ -25,12 +33,12 @@ function Page() {
           <p className={styles.description}>{msgDescription}</p>
           <ul className={styles.buttons}>
             <li>
-              <Component.Button text={msgAdd} href="" noUpper />
+              <Component.Button text={msgAdd} onClick={openAdd} noUpper />
             </li>
             <li>
               <Component.Button
                 text={msgJoin}
-                href=""
+                onClick={openInvite}
                 noUpper
                 color={ButtonColors.secondary}
               />
