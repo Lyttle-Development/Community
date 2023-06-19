@@ -45,6 +45,7 @@ export function MainNav({ mobile }: MainNavProps) {
     : `${prefix} ${prefix}--closed`;
 
   const signOut = () => {
+    app?.setSelectedGuildId(null);
     logout();
   };
 
