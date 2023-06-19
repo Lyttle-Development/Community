@@ -60,6 +60,7 @@ export class GuildModuleLevelService {
       nicknames: updateGuildModuleLevelInput.nicknames,
       lastLeaderboard: updateGuildModuleLevelInput.lastLeaderboard,
     };
+    return this.guildModuleLevelRepository.save(guildModuleLevelInput);
   }
 
   async remove(id: string): Promise<GuildModuleLevel> | null {
