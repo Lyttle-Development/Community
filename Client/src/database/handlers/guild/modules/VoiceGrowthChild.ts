@@ -1,6 +1,6 @@
 import { GuildModuleVoiceGrowthChild, Prisma } from '@prisma/client';
 import { prismaClient } from '../../../prisma';
-import { getOrCreateGuild } from '../guild';
+import { getOrCreateGuild } from '../Guild';
 
 export async function createGuildModuleVoiceGrowthChild(
   guildId: string,
