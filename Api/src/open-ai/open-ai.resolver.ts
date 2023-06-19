@@ -1,6 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { OpenAiService } from './openAi.service';
-import { OpenAi } from './entities/openAi.entity';
+import { OpenAiService } from './open-ai.service';
+import { OpenAi } from './entities/open-ai.entity';
 
 @Resolver(() => OpenAi)
 export class OpenAiResolver {

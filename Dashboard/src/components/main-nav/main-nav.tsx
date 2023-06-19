@@ -58,6 +58,17 @@ export function MainNav({ mobile }: MainNavProps) {
     setSelectedGuild({ ...selectedGuild, show: false });
 
     setTimeout(() => {
+      const name = app?.selectedGuild?.name || null;
+
+      if (!name) {
+        setSelectedGuild({
+          id: guildId,
+          name: 'Last edited guild',
+          avatar: '/media/images/placeholder.png',
+          show: true,
+        });
+        return;
+      }
       // Update id
       setSelectedGuild({
         id: guildId,
