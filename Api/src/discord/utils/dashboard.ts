@@ -11,5 +11,7 @@ export interface DashboardServer {
 
 export type DashboardServers = DashboardServer[];
 
-export const getIcon = (guild: { id: string; icon: string }) =>
-  `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`;
+export const getIcon = (guild: { id: string; icon: string | null }) =>
+  guild.icon
+    ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`
+    : '';

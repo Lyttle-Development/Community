@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="105" height="104" viewBox="0 0 105 104">
+  <g id="Group_112" transform="translate(-3080 1344)">
+    <rect id="Rectangle_160" width="105" height="104" rx="52" transform="translate(3080 -1344)" fill="#0e1015"/>
+    <ellipse id="Ellipse_43" cx="22.5" cy="22" rx="22.5" ry="22" transform="translate(3097 -1301)" fill="#6e00ff"/>
+    <ellipse id="Ellipse_45" cx="13.5" cy="14" rx="13.5" ry="14" transform="translate(3146 -1310)" fill="#ff7a49"/>
+    <circle id="Ellipse_44" cx="10.5" cy="10.5" r="10.5" transform="translate(3118 -1331)" fill="#feb900"/>
+    <text id="C" transform="translate(3112 -1274)" fill="#fafafa" font-size="56" font-family="UrbaneRounded-Medium, Urbane Rounded" font-weight="500"><tspan x="0" y="0">C</tspan></text>
+  </g>
+</svg>
