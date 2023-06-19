@@ -23,7 +23,7 @@ jobs:
           # port: ${{ secrets.SENY02_PORT }}
           script: |
             cd /server/bots/community-v3/Community
-            sudo git reset –hard
+            sudo git reset --hard
             sudo git pull
             sudo npm ci
             cd /server/bots/community-v3/Community/Api
@@ -42,7 +42,7 @@ jobs:
           # port: ${{ secrets.SENY05_PORT }}
           script: |
             cd /server/bots/community-v3/Community
-            sudo git reset –hard
+            sudo git reset --hard
             sudo git pull
             sudo npm ci
             cd /server/bots/community-v3/Community/Dashboard
