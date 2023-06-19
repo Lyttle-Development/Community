@@ -1,0 +1,35 @@
+name: Node.js CI/CD
+
+on:
+  push:
+    branches: [ "beta" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Deploy BETA to SENY-02
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          # port: ${{ secrets.PORT }}
+          script: |
+            cd /server/bots/community-v3/Community
+            sudo git reset –hard
+            sudo git pull
+            sudo npm ci
+            cd /server/bots/community-v3/Community/Api
+            sudo npm run build
+            cd /server/bots/community-v3/Community/Client
+            sudo npm run build
+            cd /server/bots/community-v3/Community
+            sudo systemctl restart community-v3-api.service
+            sudo systemctl restart community-v3-client.service
