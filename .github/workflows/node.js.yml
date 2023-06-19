@@ -17,10 +17,10 @@ jobs:
       - name: Deploy BETA to SENY-02
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          # port: ${{ secrets.PORT }}
+          host: ${{ secrets.SENY02-HOST }}
+          username: ${{ secrets.SENY02-USERNAME }}
+          password: ${{ secrets.SENY02-PASSWORD }}
+          # port: ${{ secrets.SENY02-PORT }}
           script: |
             cd /server/bots/community-v3/Community
             sudo git reset –hard
