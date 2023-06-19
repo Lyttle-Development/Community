@@ -188,7 +188,7 @@ function Page() {
           select //
             .key(changeKeys.moduleLevelsAnnouncementChannel.key)
             .title('Channel') // Todo: Translate
-            .value(data?.guild?.moduleLevel?.announcementChannelId)
+            .value(data?.guild?.moduleLevel?.announcementChannelId ?? null)
             .options(
               getChannelOptions(
                 data?.guild?.discord?.guildChannels ?? [],

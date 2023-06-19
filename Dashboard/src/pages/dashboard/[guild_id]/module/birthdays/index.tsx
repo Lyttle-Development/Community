@@ -127,7 +127,7 @@ function Page() {
           select //
             .key(changeKeys.moduleBirthdayChannel.key)
             .title('Channel') // Todo: Translate
-            .value(data?.guild?.moduleBirthday?.birthdayChannelId)
+            .value(data?.guild?.moduleBirthday?.birthdayChannelId ?? null)
             .options(
               getChannelOptions(
                 data?.guild?.discord?.guildChannels ?? [],
