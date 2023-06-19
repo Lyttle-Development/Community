@@ -1,1 +1,1 @@
-This channel is configured to be dynamic master.
+configure your master voice growth channel
