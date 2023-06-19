@@ -3,7 +3,7 @@ import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-reso
 import { DiscordService } from '../discord/discord.service';
 import { Configuration, OpenAIApi } from 'openai';
 import { GuildStatService } from '../guild-stat/guild-stat.service';
-import { OpenAi } from './entities/openAi.entity';
+import { OpenAi } from './entities/open-ai.entity';
 
 @Injectable()
 export class OpenAiService {
@@ -84,9 +84,10 @@ export class OpenAiService {
       {
         role: 'system',
         content:
-          'Your a discord bot trying to summarize in a few sentences, how to improve the server.' +
-          '- One continues text' +
-          '- No bullet points',
+          'Your a discord bot trying to summarize in a few sentences, how to improve the server.\n' +
+          'Rules:\n' +
+          '- One continues text\n' +
+          '- No bullet points\n',
       },
       {
         role: 'user',

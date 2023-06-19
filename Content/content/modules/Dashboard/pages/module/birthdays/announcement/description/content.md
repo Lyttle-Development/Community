@@ -1,1 +1,1 @@
-The channel to announce when its someone's birthday.
+The channel where we announce that it's someone's birthday.

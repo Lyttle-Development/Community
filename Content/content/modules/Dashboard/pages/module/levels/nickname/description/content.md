@@ -1,1 +1,1 @@
-Enable nicknaming your users with their level.
+Enable nicknames which include user levels.

@@ -5,7 +5,6 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useEffect } from 'react';
 import { Servers } from '@lyttledev-dashboard/components/server-card';
-import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { gql, useLazyQuery } from '@apollo/client';
 
 const mockups = 50;
@@ -33,15 +32,14 @@ const DashboardQuery = gql`
 
 function Page() {
   const authorized = useAuth();
-  const guildId = useGuild();
   const title = usePage(pagesPrefix + 'dashboard.title');
   const [fetch, { data }] = useLazyQuery(DashboardQuery);
 
   useEffect(() => {
-    if (authorized && guildId) {
+    if (authorized) {
       void fetch();
     }
-  }, [authorized, guildId]);
+  }, [authorized]);
 
   if (!authorized) return null;
 

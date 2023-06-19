@@ -20,8 +20,8 @@ import { Discord } from '../discord/entities/discord.entity';
 import { DiscordService } from '../discord/discord.service';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
-import { OpenAiService } from '../openAi/openAi.service';
-import { OpenAi } from '../openAi/entities/openAi.entity';
+import { OpenAiService } from '../open-ai/open-ai.service';
+import { OpenAi } from '../open-ai/entities/open-ai.entity';
 import { GuildModuleBirthdayService } from '../guild-module-birthday/guild-module-birthday.service';
 import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 

@@ -18,7 +18,7 @@ import { Member } from '../member/entities/member.entity';
 import { GuildModuleVoiceGrowth } from '../guild-module-voice-growth/entities/guild-module-voice-growth.entity';
 import { Discord } from '../discord/entities/discord.entity';
 import { GuildStatResolved } from '../guild-stat-resolved/entities/guild-stat-resolved.entity';
-import { OpenAi } from '../openAi/entities/openAi.entity';
+import { OpenAi } from '../open-ai/entities/open-ai.entity';
 import { GuildModuleBirthday } from '../guild-module-birthday/entities/guild-module-birthday.entity';
 
 @Resolver(() => Guild)
