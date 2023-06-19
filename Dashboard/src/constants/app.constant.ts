@@ -12,3 +12,4 @@ const scope = 'bot%20identify%20applications.commands';
 const redirectUri = loginReturnUrl;
 export const getInviteBotUrl = (guildId: string) =>
   `${inviteUrl}?client_id=${clientId}&permissions=${permissions}&scope=${scope}&redirect_uri=${redirectUri}&guild_id=${guildId}&response_type=code&disable_guild_select=true`;
+export const inviteBotUrl = `${inviteUrl}?client_id=${clientId}&permissions=${permissions}&scope=${scope}&redirect_uri=${redirectUri}&response_type=code`;
