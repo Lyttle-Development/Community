@@ -20,6 +20,11 @@ const GuildQuery = gql`
   }
 `;
 
+export const getIcon = (guild: { id: string; icon: string | null }) =>
+  guild.icon
+    ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`
+    : '/media/images/placeholder.png';
+
 export function useGuild(
   setChanges: React.Dispatch<React.SetStateAction<Changes>>,
   localGuildChanges: string,
@@ -44,13 +49,11 @@ export function useGuild(
   const [fetch, { data: guildData }] = useLazyQuery(GuildQuery);
 
   useEffect(() => {
-    const getIcon = (guild: { id: string; icon: string }) =>
-      `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.webp`;
     const guild = guildData?.guild?.discord?.guild ?? null;
     if (!guild) return;
     const _guild = {
-      id: guild?.id,
-      name: guild?.name,
+      id: guild?.id || null,
+      name: guild?.name || 'Last edited server',
       icon: getIcon(guild),
     };
     setSelectedGuild(_guild);
