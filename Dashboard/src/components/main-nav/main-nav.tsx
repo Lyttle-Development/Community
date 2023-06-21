@@ -59,11 +59,10 @@ export function MainNav({ mobile }: MainNavProps) {
     setSelectedGuild({ ...selectedGuild, show: false });
 
     setTimeout(() => {
-      // Update id
       setSelectedGuild({
         id: guildId,
-        name: app?.selectedGuild.name || 'Last edited guild',
-        avatar: app?.selectedGuild.icon || '/media/images/placeholder.png',
+        name: app?.selectedGuild?.name || 'Last edited server',
+        avatar: app?.selectedGuild?.icon || '/media/images/placeholder.png',
         show: true,
       });
     }, 800);
