@@ -81,44 +81,52 @@
       }
     }
 
-    .options {
-      height: 100%;
+    .options-container {
+      position: relative;
+      z-index: 9999;
+      background-color: darken(v.$color-primary, 40%);
+      border-radius: 0 .7rem .7rem;
       overflow: hidden;
-      max-height: 0;
-      transition: max-height .5s ease-in-out;
-      display: flex;
-      flex-direction: column;
 
-      .option {
-        padding: 1rem 1.8rem;
-        transition: background-color .2s ease-in-out;
+      .options {
+        height: 100%;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .5s ease-in-out;
+        display: flex;
+        flex-direction: column;
 
-        &.option--active {
-          background-color: transparentize(v.$color-primary, .5)
-        }
+        .option {
+          padding: 1rem 1.8rem;
+          transition: background-color .2s ease-in-out;
 
-        &.option--with-description {
-          display: flex;
-          flex-direction: column;
-          gap: .5rem;
-        }
+          &.option--active {
+            background-color: transparentize(v.$color-primary, .5)
+          }
 
-        .option__title {
-          font-size: 1rem;
-          color: v.$color-text;
-        }
+          &.option--with-description {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+          }
 
-        .option__description {
-          font-size: .8rem;
-          color: v.$color-text-dark;
-        }
+          .option__title {
+            font-size: 1rem;
+            color: v.$color-text;
+          }
 
-        &:hover:not(.option--active) {
-          background-color: transparentize(v.$color-primary, .7)
-        }
+          .option__description {
+            font-size: .8rem;
+            color: v.$color-text-dark;
+          }
 
-        &:not(:first-child) {
-          border-top: v.$color-primary solid .01rem;
+          &:hover:not(.option--active) {
+            background-color: transparentize(v.$color-primary, .7)
+          }
+
+          &:not(:first-child) {
+            border-top: v.$color-primary solid .01rem;
+          }
         }
       }
     }
@@ -156,18 +164,23 @@
       border-bottom: v.$color-primary-yellow solid .01rem;
     }
 
-    .options {
-      .option {
-        &.option--active {
-          background-color: transparentize(v.$color-primary-yellow, .5)
-        }
 
-        &:hover:not(.option--active) {
-          background-color: transparentize(v.$color-primary-yellow, .7);
-        }
+    .options-container {
+      background-color: darken(v.$color-primary-yellow, 40%);
 
-        &:not(:first-child) {
-          border-top: v.$color-primary-yellow solid .01rem;
+      .options {
+        .option {
+          &.option--active {
+            background-color: transparentize(v.$color-primary-yellow, .5)
+          }
+
+          &:hover:not(.option--active) {
+            background-color: transparentize(v.$color-primary-yellow, .7);
+          }
+
+          &:not(:first-child) {
+            border-top: v.$color-primary-yellow solid .01rem;
+          }
         }
       }
     }
@@ -183,18 +196,22 @@
       border-bottom: v.$color-primary-orange solid .01rem;
     }
 
-    .options {
-      .option {
-        &.option--active {
-          background-color: transparentize(v.$color-primary-orange, .5)
-        }
+    .options-container {
+      background-color: darken(v.$color-primary-orange, 40%);
 
-        &:hover:not(.option--active) {
-          background-color: transparentize(v.$color-primary-orange, .7);
-        }
+      .options {
+        .option {
+          &.option--active {
+            background-color: transparentize(v.$color-primary-orange, .5)
+          }
 
-        &:not(:first-child) {
-          border-top: v.$color-primary-orange solid .01rem;
+          &:hover:not(.option--active) {
+            background-color: transparentize(v.$color-primary-orange, .7);
+          }
+
+          &:not(:first-child) {
+            border-top: v.$color-primary-orange solid .01rem;
+          }
         }
       }
     }
