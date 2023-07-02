@@ -5,6 +5,7 @@ import { SelectColor } from '@lyttledev-dashboard/components/select';
 import { useEffect, useState } from 'react';
 import styles from './select.module.scss';
 import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
+import { getMessage } from '@lyttledev-dashboard/utils';
 
 export interface SettingCardSelectItemOptions {
   key: string | { title: string; description: string };
@@ -18,6 +19,7 @@ export interface SettingCardSelectItem {
   title: string;
   options: SettingCardSelectItemOptions[];
   single: boolean;
+  flex?: boolean;
 }
 
 export interface SettingCardSelectProps {
@@ -25,6 +27,9 @@ export interface SettingCardSelectProps {
   changes: Changes;
   change: SettingCardChange;
 }
+
+const keyClear = 'Dashboard.components.setting-card.select';
+const msgClear = getMessage(keyClear);
 
 export function Select({ item, changes, change }: SettingCardSelectProps) {
   const { key, value, title, options, single = true } = item;
@@ -57,7 +62,10 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
     change(value, key, newValue, JSONOptions);
   };
 
-  const withEmptyOptions = [{ key: '-', value: '' }, ...options];
+  const withEmptyOptions = [
+    { key: { title: '-', description: msgClear }, value: '' },
+    ...options,
+  ];
 
   return (
     <>

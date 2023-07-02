@@ -15,6 +15,11 @@
   gap: 1rem;
   flex-direction: column;
 
+  span {
+    display: block;
+    width: 15rem;
+  }
+
   .select {
     background-color: darken(v.$color-primary, 40%);
     border: v.$color-primary solid .2rem;

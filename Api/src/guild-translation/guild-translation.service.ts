@@ -45,14 +45,23 @@ export class GuildTranslationService {
   ): Promise<GuildTranslation> {
     const guildTranslation: GuildTranslation =
       await this.guildTranslationRepository.findOne({
-        where: { guildId: updateGuildTranslationInput.guildId },
+        where: {
+          guildId: updateGuildTranslationInput.guildId,
+          key: updateGuildTranslationInput.key,
+        },
       });
+
+    if (guildTranslation && !updateGuildTranslationInput.value) {
+      await this.guildTranslationRepository.delete(guildTranslation);
+      return guildTranslation;
+    }
+
     if (guildTranslation) {
-      guildTranslation.key = updateGuildTranslationInput.key;
       guildTranslation.value = updateGuildTranslationInput.value;
       await this.guildTranslationRepository.save(guildTranslation);
       return guildTranslation;
     }
+
     // if guildTranslation is null, create a new one
     const newGuildTranslation: GuildTranslation =
       await this.guildTranslationRepository.create({
@@ -60,13 +69,15 @@ export class GuildTranslationService {
         key: updateGuildTranslationInput.key,
         value: updateGuildTranslationInput.value,
       });
+
+    if (!updateGuildTranslationInput.value) return newGuildTranslation;
     return this.guildTranslationRepository.save(newGuildTranslation);
   }
 
-  async remove(id: string): Promise<GuildTranslation> | null {
+  async remove(guildId: string, key: string): Promise<GuildTranslation> | null {
     const guildTranslation: GuildTranslation =
       await this.guildTranslationRepository.findOne({
-        where: { guildId: id },
+        where: { guildId, key },
       });
     if (guildTranslation) {
       await this.guildTranslationRepository.delete(guildTranslation);

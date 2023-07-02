@@ -18,6 +18,7 @@ export interface SettingCardInputItem {
   defaultKey: string;
   value: string;
   variables: SettingCardInputItemVariables[];
+  flex?: boolean;
 }
 
 export interface SettingCardInputProps {

@@ -53,6 +53,7 @@ export * as ModuleConfigDashboardComponentsServerCardModules from '../../content
 export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/modules/Dashboard/components/server-card/setup/config';
 export * as ModuleConfigDashboardComponentsServerCardSetupButton from '../../content/modules/Dashboard/components/server-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
+export * as ModuleConfigDashboardComponentsSettingCardSelect from '../../content/modules/Dashboard/components/setting-card/select/config';
 export * as ModuleConfigDashboardComponentsSnackbarChangesReset from '../../content/modules/Dashboard/components/snackbar/changes/reset/config';
 export * as ModuleConfigDashboardComponentsSnackbarChangesReview from '../../content/modules/Dashboard/components/snackbar/changes/review/config';
 export * as ModuleConfigDashboardComponentsSnackbarChangesTitle from '../../content/modules/Dashboard/components/snackbar/changes/title/config';

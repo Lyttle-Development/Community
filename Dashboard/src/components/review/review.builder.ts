@@ -107,6 +107,26 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
+  [changeKeys.moduleLevelsNicknameNumbers.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersRecentLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersPoints.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersRecentPoints.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
   [changeKeys.moduleLevelsAnnouncement.key]: {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',

@@ -18,6 +18,8 @@ import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { findTranslation } from '@lyttledev-dashboard/utils/find-translation';
 import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
+import { NumberStyle } from '../../../../../../../Content/content/modules/Activity/levels/txt/nickname-numbers/levels/config';
+import { SettingCardSelectItemOptions } from '@lyttledev-dashboard/components/setting-card/components/select';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -125,6 +127,36 @@ const varNickname = getVariables(
   ContentConfigs.ModuleConfigActivityLevelsTxtNickname,
 );
 
+const keyNicknameLevels = 'Activity.levels.txt.nickname-numbers.levels';
+const msgNicknameLevels = getMessage(keyNicknameLevels);
+
+const keyNicknameRecentLevels =
+  'Activity.levels.txt.nickname-numbers.recent-levels';
+const msgNicknameRecentLevels = getMessage(keyNicknameRecentLevels);
+
+const keyNicknamePoints = 'Activity.levels.txt.nickname-numbers.points';
+const msgNicknamePoints = getMessage(keyNicknamePoints);
+
+const keyNicknameRecentPoints =
+  'Activity.levels.txt.nickname-numbers.recent-points';
+const msgNicknameRecentPoints = getMessage(keyNicknameRecentPoints);
+
+const numberKeys = Object.keys(
+  ContentConfigs.ModuleConfigActivityLevelsTxtNicknameNumbersLevels
+    .NUMBER_TYPES,
+) as NumberStyle[];
+const numberOptions: SettingCardSelectItemOptions[] = numberKeys.map(
+  (key: NumberStyle) => {
+    const numbers =
+      ContentConfigs.ModuleConfigActivityLevelsTxtNicknameNumbersLevels
+        .NUMBER_TYPES[key];
+    return {
+      key: numbers.join(''),
+      value: key,
+    };
+  },
+);
+
 const levelsQuery = gql`
   query GetLevels($guildId: String!) {
     guild(id: $guildId) {
@@ -187,7 +219,7 @@ function Page() {
         subItem.select((select) =>
           select //
             .key(changeKeys.moduleLevelsAnnouncementChannel.key)
-            .title('Channel') // Todo: Translate
+            .title(changeKeys.moduleLevelsAnnouncementChannel.title) // Todo: Translate
             .value(data?.guild?.moduleLevel?.announcementChannelId ?? null)
             .options(
               getChannelOptions(
@@ -205,6 +237,65 @@ function Page() {
             .defaultKey(keyLevelUp)
             .variables(varLevelUp),
         ),
+      )
+      .addFlexSubItem((subItem) =>
+        subItem
+          .select((select) =>
+            select //
+              .key(changeKeys.moduleLevelsNicknameNumbersLevels.key)
+              .title(changeKeys.moduleLevelsNicknameNumbersLevels.title) // Todo: Translate
+              .value(
+                (findTranslation(
+                  data?.guild?.translations,
+                  keyNicknameLevels,
+                ) ||
+                  msgNicknameLevels) ??
+                  null,
+              )
+              .options(numberOptions),
+          )
+          .select((select) =>
+            select //
+              .key(changeKeys.moduleLevelsNicknameNumbersRecentLevels.key)
+              .title(changeKeys.moduleLevelsNicknameNumbersRecentLevels.title) // Todo: Translate
+              .value(
+                (findTranslation(
+                  data?.guild?.translations,
+                  keyNicknameRecentLevels,
+                ) ||
+                  msgNicknameRecentLevels) ??
+                  null,
+              )
+              .options(numberOptions),
+          )
+          .select((select) =>
+            select //
+              .key(changeKeys.moduleLevelsNicknameNumbersPoints.key)
+              .title(changeKeys.moduleLevelsNicknameNumbersPoints.title) // Todo: Translate
+              .value(
+                (findTranslation(
+                  data?.guild?.translations,
+                  keyNicknamePoints,
+                ) ||
+                  msgNicknamePoints) ??
+                  null,
+              )
+              .options(numberOptions),
+          )
+          .select((select) =>
+            select //
+              .key(changeKeys.moduleLevelsNicknameNumbersRecentPoints.key)
+              .title(changeKeys.moduleLevelsNicknameNumbersRecentPoints.title) // Todo: Translate
+              .value(
+                (findTranslation(
+                  data?.guild?.translations,
+                  keyNicknameRecentPoints,
+                ) ||
+                  msgNicknameRecentPoints) ??
+                  null,
+              )
+              .options(numberOptions),
+          ),
       )
       .build();
 

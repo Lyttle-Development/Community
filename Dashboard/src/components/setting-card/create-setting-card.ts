@@ -53,6 +53,14 @@ export class CreateSettingCard {
     return this;
   }
 
+  addFlexSubItem(
+    addSubItem = (subItem: CreateSettingCardFlexSubItem) => subItem,
+  ) {
+    const card = addSubItem(new CreateSettingCardFlexSubItem(this.settings));
+    this.settings = card.settings;
+    return this;
+  }
+
   build() {
     return this.settings;
   }
@@ -87,6 +95,40 @@ export class CreateSettingCardSubItem {
     if (!this.settings.subItems) {
       this.settings.subItems = [];
     }
+    this.settings.subItems.push(subItem);
+  }
+}
+
+export class CreateSettingCardFlexSubItem {
+  constructor(readonly settings: SettingCard) {
+    this.settings = settings;
+  }
+
+  input(addInput = (input: CreateSettingCardInputItem) => input) {
+    const card = addInput(new CreateSettingCardInputItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  textarea(
+    addTextarea = (textarea: CreateSettingCardTextareaItem) => textarea,
+  ) {
+    const card = addTextarea(new CreateSettingCardTextareaItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  select(addSelect = (select: CreateSettingCardSelectItem) => select) {
+    const card = addSelect(new CreateSettingCardSelectItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  private addSubItem(subItem: SettingCardSubItem) {
+    if (!this.settings.subItems) {
+      this.settings.subItems = [];
+    }
+    subItem.flex = true;
     this.settings.subItems.push(subItem);
   }
 }

@@ -18,6 +18,7 @@ export interface SettingCardTextareaItem {
   defaultKey: string;
   value: string;
   variables: SettingCardTextareaItemVariables[];
+  flex?: boolean;
 }
 
 export interface SettingCardTextareaProps {
