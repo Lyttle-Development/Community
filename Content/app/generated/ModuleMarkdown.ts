@@ -276,6 +276,10 @@ export const ModuleMarkdown = {
         },
       },
       'setting-card': {
+        'receive-default': {
+          content: 'Receive default',
+          documentation: '',
+        },
         select: {
           content: 'Clear this selection.',
           documentation: '',
@@ -394,6 +398,10 @@ export const ModuleMarkdown = {
               content: 'The channel to announce when someone leveled up.',
               documentation: '',
             },
+            message: {
+              content: 'Announcement message',
+              documentation: '',
+            },
             title: {
               content: 'Announcement',
               documentation: '',
@@ -432,6 +440,24 @@ export const ModuleMarkdown = {
           title: {
             content: 'Leveling',
             documentation: '',
+          },
+          word: {
+            level: {
+              content: 'Word: Level',
+              documentation: '',
+            },
+            levels: {
+              content: 'Word: Levels',
+              documentation: '',
+            },
+            point: {
+              content: 'Word: Point',
+              documentation: '',
+            },
+            points: {
+              content: 'Word: Points',
+              documentation: '',
+            },
           },
         },
         'voice-topics': {

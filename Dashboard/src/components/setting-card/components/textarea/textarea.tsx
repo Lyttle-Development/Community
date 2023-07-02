@@ -19,6 +19,7 @@ export interface SettingCardTextareaItem {
   value: string;
   variables: SettingCardTextareaItemVariables[];
   flex?: boolean;
+  title?: string;
 }
 
 export interface SettingCardTextareaProps {
@@ -27,9 +28,12 @@ export interface SettingCardTextareaProps {
   change: SettingCardChange;
 }
 
+const keyDefault = 'Dashboard.components.setting-card.receive-default';
+const msgDefault = getMessage(keyDefault);
+
 export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   // Get item data.
-  const { key, value, variables, defaultKey } = item;
+  const { key, value, variables, defaultKey, title, flex } = item;
 
   // Get default message.
   const defaultMessage = getMessage(defaultKey);
@@ -54,19 +58,29 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
   // Render component.
   return (
     <section className={styles.card}>
-      <Component.Textarea
-        placeholder={defaultMessage}
-        onChange={handleChange}
-        value={(changes[key]?.current as string) ?? value}
-        className={styles.textarea}
-      />
-      <article className={styles.options}>
-        <Component.IconButton
-          icon={IconButtonIcons.down}
-          className={styles.retrieve}
-          onClick={retrieveDefault}
-          disabled={usingDefault}
+      <article className={styles.wrapper}>
+        {title && <span>{title}</span>}
+        <Component.Textarea
+          placeholder={defaultMessage}
+          onChange={handleChange}
+          value={(changes[key]?.current as string) ?? value}
+          className={styles.textarea}
         />
+      </article>
+      <article
+        className={`${styles.options} ${
+          !flex && title && styles['options__title']
+        }`}
+      >
+        <div className={styles.default}>
+          <Component.IconButton
+            icon={IconButtonIcons.down}
+            className={styles.retrieve}
+            onClick={retrieveDefault}
+            disabled={usingDefault}
+          />
+          <span>{msgDefault}</span>
+        </div>
         {variables && variables.length > 0 && (
           <ul className={styles.variables}>
             {variables.map((variable, i) => (

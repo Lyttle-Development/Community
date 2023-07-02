@@ -53,6 +53,7 @@ export * as ModuleConfigDashboardComponentsServerCardModules from '../../content
 export * as ModuleConfigDashboardComponentsServerCardSetup from '../../content/modules/Dashboard/components/server-card/setup/config';
 export * as ModuleConfigDashboardComponentsServerCardSetupButton from '../../content/modules/Dashboard/components/server-card/setup-button/config';
 export * as ModuleConfigDashboardComponentsServerCardStaffMembers from '../../content/modules/Dashboard/components/server-card/staff-members/config';
+export * as ModuleConfigDashboardComponentsSettingCardReceiveDefault from '../../content/modules/Dashboard/components/setting-card/receive-default/config';
 export * as ModuleConfigDashboardComponentsSettingCardSelect from '../../content/modules/Dashboard/components/setting-card/select/config';
 export * as ModuleConfigDashboardComponentsSnackbarChangesReset from '../../content/modules/Dashboard/components/snackbar/changes/reset/config';
 export * as ModuleConfigDashboardComponentsSnackbarChangesReview from '../../content/modules/Dashboard/components/snackbar/changes/review/config';
@@ -75,6 +76,7 @@ export * as ModuleConfigDashboardPagesModuleDynamicVoiceCardDescription from '..
 export * as ModuleConfigDashboardPagesModuleDynamicVoiceDescription from '../../content/modules/Dashboard/pages/module/dynamic-voice/description/config';
 export * as ModuleConfigDashboardPagesModuleDynamicVoiceTitle from '../../content/modules/Dashboard/pages/module/dynamic-voice/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementDescription from '../../content/modules/Dashboard/pages/module/levels/announcement/description/config';
+export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementMessage from '../../content/modules/Dashboard/pages/module/levels/announcement/message/config';
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementTitle from '../../content/modules/Dashboard/pages/module/levels/announcement/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsDescription from '../../content/modules/Dashboard/pages/module/levels/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardDescription from '../../content/modules/Dashboard/pages/module/levels/leaderboard/description/config';
@@ -83,6 +85,10 @@ export * as ModuleConfigDashboardPagesModuleLevelsModule from '../../content/mod
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameDescription from '../../content/modules/Dashboard/pages/module/levels/nickname/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsNicknameTitle from '../../content/modules/Dashboard/pages/module/levels/nickname/title/config';
 export * as ModuleConfigDashboardPagesModuleLevelsTitle from '../../content/modules/Dashboard/pages/module/levels/title/config';
+export * as ModuleConfigDashboardPagesModuleLevelsWordLevel from '../../content/modules/Dashboard/pages/module/levels/word/level/config';
+export * as ModuleConfigDashboardPagesModuleLevelsWordLevels from '../../content/modules/Dashboard/pages/module/levels/word/levels/config';
+export * as ModuleConfigDashboardPagesModuleLevelsWordPoint from '../../content/modules/Dashboard/pages/module/levels/word/point/config';
+export * as ModuleConfigDashboardPagesModuleLevelsWordPoints from '../../content/modules/Dashboard/pages/module/levels/word/points/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsCardDescription from '../../content/modules/Dashboard/pages/module/voice-topics/card/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsDescription from '../../content/modules/Dashboard/pages/module/voice-topics/description/config';
 export * as ModuleConfigDashboardPagesModuleVoiceTopicsTitle from '../../content/modules/Dashboard/pages/module/voice-topics/title/config';

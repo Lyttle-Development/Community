@@ -99,6 +99,22 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',
   },
+  [changeKeys.modulesLevelsWordLevel.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordPoint.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordPoints.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
   [changeKeys.moduleLevelsLevelUp.key]: {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',

@@ -8,6 +8,13 @@
   justify-content: space-between;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
 .textarea {
   flex-grow: 1;
 }
@@ -33,6 +40,10 @@
   flex-grow: 1;
 }
 
+.options__title {
+  margin-top: 2.05rem;
+}
+
 .variables {
   margin-top: 2rem;
 
@@ -50,5 +61,17 @@
       font-size: .8rem;
       color: v.$color-text-dark;
     }
+  }
+}
+
+.default {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  span {
+    position: absolute;
+    left: 4.5rem;
   }
 }

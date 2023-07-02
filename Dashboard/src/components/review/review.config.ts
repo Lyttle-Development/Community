@@ -20,6 +20,30 @@ export const changeKeys: ChangeKeys = {
     key: 'modules.levels',
     url: (id: string) => `/dashboard/${id}/modules#levels`,
   },
+  modulesLevelsWordLevel: {
+    title: 'Levels module',
+    key: 'modules.levels.unit.level',
+    translationKey: 'Activity.levels.unit.level',
+    url: (id: string) => `/dashboard/${id}/modules#module`,
+  },
+  modulesLevelsWordLevels: {
+    title: 'Levels module',
+    key: 'modules.levels.unit.levels',
+    translationKey: 'Activity.levels.unit.levels',
+    url: (id: string) => `/dashboard/${id}/modules#module`,
+  },
+  modulesLevelsWordPoint: {
+    title: 'Levels module',
+    key: 'modules.levels.unit.point',
+    translationKey: 'Activity.levels.unit.point',
+    url: (id: string) => `/dashboard/${id}/modules#module`,
+  },
+  modulesLevelsWordPoints: {
+    title: 'Levels module',
+    key: 'modules.levels.unit.points',
+    translationKey: 'Activity.levels.unit.points',
+    url: (id: string) => `/dashboard/${id}/modules#module`,
+  },
   moduleLevelsLevelUp: {
     title: 'Levels module',
     key: 'module.level.level-up',

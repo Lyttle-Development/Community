@@ -143,11 +143,17 @@ export class CreateSettingCardInputItem {
       value: '',
       variables: [],
       type: SettingCardSubItems.Input,
+      title: undefined,
     };
   }
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  title(title: string) {
+    this.subItem.title = title;
     return this;
   }
 
@@ -177,11 +183,17 @@ export class CreateSettingCardTextareaItem {
       value: '',
       variables: [],
       type: SettingCardSubItems.Textarea,
+      title: undefined,
     };
   }
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  title(title: string) {
+    this.subItem.title = title;
     return this;
   }
 

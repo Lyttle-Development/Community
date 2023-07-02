@@ -17,9 +17,9 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { findTranslation } from '@lyttledev-dashboard/utils/find-translation';
-import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
 import { NumberStyle } from '../../../../../../../Content/content/modules/Activity/levels/txt/nickname-numbers/levels/config';
 import { SettingCardSelectItemOptions } from '@lyttledev-dashboard/components/setting-card/components/select';
+import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
 
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
@@ -157,6 +157,14 @@ const numberOptions: SettingCardSelectItemOptions[] = numberKeys.map(
   },
 );
 
+const keyUnitLevel = 'Activity.levels.unit.level';
+const keyUnitLevels = 'Activity.levels.unit.levels';
+const keyUnitPoint = 'Activity.levels.unit.point';
+const keyUnitPoints = 'Activity.levels.unit.points';
+
+const keyLevelUpMessage = pfx + 'announcement.message';
+const msgLevelUpMessage = getMessage(keyLevelUpMessage);
+
 const levelsQuery = gql`
   query GetLevels($guildId: String!) {
     guild(id: $guildId) {
@@ -198,17 +206,61 @@ function Page() {
     }
 
     const settingLevel = new CreateSettingCard()
-      .id('0')
+      .id('module')
       .title(msgLevel.title)
       .description(msgLevel.description)
       .enabled(
         data?.guild?.moduleLevel?.enabled ?? false,
         changeKeys.modulesLevels.key,
       )
+      .addFlexSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(changeKeys.modulesLevelsWordLevel.key)
+            .title(getMessage(pfx + 'word.level'))
+            .value(
+              findTranslation(data?.guild?.translations ?? [], keyUnitLevel),
+            )
+            .defaultKey(keyUnitLevel),
+        ),
+      )
+      .addFlexSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(changeKeys.modulesLevelsWordLevels.key)
+            .title(getMessage(pfx + 'word.levels'))
+            .value(
+              findTranslation(data?.guild?.translations ?? [], keyUnitLevels),
+            )
+            .defaultKey(keyUnitLevels),
+        ),
+      )
+      .addFlexSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(changeKeys.modulesLevelsWordPoint.key)
+            .title(getMessage(pfx + 'word.point'))
+            .value(
+              findTranslation(data?.guild?.translations ?? [], keyUnitPoint),
+            )
+            .defaultKey(keyUnitPoint),
+        ),
+      )
+      .addFlexSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(changeKeys.modulesLevelsWordPoints.key)
+            .title(getMessage(pfx + 'word.points'))
+            .value(
+              findTranslation(data?.guild?.translations ?? [], keyUnitPoints),
+            )
+            .defaultKey(keyUnitPoints),
+        ),
+      )
       .build();
 
     const settingLevelUp = new CreateSettingCard()
-      .id('0')
+      .id('levels')
       .title(msgLevelUp.title)
       .description(msgLevelUp.description)
       .enabled(
@@ -233,6 +285,7 @@ function Page() {
         subItem.textarea((textarea) =>
           textarea //
             .key(changeKeys.moduleLevelsLevelUpText.key)
+            .title(msgLevelUpMessage)
             .value(findTranslation(data?.guild?.translations, keyLevelUp))
             .defaultKey(keyLevelUp)
             .variables(varLevelUp),
