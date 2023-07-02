@@ -203,7 +203,6 @@ export function reviewBuilder(
 
     // If the query requires a guild id, add it
     const value = change.current;
-    console.log(value);
 
     // If the value is null, continue the loop.
     if (value === null) continue;
