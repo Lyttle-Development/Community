@@ -72,6 +72,8 @@ export function MainNav({ mobile }: MainNavProps) {
     app?.setMainNavOpen(false);
   };
 
+  const realGuildId = app?.selectedGuildId ?? null;
+
   return (
     <>
       <aside className={`${openClass} ${styles['main-menu']}`}>
@@ -107,13 +109,13 @@ export function MainNav({ mobile }: MainNavProps) {
               } server-menu`}
             >
               <MainNavItem
-                href={`/dashboard/${selectedGuild.id}`}
+                href={`/dashboard/${realGuildId}`}
                 route={'/dashboard/[guild_id]'}
               >
                 {labelOverview}
               </MainNavItem>
               <MainNavItem
-                href={`/dashboard/${selectedGuild.id}/modules`}
+                href={`/dashboard/${realGuildId}/modules`}
                 route={'/dashboard/[guild_id]/modules'}
               >
                 {labelModules}

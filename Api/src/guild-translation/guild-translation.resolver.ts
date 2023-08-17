@@ -55,14 +55,15 @@ export class GuildTranslationResolver {
   updateGuildTranslation(
     @Args('updateGuildTranslationInput')
     updateGuildTranslationInput: UpdateGuildTranslationInput,
-  ): Promise<GuildTranslation> | null {
+  ): Promise<GuildTranslation | null> | null {
     return this.guildTranslationService.update(updateGuildTranslationInput);
   }
 
   @Mutation(() => GuildTranslation)
   removeGuildTranslation(
-    @Args('id', { type: () => String }) id: string,
-  ): Promise<GuildTranslation> | null {
-    return this.guildTranslationService.remove(id);
+    @Args('guildId', { type: () => String }) guildId: string,
+    @Args('key', { type: () => String }) key: string,
+  ): Promise<GuildTranslation | null> | null {
+    return this.guildTranslationService.remove(guildId, key);
   }
 }
