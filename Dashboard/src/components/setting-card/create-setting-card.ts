@@ -53,6 +53,14 @@ export class CreateSettingCard {
     return this;
   }
 
+  addFlexSubItem(
+    addSubItem = (subItem: CreateSettingCardFlexSubItem) => subItem,
+  ) {
+    const card = addSubItem(new CreateSettingCardFlexSubItem(this.settings));
+    this.settings = card.settings;
+    return this;
+  }
+
   build() {
     return this.settings;
   }
@@ -91,6 +99,40 @@ export class CreateSettingCardSubItem {
   }
 }
 
+export class CreateSettingCardFlexSubItem {
+  constructor(readonly settings: SettingCard) {
+    this.settings = settings;
+  }
+
+  input(addInput = (input: CreateSettingCardInputItem) => input) {
+    const card = addInput(new CreateSettingCardInputItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  textarea(
+    addTextarea = (textarea: CreateSettingCardTextareaItem) => textarea,
+  ) {
+    const card = addTextarea(new CreateSettingCardTextareaItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  select(addSelect = (select: CreateSettingCardSelectItem) => select) {
+    const card = addSelect(new CreateSettingCardSelectItem());
+    this.addSubItem(card.subItem);
+    return this;
+  }
+
+  private addSubItem(subItem: SettingCardSubItem) {
+    if (!this.settings.subItems) {
+      this.settings.subItems = [];
+    }
+    subItem.flex = true;
+    this.settings.subItems.push(subItem);
+  }
+}
+
 export class CreateSettingCardInputItem {
   readonly subItem: SettingCardInputItem;
 
@@ -101,11 +143,23 @@ export class CreateSettingCardInputItem {
       value: '',
       variables: [],
       type: SettingCardSubItems.Input,
+      title: undefined,
+      description: undefined,
     };
   }
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  title(title: string) {
+    this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 
@@ -135,11 +189,23 @@ export class CreateSettingCardTextareaItem {
       value: '',
       variables: [],
       type: SettingCardSubItems.Textarea,
+      title: undefined,
+      description: undefined,
     };
   }
 
   key(key: string) {
     this.subItem.key = key;
+    return this;
+  }
+
+  title(title: string) {
+    this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 
@@ -167,6 +233,7 @@ export class CreateSettingCardSelectItem {
       key: '',
       value: '',
       title: '',
+      description: undefined,
       options: [],
       type: SettingCardSubItems.Select,
       single: true,
@@ -185,6 +252,11 @@ export class CreateSettingCardSelectItem {
 
   title(title: string) {
     this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 

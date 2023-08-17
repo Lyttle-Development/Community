@@ -14,7 +14,7 @@ export const ModuleMarkdown = {
         },
         'error-set': {
           content:
-            'You already have a birthday set!\nAsk a server administrator to reset it if that was incorrect.',
+            "You already have a birthday set!\nAsk a server administrator to reset it if it's incorrect.",
           documentation: '',
         },
         'error-timeout': {
@@ -71,39 +71,42 @@ export const ModuleMarkdown = {
         'get-levels': {
           failed: {
             content:
-              "**Oh no!**\nIt looks like we did not have the requirements for nice data!\nThe user(s) you gave me were not in our record or did not have that nice data we need...\nI'm so sorry, try with other users or say to your friend to be active xD!",
-            documentation: '',
+              "**Oh no!**\nIt looks like we did not have the user(s) you were looking for...\nThe user(s) you gave me were not in our record or did not have the data we need...\nI'm so sorry, try with other users or tell your friend(s) to be more active xD!",
+            documentation:
+              'Failed\nThis message is returned when the command fails.',
           },
           other: {
             content:
-              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}.  🪙\nThey needs **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** bigger than their first level ever...  📈',
-            documentation: '',
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
+            documentation:
+              'Other\nMessage received when getting xp for other user.',
           },
           others: {
             content:
               '{levelsUnit}: **{levels}**\n{pointsUnit}: **{points}**\n**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\nLeveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
-            documentation: '',
+            documentation:
+              'Others\nMessage received when checking stats between 2 members.',
           },
           'others-ahead': {
             content:
               'Is {levels} {levelsUnit} or {points} {pointsUnit} **ahead** 🏃',
-            documentation: '',
+            documentation: 'Others: Ahead\nThe message for the ahead user',
           },
           'others-behind': {
             content:
               'Is {levels} {levelsUnit} or {points} {pointsUnit} **behind** 🚶',
-            documentation: '',
+            documentation: 'Others: Behind\nThe message for the behind user',
           },
           yourself: {
             content:
-              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}.  🪙\nYou need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times bigger than your first level ever...  📈',
-            documentation: '',
+              'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}. 🪙\nYou need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than your first level ever... 📈',
+            documentation: 'Yourself\nMessage when getting own xp.',
           },
         },
       },
       event: {
         'level-up': {
-          content: '{user} just advanced to {level} {unit}!',
+          content: '{user} just advanced to level {level}!',
           documentation:
             'Level up\nThe message send when leveling up.\nTriggered when a player levels up.',
         },
@@ -179,17 +182,17 @@ export const ModuleMarkdown = {
           documentation: '',
         },
         'dialog-topic': {
-          content: 'Whats the topic?',
+          content: "What's the topic?",
           documentation: '',
         },
         joined: {
           content:
-            'Channel has been created successfully!\nHave fun talking! *(hopefully on-topic 😉!)*',
+            'Channel has been successfully created!\nHave fun talking! *(hopefully on-topic 😉!)*',
           documentation: '',
         },
         success: {
           content:
-            "Channel has been created successfully!\nWe will delete this channel <t:{time}:R> if you don't go into it.",
+            "Channel has been successfully created!\nWe will delete this channel in <t:{time}:R> sec, if you don't go into it.",
           documentation: '',
         },
       },
@@ -275,6 +278,16 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      'setting-card': {
+        'receive-default': {
+          content: 'Receive default',
+          documentation: '',
+        },
+        select: {
+          content: 'Clear this selection.',
+          documentation: '',
+        },
+      },
       snackbar: {
         changes: {
           reset: {
@@ -346,7 +359,8 @@ export const ModuleMarkdown = {
         birthdays: {
           announcement: {
             description: {
-              content: "The channel to announce when its someone's birthday.",
+              content:
+                "The channel where we announce that it's someone's birthday.",
               documentation: '',
             },
             title: {
@@ -367,7 +381,7 @@ export const ModuleMarkdown = {
         'dynamic-voice': {
           card: {
             description: {
-              content: 'This channel is configured to be dynamic master.',
+              content: 'configure your master voice growth channel',
               documentation: '',
             },
           },
@@ -387,10 +401,19 @@ export const ModuleMarkdown = {
               content: 'The channel to announce when someone leveled up.',
               documentation: '',
             },
+            message: {
+              content: 'Announcement message',
+              documentation: '',
+            },
             title: {
               content: 'Announcement',
               documentation: '',
             },
+          },
+          command: {
+            content: '',
+            documentation:
+              'Command(s)\nAll responses from the "/xp" command and context menu\'s.',
           },
           description: {
             content:
@@ -399,7 +422,8 @@ export const ModuleMarkdown = {
           },
           leaderboard: {
             description: {
-              content: 'The channel to send ones a week a leaderboard in.',
+              content:
+                'The channel where we send a leaderboard message once a week.',
               documentation: '',
             },
             title: {
@@ -413,7 +437,7 @@ export const ModuleMarkdown = {
           },
           nickname: {
             description: {
-              content: 'Enable nicknaming your users with their level.',
+              content: 'Enable nicknames which include user levels.',
               documentation: '',
             },
             title: {
@@ -424,6 +448,24 @@ export const ModuleMarkdown = {
           title: {
             content: 'Leveling',
             documentation: '',
+          },
+          word: {
+            level: {
+              content: 'Word: Level',
+              documentation: '',
+            },
+            levels: {
+              content: 'Word: Levels',
+              documentation: '',
+            },
+            point: {
+              content: 'Word: Point',
+              documentation: '',
+            },
+            points: {
+              content: 'Word: Points',
+              documentation: '',
+            },
           },
         },
         'voice-topics': {

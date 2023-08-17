@@ -156,35 +156,37 @@ export function Select({
               Close
             </span>
           </span>
-          <ul className={`${styles.options} options`}>
-            {options &&
-              options.map((option, i) => (
-                <li
-                  key={i}
-                  className={`${styles.option} option ${
-                    typeof option.key === 'string'
-                      ? ''
-                      : styles['option--with-description']
-                  } ${
-                    option.value === selectValue && styles['option--active']
-                  }`}
-                  onClick={() => handleChange(option.value)}
-                >
-                  {typeof option.key === 'string' ? (
-                    option.key
-                  ) : (
-                    <>
-                      <span className={styles['option__title']}>
-                        {option.key.title}
-                      </span>
-                      <span className={styles['option__description']}>
-                        {option.key.description}
-                      </span>
-                    </>
-                  )}
-                </li>
-              ))}
-          </ul>
+          <div className={`${styles['options-container']} options-container`}>
+            <ul className={`${styles.options} options`}>
+              {options &&
+                options.map((option, i) => (
+                  <li
+                    key={i}
+                    className={`${styles.option} option ${
+                      typeof option.key === 'string'
+                        ? ''
+                        : styles['option--with-description']
+                    } ${
+                      option.value === selectValue && styles['option--active']
+                    }`}
+                    onClick={() => handleChange(option.value)}
+                  >
+                    {typeof option.key === 'string' ? (
+                      option.key
+                    ) : (
+                      <>
+                        <span className={styles['option__title']}>
+                          {option.key.title}
+                        </span>
+                        <span className={styles['option__description']}>
+                          {option.key.description}
+                        </span>
+                      </>
+                    )}
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
       </label>
     </>
