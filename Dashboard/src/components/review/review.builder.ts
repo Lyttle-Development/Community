@@ -99,11 +99,47 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',
   },
+  [changeKeys.modulesLevelsWordLevel.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordPoint.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.modulesLevelsWordPoints.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
   [changeKeys.moduleLevelsLevelUp.key]: {
     query: reviewBuilderMutations.updateGuildModuleLevel,
     variable: 'enabled',
   },
   [changeKeys.moduleLevelsLevelUpText.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbers.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersRecentLevels.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersPoints.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsNicknameNumbersRecentPoints.key]: {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
@@ -126,6 +162,30 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     variable: 'nicknames',
   },
   [changeKeys.moduleLevelsNicknameText.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandFailed.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOther.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthers.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthersAhead.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthersBehind.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandYourself.key]: {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
@@ -182,8 +242,9 @@ export function reviewBuilder(
     }
 
     // If the query requires a guild id, add it
-    const value = change.current;
-    console.log(value);
+    let value = change.current;
+    // fix \n to \\n
+    if (typeof value === 'string') value = value.replace(/\n/g, '\\n');
 
     // If the value is null, continue the loop.
     if (value === null) continue;

@@ -56,7 +56,9 @@ export class DiscordService {
     );
 
     const guild = ((await result.json()) ?? {}) as APIGuild;
-    await this.cacheManager.set(cacheKey, guild, cacheTime);
+    if (result.status === 200) {
+      await this.cacheManager.set(cacheKey, guild, cacheTime);
+    }
 
     return guild;
   }
@@ -84,7 +86,9 @@ export class DiscordService {
     const guildChannels = ((await result.json()) ??
       []) as RESTGetAPIGuildChannelsResult;
     if (!guildChannels || !Array.isArray(guildChannels)) return [];
-    await this.cacheManager.set(cacheKey, guildChannels, cacheTime);
+    if (result.status === 200) {
+      await this.cacheManager.set(cacheKey, guildChannels, cacheTime);
+    }
 
     return guildChannels;
   }
@@ -149,7 +153,9 @@ export class DiscordService {
 
     const guilds = ((await result.json()) ??
       []) as RESTGetAPICurrentUserGuildsResult;
-    await this.cacheManager.set(cacheKey, guilds, cacheTime);
+    if (result.status === 200) {
+      await this.cacheManager.set(cacheKey, guilds, cacheTime);
+    }
     return guilds;
   }
 

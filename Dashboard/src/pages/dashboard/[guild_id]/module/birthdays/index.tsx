@@ -73,7 +73,7 @@ export function getBirthdaysConfig({
 const keyBday = 'Activity.birth-day.txt.announcement';
 const msgBday = getDocumentation(keyBday);
 const varBday = getVariables(
-  ContentConfigs.ModuleConfigActivityLevelsEventLevelUp,
+  ContentConfigs.ModuleConfigActivityBirthDayTxtAnnouncement,
 );
 
 const birthdayQuery = gql`
