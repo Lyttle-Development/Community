@@ -72,32 +72,35 @@ export const ModuleMarkdown = {
           failed: {
             content:
               "**Oh no!**\nIt looks like we did not have the user(s) you were looking for...\nThe user(s) you gave me were not in our record or did not have the data we need...\nI'm so sorry, try with other users or tell your friend(s) to be more active xD!",
-            documentation: '',
+            documentation:
+              'Failed\nThis message is returned when the command fails.',
           },
           other: {
             content:
               '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
-            documentation: '',
+            documentation:
+              'Other\nMessage received when getting xp for other user.',
           },
           others: {
             content:
               '{levelsUnit}: **{levels}**\n{pointsUnit}: **{points}**\n**{neededPointsNextLevel}** {pointsUnit} more for level **{nextLevel}**!\nLeveling difficulty is **{timesHarder}** times bigger...\n\n{stateText}',
-            documentation: '',
+            documentation:
+              'Others\nMessage received when checking stats between 2 members.',
           },
           'others-ahead': {
             content:
               'Is {levels} {levelsUnit} or {points} {pointsUnit} **ahead** 🏃',
-            documentation: '',
+            documentation: 'Others: Ahead\nThe message for the ahead user',
           },
           'others-behind': {
             content:
               'Is {levels} {levelsUnit} or {points} {pointsUnit} **behind** 🚶',
-            documentation: '',
+            documentation: 'Others: Behind\nThe message for the behind user',
           },
           yourself: {
             content:
               'You currently have **{levels} {levelsUnit}** or to be more exact, **{points}** experience {pointsUnit}. 🪙\nYou need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than your first level ever... 📈',
-            documentation: '',
+            documentation: 'Yourself\nMessage when getting own xp.',
           },
         },
       },
@@ -406,6 +409,11 @@ export const ModuleMarkdown = {
               content: 'Announcement',
               documentation: '',
             },
+          },
+          command: {
+            content: '',
+            documentation:
+              'Command(s)\nAll responses from the "/xp" command and context menu\'s.',
           },
           description: {
             content:

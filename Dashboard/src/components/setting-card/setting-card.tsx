@@ -117,8 +117,8 @@ export function SettingCard({
     (enabled && (changes[enabled?.key]?.current as boolean)) ??
     // Get from store
     enabled?.state ??
-    // Default to false
-    false;
+    // Default to true
+    true;
 
   useEffect(() => {
     if (isEnabled) {
@@ -157,7 +157,7 @@ export function SettingCard({
       <Component.Markdown className={styles.description}>
         {description}
       </Component.Markdown>
-      {nonFlexSubItems && (
+      {nonFlexSubItems && nonFlexSubItems.length > 0 && (
         <ul
           className={`${styles['sub-items']} ${
             isEnabled && styles['sub-items--enabled']
@@ -171,7 +171,7 @@ export function SettingCard({
             ))}
         </ul>
       )}
-      {flexSubItems && (
+      {flexSubItems && flexSubItems.length > 0 && (
         <ul
           className={`${styles['sub-items']} ${
             isEnabled && styles['sub-items--enabled']

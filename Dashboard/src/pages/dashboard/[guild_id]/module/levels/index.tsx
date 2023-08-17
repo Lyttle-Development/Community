@@ -21,6 +21,28 @@ import { NumberStyle } from '../../../../../../../Content/content/modules/Activi
 import { SettingCardSelectItemOptions } from '@lyttledev-dashboard/components/setting-card/components/select';
 import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
 
+const levelsQuery = gql`
+  query GetLevels($guildId: String!) {
+    guild(id: $guildId) {
+      guildId
+      moduleLevel {
+        enabled
+        nicknames
+        leaderboardChannelId
+        announcementChannelId
+      }
+      translations {
+        key
+        value
+      }
+      discord {
+        guildChannels
+        guildTextChannels
+      }
+    }
+  }
+`;
+
 // Variables:
 const pfx = pagesPrefix + 'module.levels.';
 
@@ -141,6 +163,9 @@ const keyNicknameRecentPoints =
   'Activity.levels.txt.nickname-numbers.recent-points';
 const msgNicknameRecentPoints = getMessage(keyNicknameRecentPoints);
 
+const keyCommand = 'Dashboard.pages.module.levels.command';
+const msgCommand = getDocumentation(keyCommand);
+
 const numberKeys = Object.keys(
   ContentConfigs.ModuleConfigActivityLevelsTxtNicknameNumbersLevels
     .NUMBER_TYPES,
@@ -165,27 +190,43 @@ const keyUnitPoints = 'Activity.levels.unit.points';
 const keyLevelUpMessage = pfx + 'announcement.message';
 const msgLevelUpMessage = getMessage(keyLevelUpMessage);
 
-const levelsQuery = gql`
-  query GetLevels($guildId: String!) {
-    guild(id: $guildId) {
-      guildId
-      moduleLevel {
-        enabled
-        nicknames
-        leaderboardChannelId
-        announcementChannelId
-      }
-      translations {
-        key
-        value
-      }
-      discord {
-        guildChannels
-        guildTextChannels
-      }
-    }
-  }
-`;
+const keyCommandFailed = 'Activity.levels.commands.get-levels.failed';
+const msgCommandFailed = getDocumentation(keyCommandFailed);
+const varCommandFailed = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsFailed,
+);
+
+const keyCommandOther = 'Activity.levels.commands.get-levels.other';
+const msgCommandOther = getDocumentation(keyCommandOther);
+const varCommandOther = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsOther,
+);
+
+const keyCommandOthers = 'Activity.levels.commands.get-levels.others';
+const msgCommandOthers = getDocumentation(keyCommandOthers);
+const varCommandOthers = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsOthers,
+);
+
+const keyCommandOthersAhead =
+  'Activity.levels.commands.get-levels.others-ahead';
+const msgCommandOthersAhead = getDocumentation(keyCommandOthersAhead);
+const varCommandOthersAhead = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsOthersAhead,
+);
+
+const keyCommandOthersBehind =
+  'Activity.levels.commands.get-levels.others-behind';
+const msgCommandOthersBehind = getDocumentation(keyCommandOthersBehind);
+const varCommandOthersBehind = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind,
+);
+
+const keyCommandYourself = 'Activity.levels.commands.get-levels.yourself';
+const msgCommandYourself = getDocumentation(keyCommandYourself);
+const varCommandYourself = getVariables(
+  ContentConfigs.ModuleConfigActivityLevelsCommandsGetLevelsYourself,
+);
 
 function Page() {
   const authorized = useAuth();
@@ -371,7 +412,93 @@ function Page() {
       )
       .build();
 
-    setSettings([settingLevel, settingLevelUp, settingNickname]);
+    const settingCommand = new CreateSettingCard()
+      .id('0')
+      .title(msgCommand.title)
+      .description(msgCommand.description)
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandYourself.key)
+            .title(msgCommandYourself.title)
+            .description(msgCommandYourself.description)
+            .value(
+              findTranslation(data?.guild?.translations, keyCommandYourself),
+            )
+            .defaultKey(keyCommandYourself)
+            .variables(varCommandYourself),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandOther.key)
+            .title(msgCommandOthers.title)
+            .description(msgCommandOthers.description)
+            .value(findTranslation(data?.guild?.translations, keyCommandOther))
+            .defaultKey(keyCommandOther)
+            .variables(varCommandOther),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandOthers.key)
+            .title(msgCommandOthers.title)
+            .description(msgCommandOthers.description)
+            .value(findTranslation(data?.guild?.translations, keyCommandOthers))
+            .defaultKey(keyCommandOthers)
+            .variables(varCommandOthers),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandOthersAhead.key)
+            .title(msgCommandOthersAhead.title)
+            .description(msgCommandOthersAhead.description)
+            .value(
+              findTranslation(data?.guild?.translations, keyCommandOthersAhead),
+            )
+            .defaultKey(keyCommandOthersAhead)
+            .variables(varCommandOthersAhead),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandOthersBehind.key)
+            .title(msgCommandOthersBehind.title)
+            .description(msgCommandOthersBehind.description)
+            .value(
+              findTranslation(
+                data?.guild?.translations,
+                keyCommandOthersBehind,
+              ),
+            )
+            .defaultKey(keyCommandOthersBehind)
+            .variables(varCommandOthersBehind),
+        ),
+      )
+      .addSubItem((subItem) =>
+        subItem.textarea((input) =>
+          input //
+            .key(changeKeys.moduleLevelsCommandFailed.key)
+            .title(msgCommandFailed.title)
+            .description(msgCommandFailed.description)
+            .value(findTranslation(data?.guild?.translations, keyCommandFailed))
+            .defaultKey(keyCommandFailed)
+            .variables(varCommandFailed),
+        ),
+      )
+      .build();
+
+    setSettings([
+      settingLevel,
+      settingLevelUp,
+      settingNickname,
+      settingCommand,
+    ]);
   }, [authorized, guildId, data]);
 
   return (

@@ -165,6 +165,30 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
+  [changeKeys.moduleLevelsCommandFailed.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOther.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthers.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthersAhead.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandOthersBehind.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
+  [changeKeys.moduleLevelsCommandYourself.key]: {
+    query: reviewBuilderMutations.updateGuildTranslation,
+    variable: 'value',
+  },
   [changeKeys.moduleBirthday.key]: {
     query: reviewBuilderMutations.updateGuildModuleBirthday,
     variable: 'enabled',
@@ -218,7 +242,9 @@ export function reviewBuilder(
     }
 
     // If the query requires a guild id, add it
-    const value = change.current;
+    let value = change.current;
+    // fix \n to \\n
+    if (typeof value === 'string') value = value.replace(/\n/g, '\\n');
 
     // If the value is null, continue the loop.
     if (value === null) continue;

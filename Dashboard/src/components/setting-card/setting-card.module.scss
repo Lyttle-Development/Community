@@ -34,7 +34,7 @@
   }
 
   &.sub-items--enabled {
-    max-height: 100vh;
+    max-height: calc(100vh + 555rem);
   }
 
   &:focus-within {

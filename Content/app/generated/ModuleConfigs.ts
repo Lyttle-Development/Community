@@ -78,6 +78,7 @@ export * as ModuleConfigDashboardPagesModuleDynamicVoiceTitle from '../../conten
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementDescription from '../../content/modules/Dashboard/pages/module/levels/announcement/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementMessage from '../../content/modules/Dashboard/pages/module/levels/announcement/message/config';
 export * as ModuleConfigDashboardPagesModuleLevelsAnnouncementTitle from '../../content/modules/Dashboard/pages/module/levels/announcement/title/config';
+export * as ModuleConfigDashboardPagesModuleLevelsCommand from '../../content/modules/Dashboard/pages/module/levels/command/config';
 export * as ModuleConfigDashboardPagesModuleLevelsDescription from '../../content/modules/Dashboard/pages/module/levels/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardDescription from '../../content/modules/Dashboard/pages/module/levels/leaderboard/description/config';
 export * as ModuleConfigDashboardPagesModuleLevelsLeaderboardTitle from '../../content/modules/Dashboard/pages/module/levels/leaderboard/title/config';

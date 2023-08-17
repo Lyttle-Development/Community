@@ -144,6 +144,7 @@ export class CreateSettingCardInputItem {
       variables: [],
       type: SettingCardSubItems.Input,
       title: undefined,
+      description: undefined,
     };
   }
 
@@ -154,6 +155,11 @@ export class CreateSettingCardInputItem {
 
   title(title: string) {
     this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 
@@ -184,6 +190,7 @@ export class CreateSettingCardTextareaItem {
       variables: [],
       type: SettingCardSubItems.Textarea,
       title: undefined,
+      description: undefined,
     };
   }
 
@@ -194,6 +201,11 @@ export class CreateSettingCardTextareaItem {
 
   title(title: string) {
     this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 
@@ -221,6 +233,7 @@ export class CreateSettingCardSelectItem {
       key: '',
       value: '',
       title: '',
+      description: undefined,
       options: [],
       type: SettingCardSubItems.Select,
       single: true,
@@ -239,6 +252,11 @@ export class CreateSettingCardSelectItem {
 
   title(title: string) {
     this.subItem.title = title;
+    return this;
+  }
+
+  description(description: string) {
+    this.subItem.description = description;
     return this;
   }
 

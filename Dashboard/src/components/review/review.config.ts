@@ -111,6 +111,42 @@ export const changeKeys: ChangeKeys = {
     translationKey: 'Activity.levels.txt.nickname',
     url: (id: string) => `/dashboard/${id}/module/levels#nickname`,
   },
+  moduleLevelsCommandFailed: {
+    title: 'Command Failed',
+    key: 'module.level.command.failed',
+    translationKey: 'Activity.levels.commands.get-levels.failed',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
+  moduleLevelsCommandOther: {
+    title: 'Command Other',
+    key: 'module.level.command.other',
+    translationKey: 'Activity.levels.commands.get-levels.other',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
+  moduleLevelsCommandOthers: {
+    title: 'Command Others',
+    key: 'module.level.command.others',
+    translationKey: 'Activity.levels.commands.get-levels.others',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
+  moduleLevelsCommandOthersAhead: {
+    title: 'Command Others Ahead',
+    key: 'module.level.command.others.ahead',
+    translationKey: 'Activity.levels.commands.get-levels.others',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
+  moduleLevelsCommandOthersBehind: {
+    title: 'Command Others Behind',
+    key: 'module.level.command.others.behind',
+    translationKey: 'Activity.levels.commands.get-levels.others',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
+  moduleLevelsCommandYourself: {
+    title: 'Command Yourself',
+    key: 'module.level.command.yourself',
+    translationKey: 'Activity.levels.commands.get-levels.yourself',
+    url: (id: string) => `/dashboard/${id}/module/levels#command`,
+  },
   moduleBirthday: {
     title: 'Birthday module',
     key: 'module.birthday',

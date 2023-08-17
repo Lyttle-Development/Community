@@ -20,6 +20,7 @@ export interface SettingCardSelectItem {
   options: SettingCardSelectItemOptions[];
   single: boolean;
   flex?: boolean;
+  description?: string;
 }
 
 export interface SettingCardSelectProps {
