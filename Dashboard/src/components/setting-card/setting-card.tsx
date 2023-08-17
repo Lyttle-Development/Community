@@ -117,8 +117,8 @@ export function SettingCard({
     (enabled && (changes[enabled?.key]?.current as boolean)) ??
     // Get from store
     enabled?.state ??
-    // Default to false
-    false;
+    // Default to true
+    true;
 
   useEffect(() => {
     if (isEnabled) {
@@ -132,6 +132,10 @@ export function SettingCard({
 
     setHidden(true);
   }, [changes]);
+
+  const flex = subItems?.some((item) => item.flex) ?? false;
+  const nonFlexSubItems = subItems?.filter((item) => !item.flex) ?? [];
+  const flexSubItems = subItems?.filter((item) => item.flex) ?? [];
 
   return (
     <article className={styles.card}>
@@ -153,14 +157,28 @@ export function SettingCard({
       <Component.Markdown className={styles.description}>
         {description}
       </Component.Markdown>
-      {subItems && (
+      {nonFlexSubItems && nonFlexSubItems.length > 0 && (
         <ul
           className={`${styles['sub-items']} ${
             isEnabled && styles['sub-items--enabled']
           } ${hidden && styles['sub-items--hidden']}`}
         >
-          {subItems.length > 0 &&
-            subItems.map((item: SettingCardSubItem, i) => (
+          {nonFlexSubItems.length > 0 &&
+            nonFlexSubItems.map((item: SettingCardSubItem, i) => (
+              <li key={i}>
+                {SettingCardComponents[item.type]({ item, changes, change })}
+              </li>
+            ))}
+        </ul>
+      )}
+      {flexSubItems && flexSubItems.length > 0 && (
+        <ul
+          className={`${styles['sub-items']} ${
+            isEnabled && styles['sub-items--enabled']
+          } ${hidden && styles['sub-items--hidden']} ${flex && styles['flex']}`}
+        >
+          {flexSubItems.length > 0 &&
+            flexSubItems.map((item: SettingCardSubItem, i) => (
               <li key={i}>
                 {SettingCardComponents[item.type]({ item, changes, change })}
               </li>

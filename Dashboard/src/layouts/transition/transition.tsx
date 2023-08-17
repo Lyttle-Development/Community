@@ -11,7 +11,7 @@ export interface TransitionProps {
 }
 
 // const TIMEOUT = 2000;
-const TIMEOUT = 250;
+const TIMEOUT = 150;
 const gsapDuration = TIMEOUT / 1000;
 
 export function Transition({ children }: TransitionProps) {
