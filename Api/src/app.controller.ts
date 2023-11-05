@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as ExpressRequest, Response } from 'express';
-import { DiscordValidateResponse } from './auth/discord-oauth.strategy';
-import { Public } from './auth/discord.guard';
+import { DiscordValidateResponse } from './db_primary/auth/discord-oauth.strategy';
+import { Public } from './db_primary/auth/discord.guard';
 import * as process from 'process';
 
 @Controller()
