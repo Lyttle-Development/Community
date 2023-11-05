@@ -19,19 +19,6 @@ import { DiscordOauthStrategy } from './db_primary/auth/discord-oauth.strategy';
 import { DiscordOauthModule } from './db_primary/auth/discord-oauth.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { DiscordGuard } from './auth/discord.guard';
-import { GuildModuleVoiceGrowthChildModule } from './guild-module-voice-growth-child/guild-module-voice-growth-child.module';
-import { GuildActionModule } from './guild-action/guild-action.module';
-import { GuildModuleBirthdayModule } from './guild-module-birthday/guild-module-birthday.module';
-import { GuildModuleCountToNumberModule } from './guild-module-count-to-number/guild-module-count-to-number.module';
-import { GuildModuleEasterEggModule } from './guild-module-easter-egg/guild-module-easter-egg.module';
-import { DiscordModule } from './discord/discord.module';
-import { Discord } from './discord/entities/discord.entity';
-import { OpenAiModule } from './open-ai/open-ai.module';
-import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-resolved.entity';
-import { GuildStatModule } from './guild-stat/guild-stat.module';
-import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
-import { OpenAi } from './open-ai/entities/open-ai.entity';
 import { DiscordGuard } from './db_primary/auth/discord.guard';
 import { GuildModuleVoiceGrowthChildModule } from './db_primary/guild-module-voice-growth-child/guild-module-voice-growth-child.module';
 import { GuildActionModule } from './db_primary/guild-action/guild-action.module';
@@ -59,6 +46,7 @@ import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
         orphanedTypes: [Discord, GuildStatResolved, OpenAi, Migrate],
       },
     }),
+    // Primary database
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
@@ -75,7 +63,10 @@ import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
         // - Setting "synchronize: true" shouldn't be used in production - otherwise you can lose production data.
         synchronize: false,
       }),
+      useFactory: () => primaryDatabaseConfig,
     }),
+
+    // Primary database
     GuildModule,
     MemberModule,
     UserModule,
