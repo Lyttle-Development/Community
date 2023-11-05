@@ -1,1 +1,50 @@
-{}
+{
+  "action.onClientReady.deployCommands": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onClientReady.startupStatsQueue": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMemberUpdate.triggerAuditLog": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMessageCreate.levelEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.guildAuditLogEntryCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.guildMemberAdd": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.guildMemberUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.presenceUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.ready": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.userUpdate": {
+    "enabled": true,
+    "errors": 0
+  }
+}
