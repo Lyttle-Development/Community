@@ -1,13 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Migrate } from './entities/migrate.entity';
+import { ServerUserLevelService } from '../server-user-level/server-user-level.service';
 
 @Injectable()
 export class MigrateService {
-  constructor() {} // private migrateMemberModuleLevelService: MigrateMemberModuleLevelService, // @Inject(forwardRef(() => MigrateMemberModuleLevelService))
+  constructor(
+    @Inject(forwardRef(() => ServerUserLevelService))
+    private serverUserLevelService: ServerUserLevelService,
+  ) {}
 
   async migrateGuild(guildId: string): Promise<Migrate> {
-    console.log('migrateGuild');
-    // await this.migrateMemberModuleLevelService.findAllFromGuildId(guildId);
-    return { success: true, guildId: guildId, users: 0 };
+    let success = true;
+    let users = 0;
+    try {
+      // Migrate points
+      const [migratePointsSuccess, migratedUsers] =
+        await this.serverUserLevelService.migratePoints(guildId);
+      if (!migratePointsSuccess) success = false;
+      users = migratedUsers;
+    } catch (e) {
+      success = false;
+    }
+    return { success, guildId: guildId, users };
   }
 }

@@ -42,10 +42,10 @@ import { ServerEasterEggModule } from './db_migration/server-easter-egg/server-e
 import { ServerEventModule } from './db_migration/server-event/server-event.module';
 import { ServerLevelModule } from './db_migration/server-level/server-level.module';
 import { ServerUserModule } from './db_migration/server-user/server-user.module';
-import { ServerUserDailyActivity } from './db_migration/server-user-daily-activity/entities/server-user-daily-activity.entity';
 import { ServerUserLevelModule } from './db_migration/server-user-level/server-user-level.module';
 import { ServerVoiceGrowthModule } from './db_migration/server-voice-growth/server-voice-growth.module';
 import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth-child/server-voice-growth-child.module';
+import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-activity/server-user-daily-activity.module';
 
 @Module({
   imports: [
@@ -101,7 +101,7 @@ import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth
     ServerEventModule,
     ServerLevelModule,
     ServerUserModule,
-    ServerUserDailyActivity,
+    ServerUserDailyActivityModule,
     ServerUserLevelModule,
     ServerVoiceGrowthModule,
     ServerVoiceGrowthChildModule,

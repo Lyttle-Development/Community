@@ -30,6 +30,12 @@ export class MemberModuleLevelService {
     return this.memberModuleLevelRepository.save(createMemberModuleLevelInput);
   }
 
+  createBulk(
+    createMemberModuleLevelInput: CreateMemberModuleLevelInput[],
+  ): Promise<MemberModuleLevel[]> {
+    return this.memberModuleLevelRepository.save(createMemberModuleLevelInput);
+  }
+
   findAll(): Promise<MemberModuleLevel[]> {
     return this.memberModuleLevelRepository.find();
   }

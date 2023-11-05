@@ -227,12 +227,6 @@ type OpenAi {
   recommendation: String!
 }
 
-type Migrate {
-  success: Boolean
-  guildId: String
-  users: Float
-}
-
 type ServerCountToNumber {
   guildId: String!
   nextDate: Timestamp!
@@ -273,50 +267,6 @@ type ServerLevel {
   guild: Server!
 }
 
-type ServerUserDailyActivity {
-  userId: String!
-  guildId: String!
-  pointsMon: Float!
-  pointsTue: Float!
-  pointsWed: Float!
-  pointsThu: Float!
-  pointsFri: Float!
-  pointsSat: Float!
-  pointsSun: Float!
-  points: Float!
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
-  serverUser: ServerUser!
-}
-
-type ServerUserLevel {
-  userId: String!
-  guildId: String!
-  spamCheck: Float!
-  cooldownCount: Float!
-  cooldownTime: Timestamp!
-  inCall: Boolean!
-  callStart: Timestamp!
-  callAlone: Boolean!
-  points: Float!
-  pointsAvailable: Float!
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
-  serverUser: ServerUser!
-}
-
-type ServerUser {
-  userId: String!
-  guildId: String!
-  birthdayDate: Timestamp
-  birthday: Float
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
-  guild: Server!
-  serverUserDailyActivity: ServerUserDailyActivity!
-  serverUserLevel: ServerUserLevel!
-}
-
 type ServerVoiceGrowthChild {
   channelId: String!
   guildId: String!
@@ -350,6 +300,56 @@ type Server {
   serverVoiceGrowths: [ServerVoiceGrowth!]!
 }
 
+type ServerUserDailyActivity {
+  userId: String!
+  guildId: String!
+  pointsMon: Float!
+  pointsTue: Float!
+  pointsWed: Float!
+  pointsThu: Float!
+  pointsFri: Float!
+  pointsSat: Float!
+  pointsSun: Float!
+  points: Float!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  serverUser: ServerUser!
+}
+
+type ServerUser {
+  userId: String!
+  guildId: String!
+  birthdayDate: Timestamp
+  birthday: Float
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  guild: Server!
+  serverUserDailyActivity: ServerUserDailyActivity!
+  serverUserLevel: ServerUserLevel!
+}
+
+type ServerUserLevel {
+  userId: String!
+  guildId: String!
+  spamCheck: Float!
+  cooldownCount: Float!
+  cooldownTime: Timestamp!
+  inCall: Boolean!
+  callStart: Timestamp!
+  callAlone: Boolean!
+  points: Float!
+  pointsAvailable: Float!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  serverUser: ServerUser!
+}
+
+type Migrate {
+  success: Boolean
+  guildId: String
+  users: Float
+}
+
 type Query {
   guilds: [Guild!]!
   guild(id: String!): Guild!
@@ -364,7 +364,6 @@ type Query {
   guildAction(id: Int!): GuildAction!
   guildModuleCountToNumber(id: String!): GuildModuleCountToNumber!
   guildModuleEasterEgg(id: String!): GuildModuleEasterEgg!
-  findAllServerUserLevelsByGuildId(guildId: String!): [ServerUserLevel!]!
 }
 
 type Mutation {
@@ -560,8 +559,8 @@ input CreateMemberModuleLevelInput {
   userId: String!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1699207738929
-  callStart: Timestamp! = 1699207738929
+  cooldownTime: Timestamp! = 1699209740266
+  callStart: Timestamp! = 1699209740266
   points: Int! = 0
 }
 
@@ -570,8 +569,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1699207738929
-  callStart: Timestamp = 1699207738929
+  cooldownTime: Timestamp = 1699209740266
+  callStart: Timestamp = 1699209740266
   points: Int = 0
 }
 
