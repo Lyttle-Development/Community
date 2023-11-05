@@ -32,6 +32,20 @@ import { GuildStatResolved } from './db_primary/guild-stat-resolved/entities/gui
 import { GuildStatModule } from './db_primary/guild-stat/guild-stat.module';
 import { GuildStatResolvedModule } from './db_primary/guild-stat-resolved/guild-stat-resolved.module';
 import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
+import { MigrateModule } from './db_migration/migrate/migrate.module';
+import migrationDatabaseConfig from './migration.database';
+import primaryDatabaseConfig from './primary.database';
+import { Migrate } from './db_migration/migrate/entities/migrate.entity';
+import { ServerModule } from './db_migration/server/server.module';
+import { ServerCountToNumberModule } from './db_migration/server-count-to-number/server-count-to-number.module';
+import { ServerEasterEggModule } from './db_migration/server-easter-egg/server-easter-egg.module';
+import { ServerEventModule } from './db_migration/server-event/server-event.module';
+import { ServerLevelModule } from './db_migration/server-level/server-level.module';
+import { ServerUserModule } from './db_migration/server-user/server-user.module';
+import { ServerUserDailyActivity } from './db_migration/server-user-daily-activity/entities/server-user-daily-activity.entity';
+import { ServerUserLevelModule } from './db_migration/server-user-level/server-user-level.module';
+import { ServerVoiceGrowthModule } from './db_migration/server-voice-growth/server-voice-growth.module';
+import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth-child/server-voice-growth-child.module';
 
 @Module({
   imports: [
@@ -48,22 +62,12 @@ import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
     }),
     // Primary database
     TypeOrmModule.forRootAsync({
-      useFactory: () => ({
-        type: 'postgres',
-        host: process.env.HOST,
-        port: parseInt(process.env.TYPEORM_PORT),
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        // 1. https://www.google.com/search?q=what+does+synchronize+do+nestjs
-        // - synchronize: Indicates if database schema should be auto-created on every application launch
-        //
-        // 2. https://docs.nestjs.com/techniques/database#:~:text=WARNING,lose%20production%20data.
-        // - Setting "synchronize: true" shouldn't be used in production - otherwise you can lose production data.
-        synchronize: false,
-      }),
       useFactory: () => primaryDatabaseConfig,
+    }),
+    // Migration database
+    TypeOrmModule.forRootAsync({
+      name: 'migration',
+      useFactory: () => migrationDatabaseConfig,
     }),
 
     // Primary database
@@ -88,6 +92,19 @@ import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
     GuildStatModule,
     GuildStatResolvedModule,
     OpenAiModule,
+
+    // Migration database
+    MigrateModule,
+    ServerModule,
+    ServerCountToNumberModule,
+    ServerEasterEggModule,
+    ServerEventModule,
+    ServerLevelModule,
+    ServerUserModule,
+    ServerUserDailyActivity,
+    ServerUserLevelModule,
+    ServerVoiceGrowthModule,
+    ServerVoiceGrowthChildModule,
   ],
   controllers: [AppController],
   providers: [
