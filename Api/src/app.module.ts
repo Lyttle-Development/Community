@@ -4,19 +4,19 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GuildModule } from './guild/guild.module';
-import { MemberModule } from './member/member.module';
-import { UserModule } from './user/user.module';
-import { UserProfileModule } from './user-profile/user-profile.module';
-import { GuildTranslationModule } from './guild-translation/guild-translation.module';
-import { GuildMessageModule } from './guild-message/guild-message.module';
-import { GuildModuleLevelModule } from './guild-module-level/guild-module-level.module';
-import { GuildModuleQotdModule } from './guild-module-qotd/guild-module-qotd.module';
-import { MemberModuleLevelModule } from './member-module-level/member-module-level.module';
-import { MemberModuleLevelDayModule } from './member-module-level-day/member-module-level-day.module';
-import { GuildModuleVoiceGrowthModule } from './guild-module-voice-growth/guild-module-voice-growth.module';
-import { DiscordOauthStrategy } from './auth/discord-oauth.strategy';
-import { DiscordOauthModule } from './auth/discord-oauth.module';
+import { GuildModule } from './db_primary/guild/guild.module';
+import { MemberModule } from './db_primary/member/member.module';
+import { UserModule } from './db_primary/user/user.module';
+import { UserProfileModule } from './db_primary/user-profile/user-profile.module';
+import { GuildTranslationModule } from './db_primary/guild-translation/guild-translation.module';
+import { GuildMessageModule } from './db_primary/guild-message/guild-message.module';
+import { GuildModuleLevelModule } from './db_primary/guild-module-level/guild-module-level.module';
+import { GuildModuleQotdModule } from './db_primary/guild-module-qotd/guild-module-qotd.module';
+import { MemberModuleLevelModule } from './db_primary/member-module-level/member-module-level.module';
+import { MemberModuleLevelDayModule } from './db_primary/member-module-level-day/member-module-level-day.module';
+import { GuildModuleVoiceGrowthModule } from './db_primary/guild-module-voice-growth/guild-module-voice-growth.module';
+import { DiscordOauthStrategy } from './db_primary/auth/discord-oauth.strategy';
+import { DiscordOauthModule } from './db_primary/auth/discord-oauth.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { DiscordGuard } from './auth/discord.guard';
@@ -32,6 +32,19 @@ import { GuildStatResolved } from './guild-stat-resolved/entities/guild-stat-res
 import { GuildStatModule } from './guild-stat/guild-stat.module';
 import { GuildStatResolvedModule } from './guild-stat-resolved/guild-stat-resolved.module';
 import { OpenAi } from './open-ai/entities/open-ai.entity';
+import { DiscordGuard } from './db_primary/auth/discord.guard';
+import { GuildModuleVoiceGrowthChildModule } from './db_primary/guild-module-voice-growth-child/guild-module-voice-growth-child.module';
+import { GuildActionModule } from './db_primary/guild-action/guild-action.module';
+import { GuildModuleBirthdayModule } from './db_primary/guild-module-birthday/guild-module-birthday.module';
+import { GuildModuleCountToNumberModule } from './db_primary/guild-module-count-to-number/guild-module-count-to-number.module';
+import { GuildModuleEasterEggModule } from './db_primary/guild-module-easter-egg/guild-module-easter-egg.module';
+import { DiscordModule } from './db_primary/discord/discord.module';
+import { Discord } from './db_primary/discord/entities/discord.entity';
+import { OpenAiModule } from './db_primary/open-ai/open-ai.module';
+import { GuildStatResolved } from './db_primary/guild-stat-resolved/entities/guild-stat-resolved.entity';
+import { GuildStatModule } from './db_primary/guild-stat/guild-stat.module';
+import { GuildStatResolvedModule } from './db_primary/guild-stat-resolved/guild-stat-resolved.module';
+import { OpenAi } from './db_primary/open-ai/entities/open-ai.entity';
 
 @Module({
   imports: [
@@ -43,7 +56,7 @@ import { OpenAi } from './open-ai/entities/open-ai.entity';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
-        orphanedTypes: [Discord, GuildStatResolved, OpenAi],
+        orphanedTypes: [Discord, GuildStatResolved, OpenAi, Migrate],
       },
     }),
     TypeOrmModule.forRootAsync({
