@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GuildTranslation } from './entities/guild-translation.entity';
 import { Repository } from 'typeorm';
 import { Guild } from '../guild/entities/guild.entity';
-import { GuildService } from 'guild/guild.service';
+import { GuildService } from 'db_primary/guild/guild.service';
 
 @Injectable()
 export class GuildTranslationService {
