@@ -4,7 +4,7 @@ import type { UpdateMemberInput } from './dto/update-member.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Member } from './entities/member.entity';
 import { Repository } from 'typeorm';
-import { MemberModuleLevelService } from 'member-module-level/member-module-level.service';
+import { MemberModuleLevelService } from 'db_primary/member-module-level/member-module-level.service';
 import { UserService } from '../user/user.service';
 import { GuildService } from '../guild/guild.service';
 import { Guild } from '../guild/entities/guild.entity';

@@ -4,7 +4,7 @@ import type { UpdateMemberModuleLevelInput } from './dto/update-member-module-le
 import { MemberModuleLevel } from './entities/member-module-level.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MemberService } from 'member/member.service';
+import { MemberService } from 'db_primary/member/member.service';
 import { GuildService } from '../guild/guild.service';
 import { Guild } from '../guild/entities/guild.entity';
 import { Member } from '../member/entities/member.entity';
@@ -27,6 +27,12 @@ export class MemberModuleLevelService {
   create(
     createMemberModuleLevelInput: CreateMemberModuleLevelInput,
   ): Promise<MemberModuleLevel> {
+    return this.memberModuleLevelRepository.save(createMemberModuleLevelInput);
+  }
+
+  createBulk(
+    createMemberModuleLevelInput: CreateMemberModuleLevelInput[],
+  ): Promise<MemberModuleLevel[]> {
     return this.memberModuleLevelRepository.save(createMemberModuleLevelInput);
   }
 
