@@ -19,6 +19,7 @@ export class MigrateService {
       if (!migratePointsSuccess) success = false;
       users = migratedUsers;
     } catch (e) {
+      console.error('Error while migrating:', guildId + '\nError:', e);
       success = false;
     }
     return { success, guildId: guildId, users };
