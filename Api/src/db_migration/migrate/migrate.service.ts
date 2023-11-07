@@ -10,7 +10,6 @@ export class MigrateService {
   ) {}
 
   async migrateGuild(guildId: string): Promise<Migrate> {
-    const errors = [];
     let success = true;
     let users = 0;
     try {
@@ -20,10 +19,9 @@ export class MigrateService {
       if (!migratePointsSuccess) success = false;
       users = migratedUsers;
     } catch (e) {
-      errors.push(e);
       console.log('Error while migrating:', guildId + '\nError:', e);
       success = false;
     }
-    return { success, guildId: guildId, users, errors };
+    return { success, guildId: guildId, users };
   }
 }

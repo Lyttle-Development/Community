@@ -28,6 +28,12 @@ export class MemberService {
     return this.memberRepository.save(createMemberInput);
   }
 
+  createBulk(
+    createMemberInput: CreateMemberInput[],
+  ): Promise<CreateMemberInput[]> {
+    return this.memberRepository.save(createMemberInput);
+  }
+
   findAll(): Promise<Member[]> {
     return this.memberRepository.find();
   }
