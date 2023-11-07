@@ -45,6 +45,7 @@ export class ServerUserLevelService {
       console.log(res);
       migratedUsers = res.length;
     } catch (e) {
+      console.log('Error while migrating points:', guildId + '\nError:', e);
       success = false;
     }
     return [success, migratedUsers];
