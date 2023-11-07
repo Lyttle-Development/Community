@@ -61,7 +61,6 @@ export class ServerUserLevelService {
           } as MemberModuleLevel;
         }),
       );
-      console.log(res);
       migratedUsers = res.length;
     } catch (e) {
       console.log('Error while migrating points:', guildId + '\nError:', e);
