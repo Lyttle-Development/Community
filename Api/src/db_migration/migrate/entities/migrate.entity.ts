@@ -10,7 +10,4 @@ export class Migrate {
 
   @Field(() => Number, { nullable: true })
   users: number;
-
-  @Field(() => [String], { nullable: true })
-  errors: string[];
 }
