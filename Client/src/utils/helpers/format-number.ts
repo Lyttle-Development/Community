@@ -3,5 +3,9 @@
  * @param value
  */
 export function formatNumber(value: number | string): string {
+  if (typeof value === 'string') {
+    value = parseFloat(value);
+  }
+  value = Math.round(value);
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
