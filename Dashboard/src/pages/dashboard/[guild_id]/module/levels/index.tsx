@@ -332,6 +332,25 @@ function Page() {
             .variables(varLevelUp),
         ),
       )
+      .build();
+
+    const settingNickname = new CreateSettingCard()
+      .id('0')
+      .title(msgNickname.title)
+      .description(msgNickname.description)
+      .enabled(
+        data?.guild?.moduleLevel?.nicknames ?? false,
+        changeKeys.moduleLevelsNickname.key,
+      )
+      .addSubItem((subItem) =>
+        subItem.input((input) =>
+          input //
+            .key(changeKeys.moduleLevelsNicknameText.key)
+            .value(findTranslation(data?.guild?.translations, keyNickname))
+            .defaultKey(keyNickname)
+            .variables(varNickname),
+        ),
+      )
       .addFlexSubItem((subItem) =>
         subItem
           .select((select) =>
@@ -390,25 +409,6 @@ function Page() {
               )
               .options(numberOptions),
           ),
-      )
-      .build();
-
-    const settingNickname = new CreateSettingCard()
-      .id('0')
-      .title(msgNickname.title)
-      .description(msgNickname.description)
-      .enabled(
-        data?.guild?.moduleLevel?.nicknames ?? false,
-        changeKeys.moduleLevelsNickname.key,
-      )
-      .addSubItem((subItem) =>
-        subItem.input((input) =>
-          input //
-            .key(changeKeys.moduleLevelsNicknameText.key)
-            .value(findTranslation(data?.guild?.translations, keyNickname))
-            .defaultKey(keyNickname)
-            .variables(varNickname),
-        ),
       )
       .build();
 

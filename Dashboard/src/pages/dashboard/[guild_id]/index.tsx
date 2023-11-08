@@ -2,7 +2,7 @@ import { Layout } from '@lyttledev-dashboard/layouts';
 import { Component } from '@lyttledev-dashboard/components';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
@@ -46,6 +46,7 @@ const OpenAiQuery = gql`
 `;
 
 function Page() {
+  const [disableTip, setDisableTip] = useState(false);
   const guildId = useGuild();
   const title = usePage(pagesPrefix + 'overview.title');
 
@@ -59,7 +60,9 @@ function Page() {
   const msgActivity = getMessage(pfx + 'activity');
 
   const [fetch, { data }] = useLazyQuery(GuildQuery);
-  const [fetchOpenAi, { data: dataOpenAi }] = useLazyQuery(OpenAiQuery);
+  const [fetchOpenAi, { data: dataOpenAi }] = useLazyQuery(OpenAiQuery, {
+    onError: () => setDisableTip(true),
+  });
 
   useEffect(() => {
     if (!guildId) return;
@@ -126,11 +129,19 @@ function Page() {
     <>
       <Component.Title>{title}</Component.Title>
       <Component.Container>
-        <Component.TipCard
-          title={msgRecommendation}
-          description={dataOpenAi?.guild?.openAi?.recommendation ?? null}
-          tipKey={'overview.recommendation'}
-        />
+        {disableTip ? (
+          <Component.TipCard
+            title={msgRecommendation}
+            description={'Unable to fetch recommendation from OpenAI...'}
+            tipKey={'overview.recommendation'}
+          />
+        ) : (
+          <Component.TipCard
+            title={msgRecommendation}
+            description={dataOpenAi?.guild?.openAi?.recommendation ?? null}
+            tipKey={'overview.recommendation'}
+          />
+        )}
         <Component.Stats
           stats={[
             {

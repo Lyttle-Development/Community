@@ -1,1 +1,1 @@
-Reset
+Clear changes

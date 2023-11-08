@@ -13,7 +13,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
       const locationsMsg = locations
         ? `\n - Column: ${locations[0]?.column}\n - Line: ${locations[0]?.line}`
         : '';
-      window.alert('Error: ' + message);
+      // window.alert('Error: ' + message);
       console.error(
         `[GraphQL error]:\n - Message: ${message}${locationsMsg}\n - Path: ${path}`,
       );
