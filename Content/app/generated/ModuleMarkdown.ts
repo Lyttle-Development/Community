@@ -66,6 +66,11 @@ export const ModuleMarkdown = {
         },
       },
     },
+    'dynamic-voice': {
+      txt: {
+        'channel-names': {},
+      },
+    },
     levels: {
       commands: {
         'get-levels': {
@@ -118,6 +123,7 @@ export const ModuleMarkdown = {
             'Nicknames\nGive members a nickname when they level up.\nHappens when changing name or leveling up.',
         },
         'nickname-numbers': {
+          exp: {},
           levels: {
             content: 'superscript',
             documentation: '',
@@ -126,6 +132,7 @@ export const ModuleMarkdown = {
             content: 'subscript',
             documentation: '',
           },
+          'recent-exp': {},
           'recent-levels': {
             content: 'serif',
             documentation: '',
@@ -291,11 +298,11 @@ export const ModuleMarkdown = {
       snackbar: {
         changes: {
           reset: {
-            content: 'Reset',
+            content: 'Clear changes',
             documentation: '',
           },
           review: {
-            content: 'Review and save',
+            content: 'Review changes and save',
             documentation: '',
           },
           title: {
@@ -309,7 +316,7 @@ export const ModuleMarkdown = {
             documentation: '',
           },
           reset: {
-            content: 'Yes, Reset!',
+            content: 'Yes, clear changes!',
             documentation: '',
           },
           title: {

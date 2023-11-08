@@ -1,1 +1,1 @@
-Yes, Reset!
+Yes, clear changes!
