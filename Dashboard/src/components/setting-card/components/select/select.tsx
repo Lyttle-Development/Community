@@ -16,6 +16,7 @@ export interface SettingCardSelectItem {
   type: SettingCardSubItems.Select;
   key: string;
   value: string;
+  values: string[];
   title: string;
   options: SettingCardSelectItemOptions[];
   single: boolean;
@@ -33,10 +34,8 @@ const keyClear = 'Dashboard.components.setting-card.select';
 const msgClear = getMessage(keyClear);
 
 export function Select({ item, changes, change }: SettingCardSelectProps) {
-  const { key, value, title, options, single = true } = item;
-  const [amount, setAmount] = useState(
-    (changes[`${key}[1]`]?.amount as number) ?? 1,
-  );
+  const { key, value, values = [], title, options, single = true } = item;
+  const [amount, setAmount] = useState(values.length + 1 ?? 1);
 
   const more: string[] = [];
   for (let i = 1; i <= amount; i++) {
@@ -63,16 +62,34 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
     change(value, key, newValue, JSONOptions);
   };
 
-  const withEmptyOptions = [
-    { key: { title: '-', description: msgClear }, value: '' },
-    ...options,
-  ];
+  const allMoreValues = more.map((k) => changes[k]?.current);
+
+  const ourChanges = more.map((k) => changes[k]?.current);
+  const emptyChanges = ourChanges.filter((v) => !v);
+  const ourOriginalChanges = more.map((k) => changes[k]?.original);
+  const notUpdatedNormalValues = values.filter(
+    (v) => !ourOriginalChanges.includes(v),
+  );
+
+  const selects = emptyChanges.length - notUpdatedNormalValues.length;
+  if (selects < 1) {
+    const newAmount = amount + 1;
+    setAmount(newAmount);
+  }
+
+  const withEmptyOptions = options.filter(
+    (option) =>
+      ![...allMoreValues, ...notUpdatedNormalValues].includes(option.value),
+  );
 
   return (
     <>
       {single && (
         <Component.Select
-          options={withEmptyOptions}
+          options={[
+            { key: { title: '-', description: msgClear }, value: '' },
+            ...withEmptyOptions,
+          ]}
           value={(changes[key]?.current as string) ?? value}
           label={title}
           onChange={updateValue}
@@ -85,11 +102,25 @@ export function Select({ item, changes, change }: SettingCardSelectProps) {
           {more.map((moreKey, i) => (
             <Component.Select
               key={i}
-              options={withEmptyOptions}
-              value={(changes[moreKey]?.current as string) ?? value}
+              options={[
+                { key: { title: '-', description: msgClear }, value: '' },
+                ...withEmptyOptions,
+                ...([
+                  options.find(
+                    (option) =>
+                      option.value ===
+                      (changes[moreKey]?.current ?? values[i] ?? ''),
+                  ) ?? null,
+                ].filter((option) => option) as SettingCardSelectItemOptions[]),
+              ]}
+              value={
+                (changes[moreKey]?.current as string) ??
+                (values.length > 0 ? values[i] : value) ??
+                ''
+              }
               label={title}
               onChange={(newValue) => {
-                change('', moreKey, newValue);
+                change(values[i] ?? '', moreKey, newValue);
               }}
               color={SelectColor.Yellow}
             />

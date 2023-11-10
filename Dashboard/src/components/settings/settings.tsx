@@ -9,6 +9,7 @@ export interface SettingsProps {
 }
 
 export function Settings({ settings }: SettingsProps) {
+  console.log('settings', settings);
   return (
     <ul className={styles.settings}>
       {settings.map((setting, i) => (

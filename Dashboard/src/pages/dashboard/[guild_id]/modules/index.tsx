@@ -9,6 +9,8 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { gql, useLazyQuery } from '@apollo/client';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
+import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/dashboard/[guild_id]/module/dynamic-voice';
+import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/dashboard/[guild_id]/module/voice-topics';
 
 const modulesQuery = gql`
   query Modules($id: String!) {
@@ -73,8 +75,8 @@ function Page() {
         enabled: bday.enabled ?? false,
         announcementChannelId: bday.birthdayChannelId ?? null,
       }),
-      // getDynamicVoiceConfig(guildId),
-      // getVoiceTopicsConfig(guildId),
+      getDynamicVoiceConfig(guildId),
+      getVoiceTopicsConfig(guildId),
     ]);
   }, [guildId, data, authorized]);
 

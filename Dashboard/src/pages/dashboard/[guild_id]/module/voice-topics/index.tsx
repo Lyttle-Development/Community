@@ -8,6 +8,10 @@ import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { Component } from '@lyttledev-dashboard/components';
+import { gql, useLazyQuery } from '@apollo/client';
+import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
+import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
+import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
 
 interface VoiceTopicsChannel {
   id: string;
@@ -53,55 +57,80 @@ export const getVoiceTopicsConfig = (
   };
 };
 
+const voiceTopicsQuery = gql`
+  query GetVoiceTopics($guildId: String!) {
+    guild(id: $guildId) {
+      guildId
+      moduleVoiceGrowth {
+        enabled
+        channelId
+        manual
+      }
+      translations {
+        key
+        value
+      }
+      discord {
+        guildChannels
+        guildTextChannels
+      }
+    }
+  }
+`;
+
 function Page() {
-  const [settings, setSettings] = useState<CardSettings | null>(null);
+  const authorized = useAuth();
+  const guildId = useGuild();
   const title = usePage(pagesPrefix + 'module.levels.title');
+  const [settings, setSettings] = useState<CardSettings | null>(null);
+  const [fetch, { data }] = useLazyQuery(voiceTopicsQuery);
 
   useEffect(() => {
+    if (!authorized || !guildId) return;
+    if (!data) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+    if (data?.guild?.guildId !== guildId) {
+      void fetch({ variables: { guildId } });
+      return;
+    }
+
+    const guildVoiceTopics = (data?.guild?.moduleVoiceGrowth ?? []).filter(
+      ({ manual }: { manual: boolean }) => manual,
+    );
+
+    const channels = data?.guild?.discord?.guildTextChannels ?? [];
+
+    const guildVoiceTopicsChannelIds = guildVoiceTopics.map(
+      ({ channelId }: { channelId: string }) => channelId,
+    );
+
     const settingsChannels = new CreateSettingCard()
       .id('0')
       .title('Channels')
-      .description('Whather')
-      .enabled(false, 'eeeee')
-      .addSubItem((subItem) =>
+      .description('xx')
+      .addSubItem((subItem) => {
         subItem.select((select) =>
           select //
-            .key('test')
-            .title('Channel')
-            .value('')
+            .key('idk')
+            .title('Voice Topic Channel')
+            .values(guildVoiceTopicsChannelIds)
             .single(false)
-            .options([
-              {
-                key: { title: 'General', description: '#off-topic' },
-                value: '0',
-              },
-              { key: { title: 'General', description: '#roles' }, value: '1' },
-              {
-                key: { title: 'Voice Channels', description: '#select-vc' },
-                value: '2',
-              },
-              {
-                key: { title: 'Voice Channels', description: '#no-mic' },
-                value: '3',
-              },
-              {
-                key: { title: 'Voice Channels', description: '#commands' },
-                value: '4',
-              },
-              // { key: '1', value: '1' },
-              // { key: '2', value: '2' },
-              // { key: '3', value: '3' },
-              // { key: '4', value: '4' },
-              // { key: '5', value: '5' },
-              // { key: '6', value: '6' },
-              // { key: '7', value: '7' },
-            ]),
-        ),
-      )
+            .flex(true)
+            .options(
+              getChannelOptions(
+                data?.guild?.discord?.guildChannels ?? [],
+                channels,
+              ),
+            ),
+        );
+        return subItem;
+      })
       .build();
 
     setSettings([settingsChannels]);
-  }, []);
+  }, [authorized, guildId, data]);
 
   return (
     <>
