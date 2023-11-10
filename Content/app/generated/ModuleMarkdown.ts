@@ -82,7 +82,7 @@ export const ModuleMarkdown = {
           },
           other: {
             content:
-              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
             documentation:
               'Other\nMessage received when getting xp for other user.',
           },
