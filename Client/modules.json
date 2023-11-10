@@ -7,6 +7,14 @@
     "enabled": true,
     "errors": 0
   },
+  "action.onGuildMemberUpdate.getStaff": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildMemberUpdate.levelNickname": {
+    "enabled": true,
+    "errors": 0
+  },
   "action.onGuildMemberUpdate.triggerAuditLog": {
     "enabled": true,
     "errors": 0

@@ -20,6 +20,7 @@ import {
 } from '../../rate-limit';
 import { executorModules } from '../../executer';
 import {
+  cacheGuilds,
   channelsBeingChecked,
   mostRecentAuditLogs,
   nicknamesBeingSet,
@@ -108,6 +109,7 @@ function sendStatsToQueue() {
   const totalNicknamesBeingSet = Object.keys(nicknamesBeingSet).length;
   const totalAuditLogs = mostRecentAuditLogs.length;
   const totalBirthDaysBeingSet = Object.keys(setBirthDayCache).length;
+  const totalStaffGuildsCached = cacheGuilds.length;
 
   // get online time in hours
   const onlineTime =
@@ -213,6 +215,9 @@ function sendStatsToQueue() {
 > - **Total audit logs being kept**: \`${formatNumber(totalAuditLogs)}\`
 > - **Nicknames being set**: \`${formatNumber(totalNicknamesBeingSet)}\`
 > - **Birthdays being set**: \`${formatNumber(totalBirthDaysBeingSet)}\`
+> - **Staffmembers being checked/saved to stats**: \`${formatNumber(
+      totalStaffGuildsCached,
+    )}\`
 
 \`\`\` \`\`\`** **`;
 

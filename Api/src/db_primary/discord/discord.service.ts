@@ -8,6 +8,7 @@ import {
   RESTAPIPartialCurrentUserGuild,
   RESTGetAPICurrentUserGuildsResult,
   RESTGetAPIGuildChannelsResult,
+  RESTGetAPIUserResult,
 } from 'discord-api-types/v10';
 import { DashboardServer, DashboardServers, getIcon } from './utils';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
@@ -35,6 +36,28 @@ export class DiscordService {
 
   create(guildId: string | null = null): Discord {
     return { guildId } as Discord;
+  }
+
+  async getUser(token: string): Promise<RESTGetAPIUserResult> {
+    if (!token) return null;
+
+    const cacheKey = `discord:user:${token}:id`;
+    const cachedUser = await this.cacheManager.get(cacheKey);
+    if (cachedUser) return cachedUser as RESTGetAPIUserResult;
+
+    const result = await fetch(`${DiscordApiBaseUrl}/users/@me`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    const user = (await result.json()) as RESTGetAPIUserResult;
+    if (result.status === 200) {
+      await this.cacheManager.set(cacheKey, user, cacheTime);
+    }
+
+    return user;
   }
 
   async getGuild(guildId: string): Promise<APIGuild> {
@@ -200,6 +223,8 @@ export class DiscordService {
   async getDashboardGuilds(token: string): Promise<DashboardServers> {
     if (!token) return null;
 
+    const user = await this.getUser(token);
+
     // Discord guilds
     const {
       ownedGuilds: discordOwnedGuilds,
@@ -214,9 +239,11 @@ export class DiscordService {
     );
 
     // Api guilds
-    const apiGuilds: Guild[] = await this.guildService.findAllByGuildIds(
-      userPermittedGuildsIds,
-    );
+    const apiGuilds: Guild[] =
+      await this.guildService.findAllBuildsByStaffMemberId(
+        userPermittedGuildsIds,
+        user.id,
+      );
 
     // Setup servers
     const setupServers: DashboardServers = [];

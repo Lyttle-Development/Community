@@ -28,6 +28,12 @@ export class GuildModuleVoiceGrowthService {
     return this.guildModuleVoiceGrowthRepository.find();
   }
 
+  findAllByGuildId(guildId: string): Promise<GuildModuleVoiceGrowth[]> {
+    return this.guildModuleVoiceGrowthRepository.find({
+      where: { guildId },
+    });
+  }
+
   findOne(id: string): Promise<GuildModuleVoiceGrowth> {
     return this.guildModuleVoiceGrowthRepository.findOne({
       where: { guildId: id },
