@@ -15,8 +15,12 @@ interface ReviewBuilderMutationOptions {
   requiresGuildId: boolean;
   translation?: boolean;
   variablesName: string;
+  variableEnable?: boolean;
   variables: {
     [key: string]: QueryVariableType;
+  };
+  lockedVariables?: {
+    [key: string]: string | boolean | number | null;
   };
 }
 
@@ -36,6 +40,7 @@ export interface ReviewBuilderQuery {
   [key: string]: {
     name: string;
     variablesName: string;
+    variableEnable: boolean;
     variables: {
       [key: string]: string | boolean | number | null;
     };
@@ -86,6 +91,20 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
       guildId: QueryVariableType.String,
       key: QueryVariableType.String,
       value: QueryVariableType.String,
+    },
+  },
+  createGuildModuleVoiceGrowth: {
+    name: 'createGuildModuleVoiceGrowth',
+    requiresGuildId: true,
+    variableEnable: true,
+    variablesName: 'createGuildModuleVoiceGrowthInput',
+    variables: {
+      guildId: QueryVariableType.String,
+      enabled: QueryVariableType.Boolean,
+      channelId: QueryVariableType.String,
+    },
+    lockedVariables: {
+      manual: true,
     },
   },
 };
@@ -202,6 +221,10 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
+  [changeKeys.moduleVoiceTopicsChannels.key]: {
+    query: reviewBuilderMutations.createGuildModuleVoiceGrowth,
+    variable: 'channelId',
+  },
 };
 
 const reviewBuilderInfoKeys = Object.keys(reviewBuilderInfo);
@@ -251,13 +274,22 @@ export function reviewBuilder(
 
     // if no object is set yet, create it
     if (!query[queryName]?.name) {
+      const enabled = !(value === '' || value === null);
       query[queryName] = {
         name: queryName,
         variablesName: builderInfo.query.variablesName,
+        variableEnable: builderInfo.query.variableEnable ?? false,
         variables: {
           [builderInfo.variable]: value,
+          enabled,
         },
       };
+      if (builderInfo.query.lockedVariables) {
+        query[queryName].variables = {
+          ...query[queryName].variables,
+          ...builderInfo.query.lockedVariables,
+        };
+      }
     } else {
       // If the object is set, add the variable
       query[queryName].variables[builderInfo.variable] = value;

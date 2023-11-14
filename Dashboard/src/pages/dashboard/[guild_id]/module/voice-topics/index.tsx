@@ -12,6 +12,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
+import { changeKeys } from '@lyttledev-dashboard/components/review';
 
 interface VoiceTopicsChannel {
   id: string;
@@ -113,7 +114,7 @@ function Page() {
       .addSubItem((subItem) => {
         subItem.select((select) =>
           select //
-            .key('idk')
+            .key(changeKeys.moduleVoiceTopicsChannels.key)
             .title('Voice Topic Channel')
             .values(guildVoiceTopicsChannelIds)
             .single(false)
