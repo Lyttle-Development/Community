@@ -49,6 +49,11 @@ export function SettingCard({
     value: Change,
     store = null,
   ) => {
+    if (initial === value) {
+      console.log('remove');
+      app?.change({ remove: key });
+      return;
+    }
     app?.change({
       update: {
         key,

@@ -20,6 +20,7 @@ export interface SelectProps {
   className?: string;
   classNameDisabled?: string;
   color?: SelectColor;
+  onlyOnChange?: boolean;
 }
 
 export function Select({
@@ -32,6 +33,7 @@ export function Select({
   className,
   classNameDisabled,
   color = SelectColor.Purple,
+  onlyOnChange = false,
 }: SelectProps) {
   const [selectValue, setValue] = useState(value ?? '');
   const [startClose, setStartClose] = useState(false);
@@ -41,6 +43,8 @@ export function Select({
   const handleChange = (newValue: string) => {
     setStartClose(true);
     setValue(newValue);
+
+    if (onlyOnChange) setValue(value ?? '');
     if (!onChange) return;
     onChange(newValue);
   };
