@@ -42,7 +42,7 @@ export const getVoiceTopicsConfig = (
         id,
         route: `/dashboard/${guildId}/module/dynamic-voice#channel-${id}`,
         description: msgCardDescription,
-        active,
+        active: null,
         title: '#' + title,
       }),
     ) ?? [];
@@ -97,9 +97,9 @@ function Page() {
       return;
     }
 
-    const guildVoiceTopics = (data?.guild?.moduleVoiceGrowth ?? []).filter(
-      ({ manual }: { manual: boolean }) => manual,
-    );
+    const guildVoiceTopics = (data?.guild?.moduleVoiceGrowth ?? [])
+      .filter(({ manual }: { manual: boolean }) => manual)
+      .filter(({ enabled }: { enabled: boolean }) => enabled);
 
     const channels = data?.guild?.discord?.guildTextChannels ?? [];
 
@@ -115,7 +115,7 @@ function Page() {
         subItem.select((select) =>
           select //
             .key(changeKeys.moduleVoiceTopicsChannels.key)
-            .title('Voice Topic Channel')
+            .title('Text Channel')
             .values(guildVoiceTopicsChannelIds)
             .single(false)
             .flex(true)

@@ -97,7 +97,7 @@ export function ModuleCard({
                   href={item.route}
                   className={styles['sub-item']}
                 >
-                  {item.id !== null && (
+                  {item.id !== null && item.active !== null && (
                     <>
                       <Component.LightSwitch
                         active={

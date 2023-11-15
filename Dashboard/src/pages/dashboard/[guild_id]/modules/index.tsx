@@ -29,6 +29,14 @@ const modulesQuery = gql`
         enabled
         birthdayChannelId
       }
+      moduleVoiceGrowth {
+        enabled
+        channelId
+        manual
+      }
+      discord {
+        guildChannels
+      }
     }
   }
 `;
@@ -58,8 +66,29 @@ function Page() {
     if (!authorized) return;
     if (!data) return;
 
+    const guildChannels = data.guild.discord.guildChannels ?? [];
+
     const lvls = data.guild.moduleLevel ?? {};
     const bday = data.guild.moduleBirthday ?? {};
+
+    const voiceGrowth = (data.guild.moduleVoiceGrowth ?? [])
+      .filter((e: any) => e.enabled)
+      .filter((e: any) => !e.manual)
+      .map((e: any) => ({
+        title:
+          guildChannels.find((c: any) => c.id === e.channelId)?.name ??
+          e.channelId,
+        id: e.channelId,
+      }));
+    const voiceTopics = (data.guild.moduleVoiceGrowth ?? [])
+      .filter((e: any) => e.enabled)
+      .filter((e: any) => e.manual)
+      .map((e: any) => ({
+        title:
+          guildChannels.find((c: any) => c.id === e.channelId)?.name ??
+          e.channelId,
+        id: e.channelId,
+      }));
 
     // Get modules
     setModules([
@@ -75,8 +104,8 @@ function Page() {
         enabled: bday.enabled ?? false,
         announcementChannelId: bday.birthdayChannelId ?? null,
       }),
-      getDynamicVoiceConfig(guildId),
-      getVoiceTopicsConfig(guildId),
+      getDynamicVoiceConfig(guildId, null, voiceGrowth),
+      getVoiceTopicsConfig(guildId, null, voiceTopics),
     ]);
   }, [guildId, data, authorized]);
 

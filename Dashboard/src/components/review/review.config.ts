@@ -168,6 +168,11 @@ export const changeKeys: ChangeKeys = {
     key: 'module.voice-topics.channels',
     url: (id: string) => `/dashboard/${id}/module/voice-topics#channels`,
   },
+  moduleDynamicVoiceChannels: {
+    title: 'Dynamic Voice module channels',
+    key: 'module.dynamic-voice.channels',
+    url: (id: string) => `/dashboard/${id}/module/dynamic-voice#channels`,
+  },
 } as const;
 
 export const changeKeysValuesArray = Object.values(changeKeys);

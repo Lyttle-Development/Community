@@ -23,6 +23,7 @@ export function SelectMultiple({
     value: orgValue = '',
     values: orgValues = [],
     title,
+    newTitle = 'New ' + title,
     options,
   } = item;
 
@@ -31,25 +32,40 @@ export function SelectMultiple({
       .filter((k) => k.startsWith(`${item.key}/`))
       .map((k) => changes[k].current as string);
 
-    setSelects([...values, ...newSelects]);
+    const updatedSelects = Object.keys(changes)
+      .filter((k) => k.startsWith(`${item.key}/`))
+      .map((k) => changes[k].original as string);
+
+    const newSelectsSet = [...new Set([...values, ...newSelects])];
+    const newSelectsSetFiltered = newSelectsSet
+      .filter((v) => v !== '')
+      .filter((v) => !updatedSelects.includes(v));
+
+    setSelects(newSelectsSetFiltered);
   }, [changes]);
 
   // Update value based on available values.
   const values = orgValues.length > 0 ? orgValues : [orgValue ?? ''];
   const value = orgValue ?? values[0] ?? '';
 
-  const updateValue = (itemKey: string, newValue: string) => {
+  const updateValue = (
+    itemKey: string,
+    previousValue: string,
+    newValue: string,
+  ) => {
     const JSONOptions = JSON.stringify(item.options);
-    if (newValue === '') return change(null, itemKey, null);
+    const initial =
+      (changes[itemKey]?.original as string) ?? previousValue ?? '';
 
-    const initial = (changes[itemKey]?.original as string) ?? newValue ?? '';
+    const valueAlreadySaved = values.find((e) => e === newValue) ?? null;
+    if (valueAlreadySaved) {
+      console.log('valueAlreadySaved', valueAlreadySaved);
+      change(newValue, getKey(valueAlreadySaved), newValue, JSONOptions);
+      return;
+    }
+
+    console.log('updateValue', itemKey, previousValue, newValue);
     change(initial, itemKey, newValue, JSONOptions);
-  };
-
-  const addNewSelect = (newValue: string) => {
-    const JSONOptions = JSON.stringify(item.options);
-    const itemKey = `${key}/${newValue}`;
-    change(null, itemKey, newValue, JSONOptions);
   };
 
   const getKey = (k: string): string => {
@@ -81,7 +97,6 @@ export function SelectMultiple({
     <ul className={styles.more}>
       {selects.map((v, i) => {
         const valueKey = getKey(v);
-        console.log(valueKey);
         return (
           <li key={i}>
             <Component.Select
@@ -92,7 +107,7 @@ export function SelectMultiple({
               ]}
               value={(changes[valueKey]?.current as string) ?? v ?? ''}
               label={title}
-              onChange={(val) => updateValue(valueKey, val)}
+              onChange={(val) => updateValue(valueKey, v, val)}
               color={SelectColor.Yellow}
             />
           </li>
@@ -105,8 +120,8 @@ export function SelectMultiple({
             ...notChangedTakenOptions,
           ]}
           value={''}
-          label={title}
-          onChange={addNewSelect}
+          label={newTitle}
+          onChange={(val) => updateValue(getKey(val), '', val)}
           color={SelectColor.Yellow}
           onlyOnChange={true}
         />

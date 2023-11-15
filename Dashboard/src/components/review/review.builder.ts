@@ -2,7 +2,7 @@ import {
   changeKeys,
   changeKeysValuesArray,
 } from '@lyttledev-dashboard/components/review/review.config';
-import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
+import { Change, ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 
 enum QueryVariableType {
   String = 'string',
@@ -16,6 +16,7 @@ interface ReviewBuilderMutationOptions {
   translation?: boolean;
   variablesName: string;
   variableEnable?: boolean;
+  onEmptyUseAmountAsValue?: boolean;
   variables: {
     [key: string]: QueryVariableType;
   };
@@ -40,7 +41,11 @@ export interface ReviewBuilderQuery {
   [key: string]: {
     name: string;
     variablesName: string;
+    variableName: string;
     variableEnable: boolean;
+    onEmptyUseAmountAsValue: boolean;
+    valueFallback: Change;
+    enabled: boolean;
     variables: {
       [key: string]: string | boolean | number | null;
     };
@@ -93,10 +98,11 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
       value: QueryVariableType.String,
     },
   },
-  createGuildModuleVoiceGrowth: {
+  createGuildModuleVoiceTopic: {
     name: 'createGuildModuleVoiceGrowth',
     requiresGuildId: true,
     variableEnable: true,
+    onEmptyUseAmountAsValue: true,
     variablesName: 'createGuildModuleVoiceGrowthInput',
     variables: {
       guildId: QueryVariableType.String,
@@ -105,6 +111,21 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
     },
     lockedVariables: {
       manual: true,
+    },
+  },
+  createGuildModuleDynamicVoice: {
+    name: 'createGuildModuleVoiceGrowth',
+    requiresGuildId: true,
+    variableEnable: true,
+    onEmptyUseAmountAsValue: true,
+    variablesName: 'createGuildModuleVoiceGrowthInput',
+    variables: {
+      guildId: QueryVariableType.String,
+      enabled: QueryVariableType.Boolean,
+      channelId: QueryVariableType.String,
+    },
+    lockedVariables: {
+      manual: false,
     },
   },
 };
@@ -222,7 +243,11 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     variable: 'value',
   },
   [changeKeys.moduleVoiceTopicsChannels.key]: {
-    query: reviewBuilderMutations.createGuildModuleVoiceGrowth,
+    query: reviewBuilderMutations.createGuildModuleVoiceTopic,
+    variable: 'channelId',
+  },
+  [changeKeys.moduleDynamicVoiceChannels.key]: {
+    query: reviewBuilderMutations.createGuildModuleDynamicVoice,
     variable: 'channelId',
   },
 };
@@ -264,6 +289,8 @@ export function reviewBuilder(
       queryName = queryName + '__' + 'translation//' + changeKey;
     }
 
+    console.log(change);
+
     // If the query requires a guild id, add it
     let value = change.current;
     // fix \n to \\n
@@ -278,10 +305,14 @@ export function reviewBuilder(
       query[queryName] = {
         name: queryName,
         variablesName: builderInfo.query.variablesName,
+        variableName: builderInfo.variable,
         variableEnable: builderInfo.query.variableEnable ?? false,
+        onEmptyUseAmountAsValue:
+          builderInfo.query.onEmptyUseAmountAsValue ?? false,
+        valueFallback: change.amount ?? change.original,
+        enabled,
         variables: {
           [builderInfo.variable]: value,
-          enabled,
         },
       };
       if (builderInfo.query.lockedVariables) {
@@ -345,6 +376,28 @@ function buildQuery(queries: ReviewBuilderQuery) {
     const variables = query.variables || {};
     // Get the variables as an array
     const variablesObj = Object.entries(variables);
+
+    if (query.variableEnable) {
+      variablesObj.push(['enabled', query.enabled]);
+    }
+
+    console.log(variablesObj);
+    if (query.onEmptyUseAmountAsValue) {
+      console.log(query.variableName);
+      const valueIndex = variablesObj.findIndex(
+        ([name]) => name === query.variableName,
+      );
+      console.log(valueIndex);
+      if (valueIndex > -1) {
+        const [, value] = variablesObj[valueIndex];
+        if (value === '' || value === null) {
+          variablesObj[valueIndex] = [query.variableName, query.valueFallback];
+          console.log('query.amount:', query.valueFallback);
+          console.log(variablesObj[valueIndex]);
+        }
+      }
+    }
+
     // Get the variables as a string
     const variablesString = variablesObj
       // Loop through the variables
@@ -367,6 +420,8 @@ function buildQuery(queries: ReviewBuilderQuery) {
 
   // Close the query string
   queryString += '\n}';
+
+  console.log(queryString);
 
   // Return the query string
   return queryString;

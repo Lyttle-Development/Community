@@ -15,6 +15,7 @@ export interface SettingCardSelectItem {
   value: string;
   values: string[];
   title: string;
+  newTitle?: string;
   options: SettingCardSelectItemOptions[];
   single: boolean;
   flex?: boolean;
