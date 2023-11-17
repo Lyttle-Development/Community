@@ -7,6 +7,22 @@
     "enabled": true,
     "errors": 0
   },
+  "action.onGuildInteractionButton.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionButton.routeButtonPress": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionModalSubmit.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionModalSubmit.routeModalSubmit": {
+    "enabled": true,
+    "errors": 0
+  },
   "action.onGuildMemberUpdate.getStaff": {
     "enabled": true,
     "errors": 0
@@ -39,7 +55,15 @@
     "enabled": true,
     "errors": 0
   },
+  "main.interactionCreate": {
+    "enabled": true,
+    "errors": 0
+  },
   "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageUpdate": {
     "enabled": true,
     "errors": 0
   },

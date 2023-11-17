@@ -7,7 +7,11 @@ import { SettingCardInputItem } from '@lyttledev-dashboard/components/setting-ca
 import { SettingCardTextareaItem } from '@lyttledev-dashboard/components/setting-card/components/textarea';
 import { SettingCardSelectItem } from '@lyttledev-dashboard/components/setting-card/components/select';
 import { useEffect, useState } from 'react';
-import { Change } from '@lyttledev-dashboard/contexts/app-hooks';
+import {
+  Change,
+  ChangeObject,
+  Changes,
+} from '@lyttledev-dashboard/contexts/app-hooks';
 
 export type SettingCardSubItem =
   | SettingCardTextareaItem
@@ -20,6 +24,8 @@ export interface SettingCard {
   description: string;
   enabled?: { state: boolean; key: string };
   subItems?: SettingCardSubItem[];
+  isolate: boolean;
+  onSubmit: (data: { [key: string]: any }) => any;
 }
 
 type SettingCardProps = SettingCard;
@@ -38,10 +44,15 @@ export function SettingCard({
   description,
   enabled,
   subItems,
+  isolate = false,
+  onSubmit = () => null,
 }: SettingCardProps) {
   const app = useApp();
-  const changes = app?.changes ?? {};
   const [hidden, setHidden] = useState(false);
+
+  const [isolatedChanges, setIsolatedChanges] = useState<Changes>({});
+
+  const changes = (isolate ? isolatedChanges : app?.changes) ?? {};
 
   const change: SettingCardChange = (
     initial: Change,
@@ -49,6 +60,18 @@ export function SettingCard({
     value: Change,
     store = null,
   ) => {
+    if (isolate) {
+      setIsolatedChanges({
+        ...isolatedChanges,
+        [key]: {
+          original: initial,
+          current: value,
+          store,
+        } as ChangeObject,
+      });
+      return;
+    }
+
     if (initial === value) {
       console.log('remove');
       app?.change({ remove: key });
@@ -188,6 +211,25 @@ export function SettingCard({
                 {SettingCardComponents[item.type]({ item, changes, change })}
               </li>
             ))}
+        </ul>
+      )}
+      {isolate && (
+        <ul
+          className={`${styles['sub-items']} ${
+            isEnabled && styles['sub-items--enabled']
+          } ${hidden && styles['sub-items--hidden']}`}
+        >
+          <li style={{ width: '100%' }}>
+            <Component.Button
+              onClick={() => {
+                onSubmit(isolatedChanges);
+                setIsolatedChanges({});
+              }}
+              style={{ marginLeft: 'auto', display: 'block' }}
+            >
+              Submit
+            </Component.Button>
+          </li>
         </ul>
       )}
     </article>

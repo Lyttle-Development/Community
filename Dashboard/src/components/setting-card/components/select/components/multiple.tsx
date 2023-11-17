@@ -59,12 +59,10 @@ export function SelectMultiple({
 
     const valueAlreadySaved = values.find((e) => e === newValue) ?? null;
     if (valueAlreadySaved) {
-      console.log('valueAlreadySaved', valueAlreadySaved);
       change(newValue, getKey(valueAlreadySaved), newValue, JSONOptions);
       return;
     }
 
-    console.log('updateValue', itemKey, previousValue, newValue);
     change(initial, itemKey, newValue, JSONOptions);
   };
 

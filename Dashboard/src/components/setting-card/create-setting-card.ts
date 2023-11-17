@@ -24,6 +24,8 @@ export class CreateSettingCard {
       id: null,
       title: '',
       description: '',
+      isolate: false,
+      onSubmit: () => null,
     };
   }
 
@@ -58,6 +60,16 @@ export class CreateSettingCard {
   ) {
     const card = addSubItem(new CreateSettingCardFlexSubItem(this.settings));
     this.settings = card.settings;
+    return this;
+  }
+
+  isolate(isolate: boolean) {
+    this.settings.isolate = isolate;
+    return this;
+  }
+
+  onSubmit(onSubmit: (data: { [key: string]: any }) => any) {
+    this.settings.onSubmit = onSubmit;
     return this;
   }
 
