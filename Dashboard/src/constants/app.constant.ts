@@ -3,7 +3,7 @@ import { loginReturnUrl } from '@lyttledev-dashboard/constants/api.constant';
 export const appName = 'Community by Lyttle Development';
 export const mobileWidth = 1000;
 export const totalModules = 2;
-export const expectedUserActivity = 50;
+export const expectedUserActivity = 25;
 
 const inviteUrl = 'https://discord.com/oauth2/authorize';
 const clientId = '1091770488361058435';
