@@ -43,6 +43,26 @@
     "enabled": true,
     "errors": 0
   },
+  "action.onGuildVoiceStateUpdate.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.dynamicVoiceEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.levelCallEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.levelEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.voiceTopicEvent": {
+    "enabled": true,
+    "errors": 0
+  },
   "main.guildAuditLogEntryCreate": {
     "enabled": true,
     "errors": 0
@@ -76,6 +96,10 @@
     "errors": 0
   },
   "main.userUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.voiceStateUpdate": {
     "enabled": true,
     "errors": 0
   }
