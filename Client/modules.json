@@ -7,6 +7,22 @@
     "enabled": true,
     "errors": 0
   },
+  "action.onGuildInteractionButton.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionButton.routeButtonPress": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionModalSubmit.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildInteractionModalSubmit.routeModalSubmit": {
+    "enabled": true,
+    "errors": 0
+  },
   "action.onGuildMemberUpdate.getStaff": {
     "enabled": true,
     "errors": 0
@@ -27,6 +43,26 @@
     "enabled": true,
     "errors": 0
   },
+  "action.onGuildVoiceStateUpdate.activity": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.dynamicVoiceEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.levelCallEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.levelEvent": {
+    "enabled": true,
+    "errors": 0
+  },
+  "action.onGuildVoiceStateUpdate.voiceTopicEvent": {
+    "enabled": true,
+    "errors": 0
+  },
   "main.guildAuditLogEntryCreate": {
     "enabled": true,
     "errors": 0
@@ -39,7 +75,15 @@
     "enabled": true,
     "errors": 0
   },
+  "main.interactionCreate": {
+    "enabled": true,
+    "errors": 0
+  },
   "main.messageCreate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.messageUpdate": {
     "enabled": true,
     "errors": 0
   },
@@ -52,6 +96,10 @@
     "errors": 0
   },
   "main.userUpdate": {
+    "enabled": true,
+    "errors": 0
+  },
+  "main.voiceStateUpdate": {
     "enabled": true,
     "errors": 0
   }

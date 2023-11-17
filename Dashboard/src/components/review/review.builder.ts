@@ -2,7 +2,7 @@ import {
   changeKeys,
   changeKeysValuesArray,
 } from '@lyttledev-dashboard/components/review/review.config';
-import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
+import { Change, ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 
 enum QueryVariableType {
   String = 'string',
@@ -15,8 +15,13 @@ interface ReviewBuilderMutationOptions {
   requiresGuildId: boolean;
   translation?: boolean;
   variablesName: string;
+  variableEnable?: boolean;
+  onEmptyUseAmountAsValue?: boolean;
   variables: {
     [key: string]: QueryVariableType;
+  };
+  lockedVariables?: {
+    [key: string]: string | boolean | number | null;
   };
 }
 
@@ -36,6 +41,11 @@ export interface ReviewBuilderQuery {
   [key: string]: {
     name: string;
     variablesName: string;
+    variableName: string;
+    variableEnable: boolean;
+    onEmptyUseAmountAsValue: boolean;
+    valueFallback: Change;
+    enabled: boolean;
     variables: {
       [key: string]: string | boolean | number | null;
     };
@@ -86,6 +96,36 @@ export const reviewBuilderMutations: ReviewBuilderMutation = {
       guildId: QueryVariableType.String,
       key: QueryVariableType.String,
       value: QueryVariableType.String,
+    },
+  },
+  createGuildModuleVoiceTopic: {
+    name: 'createGuildModuleVoiceGrowth',
+    requiresGuildId: true,
+    variableEnable: true,
+    onEmptyUseAmountAsValue: true,
+    variablesName: 'createGuildModuleVoiceGrowthInput',
+    variables: {
+      guildId: QueryVariableType.String,
+      enabled: QueryVariableType.Boolean,
+      channelId: QueryVariableType.String,
+    },
+    lockedVariables: {
+      manual: true,
+    },
+  },
+  createGuildModuleDynamicVoice: {
+    name: 'createGuildModuleVoiceGrowth',
+    requiresGuildId: true,
+    variableEnable: true,
+    onEmptyUseAmountAsValue: true,
+    variablesName: 'createGuildModuleVoiceGrowthInput',
+    variables: {
+      guildId: QueryVariableType.String,
+      enabled: QueryVariableType.Boolean,
+      channelId: QueryVariableType.String,
+    },
+    lockedVariables: {
+      manual: false,
     },
   },
 };
@@ -202,6 +242,14 @@ export const reviewBuilderInfo: reviewBuilderInfo = {
     query: reviewBuilderMutations.updateGuildTranslation,
     variable: 'value',
   },
+  [changeKeys.moduleVoiceTopicsChannels.key]: {
+    query: reviewBuilderMutations.createGuildModuleVoiceTopic,
+    variable: 'channelId',
+  },
+  [changeKeys.moduleDynamicVoiceChannels.key]: {
+    query: reviewBuilderMutations.createGuildModuleDynamicVoice,
+    variable: 'channelId',
+  },
 };
 
 const reviewBuilderInfoKeys = Object.keys(reviewBuilderInfo);
@@ -230,7 +278,7 @@ export function reviewBuilder(
   const query: ReviewBuilderQuery = {};
 
   // Loop through the changes
-  for (const [changeKey, change] of changes) {
+  for (const [i, [changeKey, change]] of changes.entries()) {
     // Get the builder info
     const builderInfo = reviewBuilderInfo[changeKey];
     // Get the query name
@@ -239,7 +287,11 @@ export function reviewBuilder(
     // If the query is a translation, add the translation suffix
     if (builderInfo.query.translation) {
       queryName = queryName + '__' + 'translation//' + changeKey;
+    } else {
+      queryName = queryName + '__' + i + changeKey;
     }
+
+    console.log('change:', change);
 
     // If the query requires a guild id, add it
     let value = change.current;
@@ -251,13 +303,26 @@ export function reviewBuilder(
 
     // if no object is set yet, create it
     if (!query[queryName]?.name) {
+      const enabled = !(value === '' || value === null);
       query[queryName] = {
         name: queryName,
         variablesName: builderInfo.query.variablesName,
+        variableName: builderInfo.variable,
+        variableEnable: builderInfo.query.variableEnable ?? false,
+        onEmptyUseAmountAsValue:
+          builderInfo.query.onEmptyUseAmountAsValue ?? false,
+        valueFallback: change.amount ?? change.original,
+        enabled,
         variables: {
           [builderInfo.variable]: value,
         },
       };
+      if (builderInfo.query.lockedVariables) {
+        query[queryName].variables = {
+          ...query[queryName].variables,
+          ...builderInfo.query.lockedVariables,
+        };
+      }
     } else {
       // If the object is set, add the variable
       query[queryName].variables[builderInfo.variable] = value;
@@ -313,6 +378,28 @@ function buildQuery(queries: ReviewBuilderQuery) {
     const variables = query.variables || {};
     // Get the variables as an array
     const variablesObj = Object.entries(variables);
+
+    if (query.variableEnable) {
+      variablesObj.push(['enabled', query.enabled]);
+    }
+
+    console.log(variablesObj);
+    if (query.onEmptyUseAmountAsValue) {
+      console.log(query.variableName);
+      const valueIndex = variablesObj.findIndex(
+        ([name]) => name === query.variableName,
+      );
+      console.log(valueIndex);
+      if (valueIndex > -1) {
+        const [, value] = variablesObj[valueIndex];
+        if (value === '' || value === null) {
+          variablesObj[valueIndex] = [query.variableName, query.valueFallback];
+          console.log('query.amount:', query.valueFallback);
+          console.log(variablesObj[valueIndex]);
+        }
+      }
+    }
+
     // Get the variables as a string
     const variablesString = variablesObj
       // Loop through the variables
@@ -335,6 +422,8 @@ function buildQuery(queries: ReviewBuilderQuery) {
 
   // Close the query string
   queryString += '\n}';
+
+  console.log(queryString);
 
   // Return the query string
   return queryString;
