@@ -278,7 +278,7 @@ export function reviewBuilder(
   const query: ReviewBuilderQuery = {};
 
   // Loop through the changes
-  for (const [changeKey, change] of changes) {
+  for (const [i, [changeKey, change]] of changes.entries()) {
     // Get the builder info
     const builderInfo = reviewBuilderInfo[changeKey];
     // Get the query name
@@ -287,9 +287,11 @@ export function reviewBuilder(
     // If the query is a translation, add the translation suffix
     if (builderInfo.query.translation) {
       queryName = queryName + '__' + 'translation//' + changeKey;
+    } else {
+      queryName = queryName + '__' + i + changeKey;
     }
 
-    console.log(change);
+    console.log('change:', change);
 
     // If the query requires a guild id, add it
     let value = change.current;
