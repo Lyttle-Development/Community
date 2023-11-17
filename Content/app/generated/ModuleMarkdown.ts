@@ -69,6 +69,12 @@ export const ModuleMarkdown = {
     'dynamic-voice': {
       txt: {
         'channel-names': {},
+        'send-message': {
+          content:
+            '# Voice Topic\n\nClick the button below to create a new voice topic channel.',
+          documentation:
+            'Send creation message with button.\nCreate a message to send to the channel so people can create voice channels.',
+        },
       },
     },
     levels: {
@@ -82,7 +88,7 @@ export const ModuleMarkdown = {
           },
           other: {
             content:
-              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{points} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
+              '{user} currently has **{levels} {levelsUnit}** or te be more exact, **{points}** experience {pointsUnit}. 🪙\nThey need **{neededPointsNextLevel} {pointsUnit}** more for level **{nextLevel}**!  📊\nLeveling **difficulty** is **{timesHarder}** times harder than their first level ever... 📈',
             documentation:
               'Other\nMessage received when getting xp for other user.',
           },

@@ -4,23 +4,7 @@ import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useEffect } from 'react';
-import { Servers } from '@lyttledev-dashboard/components/server-card';
 import { gql, useLazyQuery } from '@apollo/client';
-
-const mockups = 50;
-const mockupServers: Servers = [];
-for (let i = 0; i < mockups; i++) {
-  mockupServers.push({
-    id: '0',
-    name: 'Loading Servers!',
-    icon: '/media/images/placeholder.png',
-    setup: false,
-    active: null,
-    members: 0,
-    staffMembers: 0,
-    modulesEnabled: 0,
-  });
-}
 
 const DashboardQuery = gql`
   query {
@@ -47,9 +31,15 @@ function Page() {
     <>
       <Component.Title>{title}</Component.Title>
       <Component.Container>
-        <Component.ServerCardGrid
-          servers={data?.discord?.dashboardUserGuilds ?? mockupServers}
-        />
+        <Layout.Transition>
+          {data?.discord?.dashboardUserGuilds ? (
+            <Component.ServerCardGrid
+              servers={data?.discord?.dashboardUserGuilds}
+            />
+          ) : (
+            <Component.ServerCardDummyGrid />
+          )}
+        </Layout.Transition>
       </Component.Container>
     </>
   );
