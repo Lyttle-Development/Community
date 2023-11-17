@@ -20,6 +20,7 @@ export interface ButtonProps {
   color?: ButtonColors;
   children?: React.ReactNode;
   noUpper?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function Button({
@@ -32,6 +33,7 @@ export function Button({
   color = ButtonColors.purple,
   children,
   noUpper = false,
+  style,
 }: ButtonProps) {
   const router = useRouter();
 
@@ -60,6 +62,7 @@ export function Button({
           styles[`button--${color}`]
         } ${disabledClass} ${noUpperClass} ${className} ${customDisabledClass}`}
         onClick={navigate}
+        style={style}
       >
         {text}
         {children}
@@ -73,6 +76,7 @@ export function Button({
         styles[`button--${color}`]
       } ${disabledClass} ${noUpperClass} ${className} ${customDisabledClass}`}
       onClick={handleClick}
+      style={style}
     >
       {text}
       {children}

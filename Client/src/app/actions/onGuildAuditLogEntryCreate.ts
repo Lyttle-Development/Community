@@ -1,7 +1,7 @@
 import { executor } from '../../utils';
 import { actionPrefix } from './index';
 import { Guild, GuildAuditLogsEntry } from 'discord.js';
-import { triggerAuditLog } from '../../modules';
+import { getStaff, triggerAuditLog } from '../../modules';
 
 // This file's prefix
 const prefix: string = actionPrefix + 'onGuildMemberUpdate.';
@@ -14,6 +14,7 @@ export async function onGuildAuditLogEntryCreate(
   // All actions that should be executed
   const actions: Promise<() => void>[] = [
     executor(prefix + 'triggerAuditLog', triggerAuditLog, auditLog, guild),
+    executor(prefix + 'getStaff', getStaff, guild),
   ];
 
   // If no actions, return

@@ -66,6 +66,36 @@ export class GuildService {
     });
   }
 
+  async findAllBuildsByStaffMemberId(
+    guildIds: string[],
+    userId: string,
+  ): Promise<Guild[]> {
+    // Find all guild where the user id is in the staff member ids: guild stat: staffMembersIds
+
+    const guilds: Guild[] = [];
+
+    for (const guildId of guildIds) {
+      try {
+        const guild: Guild = await this.guildRepository.findOne({
+          where: { guildId, guildStats: { key: 'staffMembersIds' } },
+          relations: ['guildStats'],
+        });
+        if (!guild || !guild.guildStats) {
+          continue;
+        }
+        const staffMembersIds: string[] = guild.guildStats[0].value.split(',');
+        if (staffMembersIds.includes(userId)) {
+          guilds.push(guild);
+        }
+      } catch (err) {
+        console.log(err);
+        //
+      }
+    }
+
+    return guilds;
+  }
+
   findOne(id: string): Promise<Guild> {
     return this.guildRepository.findOne({
       where: { guildId: id },
@@ -92,8 +122,10 @@ export class GuildService {
     return this.guildMessageService.findAllByGuild(guildId);
   }
 
-  getGuildModuleVoiceGrowth(guildId: string): Promise<GuildModuleVoiceGrowth> {
-    return this.guildModuleVoiceGrowthService.findOne(guildId);
+  getGuildModuleVoiceGrowth(
+    guildId: string,
+  ): Promise<GuildModuleVoiceGrowth[]> {
+    return this.guildModuleVoiceGrowthService.findAllByGuildId(guildId);
   }
 
   getGuildTranslation(guildId: string, key: string): Promise<GuildTranslation> {

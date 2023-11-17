@@ -1,0 +1,14 @@
+@use '../../styles/variables.scss' as v;
+
+.grid {
+  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.hide {
+  opacity: 0;
+}

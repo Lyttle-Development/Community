@@ -16,9 +16,17 @@ export class GuildModuleVoiceGrowthService {
     private guildService: GuildService,
   ) {}
 
-  create(
+  async create(
     createGuildModuleVoiceGrowthInput: CreateGuildModuleVoiceGrowthInput,
   ): Promise<GuildModuleVoiceGrowth> {
+    try {
+      const res = await this.update(
+        createGuildModuleVoiceGrowthInput.guildId,
+        createGuildModuleVoiceGrowthInput.channelId,
+        createGuildModuleVoiceGrowthInput as UpdateGuildModuleVoiceGrowthInput,
+      );
+      return res;
+    } catch (e) {}
     return this.guildModuleVoiceGrowthRepository.save(
       createGuildModuleVoiceGrowthInput,
     );
@@ -26,6 +34,12 @@ export class GuildModuleVoiceGrowthService {
 
   findAll(): Promise<GuildModuleVoiceGrowth[]> {
     return this.guildModuleVoiceGrowthRepository.find();
+  }
+
+  findAllByGuildId(guildId: string): Promise<GuildModuleVoiceGrowth[]> {
+    return this.guildModuleVoiceGrowthRepository.find({
+      where: { guildId },
+    });
   }
 
   findOne(id: string): Promise<GuildModuleVoiceGrowth> {
@@ -47,7 +61,17 @@ export class GuildModuleVoiceGrowthService {
       await this.guildModuleVoiceGrowthRepository.findOne({
         where: { guildId, channelId },
       });
+
     if (guildModuleVoiceGrowth) {
+      if (
+        [false, undefined].includes(updateGuildModuleVoiceGrowthInput.enabled)
+      ) {
+        console.log('remove');
+        return this.guildModuleVoiceGrowthRepository.remove(
+          guildModuleVoiceGrowth,
+        );
+      }
+      console.log('update');
       return this.guildModuleVoiceGrowthRepository.save({
         ...guildModuleVoiceGrowth,
         ...updateGuildModuleVoiceGrowthInput,

@@ -301,7 +301,7 @@ function Page() {
       .build();
 
     const settingLevelUp = new CreateSettingCard()
-      .id('levels')
+      .id('announcement')
       .title(msgLevelUp.title)
       .description(msgLevelUp.description)
       .enabled(
@@ -335,7 +335,7 @@ function Page() {
       .build();
 
     const settingNickname = new CreateSettingCard()
-      .id('0')
+      .id('nickname')
       .title(msgNickname.title)
       .description(msgNickname.description)
       .enabled(
@@ -413,7 +413,7 @@ function Page() {
       .build();
 
     const settingCommand = new CreateSettingCard()
-      .id('0')
+      .id('commands')
       .title(msgCommand.title)
       .description(msgCommand.description)
       .addSubItem((subItem) =>
