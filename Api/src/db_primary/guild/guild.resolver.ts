@@ -69,8 +69,8 @@ export class GuildResolver {
     return this.guildService.getGuildModuleQotd(guild.guildId);
   }
 
-  @ResolveField(() => GuildModuleVoiceGrowth, { nullable: true })
-  moduleVoiceGrowth(@Parent() guild: Guild): Promise<GuildModuleVoiceGrowth> {
+  @ResolveField(() => [GuildModuleVoiceGrowth], { nullable: true })
+  moduleVoiceGrowth(@Parent() guild: Guild): Promise<GuildModuleVoiceGrowth[]> {
     return this.guildService.getGuildModuleVoiceGrowth(guild.guildId);
   }
 

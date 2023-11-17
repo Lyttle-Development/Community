@@ -12,6 +12,7 @@ export interface ModuleCardItem {
   title: string;
   description: string;
   active: boolean | null;
+  setupMsg?: string;
 }
 
 export interface ModuleCardProps extends ModuleCardItem {
@@ -97,7 +98,7 @@ export function ModuleCard({
                   href={item.route}
                   className={styles['sub-item']}
                 >
-                  {item.id !== null && (
+                  {item.id !== null && item.active !== null && (
                     <>
                       <Component.LightSwitch
                         active={
@@ -122,7 +123,7 @@ export function ModuleCard({
                       href={item.route}
                       className={styles['sub-item__setup-button']}
                     >
-                      {msgSetupButton}
+                      {item.setupMsg ?? msgSetupButton}
                     </Component.Button>
                   )}
                   <h3>{item.title}</h3>

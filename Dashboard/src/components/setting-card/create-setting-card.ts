@@ -24,6 +24,8 @@ export class CreateSettingCard {
       id: null,
       title: '',
       description: '',
+      isolate: false,
+      onSubmit: () => null,
     };
   }
 
@@ -58,6 +60,16 @@ export class CreateSettingCard {
   ) {
     const card = addSubItem(new CreateSettingCardFlexSubItem(this.settings));
     this.settings = card.settings;
+    return this;
+  }
+
+  isolate(isolate: boolean) {
+    this.settings.isolate = isolate;
+    return this;
+  }
+
+  onSubmit(onSubmit: (data: { [key: string]: any }) => any) {
+    this.settings.onSubmit = onSubmit;
     return this;
   }
 
@@ -232,11 +244,13 @@ export class CreateSettingCardSelectItem {
     this.subItem = {
       key: '',
       value: '',
+      values: [],
       title: '',
       description: undefined,
       options: [],
       type: SettingCardSubItems.Select,
       single: true,
+      flex: false,
     };
   }
 
@@ -247,6 +261,11 @@ export class CreateSettingCardSelectItem {
 
   value(value: string) {
     this.subItem.value = value;
+    return this;
+  }
+
+  values(values: string[]) {
+    this.subItem.values = values;
     return this;
   }
 
@@ -267,6 +286,11 @@ export class CreateSettingCardSelectItem {
 
   single(single: boolean) {
     this.subItem.single = single;
+    return this;
+  }
+
+  flex(flex: boolean) {
+    this.subItem.flex = flex;
     return this;
   }
 }

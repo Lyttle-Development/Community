@@ -21,9 +21,14 @@ export function Review() {
   const app = useApp();
   const router = useRouter();
   const guildId = app?.selectedGuildId ?? '';
-  const changes: [string, ChangeObject][] = Object.entries(app?.changes ?? {});
+  let changes: [string, ChangeObject][] = Object.entries(app?.changes ?? {});
   const [confirm, setConfirm] = useState(false);
   const [mutation, setMutation] = useState<string>(initialMutation);
+
+  changes = changes.map(([key, change]) => {
+    key = key.split('/')[0];
+    return [key, change];
+  });
 
   // Get the mutation from the review builder
   const reviewBuilderMutation = reviewBuilder(guildId, changes);
