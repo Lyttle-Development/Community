@@ -7,6 +7,7 @@ import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { logout } from '@lyttledev-dashboard/hooks/useAuth';
+import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
 interface SelectedGuild {
   id: string;
@@ -28,6 +29,7 @@ export interface MainNavProps {
 
 export function MainNav({ mobile }: MainNavProps) {
   const app = useApp();
+  const selectedUser = useUser();
   const [selectedGuild, setSelectedGuild] =
     useState<SelectedGuild>(emptySelectedGuild);
   const mainNavOpen = app?.mainNavOpen ?? false;
@@ -36,6 +38,7 @@ export function MainNav({ mobile }: MainNavProps) {
   const labelHome = getMessage(pfx + 'home');
   const labelLogout = getMessage(pfx + 'logout');
   const labelModules = getMessage(pfx + 'modules');
+  const labelProfile = getMessage(pfx + 'profile');
   // const labelProfile = getMessage(pfx + 'profile'); // TODO: Add profile
   const labelOverview = getMessage(pfx + 'overview');
 
@@ -87,6 +90,38 @@ export function MainNav({ mobile }: MainNavProps) {
             {/* // Currently disabled, will be added in the future! // */}
             {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
           </ul>
+          <article className={'main-nav__profile'}>
+            <section
+              className={`${styles.profile} main-nav__profile__item ${
+                !selectedUser && styles.hide
+              }`}
+            >
+              <Image
+                className={styles.avatar}
+                src={
+                  selectedUser?.avatar
+                    ? 'https://cdn.discordapp.com/avatars/' +
+                      selectedUser.id +
+                      '/' +
+                      selectedUser.avatar
+                    : '/media/images/placeholder.png'
+                }
+                alt={`Avatar of server ${selectedUser?.username}.`}
+                width={30}
+                height={30}
+              />
+              <p className={styles.selected}>{selectedUser?.global_name}</p>
+            </section>
+            <ul
+              className={`${styles['user-menu']} profile-menu ${
+                !selectedUser && styles.hide
+              }`}
+            >
+              <MainNavItem href={'/profile'} route={'/profile'}>
+                {labelProfile}
+              </MainNavItem>
+            </ul>
+          </article>
           <article className={'main-nav__guild'}>
             <section
               className={`${styles.guild} ${
