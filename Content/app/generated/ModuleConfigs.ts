@@ -103,6 +103,7 @@ export * as ModuleConfigDashboardPagesOverviewRecommendationModules from '../../
 export * as ModuleConfigDashboardPagesOverviewRecommendationStaff from '../../content/modules/Dashboard/pages/overview/recommendation/staff/config';
 export * as ModuleConfigDashboardPagesOverviewRecommendationTitle from '../../content/modules/Dashboard/pages/overview/recommendation/title/config';
 export * as ModuleConfigDashboardPagesOverviewTitle from '../../content/modules/Dashboard/pages/overview/title/config';
+export * as ModuleConfigDashboardPagesProfileTitle from '../../content/modules/Dashboard/pages/profile/title/config';
 export * as ModuleConfigGlobalMonths from '../../content/modules/Global/months/config';
 export * as ModuleConfigGlobalPrefix from '../../content/modules/Global/prefix/config';
 export * as ModuleConfigGlobalVariables from '../../content/modules/Global/variables/config';
