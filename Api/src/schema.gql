@@ -193,6 +193,7 @@ type User {
 type Discord {
   guildId: String
   userGuilds: [JSONObject!]!
+  user: JSONObject!
   memberGuilds: [JSONObject!]!
   dashboardUserGuilds: [JSONObject!]!
   guild: JSONObject!
@@ -559,8 +560,8 @@ input CreateMemberModuleLevelInput {
   userId: String!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1700225801428
-  callStart: Timestamp! = 1700225801428
+  cooldownTime: Timestamp! = 1703346332080
+  callStart: Timestamp! = 1703346332080
   points: Int! = 0
 }
 
@@ -569,8 +570,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1700225801428
-  callStart: Timestamp = 1700225801428
+  cooldownTime: Timestamp = 1703346332080
+  callStart: Timestamp = 1703346332080
   points: Int = 0
 }
 

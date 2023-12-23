@@ -542,6 +542,12 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      profile: {
+        title: {
+          content: 'Profile',
+          documentation: '',
+        },
+      },
     },
   },
   Global: {

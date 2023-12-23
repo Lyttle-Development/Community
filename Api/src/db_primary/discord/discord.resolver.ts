@@ -18,6 +18,11 @@ export class DiscordResolver {
     return this.discordService.getUserGuilds(token);
   }
 
+  @ResolveField(() => GraphQLJSONObject)
+  user(@AuthorizationToken() token: string): Promise<object> {
+    return this.discordService.getUser(token);
+  }
+
   @ResolveField(() => [GraphQLJSONObject])
   memberGuilds(@AuthorizationToken() token: string): Promise<object[]> {
     return this.discordService.getUserPermittedGuilds(token);
