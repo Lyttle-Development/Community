@@ -13,7 +13,7 @@
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
   "engines": {
-    "node": "20.9.0"
+    "node": "20.11.1"
   },
   "author": "",
   "license": "ISC",
