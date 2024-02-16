@@ -18,7 +18,7 @@
     "setup": "npm run prisma:generate && npm run prisma:migrate && npm run build && npm run update-commands"
   },
   "engines": {
-    "node": "20.9.0"
+    "node": "20.11.1"
   },
   "author": "",
   "license": "ISC",
