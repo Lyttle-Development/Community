@@ -1,8 +1,10 @@
 import * as fs from 'fs';
-import { log, sortObject } from './';
+import { log, QueueBacklogType, sendMessage, sortObject } from './';
 import { messageDevs } from './helpers';
-import { ALLOWED_ERROR_COUNT } from '../../constants';
+import { ALLOWED_ERROR_COUNT, DEV_IDS } from '../../constants';
 import { LogType } from '../types';
+import * as path from 'path';
+import client from '../main';
 
 /**
  * The main module executor, it prevents the bot from hard crashing.
@@ -49,7 +51,7 @@ export async function executor(
 }
 
 // The path to the modules.json file
-const modulesPath: string = process.cwd() + '\\modules.json';
+const modulesPath: string = path.join(process.cwd(), '\\modules.json');
 // Cached modules
 
 export interface ExecutorModules {
@@ -59,6 +61,8 @@ export interface ExecutorModules {
   };
 }
 export let executorModules: ExecutorModules = {};
+export const crashedModules: string[] = [];
+export const disabledModules: string[] = [];
 
 // Check if a module may be executed
 function mayExecute(moduleName: string): boolean {
@@ -70,6 +74,38 @@ function mayExecute(moduleName: string): boolean {
     // Check if the module has too many errors
     const tooManyErrors =
       executorModules[moduleName].errors >= ALLOWED_ERROR_COUNT;
+
+    if (tooManyErrors && !crashedModules.includes(moduleName)) {
+      crashedModules.push(moduleName);
+      // send the message to the devs
+      for (const dev of DEV_IDS) {
+        const channel = client.users.resolve(dev);
+        const message = `WARNING: The module "${moduleName}" has crashed too many times and has been disabled.`;
+        void sendMessage(
+          channel,
+          message,
+          true,
+          false,
+          QueueBacklogType.BACKGROUND,
+        );
+      }
+    }
+
+    if (!enabled && !disabledModules.includes(moduleName)) {
+      disabledModules.push(moduleName);
+      // send the message to the devs
+      for (const dev of DEV_IDS) {
+        const channel = client.users.resolve(dev);
+        const message = `INFO: The module "${moduleName}" has been disabled.`;
+        void sendMessage(
+          channel,
+          message,
+          true,
+          false,
+          QueueBacklogType.BACKGROUND,
+        );
+      }
+    }
 
     // Check if the module is enabled and not disabled
     return enabled && !tooManyErrors;
