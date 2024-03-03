@@ -74,7 +74,9 @@ eventFiles.forEach((file, i) => {
 });
 
 // Login to Discord with your client's token
-client.login(environment.BOT_TOKEN).then(() => log(LogType.INFO, 'running'));
+client
+  .login(environment.BOT_TOKEN)
+  .then(() => log(LogType.INFO, 'Startup complete, logged in.'));
 
 export const bootdate = new Date();
 initQueue();
