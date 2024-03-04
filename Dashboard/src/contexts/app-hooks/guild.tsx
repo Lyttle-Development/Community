@@ -71,7 +71,7 @@ export function useGuild(
 
     // Check if the guild id changes
     if (
-      (selectedGuildId && selectedGuild.id !== selectedGuildId) ||
+      (selectedGuildId && selectedGuild?.id !== selectedGuildId) ||
       !guildData
     ) {
       if (!authorized) return;
@@ -81,6 +81,8 @@ export function useGuild(
       });
     }
   }, [selectedGuildId, authorized]);
+
+  console.log(selectedGuild, guildData);
 
   return {
     selectedGuildId,

@@ -51,6 +51,7 @@ export class OpenAiService {
     const newAiRecommendation = await this.createRecommendationWithGuildStat(
       guildId,
     );
+    console.log('newAiRecommendation', newAiRecommendation);
     if (newAiRecommendation) {
       await this.guildStatService.createOrUpdate(
         guildId,
@@ -110,6 +111,8 @@ ${Object.entries(guildStatVoiceChannelsCallTime)
   .join('\n')}`,
       },
     ];
+
+    console.log('prompt', prompt);
 
     return await this.createRecommendation(prompt);
   }

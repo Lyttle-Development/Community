@@ -89,3 +89,11 @@
     filter: none;
   }
 }
+
+.mock {
+  filter: grayscale(100%);
+
+  &:hover {
+    filter: grayscale(100%);
+  }
+}

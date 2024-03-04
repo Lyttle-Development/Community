@@ -8,7 +8,7 @@ export function ServerCardDummyGrid() {
   return (
     <section className={styles.grid}>
       {servers.map((v, i) => (
-        <Components.ServerDummyCard />
+        <Components.ServerDummyCard key={i} />
       ))}
     </section>
   );
