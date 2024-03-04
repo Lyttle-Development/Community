@@ -109,12 +109,18 @@ function Page() {
     ]);
   }, [guildId, data, authorized]);
 
-  if (!authorized) return null;
+  // if (!authorized) return null;
 
   return (
     <Component.Container>
       <Component.Title>{title}</Component.Title>
-      {guildId !== null && <Component.Modules modules={modules} />}
+      <Layout.Transition>
+        {!guildId || !authorized ? (
+          <Component.ModulesDummy />
+        ) : (
+          <Component.Modules modules={modules} />
+        )}
+      </Layout.Transition>
     </Component.Container>
   );
 }

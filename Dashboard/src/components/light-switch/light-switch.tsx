@@ -14,6 +14,7 @@ export interface LightSwitchProps {
   classNameActive?: string;
   color?: SCSSPrimaryColors;
   disabled?: boolean;
+  mock?: boolean;
 }
 
 export function LightSwitch({
@@ -23,6 +24,7 @@ export function LightSwitch({
   classNameActive,
   color = SCSSPrimaryColors.purple,
   disabled = false,
+  mock = false,
 }: LightSwitchProps) {
   const [activeState, setActiveState] = useState(active);
 
@@ -55,7 +57,7 @@ export function LightSwitch({
         styles[`switch--${color}`]
       } ${activeClass} ${
         disabled && styles.disabled
-      } ${className} ${customActiveClass}`}
+      } ${className} ${customActiveClass} ${mock && styles.mock}`}
       onClick={handleClick}
     >
       <input
