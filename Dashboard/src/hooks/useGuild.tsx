@@ -9,11 +9,11 @@ export function useGuild(): string | null {
 
   // Set selected guild id from router, on initial load
   useEffect(() => {
-    const _guildId = router.query.guild_id;
+    const _guildId = router?.query?.guild_id;
     if (app?.selectedGuildId === _guildId) return;
     if (typeof _guildId !== 'string') return;
     app?.setSelectedGuildId(_guildId);
-  }, [router.query.guild_id]);
+  }, [router?.query?.guild_id]);
 
   // Update selected guild id from context
   useEffect(() => {

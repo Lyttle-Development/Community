@@ -9,7 +9,7 @@
   display: inline-block;
   transition: filter .2s ease-in-out;
 
-  &:hover {
+  &:not(.mock):hover {
     filter: brightness(1.5);
   }
 }
