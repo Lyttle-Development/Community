@@ -17,6 +17,7 @@ export interface IconButtonProps {
   className?: string;
   classNameDisabled?: string;
   children?: React.ReactNode;
+  mock?: boolean;
 }
 
 function getIcon(icon: IconButtonIcons) {
@@ -88,6 +89,7 @@ export function IconButton({
   className,
   classNameDisabled,
   children,
+  mock = false,
 }: IconButtonProps) {
   const router = useRouter();
   const IconElement = getIcon(icon);
@@ -112,7 +114,11 @@ export function IconButton({
   if (href && !disabled) {
     return (
       <button
-        className={`${styles.button} ${disabledClass} ${className} ${customDisabledClass}`}
+        className={`${
+          styles.button
+        } ${disabledClass} ${className} ${customDisabledClass} ${
+          mock && styles.mock
+        }`}
         onClick={navigate}
       >
         {IconElement}
@@ -126,7 +132,11 @@ export function IconButton({
   return (
     <button
       disabled={disabled}
-      className={`${styles.button} ${disabledClass} ${className} ${customDisabledClass}`}
+      className={`${
+        styles.button
+      } ${disabledClass} ${className} ${customDisabledClass} ${
+        mock && styles.mock
+      }`}
       onClick={handleClick}
     >
       {IconElement}

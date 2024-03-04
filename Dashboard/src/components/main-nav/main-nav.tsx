@@ -14,13 +14,15 @@ interface SelectedGuild {
   name: string;
   avatar: string;
   show: boolean;
+  template: boolean;
 }
 
 const emptySelectedGuild: SelectedGuild = {
   id: '0',
   name: 'Loading...',
   avatar: '/media/images/placeholder.png',
-  show: false,
+  show: true,
+  template: true,
 } as const;
 
 export interface MainNavProps {
@@ -57,19 +59,20 @@ export function MainNav({ mobile }: MainNavProps) {
     // Get id
     const guildId = app?.selectedGuildId ?? null;
     // Check id against current id
-    if (guildId === selectedGuild?.id) return;
+    if (guildId === selectedGuild?.id && !selectedGuild?.template) return;
     if (typeof guildId !== 'string') return;
     setSelectedGuild({ ...selectedGuild, show: false });
 
     setTimeout(() => {
       setSelectedGuild({
         id: guildId,
-        name: app?.selectedGuild?.name || 'Last edited server',
-        avatar: app?.selectedGuild?.icon || '/media/images/placeholder.png',
+        name: app?.selectedGuild?.name || emptySelectedGuild.name,
+        avatar: app?.selectedGuild?.icon || emptySelectedGuild.avatar,
         show: true,
+        template: !(app?.selectedGuild?.name || app?.selectedGuild?.icon),
       });
     }, 800);
-  }, [app?.selectedGuild]);
+  }, [app?.selectedGuild, app?.selectedGuildId, app?.selectedGuild?.name]);
 
   const closeMenu = () => {
     app?.setMainNavOpen(false);
@@ -93,7 +96,7 @@ export function MainNav({ mobile }: MainNavProps) {
           <article className={'main-nav__profile'}>
             <section
               className={`${styles.profile} main-nav__profile__item ${
-                !selectedUser && styles.hide
+                (!selectedUser || !selectedUser?.id) && styles.hide
               }`}
             >
               <Image
@@ -101,9 +104,9 @@ export function MainNav({ mobile }: MainNavProps) {
                 src={
                   selectedUser?.avatar
                     ? 'https://cdn.discordapp.com/avatars/' +
-                      selectedUser.id +
+                      selectedUser?.id +
                       '/' +
-                      selectedUser.avatar
+                      selectedUser?.avatar
                     : '/media/images/placeholder.png'
                 }
                 alt={`Avatar of server ${selectedUser?.username}.`}
@@ -125,7 +128,14 @@ export function MainNav({ mobile }: MainNavProps) {
           <article className={'main-nav__guild'}>
             <section
               className={`${styles.guild} ${
-                (!selectedGuild.show || !selectedGuild?.avatar) && styles.hide
+                (!selectedGuild ||
+                  !selectedGuild?.show ||
+                  selectedGuild?.id === '0' ||
+                  selectedGuild?.id === 'null' ||
+                  !selectedGuild?.id ||
+                  !selectedGuild?.avatar ||
+                  !selectedUser) &&
+                styles.hide
               } main-nav__guild__item`}
             >
               <Image
@@ -139,7 +149,14 @@ export function MainNav({ mobile }: MainNavProps) {
             </section>
             <ul
               className={`${styles['server-menu']} ${
-                (selectedGuild.id === '0' || !selectedGuild?.avatar) &&
+                (!selectedGuild ||
+                  !selectedGuild?.show ||
+                  selectedGuild?.template ||
+                  selectedGuild?.id === '0' ||
+                  selectedGuild?.id === 'null' ||
+                  !selectedGuild?.id ||
+                  !selectedGuild?.avatar ||
+                  !selectedUser) &&
                 styles.hide
               } server-menu`}
             >

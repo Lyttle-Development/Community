@@ -13,16 +13,16 @@ export function ServerDummyCard() {
         width={100}
         height={100}
       />
-      <h2 className={`${styles.name} ${styles.mock}`}></h2>
+      <h2 className={`${styles.name} mock`}></h2>
       <ul className={styles.about}>
         <li className={styles.business}>
-          <span className={`${styles.staffMembers} ${styles.mock}`}></span>
+          <span className={`${styles.staffMembers} mock`}></span>
         </li>
         <li className={styles.stacks}>
-          <span className={`${styles.modulesEnabled} ${styles.mock}`}></span>
+          <span className={`${styles.modulesEnabled} mock`}></span>
         </li>
         <li className={styles.person}>
-          <span className={`${styles.members} ${styles.mock}`}></span>
+          <span className={`${styles.members} mock`}></span>
         </li>
       </ul>
       <Component.LightSwitch
@@ -30,6 +30,7 @@ export function ServerDummyCard() {
         color={SCSSPrimaryColors.orange}
         className={styles.switch}
         disabled={true}
+        mock={true}
       />
     </div>
   );
