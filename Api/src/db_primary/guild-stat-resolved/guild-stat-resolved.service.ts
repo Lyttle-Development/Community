@@ -93,7 +93,7 @@ export class GuildStatResolvedService {
       'textChannels',
       -1,
     );
-    return result.valueInt ?? 0;
+    return result?.valueInt ?? 0;
   }
 
   async getTextChannelsMessages(
