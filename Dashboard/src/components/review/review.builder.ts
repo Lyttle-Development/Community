@@ -291,8 +291,6 @@ export function reviewBuilder(
       queryName = queryName + '__' + i + changeKey;
     }
 
-    console.log('change:', change);
-
     // If the query requires a guild id, add it
     let value = change.current;
     // fix \n to \\n
@@ -383,19 +381,14 @@ function buildQuery(queries: ReviewBuilderQuery) {
       variablesObj.push(['enabled', query.enabled]);
     }
 
-    console.log(variablesObj);
     if (query.onEmptyUseAmountAsValue) {
-      console.log(query.variableName);
       const valueIndex = variablesObj.findIndex(
         ([name]) => name === query.variableName,
       );
-      console.log(valueIndex);
       if (valueIndex > -1) {
         const [, value] = variablesObj[valueIndex];
         if (value === '' || value === null) {
           variablesObj[valueIndex] = [query.variableName, query.valueFallback];
-          console.log('query.amount:', query.valueFallback);
-          console.log(variablesObj[valueIndex]);
         }
       }
     }
@@ -422,8 +415,6 @@ function buildQuery(queries: ReviewBuilderQuery) {
 
   // Close the query string
   queryString += '\n}';
-
-  console.log(queryString);
 
   // Return the query string
   return queryString;
