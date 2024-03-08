@@ -37,11 +37,12 @@ export function StatsCard({
   // round to 5 , 10 ,15 20
   // const roundedTotal = total ? Math.round(total / 5) * 5 : 0;
   const setTotal = () => {
-    if (currentTotal !== total) {
-      if (currentTotal < total) {
+    const roundedTotal = Math.round(total);
+    if (currentTotal !== roundedTotal) {
+      if (currentTotal < roundedTotal) {
         setCurrentTotal(currentTotal + 1);
       }
-      if (currentTotal > total) {
+      if (currentTotal > roundedTotal) {
         setCurrentTotal(currentTotal - 1);
       }
     }
