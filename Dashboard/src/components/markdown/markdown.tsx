@@ -12,7 +12,7 @@ export const Markdown = ({ children, content, className }: MarkdownProps) => {
   const markdownContent: string = children || content || '';
 
   // Join all props
-  const props = { components, remarkPlugins, className };
+  const props = { options: { components, remarkPlugins, className } };
 
   // Return markdown JSX.Element
   return <ReactMarkdown {...props}>{markdownContent}</ReactMarkdown>;
