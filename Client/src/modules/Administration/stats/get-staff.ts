@@ -14,10 +14,24 @@ export async function getStaff(guild: Guild): Promise<void> {
   // Add guild to cache
   cacheGuilds.push(guild.id);
 
+  const staffPermissions = [
+    PermissionsBitField.Flags.Administrator,
+    PermissionsBitField.Flags.ModerateMembers,
+    PermissionsBitField.Flags.KickMembers,
+    PermissionsBitField.Flags.BanMembers,
+    PermissionsBitField.Flags.ManageChannels,
+    PermissionsBitField.Flags.ManageGuild,
+    PermissionsBitField.Flags.ManageMessages,
+    PermissionsBitField.Flags.ManageRoles,
+    PermissionsBitField.Flags.ManageWebhooks,
+  ];
+
   const staffMembers: Collection<string, GuildMember> =
     guild.members.cache.filter(
       (member: GuildMember) =>
-        member.permissions.has(PermissionsBitField.Flags.Administrator) &&
+        // Check if member has any of the staff permissions.
+        staffPermissions.some((perm) => member.permissions.has(perm)) &&
+        // Check if member is not a bot.
         !member.user.bot,
     );
   const staffMembersIds: string[] = staffMembers.map((member) => member.id);
