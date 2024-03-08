@@ -82,8 +82,6 @@ export function useGuild(
     }
   }, [selectedGuildId, authorized]);
 
-  console.log(selectedGuild, guildData);
-
   return {
     selectedGuildId,
     setSelectedGuildId,

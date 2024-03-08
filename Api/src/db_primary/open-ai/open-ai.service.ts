@@ -1,13 +1,13 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { GuildStatResolvedService } from '../guild-stat-resolved/guild-stat-resolved.service';
 import { DiscordService } from '../discord/discord.service';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 import { GuildStatService } from '../guild-stat/guild-stat.service';
 import { OpenAi } from './entities/open-ai.entity';
 
 @Injectable()
 export class OpenAiService {
-  private openai: OpenAIApi;
+  private openai: OpenAI;
 
   constructor(
     @Inject(forwardRef(() => GuildStatResolvedService))
@@ -17,10 +17,9 @@ export class OpenAiService {
     @Inject(forwardRef(() => DiscordService))
     private discordService: DiscordService,
   ) {
-    const configuration = new Configuration({
+    this.openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    this.openai = new OpenAIApi(configuration);
   }
 
   create(guildId: string | null = null): OpenAi {
@@ -28,13 +27,13 @@ export class OpenAiService {
   }
 
   async createRecommendation(prompt, maxTokens = 100): Promise<string | null> {
-    const result = await this.openai.createChatCompletion({
+    const result = await this.openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: prompt,
       max_tokens: maxTokens,
     });
 
-    return result?.data?.choices[0]?.message?.content ?? null;
+    return result?.choices[0]?.message?.content ?? null;
   }
 
   async getOrCreateRecommendation(guildId: string): Promise<string> {
