@@ -17,6 +17,8 @@ export interface StatsCardProps {
   color?: StatsCardColors;
 }
 
+const defaultAnimationTime = 1000;
+
 export function StatsCard({
   title,
   value,
@@ -25,6 +27,7 @@ export function StatsCard({
   total = 0,
   color = StatsCardColors.Purple,
 }: StatsCardProps) {
+  const [totalTime, setTotalTime] = useState(defaultAnimationTime);
   const [currentTotal, setCurrentTotal] = useState(total);
   const [degrees, setDegrees] = useState(0);
   const [rotate, setRotate] = useState(false);
@@ -60,13 +63,17 @@ export function StatsCard({
   };
 
   useEffect(() => {
-    const timeout = setTimeout(setTotal, 10);
+    const timeout = setTimeout(setTotal, totalTime);
     return () => clearTimeout(timeout);
   }, [total, currentTotal]);
 
   useEffect(() => {
     setTotal();
   }, []);
+
+  useEffect(() => {
+    setTotalTime(defaultAnimationTime / total);
+  }, [total]);
 
   return (
     <article className={`${styles.card} ${color && styles[`card--${color}`]}`}>
