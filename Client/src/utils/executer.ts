@@ -51,7 +51,7 @@ export async function executor(
 }
 
 // The path to the modules.json file
-const modulesPath: string = path.join(process.cwd(), '\\modules.json');
+const modulesPath: string = path.join(process.cwd(), 'modules.json');
 // Cached modules
 
 export interface ExecutorModules {
