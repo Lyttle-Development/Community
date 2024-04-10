@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "docker:build": "concurrently \"npm run docker:build:api\" \"npm run docker:build:client\" \"npm run docker:build:dashboard\"",
-    "docker:build:api": "docker build -t community-v3:api Api",
-    "docker:build:client": "docker build -t community-v3:client Client",
-    "docker:build:dashboard": "docker build -t community-v3:dashboard Dashboard",
+    "docker:build:api": "docker build -t community.api:v3 -f Api/Dockerfile .",
+    "docker:build:client": "docker build -t community.client:v3 -f Client/Dockerfile .",
+    "docker:build:dashboard": "docker build -t community.dashboard:v3 -f Dashboard/Dockerfile .",
     "format": "prettier --write ."
   },
   "repository": {
