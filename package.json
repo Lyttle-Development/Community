@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "npm -s run tools && echo Starting",
-    "format": "prettier --write .",
-    "tools": "node ./.tools/app/lyttle_tools/main.js"
+    "docker:build": "concurrently \"npm run docker:build:api\" \"npm run docker:build:client\" \"npm run docker:build:dashboard\"",
+    "docker:build:api": "docker build -t community-v3:api Api",
+    "docker:build:client": "docker build -t community-v3:client Client",
+    "docker:build:dashboard": "docker build -t community-v3:dashboard Dashboard",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
   "engines": {
-    "node": "20.11.1"
+    "node": "20.12.0"
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +39,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",

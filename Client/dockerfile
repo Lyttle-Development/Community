@@ -1,14 +1,8 @@
 # Use an official Node.js runtime as a parent image
-FROM node:20.11.0
+FROM node:20.12.0
 
 # Set the working directory in the container
-WORKDIR /home/server/server/bots/Community/Client
-
-# Install app dependencies using npm ci
-RUN npm ci
-
-# Do necessary setup steps
-RUN npm run setup
+WORKDIR /home/server/applications/bots/community-v3/Client
 
 # Command to run your application
 CMD ["npm", "start"]
