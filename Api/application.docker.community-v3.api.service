@@ -23,12 +23,8 @@ Environment=BOT_TOKEN=0.0.0
 Environment=DATABASE_URL=postgresql://username:password@localhost/community?connect_timeout=360
 Environment=DATABASE_SSL=false
 
-Environment=DB_MIGRATION_HOST=localhost
-Environment=DB_MIGRATION_PORT=5432
-Environment=DB_MIGRATION_USERNAME=username
-Environment=DB_MIGRATION_PASSWORD=password
-Environment=DB_MIGRATION_DATABASE=community-canary
-Environment=DB_MIGRATION_SSLMODE=disable
+Environment=DATABASE_MIGRATION_URL=postgresql://username:password@localhost/community?connect_timeout=360
+Environment=DATABASE_MIGRATION_SSL=false
 
 Environment=JWT_SECRET=secret
 Environment=OPENAI_API_KEY=0-0

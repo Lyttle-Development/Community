@@ -4,11 +4,15 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 const migrationDatabaseConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: process.env.DB_MIGRATION_HOST,
-  port: parseInt(process.env.DB_MIGRATION_PORT),
-  username: process.env.DB_MIGRATION_USERNAME,
-  password: process.env.DB_MIGRATION_PASSWORD,
-  database: process.env.DB_MIGRATION_DATABASE,
+  url: process.env.DATABASE_MIGRATION_URL,
+  ssl: process.env.DATABASE_MIGRATION_SSL === 'true' && {
+    rejectUnauthorized: false,
+  },
+  // 1. https://www.google.com/search?q=what+does+synchronize+do+nestjs
+  // - synchronize: Indicates if database schema should be auto-created on every application launch
+  //
+  // 2. https://docs.nestjs.com/techniques/database#:~:text=WARNING,lose%20production%20data.
+  // - Setting "synchronize: true" shouldn't be used in production - otherwise you can lose production data.
   synchronize: false,
   entities: [__dirname + '/db_migration/**/*.entity.{js,ts}'],
   subscribers: [__dirname + '/db_migration/*.subscriber.{js,ts}'],
