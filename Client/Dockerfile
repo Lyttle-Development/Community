@@ -13,7 +13,7 @@ RUN npm ci
 WORKDIR /community-v3/Client
 
 # Build the application
-RUN npm run deploy
+RUN npm run docker:setup
 
 # Command to run your application
 CMD ["npm", "start"]

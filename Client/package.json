@@ -15,7 +15,8 @@
     "dev": "tsc -w",
     "dev:start": "node dist/Client/src/main.js",
     "dev:test": "jest -i",
-    "deploy": "npm run prisma:generate && npm run prisma:deploy && npm run build && npm run update-commands"
+    "deploy": "npm run prisma:generate && npm run prisma:deploy && npm run build && npm run update-commands",
+    "docker:setup": "npm run prisma:generate && npm run build"
   },
   "engines": {
     "node": "20.12.0"

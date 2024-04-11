@@ -13,7 +13,7 @@ RUN npm ci
 WORKDIR /community-v3/Api
 
 # Build the application
-RUN npm run deploy
+RUN npm run docker:setup
 
 # Expose the port the app runs on
 EXPOSE 3000

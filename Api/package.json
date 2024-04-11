@@ -13,7 +13,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "deploy": "npm run build"
+    "deploy": "npm run build",
+    "docker:setup": "npm run build"
   },
   "engines": {
     "node": "20.12.0"
