@@ -21,4 +21,4 @@ jobs:
       - name: Build and push API Docker image
         run: |
           docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/community.api:v3 -f Api/Dockerfile .
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/community.api:v3
+          docker push ghcr.io/${{ github.repository_owner | downcase }}/${{ github.repository | downcase }}/community.api:v3
