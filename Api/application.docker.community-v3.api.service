@@ -6,19 +6,30 @@ Requires=docker.service
 [Service]
 Type=oneshot
 
+# .env
+Environment=NODE_ENV=development|production|staging
+
+# API
+Environment=CLIENT_URI=http://localhost:8080
+Environment=CLIENT_DASHBOARD_URI=http://localhost:8080/dashboard
 Environment=PORT=3000
+
+# Discord
 Environment=CLIENT_ID=833083221775745074
 Environment=CLIENT_SECRET=0-0
 Environment=REDIRECT_URI=http://localhost:3000/auth/discord
 Environment=BOT_TOKEN=0.0.0
+
 Environment=DATABASE_URL=postgresql://username:password@localhost/community?connect_timeout=360
 Environment=DATABASE_SSL=false
+
 Environment=DB_MIGRATION_HOST=localhost
 Environment=DB_MIGRATION_PORT=5432
 Environment=DB_MIGRATION_USERNAME=username
 Environment=DB_MIGRATION_PASSWORD=password
 Environment=DB_MIGRATION_DATABASE=community-canary
 Environment=DB_MIGRATION_SSLMODE=disable
+
 Environment=JWT_SECRET=secret
 Environment=OPENAI_API_KEY=0-0
 
@@ -27,7 +38,7 @@ Group=server
 ExecStartPre=-/usr/bin/docker stop community-api
 ExecStartPre=-/usr/bin/docker rm community-api
 ExecStart=/usr/bin/docker pull ghcr.io/lyttle-development/community.api:v3
-ExecStart=/usr/bin/docker run --name community-api -e PORT -e CLIENT_ID -e CLIENT_SECRET -e REDIRECT_URI -e BOT_TOKEN -e DATABASE_URL -e DATABASE_SSL -e DB_MIGRATION_HOST -e DB_MIGRATION_PORT -e DB_MIGRATION_USERNAME -e DB_MIGRATION_PASSWORD -e DB_MIGRATION_DATABASE -e DB_MIGRATION_SSLMODE -e JWT_SECRET -e OPENAI_API_KEY ghcr.io/lyttle-development/community.api:v3
+ExecStart=/usr/bin/docker run --name community-api -e NODE_ENV -e CLIENT_URI -e CLIENT_DASHBOARD_URI -e PORT -e CLIENT_ID -e CLIENT_SECRET -e REDIRECT_URI -e BOT_TOKEN -e DATABASE_URL -e DATABASE_SSL -e DB_MIGRATION_HOST -e DB_MIGRATION_PORT -e DB_MIGRATION_USERNAME -e DB_MIGRATION_PASSWORD -e DB_MIGRATION_DATABASE -e DB_MIGRATION_SSLMODE -e JWT_SECRET -e OPENAI_API_KEY ghcr.io/lyttle-development/community.api:v3
 ExecStop=/usr/bin/docker stop community-api
 
 [Install]
