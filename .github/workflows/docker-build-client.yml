@@ -22,8 +22,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Client Docker image
-        run: docker build -t ghcr.io/Lyttle-Development/community.client:v3 -f Client/Dockerfile .
+        run: docker build -t ghcr.io/lyttle-development/community.client:v3 -f Client/Dockerfile .
 
       - name: Push Client Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/Lyttle-Development/community.client:v3
+          docker push ghcr.io/lyttle-development/community.client:v3

@@ -22,8 +22,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build API Docker image
-        run: docker build -t ghcr.io/Lyttle-Development/community.api:v3 -f Api/Dockerfile .
+        run: docker build -t ghcr.io/lyttle-development/community.api:v3 -f Api/Dockerfile .
 
       - name: Push API Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/Lyttle-Development/community.api:v3
+          docker push ghcr.io/lyttle-development/community.api:v3
