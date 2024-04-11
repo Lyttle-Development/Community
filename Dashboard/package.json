@@ -6,7 +6,9 @@
     "dev": "npx rimraf ./.next && next dev -p 8080",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build",
+    "docker:setup": "npm run build"
   },
   "dependencies": {
     "@apollo/client": "^3.9.6",

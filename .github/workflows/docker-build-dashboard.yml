@@ -1,0 +1,24 @@
+name: Build and Push Dashboard Docker Image
+
+on:
+  push:
+    branches:
+      - main
+      - alpha
+      - dev
+      - beta
+
+jobs:
+  build-and-push-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push Dashboard Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/community.dashboard:v3 -f Dashboard/Dockerfile .
+          docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/community.dashboard:v3
