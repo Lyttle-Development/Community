@@ -20,7 +20,8 @@ User=server
 Group=server
 ExecStartPre=-/usr/bin/docker stop application.docker.community-v3.client
 ExecStartPre=-/usr/bin/docker rm application.docker.community-v3.client
-ExecStart=/usr/bin/docker pull ghcr.io/lyttle-development/community.client:v3 && /usr/bin/docker run --name application.docker.community-v3.client -e NODE_ENV -e CLIENT_ID -e BOT_TOKEN -e DATABASE_URL ghcr.io/lyttle-development/community.client:v3
+ExecStartPre=/usr/bin/docker pull ghcr.io/lyttle-development/community.client:v3
+ExecStart=/usr/bin/docker run --name application.docker.community-v3.client -e NODE_ENV -e CLIENT_ID -e BOT_TOKEN -e DATABASE_URL ghcr.io/lyttle-development/community.client:v3
 ExecStop=/usr/bin/docker stop application.docker.community-v3.client
 
 [Install]
