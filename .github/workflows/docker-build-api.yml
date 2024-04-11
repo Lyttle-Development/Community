@@ -26,7 +26,10 @@ jobs:
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push API Docker image
+      - name: Build API Docker image
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/$REPO_NAME/community.api:v3 -f Api/Dockerfile .
+          docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/$REPO_NAME/community.api:v3 -f Api/Dockerfile . --output type=local,dest=.
+
+      - name: Push API Docker image
+        run: |
           docker push ghcr.io/$REPO_OWNER/$REPO_NAME/community.api:v3

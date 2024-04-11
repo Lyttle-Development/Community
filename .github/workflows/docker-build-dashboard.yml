@@ -1,4 +1,4 @@
-name: Build and Push Dashboard Docker Image
+name: Build and Push Client Docker Image
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - beta
 
 jobs:
-  build-and-push-dashboard:
+  build-and-push-client:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,7 +26,10 @@ jobs:
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push Dashboard Docker image
+      - name: Build Client Docker image
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/$REPO_NAME/community.dashboard:v3 -f Dashboard/Dockerfile .
-          docker push ghcr.io/$REPO_OWNER/$REPO_NAME/community.dashboard:v3
+          docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/$REPO_NAME/community.client:v3 -f Client/Dockerfile . --output type=local,dest=.
+
+      - name: Push Client Docker image
+        run: |
+          docker push ghcr.io/$REPO_OWNER/$REPO_NAME/community.client:v3
