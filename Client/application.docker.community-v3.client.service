@@ -1,0 +1,28 @@
+[Unit]
+Description=Community Client Docker Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+
+# .env
+Environment=NODE_ENV=development|production|staging
+
+# Discord Bot
+Environment=CLIENT_ID=833083221775745074
+Environment=BOT_TOKEN=0.0.0
+
+# Database
+Environment=DATABASE_URL=postgresql://username:password@localhost/community?connect_timeout=360
+
+User=server
+Group=server
+ExecStartPre=-/usr/bin/docker stop community-client
+ExecStartPre=-/usr/bin/docker rm community-client
+ExecStart=/usr/bin/docker pull ghcr.io/lyttle-development/community.client:v3
+ExecStart=/usr/bin/docker run --name community-client -e NODE_ENV -e CLIENT_ID -e BOT_TOKEN -e DATABASE_URL ghcr.io/lyttle-development/community.client:v3
+ExecStop=/usr/bin/docker stop community-client
+
+[Install]
+WantedBy=multi-user.target
