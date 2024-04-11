@@ -20,5 +20,5 @@ jobs:
 
       - name: Build and push Dashboard Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/community.dashboard:v3 -f Dashboard/Dockerfile .
-          docker push ghcr.io/${{ github.repository_owner | downcase }}/${{ github.repository | downcase }}/community.dashboard:v3
+          docker build -t ghcr.io/${{ github.repository_owner }}/community.dashboard:v3 -f Dashboard/Dockerfile .
+          docker push ghcr.io/${{ github.repository_owner }}/community.dashboard:v3
