@@ -17,7 +17,7 @@ Group=server
 ExecStartPre=-/usr/bin/docker stop application.docker.community-v3.dashboard
 ExecStartPre=-/usr/bin/docker rm application.docker.community-v3.dashboard
 ExecStart=/usr/bin/docker pull ghcr.io/lyttle-development/community.dashboard:v3
-ExecStart=/usr/bin/docker run --name application.docker.community-v3.dashboard -e NEXT_PUBLIC_GRAPHQL_URL -e NEXT_PUBLIC_LOGIN_URL -e NEXT_PUBLIC_LOGOUT_URL -e NEXT_PUBLIC_LOGIN_URL_RETURN -e NEXT_PUBLIC_CHECK_URL ghcr.io/lyttle-development/community.dashboard:v3
+ExecStart=/usr/bin/docker run --name application.docker.community-v3.dashboard -e NEXT_PUBLIC_GRAPHQL_URL -e NEXT_PUBLIC_LOGIN_URL -e NEXT_PUBLIC_LOGOUT_URL -e NEXT_PUBLIC_LOGIN_URL_RETURN -e NEXT_PUBLIC_CHECK_URL -p 3000:3000 ghcr.io/lyttle-development/community.dashboard:v3
 ExecStop=/usr/bin/docker stop application.docker.community-v3.dashboard
 
 [Install]
