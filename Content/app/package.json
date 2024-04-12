@@ -12,7 +12,7 @@
     "generate:format": "prettier --write \"generated/**/*.ts\""
   },
   "engines": {
-    "node": "20.11.1"
+    "node": "20.12.0"
   },
   "author": "",
   "license": "ISC",
