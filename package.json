@@ -1,19 +1,17 @@
 {
   "name": "community",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "npm -s run tools && echo Starting",
-    "format": "prettier --write .",
-    "tools": "node ./.tools/app/lyttle_tools/main.js"
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
   "engines": {
-    "node": "20.11.1"
+    "node": "20.12.0"
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +35,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
