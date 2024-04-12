@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-      - alpha
-      - dev
-      - beta
 
 jobs:
   build-and-push:
@@ -22,7 +19,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Dashboard Docker image
-        run: docker build -t ghcr.io/lyttle-development/community.dashboard:v3 -f Dashboard/Dockerfile .
+        run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:main -f Dashboard/Dockerfile .
 
       - name: Push Dashboard Docker image to GitHub Container Registry
         run: |

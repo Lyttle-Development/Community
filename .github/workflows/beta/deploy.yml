@@ -1,8 +1,9 @@
-name: Node.js CI/CD
+name: Deploy BETA
 
 on:
   push:
-    branches: [ "beta" ]
+    branches:
+      - beta
 
 jobs:
   deploy:

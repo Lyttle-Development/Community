@@ -1,11 +1,8 @@
-name: Build and Push API Docker Image
+name: Build and Push Dashboard Docker Image
 on:
   push:
     branches:
-      - main
-      - alpha
       - dev
-      - beta
 
 jobs:
   build-and-push:
@@ -21,9 +18,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build API Docker image
-        run: docker build -t ghcr.io/lyttle-development/community.api:v3 -f Api/Dockerfile .
+      - name: Build Dashboard Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:dev -f Dashboard/Dockerfile .
 
-      - name: Push API Docker image to GitHub Container Registry
+      - name: Push Dashboard Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/lyttle-development/community.api:v3
+          docker push ghcr.io/lyttle-development/community.dashboard:v3
