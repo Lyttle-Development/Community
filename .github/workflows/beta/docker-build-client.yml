@@ -24,4 +24,4 @@ jobs:
 
       - name: Push Client Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/lyttle-development/community.client:v3
+          docker push ghcr.io/lyttle-development/community.v3.client:beta

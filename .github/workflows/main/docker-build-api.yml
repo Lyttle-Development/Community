@@ -23,4 +23,4 @@ jobs:
 
       - name: Push API Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/lyttle-development/community.api:v3
+          docker push ghcr.io/lyttle-development/community.v3.api:main
