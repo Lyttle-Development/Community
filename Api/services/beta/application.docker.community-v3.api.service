@@ -33,8 +33,8 @@ User=server
 Group=server
 ExecStartPre=-/usr/bin/docker stop application.docker.community-v3.api
 ExecStartPre=-/usr/bin/docker rm application.docker.community-v3.api
-ExecStartPre=/usr/bin/docker pull ghcr.io/lyttle-development/community.api:v3
-ExecStart=/usr/bin/docker run --name application.docker.community-v3.api -e NODE_ENV -e CLIENT_URI -e CLIENT_DASHBOARD_URI -e PORT -e CLIENT_ID -e CLIENT_SECRET -e REDIRECT_URI -e BOT_TOKEN -e DATABASE_URL -e DATABASE_SSL -e DATABASE_MIGRATION_URL -e DATABASE_MIGRATION_SSL -e JWT_SECRET -e OPENAI_API_KEY -p 3000:3000 ghcr.io/lyttle-development/community.api:v3
+ExecStartPre=/usr/bin/docker pull ghcr.io/lyttle-development/community.v3.api:beta
+ExecStart=/usr/bin/docker run --name application.docker.community-v3.api -e NODE_ENV -e CLIENT_URI -e CLIENT_DASHBOARD_URI -e PORT -e CLIENT_ID -e CLIENT_SECRET -e REDIRECT_URI -e BOT_TOKEN -e DATABASE_URL -e DATABASE_SSL -e DATABASE_MIGRATION_URL -e DATABASE_MIGRATION_SSL -e JWT_SECRET -e OPENAI_API_KEY -p 3000:3000 ghcr.io/lyttle-development/community.v3.api:beta
 ExecStop=/usr/bin/docker stop application.docker.community-v3.api
 
 [Install]
