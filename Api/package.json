@@ -7,14 +7,15 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "dev:start": "nest start --watch",
+    "dev:debug": "nest start --debug --watch",
     "deploy": "npm run build",
-    "docker:setup": "npm run build"
+    "docker:setup": "npm run build",
+    "docker:service:api:main": "cp services/main/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
+    "docker:service:api:beta": "cp services/beta/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
+    "docker:service:api:alpha": "cp services/alpha/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
+    "docker:service:api:dev": "cp services/dev/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service"
   },
   "engines": {
     "node": "20.12.0"

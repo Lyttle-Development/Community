@@ -4,14 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "docker:build": "concurrently \"npm run docker:build:api\" \"npm run docker:build:client\" \"npm run docker:build:dashboard\"",
-    "docker:build:api": "docker build -t community.api:v3 -f Api/Dockerfile .",
-    "docker:build:client": "docker build -t community.client:v3 -f Client/Dockerfile .",
-    "docker:build:dashboard": "docker build -t community.dashboard:v3 -f Dashboard/Dockerfile .",
-    "docker:setup:api": "cp Api/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
-    "docker:expose:api": "docker run -d -p 91.134.89.133:3000:3000/tcp ghcr.io/lyttle-development/community.api:v3",
-    "docker:setup:client": "cp Client/application.docker.community-v3.client.service /etc/systemd/system/application.docker.community-v3.client.service && nano /etc/systemd/system/application.docker.community-v3.client.service",
-    "docker:setup:dashboard": "cp Dashboard/application.docker.community-v3.dashboard.service /etc/systemd/system/application.docker.community-v3.dashboard.service && nano /etc/systemd/system/application.docker.community-v3.dashboard.service",
     "format": "prettier --write ."
   },
   "repository": {
