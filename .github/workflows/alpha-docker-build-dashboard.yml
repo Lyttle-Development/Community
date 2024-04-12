@@ -1,0 +1,27 @@
+name: Build and Push ALPHA Dashboard Docker Image
+
+on:
+  push:
+    branches:
+      - alpha
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Dashboard Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:alpha -f Dashboard/Dockerfile .
+
+      - name: Push Dashboard Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.dashboard:alpha
