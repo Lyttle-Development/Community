@@ -1,0 +1,98 @@
+name: BETA Workflow
+
+on:
+  push:
+    branches:
+      - alpha
+
+jobs:
+  docker-build-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build API Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.api:beta -f Api/Dockerfile .
+
+      - name: Push API Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.api:beta
+
+  docker-build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Client Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.client:beta -f Client/Dockerfile .
+
+      - name: Push Client Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.client:beta
+
+  docker-build-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Dashboard Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:beta -f Dashboard/Dockerfile .
+
+      - name: Push Dashboard Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.dashboard:beta
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - docker-build-api
+      - docker-build-client
+      - docker-build-dashboard
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Deploy BETA to FR001
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.FR001_HOST }}
+          username: ${{ secrets.FR001_USERNAME }}
+          password: ${{ secrets.FR001_PASSWORD }}
+          script: |
+            sudo systemctl restart application.docker.community-v3.api.service
+            sudo systemctl restart application.docker.community-v3.client.service
+      - name: Deploy BETA to DE001
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DE001_HOST }}
+          username: ${{ secrets.DE001_USERNAME }}
+          password: ${{ secrets.DE001_PASSWORD }}
+          script: |
+            sudo systemctl restart application.docker.community-v3.dashboard.service
