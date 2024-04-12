@@ -1,0 +1,24 @@
+[Unit]
+Description=Community Dashboard Docker Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+
+Environment=NEXT_PUBLIC_GRAPHQL_URL=http://localhost:3000/graphql
+Environment=NEXT_PUBLIC_LOGIN_URL=http://localhost:3000/auth/login
+Environment=NEXT_PUBLIC_LOGOUT_URL=http://localhost:3000/auth/logout
+Environment=NEXT_PUBLIC_LOGIN_URL_RETURN=http://localhost:3000/auth/discord
+Environment=NEXT_PUBLIC_CHECK_URL=http://localhost:3000/
+
+User=server
+Group=server
+ExecStartPre=-/usr/bin/docker stop application.docker.community-v3.dashboard
+ExecStartPre=-/usr/bin/docker rm application.docker.community-v3.dashboard
+ExecStartPre=/usr/bin/docker pull ghcr.io/lyttle-development/community.v3.dashboard:dev
+ExecStart=/usr/bin/docker run --name application.docker.community-v3.dashboard -e NEXT_PUBLIC_GRAPHQL_URL -e NEXT_PUBLIC_LOGIN_URL -e NEXT_PUBLIC_LOGOUT_URL -e NEXT_PUBLIC_LOGIN_URL_RETURN -e NEXT_PUBLIC_CHECK_URL -p 3000:3000 ghcr.io/lyttle-development/community.v3.dashboard:dev
+ExecStop=/usr/bin/docker stop application.docker.community-v3.dashboard
+
+[Install]
+WantedBy=multi-user.target
