@@ -1,4 +1,4 @@
-name: Build and Push Dashboard Docker Image
+name: Build and Push MAIN Dashboard Docker Image
 on:
   push:
     branches:
