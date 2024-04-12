@@ -1,9 +1,14 @@
 name: Deploy BETA
 
 on:
-  push:
-    branches:
-      - beta
+  workflow_run:
+    workflows: [
+      "Build and Push BETA API Docker Image"
+      "Build and Push BETA Client Docker Image",
+      "Build and Push BETA Dashboard Docker Image"
+    ]
+    types:
+      - completed
 
 jobs:
   deploy:
