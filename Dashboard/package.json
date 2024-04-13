@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "start": "systemctl show-environment > .env && next start -p 3000",
+    "start": "npm run build && next start -p 3000",
     "dev:start": "npx rimraf ./.next && next dev -p 8080",
     "deploy": "npm run build",
     "docker:setup": "npm run build",
