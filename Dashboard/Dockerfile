@@ -12,13 +12,6 @@ RUN npm ci
 
 WORKDIR /community-v3/Dashboard
 
-# List environment variables
-ENV NEXT_PUBLIC_GRAPHQL_URL=http://localhost:3000/graphql
-ENV NEXT_PUBLIC_LOGIN_URL=http://localhost:3000/auth/login
-ENV NEXT_PUBLIC_LOGOUT_URL=http://localhost:3000/auth/logout
-ENV NEXT_PUBLIC_LOGIN_URL_RETURN=http://localhost:3000/auth/discord
-ENV NEXT_PUBLIC_CHECK_URL=http://localhost:3000/
-
 # Build the application
 RUN npm run docker:setup
 
