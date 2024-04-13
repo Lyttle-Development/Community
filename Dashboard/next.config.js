@@ -18,6 +18,13 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_PUBLIC_GRAPHQL_URL: process.env.NEXT_PUBLIC_GRAPHQL_URL,
+    NEXT_PUBLIC_LOGIN_URL: process.env.NEXT_PUBLIC_LOGIN_URL,
+    NEXT_PUBLIC_LOGOUT_URL: process.env.NEXT_PUBLIC_LOGOUT_URL,
+    NEXT_PUBLIC_LOGIN_URL_RETURN: process.env.NEXT_PUBLIC_LOGIN_URL_RETURN,
+    NEXT_PUBLIC_CHECK_URL: process.env.NEXT_PUBLIC_CHECK_URL,
+  },
 };
 
 module.exports = nextConfig;
