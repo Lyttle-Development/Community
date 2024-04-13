@@ -1,12 +1,23 @@
+const env = process.env;
+
 export const graphQlUrl =
-  process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:3000/graphql';
+  env.NEXT_PUBLIC_GRAPHQL_URL ||
+  process.env.NEXT_PUBLIC_GRAPHQL_URL ||
+  'http://localhost:3000/graphql';
 
 export const loginUrl =
-  process.env.NEXT_PUBLIC_LOGIN_URL || 'http://localhost:3000/auth/login';
+  env.NEXT_PUBLIC_LOGIN_URL ||
+  process.env.NEXT_PUBLIC_LOGIN_URL ||
+  'http://localhost:3000/auth/login';
 export const logoutUrl =
-  process.env.NEXT_PUBLIC_LOGOUT_URL || 'http://localhost:3000/auth/logout';
+  env.NEXT_PUBLIC_LOGOUT_URL ||
+  process.env.NEXT_PUBLIC_LOGOUT_URL ||
+  'http://localhost:3000/auth/logout';
 export const loginReturnUrl =
+  env.NEXT_PUBLIC_LOGIN_URL_RETURN ||
   process.env.NEXT_PUBLIC_LOGIN_URL_RETURN ||
   'http://localhost:3000/auth/discord';
 export const checkLoginUrl =
-  process.env.NEXT_PUBLIC_CHECK_URL || 'http://localhost:3000/';
+  env.NEXT_PUBLIC_CHECK_URL ||
+  process.env.NEXT_PUBLIC_CHECK_URL ||
+  'http://localhost:3000/';
