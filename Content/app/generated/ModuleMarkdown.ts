@@ -368,6 +368,29 @@ export const ModuleMarkdown = {
           documentation: '',
         },
       },
+      login: {
+        'back-button': {
+          content: 'Go back',
+          documentation: '',
+        },
+        'landing-description': {
+          content:
+            'To be able to access the dashboard, you need to log in using Discord. This way we can authorise your permissions and provide you with the best experience possible.',
+          documentation: '',
+        },
+        'landing-title': {
+          content: 'Pending Discord Connection.',
+          documentation: '',
+        },
+        'login-button': {
+          content: 'Login, via Discord.',
+          documentation: '',
+        },
+        title: {
+          content: 'Login',
+          documentation: '',
+        },
+      },
       module: {
         birthdays: {
           announcement: {

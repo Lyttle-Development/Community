@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Constants } from '@lyttledev-dashboard/constants';
+import { useRouter } from 'next/router';
 
 export function useAuth() {
   const [authorized, setAuthorized] = useState(false);
+  const router = useRouter();
 
   const login = (): void => {
-    window.location.href = Constants.loginUrl;
+    const currentPath = window.location.pathname;
+    localStorage.setItem('redirect', currentPath);
+    void router.push('/login');
   };
 
   const check = async (): Promise<void> => {

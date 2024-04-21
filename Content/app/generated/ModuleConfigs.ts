@@ -69,6 +69,11 @@ export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules
 export * as ModuleConfigDashboardPagesHomeLandingDescription from '../../content/modules/Dashboard/pages/home/landing-description/config';
 export * as ModuleConfigDashboardPagesHomeLandingTitle from '../../content/modules/Dashboard/pages/home/landing-title/config';
 export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';
+export * as ModuleConfigDashboardPagesLoginBackButton from '../../content/modules/Dashboard/pages/login/back-button/config';
+export * as ModuleConfigDashboardPagesLoginLandingDescription from '../../content/modules/Dashboard/pages/login/landing-description/config';
+export * as ModuleConfigDashboardPagesLoginLandingTitle from '../../content/modules/Dashboard/pages/login/landing-title/config';
+export * as ModuleConfigDashboardPagesLoginLoginButton from '../../content/modules/Dashboard/pages/login/login-button/config';
+export * as ModuleConfigDashboardPagesLoginTitle from '../../content/modules/Dashboard/pages/login/title/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementDescription from '../../content/modules/Dashboard/pages/module/birthdays/announcement/description/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementTitle from '../../content/modules/Dashboard/pages/module/birthdays/announcement/title/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysDescription from '../../content/modules/Dashboard/pages/module/birthdays/description/config';
