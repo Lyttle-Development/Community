@@ -1,0 +1,1 @@
+To be able to access the dashboard, you need to log in using Discord. This way we can authorise your permissions and provide you with the best experience possible.

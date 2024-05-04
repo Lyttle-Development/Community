@@ -222,6 +222,10 @@ export const ModuleMarkdown = {
           content: 'Home',
           documentation: '',
         },
+        'label-login': {
+          content: 'Login',
+          documentation: '',
+        },
         'label-logout': {
           content: 'Logout',
           documentation: '',
@@ -340,6 +344,11 @@ export const ModuleMarkdown = {
     },
     pages: {
       dashboard: {
+        'no-servers': {
+          content:
+            'It looks like you have no servers, create one in the discord app!',
+          documentation: '',
+        },
         title: {
           content: 'Servers',
           documentation: '',
@@ -365,6 +374,52 @@ export const ModuleMarkdown = {
         },
         title: {
           content: 'Home',
+          documentation: '',
+        },
+      },
+      login: {
+        'back-button': {
+          content: 'Go back',
+          documentation: '',
+        },
+        'landing-description': {
+          content:
+            'To be able to access the dashboard, you need to log in using Discord. This way we can authorise your permissions and provide you with the best experience possible.',
+          documentation: '',
+        },
+        'landing-title': {
+          content: 'Pending Discord Connection.',
+          documentation: '',
+        },
+        'login-button': {
+          content: 'Login, via Discord.',
+          documentation: '',
+        },
+        title: {
+          content: 'Login',
+          documentation: '',
+        },
+      },
+      logout: {
+        'back-button': {
+          content: 'I have unsaved progress, go back!',
+          documentation: '',
+        },
+        'landing-description': {
+          content:
+            'When you log out, we clear all data stored in your browser. This means any unsaved progress will be lost! If you are sure, and understand this risk, confirm & logout below:',
+          documentation: '',
+        },
+        'landing-title': {
+          content: 'Watch out!',
+          documentation: '',
+        },
+        'logout-button': {
+          content: 'Confirm & logout.',
+          documentation: '',
+        },
+        title: {
+          content: 'Logout',
           documentation: '',
         },
       },

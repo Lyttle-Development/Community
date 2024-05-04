@@ -1,0 +1,1 @@
+It looks like you have no servers, create one in the discord app!

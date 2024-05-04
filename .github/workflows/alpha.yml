@@ -1,0 +1,67 @@
+name: ALPHA Workflow
+
+on:
+  push:
+    branches:
+      - alpha
+
+jobs:
+  docker-build-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build API Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.api:alpha -f Api/Dockerfile .
+
+      - name: Push API Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.api:alpha
+
+  docker-build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Client Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.client:alpha -f Client/Dockerfile .
+
+      - name: Push Client Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.client:alpha
+
+  docker-build-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Dashboard Docker image
+        run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:alpha -f Dashboard/Dockerfile .
+
+      - name: Push Dashboard Docker image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/lyttle-development/community.v3.dashboard:alpha
