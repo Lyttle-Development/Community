@@ -1,0 +1,1 @@
+When you log out, we clear all data stored in your browser. This means any unsaved progress will be lost! If you are sure, and understand this risk, confirm & logout below:
