@@ -344,6 +344,11 @@ export const ModuleMarkdown = {
     },
     pages: {
       dashboard: {
+        'no-servers': {
+          content:
+            'It looks like you have no servers, create one in the discord app!',
+          documentation: '',
+        },
         title: {
           content: 'Servers',
           documentation: '',
