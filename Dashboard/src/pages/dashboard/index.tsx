@@ -5,6 +5,7 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useEffect } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
+import { getMessage } from '@lyttledev-dashboard/utils';
 
 const DashboardQuery = gql`
   query {
@@ -17,6 +18,7 @@ const DashboardQuery = gql`
 function Page() {
   const authorized = useAuth();
   const title = usePage(pagesPrefix + 'dashboard.title');
+  const msgNoServers = getMessage(pagesPrefix + 'dashboard.no-servers');
   const [fetch, { data }] = useLazyQuery(DashboardQuery);
 
   useEffect(() => {
@@ -33,9 +35,17 @@ function Page() {
       <Component.Container>
         <Layout.Transition>
           {data?.discord?.dashboardUserGuilds ? (
-            <Component.ServerCardGrid
-              servers={data?.discord?.dashboardUserGuilds}
-            />
+            <>
+              {data?.discord?.dashboardUserGuilds?.length > 0 ? (
+                <Component.ServerCardGrid
+                  servers={data?.discord?.dashboardUserGuilds}
+                />
+              ) : (
+                <a href={'https://discord.com/app'} target={'_blank'}>
+                  {msgNoServers}
+                </a>
+              )}
+            </>
           ) : (
             <Component.ServerCardDummyGrid />
           )}

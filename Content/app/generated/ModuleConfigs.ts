@@ -64,6 +64,7 @@ export * as ModuleConfigDashboardComponentsSnackbarResettingCancel from '../../c
 export * as ModuleConfigDashboardComponentsSnackbarResettingReset from '../../content/modules/Dashboard/components/snackbar/resetting/reset/config';
 export * as ModuleConfigDashboardComponentsSnackbarResettingTitle from '../../content/modules/Dashboard/components/snackbar/resetting/title/config';
 export * as ModuleConfigDashboardComponentsTipCardDismiss from '../../content/modules/Dashboard/components/tip-card/dismiss/config';
+export * as ModuleConfigDashboardPagesDashboardNoServers from '../../content/modules/Dashboard/pages/dashboard/no-servers/config';
 export * as ModuleConfigDashboardPagesDashboardTitle from '../../content/modules/Dashboard/pages/dashboard/title/config';
 export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/Dashboard/pages/home/add-button/config';
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
