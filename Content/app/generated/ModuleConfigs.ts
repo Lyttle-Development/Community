@@ -39,6 +39,7 @@ export * as ModuleConfigCommunicationVoiceTopicTxtJoined from '../../content/mod
 export * as ModuleConfigCommunicationVoiceTopicTxtSuccess from '../../content/modules/Communication/voice-topic/txt/success/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelDashboard from '../../content/modules/Dashboard/components/main-nav/label-dashboard/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelHome from '../../content/modules/Dashboard/components/main-nav/label-home/config';
+export * as ModuleConfigDashboardComponentsMainNavLabelLogin from '../../content/modules/Dashboard/components/main-nav/label-login/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelLogout from '../../content/modules/Dashboard/components/main-nav/label-logout/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelModules from '../../content/modules/Dashboard/components/main-nav/label-modules/config';
 export * as ModuleConfigDashboardComponentsMainNavLabelOverview from '../../content/modules/Dashboard/components/main-nav/label-overview/config';
@@ -74,6 +75,11 @@ export * as ModuleConfigDashboardPagesLoginLandingDescription from '../../conten
 export * as ModuleConfigDashboardPagesLoginLandingTitle from '../../content/modules/Dashboard/pages/login/landing-title/config';
 export * as ModuleConfigDashboardPagesLoginLoginButton from '../../content/modules/Dashboard/pages/login/login-button/config';
 export * as ModuleConfigDashboardPagesLoginTitle from '../../content/modules/Dashboard/pages/login/title/config';
+export * as ModuleConfigDashboardPagesLogoutBackButton from '../../content/modules/Dashboard/pages/logout/back-button/config';
+export * as ModuleConfigDashboardPagesLogoutLandingDescription from '../../content/modules/Dashboard/pages/logout/landing-description/config';
+export * as ModuleConfigDashboardPagesLogoutLandingTitle from '../../content/modules/Dashboard/pages/logout/landing-title/config';
+export * as ModuleConfigDashboardPagesLogoutLogoutButton from '../../content/modules/Dashboard/pages/logout/logout-button/config';
+export * as ModuleConfigDashboardPagesLogoutTitle from '../../content/modules/Dashboard/pages/logout/title/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementDescription from '../../content/modules/Dashboard/pages/module/birthdays/announcement/description/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysAnnouncementTitle from '../../content/modules/Dashboard/pages/module/birthdays/announcement/title/config';
 export * as ModuleConfigDashboardPagesModuleBirthdaysDescription from '../../content/modules/Dashboard/pages/module/birthdays/description/config';

@@ -222,6 +222,10 @@ export const ModuleMarkdown = {
           content: 'Home',
           documentation: '',
         },
+        'label-login': {
+          content: 'Login',
+          documentation: '',
+        },
         'label-logout': {
           content: 'Logout',
           documentation: '',
@@ -388,6 +392,29 @@ export const ModuleMarkdown = {
         },
         title: {
           content: 'Login',
+          documentation: '',
+        },
+      },
+      logout: {
+        'back-button': {
+          content: 'I have unsaved progress, go back!',
+          documentation: '',
+        },
+        'landing-description': {
+          content:
+            'When you log out, we clear all data stored in your browser. This means any unsaved progress will be lost! If you are sure, and understand this risk, confirm & logout below:',
+          documentation: '',
+        },
+        'landing-title': {
+          content: 'Watch out!',
+          documentation: '',
+        },
+        'logout-button': {
+          content: 'Confirm & logout.',
+          documentation: '',
+        },
+        title: {
+          content: 'Logout',
           documentation: '',
         },
       },
