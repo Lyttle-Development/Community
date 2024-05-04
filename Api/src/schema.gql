@@ -560,8 +560,8 @@ input CreateMemberModuleLevelInput {
   userId: String!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1714840882386
-  callStart: Timestamp! = 1714840882386
+  cooldownTime: Timestamp! = 1714842924857
+  callStart: Timestamp! = 1714842924857
   points: Int! = 0
 }
 
@@ -570,8 +570,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1714840882386
-  callStart: Timestamp = 1714840882386
+  cooldownTime: Timestamp = 1714842924857
+  callStart: Timestamp = 1714842924857
   points: Int = 0
 }
 
