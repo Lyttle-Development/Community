@@ -6,7 +6,6 @@ import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { logout } from '@lyttledev-dashboard/hooks/useAuth';
 import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
 interface SelectedGuild {
@@ -38,6 +37,7 @@ export function MainNav({ mobile }: MainNavProps) {
   const pfx = componentsPrefix + 'main-nav.label-';
   const labelDashboard = getMessage(pfx + 'dashboard');
   const labelHome = getMessage(pfx + 'home');
+  const labelLogin = getMessage(pfx + 'login');
   const labelLogout = getMessage(pfx + 'logout');
   const labelModules = getMessage(pfx + 'modules');
   const labelProfile = getMessage(pfx + 'profile');
@@ -48,11 +48,6 @@ export function MainNav({ mobile }: MainNavProps) {
   const openClass = mainNavOpen
     ? `${prefix} ${prefix}--open`
     : `${prefix} ${prefix}--closed`;
-
-  const signOut = () => {
-    app?.setSelectedGuildId(null);
-    logout();
-  };
 
   // Update selected guild id
   useEffect(() => {
@@ -176,7 +171,15 @@ export function MainNav({ mobile }: MainNavProps) {
           </article>
         </nav>
         <ul className={`${styles['main-menu__footer']}`}>
-          <MainNavItem onClick={signOut}>{labelLogout}</MainNavItem>
+          {!selectedUser || !selectedUser?.id ? (
+            <MainNavItem href={'/login'} route={'/login'}>
+              {labelLogin}
+            </MainNavItem>
+          ) : (
+            <MainNavItem href={'/logout'} route={'/logout'}>
+              {labelLogout}
+            </MainNavItem>
+          )}
         </ul>
       </aside>
       {mobile && (
