@@ -1,6 +1,7 @@
 import {
   findOneGuildStatsByGuildAndKey,
   getAllGuildStatsCaches,
+  GuildStatDay,
   removeOutdatedGuildStats,
   setGuildStat,
 } from '../../../database/handlers';
@@ -25,7 +26,7 @@ export async function resetCaches() {
     // set cached result as real result
     await setGuildStat(guildId, key, todayInt, value, value_int, group_key);
     // reset cached result back to 0
-    await setGuildStat(guildId, key, -2, null, 0);
+    await setGuildStat(guildId, key, GuildStatDay.Cache, null, 0);
   }
 
   // remove outdated stats (older than 7 days)
