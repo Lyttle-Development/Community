@@ -76,7 +76,7 @@ export function getIcon(icon: Icons) {
       );
 
     default:
-      return <p>Not icon found!</p>;
+      return <p>No icon found!</p>;
   }
 }
 
