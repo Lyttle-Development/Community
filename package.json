@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "npm:update": "npm update --save"
   },
   "repository": {
     "type": "git",
@@ -27,14 +28,14 @@
     "Database"
   ],
   "dependencies": {
-    "@lyttledev/api": "file:Api",
-    "@lyttledev/client": "file:Client",
-    "@lyttledev/content": "file:Content/app",
+    "@lyttledev/api": "^1.0.0",
+    "@lyttledev/client": "^1.0.0",
+    "@lyttledev/content": "^1.0.0",
     "@lyttledev/dashboard": "file:Dashboard",
-    "@lyttledev/database": "file:Database"
+    "@lyttledev/database": "^1.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",

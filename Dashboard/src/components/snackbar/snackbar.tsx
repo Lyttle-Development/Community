@@ -71,7 +71,7 @@ export function Snackbar() {
   const msgResettingCancel = getMessage(pfx + 'resetting.cancel');
   const msgResettingReset = getMessage(pfx + 'resetting.reset');
 
-  if (router.pathname === '/dashboard/[guild_id]/review') {
+  if (router.pathname === '/servers/[guild_id]/review') {
     if (hasChanges) setHasChanges(false);
   }
   return (
@@ -104,7 +104,7 @@ export function Snackbar() {
                 color={ButtonColors.orange}
                 className={styles['review-btn']}
                 text={msgChangesReview}
-                href={`/dashboard/${guildId ?? '0'}/review`}
+                href={`/servers/${guildId ?? '0'}/review`}
               />
             </section>
           </>

@@ -92,7 +92,7 @@ export function ServerCard({
       : active ?? false;
 
   return (
-    <Component.Link href={`/dashboard/${id}`} className={styles.card}>
+    <Component.Link href={`/servers/${id}`} className={styles.card}>
       <Image
         className={styles.avatar}
         src={icon}
