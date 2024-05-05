@@ -47,7 +47,7 @@ export const getVoiceTopicsConfig = (
     channels?.map(
       ({ id, title, active }: VoiceTopicsChannel): ModuleCardItem => ({
         id,
-        route: `/dashboard/${guildId}/module/voice-topics#channel-${id}`,
+        route: `/servers/${guildId}/module/voice-topics#channel-${id}`,
         description: msgCardDescription,
         active: null,
         title: '#' + title,
@@ -60,11 +60,11 @@ export const getVoiceTopicsConfig = (
     description: msgDescription,
     extendable: true,
     id: moduleId,
-    route: `/dashboard/${guildId}/module/voice-topics`,
+    route: `/servers/${guildId}/module/voice-topics`,
     subItems: [
       {
         id: null,
-        route: `/dashboard/${guildId}/module/voice-topics#send-message`,
+        route: `/servers/${guildId}/module/voice-topics#send-message`,
         description: msgCardDescription,
         active: null,
         title: 'Send Message in Channel',

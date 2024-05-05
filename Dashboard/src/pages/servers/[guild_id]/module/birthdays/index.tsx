@@ -56,11 +56,11 @@ export function getBirthdaysConfig({
     title: msgTitle,
     description: msgDescription,
     id: setup ? changeKeys.moduleBirthday.key : null,
-    route: `/dashboard/${guildId}/module/birthdays`,
+    route: `/servers/${guildId}/module/birthdays`,
     subItems: [
       {
         id: announcementKey,
-        route: `/dashboard/${guildId}/module/birthdays#announcement`,
+        route: `/servers/${guildId}/module/birthdays#announcement`,
         active: announcementActive,
         title: msgAnnouncementTitle,
         description: msgAnnouncementDescription,

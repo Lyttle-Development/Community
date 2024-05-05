@@ -40,7 +40,7 @@ export const getDynamicVoiceConfig = (
     channels?.map(
       ({ id, title, active }: DynamicVoiceChannel): ModuleCardItem => ({
         id,
-        route: `/dashboard/${guildId}/module/dynamic-voice#channel-${id}`,
+        route: `/servers/${guildId}/module/dynamic-voice#channel-${id}`,
         description: msgCardDescription,
         active: null,
         title: '#' + title,
@@ -53,7 +53,7 @@ export const getDynamicVoiceConfig = (
     description: msgDescription,
     extendable: true,
     id: moduleId,
-    route: `/dashboard/${guildId}/module/dynamic-voice`,
+    route: `/servers/${guildId}/module/dynamic-voice`,
     subItems,
   };
 };

@@ -7,6 +7,8 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { Constants } from '@lyttledev-dashboard/constants';
 import { gql, useQuery } from '@apollo/client';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
+import { getTotal } from '@lyttledev-dashboard/utils/get-total';
+import { getTotalChange } from '@lyttledev-dashboard/utils/get-total-change';
 
 export const pagesPrefix = dashboardPrefix + 'pages.';
 
@@ -72,6 +74,9 @@ function Page() {
               {
                 title: getMessage(statsPfx + 'total-guilds'),
                 value: stats?.totalGuilds || 0,
+                change: getTotalChange(100, stats?.totalGuilds || 0),
+                changeNote: ' more until verified',
+                total: getTotal(100, stats?.totalGuilds || 0),
               },
               {
                 title: getMessage(
@@ -79,6 +84,10 @@ function Page() {
                 ),
                 value: stats?.totalPointsGivenSinceLastRestart || 0,
                 color: StatsCardColors.Yellow,
+                total: getTotal(
+                  25000,
+                  stats?.totalPointsGivenSinceLastRestart || 0,
+                ),
               },
               {
                 title: getMessage(
@@ -86,21 +95,29 @@ function Page() {
                 ),
                 value: stats?.totalDynamicChannelsBeingChecked || 0,
                 color: StatsCardColors.Orange,
+                total: getTotal(
+                  1500,
+                  stats?.totalDynamicChannelsBeingChecked || 0,
+                ),
               },
               {
                 title: getMessage(statsPfx + 'rate-limit-total-checks'),
                 value: stats?.rateLimitTotalChecks || 0,
                 color: StatsCardColors.Yellow,
+                total: getTotal(1500, stats?.rateLimitTotalChecks || 0),
               },
               {
                 title: getMessage(statsPfx + 'total-queues'),
                 value: stats?.totalQueues || 0,
                 color: StatsCardColors.Orange,
+                total: getTotal(2500, stats?.totalQueues || 0),
               },
               {
                 title: getMessage(statsPfx + 'jobs-in-use'),
                 value: stats?.jobsInUse || 0,
-                total: (stats?.itemsInQueue || 0) * 10,
+                change: getTotalChange(10, stats?.jobsInUse || 0),
+                changeNote: ' unused jobs available',
+                total: getTotal(10, stats?.jobsInUse || 0),
               },
             ]}
           ></Component.Stats>
