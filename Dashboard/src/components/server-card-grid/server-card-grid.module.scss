@@ -7,6 +7,10 @@
   justify-content: center;
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
+
+  a, article {
+    flex: 1 1 21.5rem;
+  }
 }
 
 .hide {

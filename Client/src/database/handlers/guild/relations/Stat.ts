@@ -2,10 +2,41 @@ import { GuildStat } from '@prisma/client';
 import { prismaClient } from '../../../prisma';
 import { getOrCreateGuild } from '../Guild';
 
+export enum GuildStatDay {
+  Cache = -2,
+  Total = -1,
+  Monday = 0,
+  Tuesday = 1,
+  Wednesday = 2,
+  Thursday = 3,
+  Friday = 4,
+  Saturday = 5,
+  Sunday = 6,
+}
+
+/**
+ * Create a guild stat.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ * @param value
+ * @param valueInt
+ * @param groupKey
+ */
 export async function createGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
   value: string,
   valueInt = 0,
   groupKey: string | null = null,
@@ -37,10 +68,26 @@ export async function createGuildStat(
   });
 }
 
+/**
+ * Find a single guild stat.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ */
 export async function findSingleGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
 ): Promise<GuildStat> {
   return prismaClient.guildStat.findUnique({
     where: {
@@ -53,10 +100,29 @@ export async function findSingleGuildStat(
   });
 }
 
+/**
+ * Find all guild stats.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ * @param value
+ * @param valueInt
+ * @param groupKey
+ */
 export async function getOrCreateGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
   value: string | null = null,
   valueInt = 0,
   groupKey: string | null = null,
@@ -68,19 +134,54 @@ export async function getOrCreateGuildStat(
   );
 }
 
+/**
+ * Get a guild stat.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ */
 export async function getGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
 ): Promise<GuildStat> {
   await getOrCreateGuild(guildId);
   return findSingleGuildStat(guildId, key, day);
 }
 
+/**
+ * Set a guild stat.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ * @param value
+ * @param valueInt
+ * @param groupKey
+ */
 export async function setGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
   value: string | null = null,
   valueInt = 0,
   groupKey: string | null = null,
@@ -103,10 +204,28 @@ export async function setGuildStat(
   });
 }
 
+/**
+ * Increment a guild stat.
+ * @param guildId
+ * @param key
+ * @param day
+ *  The day to set the stat for.
+ *  -2: Cache
+ *  -1: Total or non-day specific
+ *  0: Monday
+ *  1: Tuesday
+ *  2: Wednesday
+ *  3: Thursday
+ *  4: Friday
+ *  5: Saturday
+ *  6: Sunday
+ * @param valueInt
+ * @param groupKey
+ */
 export async function incrementGuildStat(
   guildId: string,
   key: string,
-  day: number,
+  day: GuildStatDay,
   valueInt = 0,
   groupKey: string | null = null,
 ): Promise<GuildStat> {
@@ -129,6 +248,9 @@ export async function incrementGuildStat(
   });
 }
 
+/**
+ * Get all guild stats caches (where day is -2).
+ */
 export async function getAllGuildStatsCaches() {
   return prismaClient.guildStat.findMany({
     where: {
@@ -137,6 +259,11 @@ export async function getAllGuildStatsCaches() {
   });
 }
 
+/**
+ * Get all guild stats. (where day is not cache, aka: day -2)
+ * @param guildId
+ * @param key
+ */
 export async function findOneGuildStatsByGuildAndKey(
   guildId: string,
   key: string,
@@ -152,6 +279,9 @@ export async function findOneGuildStatsByGuildAndKey(
   });
 }
 
+/**
+ * Remove outdated guild stats.
+ */
 export function removeOutdatedGuildStats() {
   return prismaClient.guildStat.deleteMany({
     where: {

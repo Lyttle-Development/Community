@@ -164,6 +164,17 @@ type Guild {
   openAi: OpenAi!
 }
 
+type GuildStat {
+  guildId: String!
+  key: String!
+  day: String!
+  groupKey: String!
+  value: String!
+  valueInt: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+}
+
 type GuildModuleQotd {
   guildId: String!
   enabled: Boolean!
@@ -360,6 +371,7 @@ type Query {
   findAllByGuild(guildId: String!): [Member!]!
   discord: Discord!
   guildStat(guildId: String!): GuildStatResolved!
+  getGeneralStats: GuildStat!
   guildModuleVoiceGrowthChild(guildId: String!, channelId: String!): GuildModuleVoiceGrowthChild!
   guildActions: [GuildAction!]!
   guildAction(id: Int!): GuildAction!
@@ -560,8 +572,8 @@ input CreateMemberModuleLevelInput {
   userId: String!
   spamCheck: Int! = 0
   cooldownCount: Int! = 0
-  cooldownTime: Timestamp! = 1714842924857
-  callStart: Timestamp! = 1714842924857
+  cooldownTime: Timestamp! = 1714930235251
+  callStart: Timestamp! = 1714930235251
   points: Int! = 0
 }
 
@@ -570,8 +582,8 @@ input UpdateMemberModuleLevelInput {
   userId: Int!
   spamCheck: Int = 0
   cooldownCount: Int = 0
-  cooldownTime: Timestamp = 1714842924857
-  callStart: Timestamp = 1714842924857
+  cooldownTime: Timestamp = 1714930235251
+  callStart: Timestamp = 1714930235251
   points: Int = 0
 }
 

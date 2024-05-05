@@ -3,8 +3,8 @@ import styles from './module-card.module.scss';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
+import { Icons } from '@lyttledev-dashboard/components/icon';
 
 export interface ModuleCardItem {
   id: string | null;
@@ -70,7 +70,7 @@ export function ModuleCard({
           )}
           {setup && (
             <Component.IconButton
-              icon={IconButtonIcons.cog}
+              icon={Icons.cog}
               className={styles['cog']}
               href={route}
             />
@@ -111,7 +111,7 @@ export function ModuleCard({
                         color={SCSSPrimaryColors.yellow}
                       />
                       <Component.IconButton
-                        icon={IconButtonIcons.cog}
+                        icon={Icons.cog}
                         className={styles['sub-item__cog']}
                         href={item.route}
                       />

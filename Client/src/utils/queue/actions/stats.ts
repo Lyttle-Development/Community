@@ -1,53 +1,7 @@
-import {
-  ALLOWED_REQUESTS_SECOND,
-  SEND_STATS_INTERVAL,
-  STATS_CHANNEL_ID,
-} from '../../../../constants';
+import { SEND_STATS_INTERVAL, STATS_CHANNEL_ID } from '../../../../constants';
 import { sendMessage } from '../../messages';
-import { bootdate, client } from '../../../main';
-import {
-  queueBacklog,
-  QueueBacklogType,
-  queueFree,
-  totalQueues,
-} from '../queue';
-import { actionsCurrentlyBeingExecuted, actionsInQueue } from '../triggers';
-import { messageQueueChannels } from '../messages-queue';
-import {
-  rateLimitCache,
-  rateLimitLimited,
-  rateLimitTotalChecks,
-} from '../../rate-limit';
-import { executorModules } from '../../executer';
-import {
-  cacheGuilds,
-  channelsBeingChecked,
-  mostRecentAuditLogs,
-  nicknamesBeingSet,
-  registeredButtonInteractions,
-  registeredCommandInteractions,
-  registeredContextMenuCommandInteractions,
-  registeredModalInteractions,
-  timesEventsCreatedSinceLastRestart,
-  timesEventsTriggeredSinceLastRestart,
-  timesPointsGivenSinceLastRestart,
-  totalDynamicVoiceChannelCheckedSinceLastRestart,
-  totalDynamicVoiceChannelCreatedSinceLastRestart,
-  totalDynamicVoiceChannelDeletedSinceLastRestart,
-  totalNicknamesSetSinceLastRestart,
-  totalPointsGivenSinceLastRestart,
-  totalVoiceTopicsCompletedSinceLastRestart,
-  totalVoiceTopicsCreatedSinceLastRestart,
-  totalVoiceTopicsDeletedSinceLastRestart,
-  totalVoiceTopicsStartedSinceLastRestart,
-  voiceTopicChildCreationCache,
-  xpCommandsRanAfterLastRestart,
-  xpFromContextMenuRanAfterLastRestart,
-} from '../../../modules';
-import { formatNumber, getDayString, getDiscordTime } from '../../helpers';
-import { setBirthDayCache } from '../../../modules/Activity/birth-day/set-birth-day-modal';
-import { birthdaysSetSinceLastRestart } from '../../../modules/Activity/birth-day/set-birth-day-buttons';
-import { birthdayCommandsRanAfterLastRestart } from '../../../modules/Activity/birth-day';
+import { formatNumber, getDayString } from '../../helpers';
+import { getStats, Stats } from '../../helpers/get-stats';
 
 let statsQueueStarted = false;
 
@@ -60,163 +14,114 @@ export function startupStatsQueue() {
 }
 
 function sendStatsToQueue() {
-  // Global:
-  const now = getDiscordTime(new Date());
-
-  // General:
-  const boot = getDiscordTime(bootdate);
-  const totalGuilds = client.guilds.cache.size;
-
-  // Queue:
-  const jobsInUse = queueFree.filter((job) => !job).length;
-  const itemsInQueue =
-    queueBacklog[QueueBacklogType.CRITICAL].length +
-    queueBacklog[QueueBacklogType.URGENT].length +
-    queueBacklog[QueueBacklogType.IMPORTANT].length +
-    queueBacklog.time.length +
-    queueBacklog.timeout.length +
-    queueBacklog[QueueBacklogType.NORMAL].length +
-    queueBacklog[QueueBacklogType.LOW].length +
-    queueBacklog[QueueBacklogType.BACKGROUND].length;
-
-  // Caches:
-  const totalExecutorModules = Object.keys(executorModules).length;
-  const disabledExecutorModules = Object.values(executorModules).filter(
-    (x) => !x.enabled,
-  ).length;
-  const totalRegisteredCommandInteractions = Object.values(
-    registeredCommandInteractions,
-  ).length;
-  const totalRegisteredUserContextMenuCommandInteractions = Object.values(
-    registeredContextMenuCommandInteractions,
-  ).length;
-  const totalRegisteredButtonInteractions = Object.values(
-    registeredButtonInteractions,
-  ).length;
-  const totalRegisteredModalInteractions = Object.values(
-    registeredModalInteractions,
-  ).length;
-  const totalActionsQueued = actionsInQueue.length;
-  const totalActionsBeingProcessed = actionsCurrentlyBeingExecuted.length;
-  const totalMessageChannelsInQueue = Object.keys(messageQueueChannels).length;
-  const totalRateLimitChecks = Object.keys(rateLimitCache).length;
-  const totalRateLimitBlocked = Object.keys(rateLimitLimited).length;
-  const totalDynamicChannelsBeingChecked =
-    Object.keys(channelsBeingChecked).length;
-  const totalVoiceTopicChildCreations = Object.keys(
-    voiceTopicChildCreationCache,
-  ).length;
-  const totalNicknamesBeingSet = Object.keys(nicknamesBeingSet).length;
-  const totalAuditLogs = mostRecentAuditLogs.length;
-  const totalBirthDaysBeingSet = Object.keys(setBirthDayCache).length;
-  const totalStaffGuildsCached = cacheGuilds.length;
-
-  // get online time in hours
-  const onlineTime =
-    Math.floor(((Date.now() - bootdate.getTime()) / 1000 / 60 / 60) * 100) /
-    100;
-  const todayInt = new Date().getDay();
+  const stats: Stats = getStats();
 
   // The message:
   const message =
     //
-    `**Bot Stats** @ <t:${now}:F>:
+    `**Bot Stats** @ <t:${stats.now}:F>:
 
 **General**:
-> - **Booted**: <t:${boot}:R>
-> - **Online**: \`${onlineTime} hours\`
-> - **Guilds**: \`${totalGuilds}\`
-> - **Today**: \`${todayInt} (${getDayString(todayInt)})\`
+> - **Booted**: <t:${stats.boot}:R>
+> - **Online**: \`${stats.onlineTime} hours\`
+> - **Guilds**: \`${stats.totalGuilds}\`
+> - **Today**: \`${stats.todayInt} (${getDayString(stats.todayInt)})\`
 
 **Queue**:
-> - **Total item queued**: \`${totalQueues}\`
-> - **Items in queue**: \`${itemsInQueue}\`
-> - **Jobs in use**: \`${jobsInUse}/${ALLOWED_REQUESTS_SECOND}\`
+> - **Total item queued**: \`${stats.totalQueues}\`
+> - **Items in queue**: \`${stats.itemsInQueue}\`
+> - **Jobs in use**: \`${stats.jobsInUse}/${stats.ALLOWED_REQUESTS_SECOND}\`
 
 **Executor**:
-> - **Known modules**: \`${formatNumber(totalExecutorModules)}\`
-> - **Disabled modules**: \`${formatNumber(disabledExecutorModules)}\`
+> - **Known modules**: \`${formatNumber(stats.totalExecutorModules)}\`
+> - **Disabled modules**: \`${formatNumber(stats.disabledExecutorModules)}\`
 
 **Rate Limit**:
-> - **Total checks**: \`${formatNumber(rateLimitTotalChecks)}\`
-> - **Being checked**: \`${formatNumber(totalRateLimitChecks)}\`
-> - **Currently blocked**: \`${formatNumber(totalRateLimitBlocked)}\`
+> - **Total checks**: \`${formatNumber(stats.rateLimitTotalChecks)}\`
+> - **Being checked**: \`${formatNumber(stats.totalRateLimitChecks)}\`
+> - **Currently blocked**: \`${formatNumber(stats.totalRateLimitBlocked)}\`
 
 **Interactions**:
 > - **Registered Commands**: \`${formatNumber(
-      totalRegisteredCommandInteractions,
+      stats.totalRegisteredCommandInteractions,
     )}\`
 > - **Registered User Context Menu Commands**: \`${formatNumber(
-      totalRegisteredUserContextMenuCommandInteractions,
+      stats.totalRegisteredUserContextMenuCommandInteractions,
     )}\`
 > - **Registered Buttons**: \`${formatNumber(
-      totalRegisteredButtonInteractions,
+      stats.totalRegisteredButtonInteractions,
     )}\`
-> - **Registered Modals**: \`${formatNumber(totalRegisteredModalInteractions)}\`
+> - **Registered Modals**: \`${formatNumber(
+      stats.totalRegisteredModalInteractions,
+    )}\`
 
 **Actions**:
-> - **Processing**: \`${formatNumber(totalActionsBeingProcessed)}\`
-> - **Queued**: \`${formatNumber(totalActionsQueued)}\`
+> - **Processing**: \`${formatNumber(stats.totalActionsBeingProcessed)}\`
+> - **Queued**: \`${formatNumber(stats.totalActionsQueued)}\`
 
 **Stats**: (Since last reboot)
 > - **Total times points given**: \`${formatNumber(
-      timesPointsGivenSinceLastRestart,
+      stats.timesPointsGivenSinceLastRestart,
     )}\`
 > - **Total amount of points given**: \`${formatNumber(
-      totalPointsGivenSinceLastRestart,
+      stats.totalPointsGivenSinceLastRestart,
     )}\`
 > - **Total events created (passed & denied)**: \`${formatNumber(
-      timesEventsCreatedSinceLastRestart,
+      stats.timesEventsCreatedSinceLastRestart,
     )}\`
 > - **Total events triggered (passed)**: \`${formatNumber(
-      timesEventsTriggeredSinceLastRestart,
+      stats.timesEventsTriggeredSinceLastRestart,
     )}\`
-> - **"/xp" commands ran**: \`${formatNumber(xpCommandsRanAfterLastRestart)}\`
+> - **"/xp" commands ran**: \`${formatNumber(
+      stats.xpCommandsRanAfterLastRestart,
+    )}\`
 > - **Points reveived from user context menu**: \`${formatNumber(
-      xpFromContextMenuRanAfterLastRestart,
+      stats.xpFromContextMenuRanAfterLastRestart,
     )}\`
 > - **"/setbday" commands ran**: \`${formatNumber(
-      birthdayCommandsRanAfterLastRestart,
+      stats.birthdayCommandsRanAfterLastRestart,
     )}\`
-> - **Birthdays set**: \`${formatNumber(birthdaysSetSinceLastRestart)}\`
-> - **Nicknames set**: \`${formatNumber(totalNicknamesSetSinceLastRestart)}\`
+> - **Birthdays set**: \`${formatNumber(stats.birthdaysSetSinceLastRestart)}\`
+> - **Nicknames set**: \`${formatNumber(
+      stats.totalNicknamesSetSinceLastRestart,
+    )}\`
 > - **Total Dynamic Channels checked**: \`${formatNumber(
-      totalDynamicVoiceChannelCheckedSinceLastRestart,
+      stats.totalDynamicVoiceChannelCheckedSinceLastRestart,
     )}\`
 > - **Total Dynamic Channels created**: \`${formatNumber(
-      totalDynamicVoiceChannelCreatedSinceLastRestart,
+      stats.totalDynamicVoiceChannelCreatedSinceLastRestart,
     )}\`
 > - **Total Dynamic Channels deleted**: \`${formatNumber(
-      totalDynamicVoiceChannelDeletedSinceLastRestart,
+      stats.totalDynamicVoiceChannelDeletedSinceLastRestart,
     )}\`
 > - **Total Voice Topics Started**: \`${formatNumber(
-      totalVoiceTopicsStartedSinceLastRestart,
+      stats.totalVoiceTopicsStartedSinceLastRestart,
     )}\`
 > - **Total Voice Topics Competed**: \`${formatNumber(
-      totalVoiceTopicsCompletedSinceLastRestart,
+      stats.totalVoiceTopicsCompletedSinceLastRestart,
     )}\`
 > - **Total Voice Topics Created**: \`${formatNumber(
-      totalVoiceTopicsCreatedSinceLastRestart,
+      stats.totalVoiceTopicsCreatedSinceLastRestart,
     )}\`
 > - **Total Voice Topics Deleted**: \`${formatNumber(
-      totalVoiceTopicsDeletedSinceLastRestart,
+      stats.totalVoiceTopicsDeletedSinceLastRestart,
     )}\`
 
 **Caches**:
 > - **Message-channels in cache**: \`${formatNumber(
-      totalMessageChannelsInQueue,
+      stats.totalMessageChannelsInQueue,
     )}\`
 > - **Dynamic Channels Being Checked**: \`${formatNumber(
-      totalDynamicChannelsBeingChecked,
+      stats.totalDynamicChannelsBeingChecked,
     )}\`
 > - **Voice Topic Being Created**: \`${formatNumber(
-      totalVoiceTopicChildCreations,
+      stats.totalVoiceTopicChildCreations,
     )}\`
-> - **Total audit logs being kept**: \`${formatNumber(totalAuditLogs)}\`
-> - **Nicknames being set**: \`${formatNumber(totalNicknamesBeingSet)}\`
-> - **Birthdays being set**: \`${formatNumber(totalBirthDaysBeingSet)}\`
+> - **Total audit logs being kept**: \`${formatNumber(stats.totalAuditLogs)}\`
+> - **Nicknames being set**: \`${formatNumber(stats.totalNicknamesBeingSet)}\`
+> - **Birthdays being set**: \`${formatNumber(stats.totalBirthDaysBeingSet)}\`
 > - **Staffmembers being checked/saved to stats**: \`${formatNumber(
-      totalStaffGuildsCached,
+      stats.totalStaffGuildsCached,
     )}\`
 
 \`\`\` \`\`\`** **`;
