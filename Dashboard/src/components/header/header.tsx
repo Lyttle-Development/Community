@@ -3,7 +3,8 @@ import { Component } from '@lyttledev-dashboard/components';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
+import { Icons } from '@lyttledev-dashboard/components/icon';
+import { Layout } from '@lyttledev-dashboard/layouts';
 
 export interface HeaderProps {
   mobile: boolean;
@@ -23,18 +24,19 @@ export function Header({ mobile }: HeaderProps) {
       <header className={styles.header}>
         {mobile && (
           <Component.IconButton
-            icon={IconButtonIcons.hamburger}
+            icon={Icons.hamburger}
             className={styles.hamburger}
             onClick={onHamburgerClick}
           />
         )}
-        <h1 className={styles.title}>{title}</h1>
+        <Layout.Transition>
+          <h1 className={styles.title}>{title}</h1>
+        </Layout.Transition>
         <section
           className={`${styles.navigation} ${mobile ? styles.hide : ''}`}
         >
-          {/* // Currently disabled, will be added in the future! // */}
-          {/* <Component.Search />*/}
-          {/* <Component.Avatar />*/}
+          <Component.Search />
+          <Component.Avatar />
         </section>
       </header>
     </Component.Container>
