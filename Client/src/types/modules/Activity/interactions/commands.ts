@@ -1,5 +1,9 @@
 import { GuildMember } from '../../../app';
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import {
+  CommandInteraction,
+  SlashCommandOptionsOnlyBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
+} from 'discord.js';
 import { commands } from '../../../../modules';
 
 /**
@@ -20,7 +24,10 @@ export type CommandRoutes = {
 /**
  * A single command
  */
-export type Command = Omit<
-  SlashCommandBuilder,
-  'addSubcommand' | 'addSubcommandGroup'
->;
+export type Command =
+  | SlashCommandOptionsOnlyBuilder
+  | SlashCommandSubcommandsOnlyBuilder;
+// export type Command = Omit<
+//   SlashCommandBuilder,
+//   'addSubcommand' | 'addSubcommandGroup'
+// >;
