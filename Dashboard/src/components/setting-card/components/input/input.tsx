@@ -1,11 +1,11 @@
 import { SettingCardChange } from '@lyttledev-dashboard/components/setting-card';
 import { SettingCardSubItems } from '@lyttledev-dashboard/components/setting-card/components';
 import { Component } from '@lyttledev-dashboard/components';
-import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import styles from './input.module.scss';
 import { ChangeEvent } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { Changes } from '@lyttledev-dashboard/contexts/app-hooks';
+import { Icons } from '@lyttledev-dashboard/components/icon';
 
 export interface SettingCardInputItemVariables {
   variable: string;
@@ -84,7 +84,7 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
         >
           <div className={styles.default}>
             <Component.IconButton
-              icon={IconButtonIcons.down}
+              icon={Icons.down}
               className={styles.retrieve}
               onClick={retrieveDefault}
               disabled={usingDefault}
