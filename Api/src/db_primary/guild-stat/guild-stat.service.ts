@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GuildStat } from './entities/guild-stat.entity';
+import { BOT_FAKE_GUILD_ID } from '@lyttledev/client/dist/Client/constants';
 
 @Injectable()
 export class GuildStatService {
@@ -51,5 +52,9 @@ export class GuildStatService {
         groupKey,
       },
     });
+  }
+
+  async getGeneralStats(): Promise<GuildStat> {
+    return await this.findOne(BOT_FAKE_GUILD_ID, 'stats', -1);
   }
 }

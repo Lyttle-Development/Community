@@ -84,9 +84,11 @@ export function MainNav({ mobile }: MainNavProps) {
         <nav>
           <ul>
             <MainNavItem href={'/'}>{labelHome}</MainNavItem>
-            <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
-            {/* // Currently disabled, will be added in the future! // */}
-            {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
+            {!selectedUser || !selectedUser?.id ? (
+              <MainNavItem href={'/servers'} locked={true}>
+                {labelDashboard}
+              </MainNavItem>
+            ) : null}
           </ul>
           <article className={'main-nav__profile'}>
             <section
@@ -118,6 +120,10 @@ export function MainNav({ mobile }: MainNavProps) {
               <MainNavItem href={'/profile'} route={'/profile'}>
                 {labelProfile}
               </MainNavItem>
+
+              {!selectedUser || !selectedUser?.id ? null : (
+                <MainNavItem href={'/servers'}>{labelDashboard}</MainNavItem>
+              )}
             </ul>
           </article>
           <article className={'main-nav__guild'}>
@@ -156,14 +162,14 @@ export function MainNav({ mobile }: MainNavProps) {
               } server-menu`}
             >
               <MainNavItem
-                href={`/dashboard/${realGuildId}`}
-                route={'/dashboard/[guild_id]'}
+                href={`/servers/${realGuildId}`}
+                route={'/servers/[guild_id]'}
               >
                 {labelOverview}
               </MainNavItem>
               <MainNavItem
-                href={`/dashboard/${realGuildId}/modules`}
-                route={'/dashboard/[guild_id]/modules'}
+                href={`/servers/${realGuildId}/modules`}
+                route={'/servers/[guild_id]/modules'}
               >
                 {labelModules}
               </MainNavItem>

@@ -60,7 +60,7 @@ export function Review() {
 
   // If there are no changes, redirect to the modules page. (When it's not loading)
   if (!loading && changes.length < 1) {
-    void router.push(`/dashboard/${guildId}/modules`);
+    void router.push(`/servers/${guildId}/modules`);
     return null;
   }
 
@@ -73,7 +73,7 @@ export function Review() {
     // Reset the changes
     app?.resetChanges();
     // Redirect to the modules page
-    await router.push(`/dashboard/${guildId}/modules`);
+    await router.push(`/servers/${guildId}/modules`);
     // Reload the page
     await router.reload();
   };
