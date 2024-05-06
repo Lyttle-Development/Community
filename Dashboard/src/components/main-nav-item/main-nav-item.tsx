@@ -30,7 +30,7 @@ export function MainNavItem({
       {locked && (
         <Component.Icon
           className={styles.lock}
-          icon={Icons.lock}
+          icon={Icons.LOCK}
         ></Component.Icon>
       )}
     </Component.Link>

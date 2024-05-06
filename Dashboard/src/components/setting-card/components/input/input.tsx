@@ -84,7 +84,7 @@ export function Input({ item, changes, change }: SettingCardInputProps) {
         >
           <div className={styles.default}>
             <Component.IconButton
-              icon={Icons.down}
+              icon={Icons.DOWN}
               className={styles.retrieve}
               onClick={retrieveDefault}
               disabled={usingDefault}

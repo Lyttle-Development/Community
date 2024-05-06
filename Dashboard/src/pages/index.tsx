@@ -9,6 +9,7 @@ import { gql, useQuery } from '@apollo/client';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { getTotal } from '@lyttledev-dashboard/utils/get-total';
 import { getTotalChange } from '@lyttledev-dashboard/utils/get-total-change';
+import { getTotalEstimate } from '@lyttledev-dashboard/utils/get-total-estimate';
 
 export const pagesPrefix = dashboardPrefix + 'pages.';
 
@@ -24,18 +25,19 @@ function Page() {
   const pfx = pagesPrefix + 'home.';
   const statsPfx = pfx + 'stats.';
   const title = usePage(pfx + 'title');
-  const msgStatsTitle = getMessage(statsPfx + 'title');
   const msgTitle = getMessage(pfx + 'landing-title');
   const msgDescription = getMessage(pfx + 'landing-description');
   const msgAdd = getMessage(pfx + 'add-button');
   const msgJoin = getMessage(pfx + 'join-button');
+
+  const msgStatsTitle = getMessage(statsPfx + 'title');
+  // const msgStatsDescription = getMessage(statsPfx + 'description');
 
   const { data } = useQuery(GeneralStatsQuery);
 
   const stats: Stats = data?.getGeneralStats?.value
     ? JSON.parse(data?.getGeneralStats?.value)
     : null;
-  console.log(stats);
 
   const openInvite = () => {
     window.open('https://discord.gg/QfqFFPFFQZ', '_blank');
@@ -43,6 +45,9 @@ function Page() {
   const openAdd = () => {
     window.location.href = Constants.inviteBotUrl;
   };
+
+  const _getTotalEstimate = (dailyTarget: number) =>
+    getTotalEstimate(stats?.onlineTime || 24, dailyTarget);
 
   return (
     <>
@@ -69,6 +74,7 @@ function Page() {
 
         <Component.Container>
           <h2>{msgStatsTitle}</h2>
+          {/* <p>{msgStatsDescription}</p>*/}
           <Component.Stats
             stats={[
               {
@@ -79,38 +85,51 @@ function Page() {
                 total: getTotal(100, stats?.totalGuilds || 0),
               },
               {
+                title: getMessage(statsPfx + 'rate-limit-total-checks'),
+                value: stats?.rateLimitTotalChecks || 0,
+                total: getTotal(
+                  _getTotalEstimate(20000),
+                  stats?.rateLimitTotalChecks || 0,
+                ),
+                change: _getTotalEstimate(20000),
+                changeNote: ' estimated checks',
+                color: StatsCardColors.Yellow,
+              },
+              {
                 title: getMessage(
                   statsPfx + 'total-points-given-since-last-restart',
                 ),
                 value: stats?.totalPointsGivenSinceLastRestart || 0,
-                color: StatsCardColors.Yellow,
                 total: getTotal(
-                  25000,
+                  _getTotalEstimate(5000),
                   stats?.totalPointsGivenSinceLastRestart || 0,
                 ),
+                change: _getTotalEstimate(5000),
+                changeNote: ' estimated given',
+                color: StatsCardColors.Orange,
               },
               {
                 title: getMessage(
-                  statsPfx + 'total-dynamic-channels-being-checked',
+                  statsPfx + 'times-events-triggered-since-last-restart',
                 ),
-                value: stats?.totalDynamicChannelsBeingChecked || 0,
-                color: StatsCardColors.Orange,
+                value: stats?.timesEventsTriggeredSinceLastRestart || 0,
                 total: getTotal(
-                  1500,
-                  stats?.totalDynamicChannelsBeingChecked || 0,
+                  _getTotalEstimate(150),
+                  stats?.timesEventsTriggeredSinceLastRestart || 0,
                 ),
-              },
-              {
-                title: getMessage(statsPfx + 'rate-limit-total-checks'),
-                value: stats?.rateLimitTotalChecks || 0,
-                color: StatsCardColors.Yellow,
-                total: getTotal(1500, stats?.rateLimitTotalChecks || 0),
+                change: _getTotalEstimate(150),
+                changeNote: ' estimated events triggered',
               },
               {
                 title: getMessage(statsPfx + 'total-queues'),
                 value: stats?.totalQueues || 0,
-                color: StatsCardColors.Orange,
-                total: getTotal(2500, stats?.totalQueues || 0),
+                total: getTotal(
+                  _getTotalEstimate(1000),
+                  stats?.totalQueues || 0,
+                ),
+                change: _getTotalEstimate(1000),
+                changeNote: ' estimated items queued',
+                color: StatsCardColors.Yellow,
               },
               {
                 title: getMessage(statsPfx + 'jobs-in-use'),
@@ -118,6 +137,7 @@ function Page() {
                 change: getTotalChange(10, stats?.jobsInUse || 0),
                 changeNote: ' unused jobs available',
                 total: getTotal(10, stats?.jobsInUse || 0),
+                color: StatsCardColors.Orange,
               },
             ]}
           ></Component.Stats>

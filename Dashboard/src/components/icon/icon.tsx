@@ -1,8 +1,9 @@
 export enum Icons {
-  cog = 'cog',
-  hamburger = 'hamburger',
-  down = 'down',
-  lock = 'lock',
+  COG,
+  HAMBURGER,
+  DOWN,
+  LOCK,
+  MENU,
 }
 
 export interface IconProps {
@@ -12,7 +13,7 @@ export interface IconProps {
 
 export function getIcon(icon: Icons) {
   switch (icon) {
-    case Icons.cog:
+    case Icons.COG:
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,13 +39,13 @@ export function getIcon(icon: Icons) {
           </g>
         </svg>
       );
-    case Icons.hamburger:
+    case Icons.HAMBURGER:
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path d="M464 256H48a48 48 0 0 0 0 96h416a48 48 0 0 0 0-96zm16 128H32a16 16 0 0 0-16 16v16a64 64 0 0 0 64 64h352a64 64 0 0 0 64-64v-16a16 16 0 0 0-16-16zM58.64 224h394.72c34.57 0 54.62-43.9 34.82-75.88C448 83.2 359.55 32.1 256 32c-103.54.1-192 51.2-232.18 116.11C4 180.09 24.07 224 58.64 224zM384 112a16 16 0 1 1-16 16 16 16 0 0 1 16-16zM256 80a16 16 0 1 1-16 16 16 16 0 0 1 16-16zm-128 32a16 16 0 1 1-16 16 16 16 0 0 1 16-16z" />
         </svg>
       );
-    case Icons.down:
+    case Icons.DOWN:
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,11 +66,20 @@ export function getIcon(icon: Icons) {
           </g>
         </svg>
       );
-    case Icons.lock:
+    case Icons.LOCK:
       return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
           <path
             d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"
+            fill="#707070"
+          />
+        </svg>
+      );
+    case Icons.MENU:
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <path
+            d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
             fill="#707070"
           />
         </svg>

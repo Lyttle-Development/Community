@@ -70,7 +70,7 @@ export function ModuleCard({
           )}
           {setup && (
             <Component.IconButton
-              icon={Icons.cog}
+              icon={Icons.COG}
               className={styles['cog']}
               href={route}
             />
@@ -111,7 +111,7 @@ export function ModuleCard({
                         color={SCSSPrimaryColors.yellow}
                       />
                       <Component.IconButton
-                        icon={Icons.cog}
+                        icon={Icons.COG}
                         className={styles['sub-item__cog']}
                         href={item.route}
                       />
