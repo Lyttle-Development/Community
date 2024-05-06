@@ -27,7 +27,7 @@ export function ModuleDummyCard() {
             mock={true}
           />
           <Component.IconButton
-            icon={Icons.cog}
+            icon={Icons.COG}
             className={styles['cog']}
             disabled={true}
             mock={true}

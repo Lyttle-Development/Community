@@ -1,5 +1,4 @@
 import styles from './avatar.module.scss';
-import Image from 'next/image';
 import { Component } from '@lyttledev-dashboard/components';
 import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
@@ -8,7 +7,7 @@ export function Avatar() {
   return (
     <article className={styles.container}>
       <Component.Link href="profile" className={styles.link}>
-        <Image
+        <Component.Image
           className={styles.avatar}
           src={
             selectedUser?.avatar

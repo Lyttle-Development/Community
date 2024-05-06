@@ -83,7 +83,7 @@ export function Textarea({ item, changes, change }: SettingCardTextareaProps) {
         >
           <div className={styles.default}>
             <Component.IconButton
-              icon={Icons.down}
+              icon={Icons.DOWN}
               className={styles.retrieve}
               onClick={retrieveDefault}
               disabled={usingDefault}
