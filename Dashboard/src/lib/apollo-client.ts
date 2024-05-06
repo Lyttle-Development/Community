@@ -30,4 +30,5 @@ const httpLink = createHttpLink({
 export const apolloClient = new ApolloClient({
   link: from([errorLink, httpLink]),
   cache: new InMemoryCache(),
+  credentials: 'include',
 });
