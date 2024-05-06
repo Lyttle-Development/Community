@@ -28,7 +28,7 @@ export function StatsCard({
   color = StatsCardColors.Purple,
 }: StatsCardProps) {
   const [totalTime, setTotalTime] = useState(defaultAnimationTime);
-  const [currentTotal, setCurrentTotal] = useState(total);
+  const [currentTotal, setCurrentTotal] = useState(0);
   const [degrees, setDegrees] = useState(0);
   const [rotate, setRotate] = useState(false);
   const changeUnit = change ? (change < 0 ? '- ' : '+ ') : '';
@@ -48,11 +48,12 @@ export function StatsCard({
     }
 
     if (total > 0) {
-      let totalDegrees = (currentTotal / 100) * 360 + 270;
+      const currentPrcTotal = currentTotal > 100 ? 100 : currentTotal;
+      let totalDegrees = (currentPrcTotal / 100) * 360 + 270;
       totalDegrees = totalDegrees > 360 ? totalDegrees - 360 : totalDegrees;
 
       setDegrees(totalDegrees);
-      if (currentTotal > 50) {
+      if (currentPrcTotal > 50) {
         setRotate(true);
       } else {
         setRotate(false);
@@ -73,7 +74,8 @@ export function StatsCard({
   }, []);
 
   useEffect(() => {
-    setTotalTime(defaultAnimationTime / total);
+    const totalPrc = total > 100 ? 100 : total;
+    setTotalTime(defaultAnimationTime / totalPrc);
   }, [total]);
 
   return (

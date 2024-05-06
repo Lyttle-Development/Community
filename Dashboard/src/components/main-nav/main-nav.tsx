@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
 interface SelectedGuild {
@@ -96,7 +95,7 @@ export function MainNav({ mobile }: MainNavProps) {
                 (!selectedUser || !selectedUser?.id) && styles.hide
               }`}
             >
-              <Image
+              <Component.Image
                 className={styles.avatar}
                 src={
                   selectedUser?.avatar
@@ -139,7 +138,7 @@ export function MainNav({ mobile }: MainNavProps) {
                 styles.hide
               } main-nav__guild__item`}
             >
-              <Image
+              <Component.Image
                 className={styles.avatar}
                 src={selectedGuild?.avatar || '/media/images/placeholder.png'}
                 alt={`Avatar of server ${selectedGuild.name}.`}

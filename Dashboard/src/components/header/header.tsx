@@ -22,22 +22,34 @@ export function Header({ mobile }: HeaderProps) {
   return (
     <Component.Container>
       <header className={styles.header}>
-        {mobile && (
-          <Component.IconButton
-            icon={Icons.hamburger}
-            className={styles.hamburger}
-            onClick={onHamburgerClick}
-          />
+        {mobile ? (
+          <>
+            <section className={styles['header--mobile']}>
+              <Component.IconButton
+                icon={Icons.MENU}
+                className={styles.hamburger}
+                onClick={onHamburgerClick}
+              />
+
+              <Layout.Transition>
+                <h1 className={styles.title}>{title}</h1>
+              </Layout.Transition>
+            </section>
+            <section className={styles.navigation}>
+              <Component.Avatar />
+            </section>
+          </>
+        ) : (
+          <>
+            <Layout.Transition>
+              <h1 className={styles.title}>{title}</h1>
+            </Layout.Transition>
+            <section className={styles.navigation}>
+              <Component.Search />
+              <Component.Avatar />
+            </section>
+          </>
         )}
-        <Layout.Transition>
-          <h1 className={styles.title}>{title}</h1>
-        </Layout.Transition>
-        <section
-          className={`${styles.navigation} ${mobile ? styles.hide : ''}`}
-        >
-          <Component.Search />
-          <Component.Avatar />
-        </section>
       </header>
     </Component.Container>
   );

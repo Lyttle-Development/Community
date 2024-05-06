@@ -373,6 +373,11 @@ export const ModuleMarkdown = {
           documentation: '',
         },
         stats: {
+          description: {
+            content:
+              'All values are based on an estimate for every day. The actual values may vary.',
+            documentation: '',
+          },
           'jobs-in-use': {
             content: 'Queue Jobs In Use',
             documentation: '',
@@ -381,12 +386,12 @@ export const ModuleMarkdown = {
             content: 'Rate Limit Checks',
             documentation: '',
           },
-          title: {
-            content: 'Some stats:',
+          'times-events-triggered-since-last-restart': {
+            content: 'Events Triggered',
             documentation: '',
           },
-          'total-dynamic-channels-being-checked': {
-            content: 'Voice Checks',
+          title: {
+            content: 'Some stats:',
             documentation: '',
           },
           'total-guilds': {

@@ -6,6 +6,7 @@ export * from './footer';
 export * from './header';
 export * from './icon';
 export * from './icon-button';
+export * from './image';
 export * from './input';
 export * from './light-switch';
 export * from './link';
