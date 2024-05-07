@@ -86,8 +86,8 @@ jobs:
           username: ${{ secrets.FR001_USERNAME }}
           password: ${{ secrets.FR001_PASSWORD }}
           script: |
-            sudo systemctl restart application.docker.community-v3.api.service
-            sudo systemctl restart application.docker.community-v3.client.service
+            sudo systemctl restart application.docker.community-v3.api.service &
+            sudo systemctl restart application.docker.community-v3.client.service &
       - name: Deploy BETA to DE001
         uses: appleboy/ssh-action@master
         with:
@@ -95,4 +95,4 @@ jobs:
           username: ${{ secrets.DE001_USERNAME }}
           password: ${{ secrets.DE001_PASSWORD }}
           script: |
-            sudo systemctl restart application.docker.community-v3.dashboard.service
+            sudo systemctl restart application.docker.community-v3.dashboard.service &
