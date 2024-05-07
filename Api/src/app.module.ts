@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GuildModule } from './db_primary/guild/guild.module';
@@ -50,7 +50,7 @@ import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,
       introspection: true,
@@ -58,6 +58,10 @@ import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
         orphanedTypes: [Discord, GuildStatResolved, OpenAi, Migrate],
+      },
+      cors: {
+        credentials: true,
+        origin: 'https://community.lyttledevelopment.com',
       },
     }),
     // Primary database
