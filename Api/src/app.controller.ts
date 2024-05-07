@@ -4,7 +4,6 @@ import { Request as ExpressRequest, Response } from 'express';
 import { DiscordValidateResponse } from './db_primary/auth/discord-oauth.strategy';
 import { Public } from './db_primary/auth/discord.guard';
 import * as process from 'process';
-import { DashboardDomain } from './main';
 
 @Controller()
 export class AppController {
@@ -36,8 +35,8 @@ export class AppController {
       ? `${process.env.CLIENT_URI}/${req.cookies.redirect}`
       : process.env.CLIENT_DASHBOARD_URI;
 
-    res.cookie('accessToken', user.accessToken, { domain: DashboardDomain });
-    res.cookie('refreshToken', user.refreshToken, { domain: DashboardDomain });
+    res.cookie('accessToken', user.accessToken);
+    res.cookie('refreshToken', user.refreshToken);
     res.cookie('redirect', '');
 
     return res.redirect(redirectUrl);
