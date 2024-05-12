@@ -21,10 +21,12 @@ export function Header({ mobile }: HeaderProps) {
 
   return (
     <Component.Container>
-      <header className={styles.header}>
+      <header
+        className={`${styles.header} ${mobile && styles['header--mobile']}`}
+      >
         {mobile ? (
           <>
-            <section className={styles['header--mobile']}>
+            <section className={styles['navigation--mobile']}>
               <Component.IconButton
                 icon={Icons.MENU}
                 className={styles.hamburger}
