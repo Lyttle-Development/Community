@@ -52,96 +52,91 @@ function Page() {
   return (
     <>
       <Component.Title>{title}</Component.Title>
-      <Component.Container>
-        <section className={styles.landing}>
-          <Component.Logo className={styles.logo} />
-          <h2>{msgTitle}</h2>
-          <p className={styles.description}>{msgDescription}</p>
-          <ul className={styles.buttons}>
-            <li>
-              <Component.Button text={msgAdd} onClick={openAdd} noUpper />
-            </li>
-            <li>
-              <Component.Button
-                text={msgJoin}
-                onClick={openInvite}
-                noUpper
-                color={ButtonColors.secondary}
-              />
-            </li>
-          </ul>
-        </section>
+      <Component.Container className={styles.landing}>
+        <Component.Logo className={styles.logo} />
+        <h2>{msgTitle}</h2>
+        <p className={styles.description}>{msgDescription}</p>
+        <ul className={styles.buttons}>
+          <li>
+            <Component.Button text={msgAdd} onClick={openAdd} noUpper />
+          </li>
+          <li>
+            <Component.Button
+              text={msgJoin}
+              onClick={openInvite}
+              noUpper
+              color={ButtonColors.secondary}
+            />
+          </li>
+        </ul>
+      </Component.Container>
 
-        <Component.Container>
-          <h2>{msgStatsTitle}</h2>
-          {/* <p>{msgStatsDescription}</p>*/}
-          <Component.Stats
-            stats={[
-              {
-                title: getMessage(statsPfx + 'total-guilds'),
-                value: stats?.totalGuilds || 0,
-                change: getTotalChange(100, stats?.totalGuilds || 0),
-                changeNote: ' more until verified',
-                total: getTotal(100, stats?.totalGuilds || 0),
-              },
-              {
-                title: getMessage(statsPfx + 'rate-limit-total-checks'),
-                value: stats?.rateLimitTotalChecks || 0,
-                total: getTotal(
-                  _getTotalEstimate(20000),
-                  stats?.rateLimitTotalChecks || 0,
-                ),
-                change: _getTotalEstimate(20000),
-                changeNote: ' estimated checks',
-                color: StatsCardColors.Yellow,
-              },
-              {
-                title: getMessage(
-                  statsPfx + 'total-points-given-since-last-restart',
-                ),
-                value: stats?.totalPointsGivenSinceLastRestart || 0,
-                total: getTotal(
-                  _getTotalEstimate(5000),
-                  stats?.totalPointsGivenSinceLastRestart || 0,
-                ),
-                change: _getTotalEstimate(5000),
-                changeNote: ' estimated given',
-                color: StatsCardColors.Orange,
-              },
-              {
-                title: getMessage(
-                  statsPfx + 'times-events-triggered-since-last-restart',
-                ),
-                value: stats?.timesEventsTriggeredSinceLastRestart || 0,
-                total: getTotal(
-                  _getTotalEstimate(150),
-                  stats?.timesEventsTriggeredSinceLastRestart || 0,
-                ),
-                change: _getTotalEstimate(150),
-                changeNote: ' estimated events triggered',
-              },
-              {
-                title: getMessage(statsPfx + 'total-queues'),
-                value: stats?.totalQueues || 0,
-                total: getTotal(
-                  _getTotalEstimate(1000),
-                  stats?.totalQueues || 0,
-                ),
-                change: _getTotalEstimate(1000),
-                changeNote: ' estimated items queued',
-                color: StatsCardColors.Yellow,
-              },
-              {
-                title: getMessage(statsPfx + 'jobs-in-use'),
-                value: stats?.jobsInUse || 0,
-                change: getTotalChange(10, stats?.jobsInUse || 0),
-                changeNote: ' unused jobs available',
-                total: getTotal(10, stats?.jobsInUse || 0),
-                color: StatsCardColors.Orange,
-              },
-            ]}
-          ></Component.Stats>
-        </Component.Container>
+      <Component.Container>
+        <h2 className={styles['stats__title']}>{msgStatsTitle}</h2>
+        {/* <p>{msgStatsDescription}</p>*/}
+        <Component.Stats
+          stats={[
+            {
+              title: getMessage(statsPfx + 'total-guilds'),
+              value: stats?.totalGuilds || 0,
+              change: getTotalChange(100, stats?.totalGuilds || 0),
+              changeNote: ' more until verified',
+              total: getTotal(100, stats?.totalGuilds || 0),
+            },
+            {
+              title: getMessage(statsPfx + 'rate-limit-total-checks'),
+              value: stats?.rateLimitTotalChecks || 0,
+              total: getTotal(
+                _getTotalEstimate(20000),
+                stats?.rateLimitTotalChecks || 0,
+              ),
+              change: _getTotalEstimate(20000),
+              changeNote: ' estimated checks',
+              color: StatsCardColors.Yellow,
+            },
+            {
+              title: getMessage(
+                statsPfx + 'total-points-given-since-last-restart',
+              ),
+              value: stats?.totalPointsGivenSinceLastRestart || 0,
+              total: getTotal(
+                _getTotalEstimate(5000),
+                stats?.totalPointsGivenSinceLastRestart || 0,
+              ),
+              change: _getTotalEstimate(5000),
+              changeNote: ' estimated given',
+              color: StatsCardColors.Orange,
+            },
+            {
+              title: getMessage(
+                statsPfx + 'times-events-triggered-since-last-restart',
+              ),
+              value: stats?.timesEventsTriggeredSinceLastRestart || 0,
+              total: getTotal(
+                _getTotalEstimate(150),
+                stats?.timesEventsTriggeredSinceLastRestart || 0,
+              ),
+              change: _getTotalEstimate(150),
+              changeNote: ' estimated events triggered',
+            },
+            {
+              title: getMessage(statsPfx + 'total-queues'),
+              value: stats?.totalQueues || 0,
+              total: getTotal(_getTotalEstimate(1000), stats?.totalQueues || 0),
+              change: _getTotalEstimate(1000),
+              changeNote: ' estimated items queued',
+              color: StatsCardColors.Yellow,
+            },
+            {
+              title: getMessage(statsPfx + 'jobs-in-use'),
+              value: stats?.jobsInUse || 0,
+              change: getTotalChange(10, stats?.jobsInUse || 0),
+              changeNote: ' unused jobs available',
+              total: getTotal(10, stats?.jobsInUse || 0),
+              color: StatsCardColors.Orange,
+            },
+          ]}
+        ></Component.Stats>
       </Component.Container>
     </>
   );

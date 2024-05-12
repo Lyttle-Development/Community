@@ -5,7 +5,11 @@
   padding: 3rem 0 2.5rem;
   justify-content: space-between;
 
-  .header--mobile {
+  &.header--mobile {
+    padding: 1rem 0 2rem;
+  }
+
+  .navigation--mobile {
     gap: 2rem;
     display: flex;
     align-items: center;
