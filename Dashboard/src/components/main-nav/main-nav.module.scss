@@ -9,19 +9,26 @@
   top: 0;
   left: 0;
   bottom: 0;
-  overflow-y: scroll;
   z-index: 9991;
 
-  nav section {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    margin-top: 3rem;
-    padding: .8rem 2rem .8rem 1.2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: v.$color-text-dark;
-    font-weight: 600;
+  nav {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 3rem;
+      padding: .8rem 2rem .8rem 1.2rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: v.$color-text-dark;
+      font-weight: 600;
+    }
   }
 }
 
