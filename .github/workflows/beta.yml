@@ -3,7 +3,7 @@ name: BETA Workflow
 on:
   push:
     branches:
-      - alpha
+      - beta
 
 jobs:
   docker-build-api:
@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18.x]
+        node-version: [ 18.x ]
 
     steps:
       - name: Deploy BETA to FR001
