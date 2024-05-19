@@ -16,4 +16,9 @@
 
 .main {
   padding-bottom: 3rem;
+  padding-top: 6rem;
+
+  &.main--mobile {
+    padding-top: 5rem;
+  }
 }
