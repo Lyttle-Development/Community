@@ -1,5 +1,9 @@
 @use "./variables" as v;
 
+.default-layout {
+  position: relative;
+}
+
 // Hide main nav by default
 .default-layout > .main-nav {
   transform: translateX(-100%);
@@ -25,10 +29,10 @@
 }
 
 .default-layout.no-startup {
-    .default-layout__content,
-    .main-nav {
-        transition: none;
-    }
+  .default-layout__content,
+  .main-nav {
+    transition: none;
+  }
 }
 
 // Stop page from scrolling when main nav is open

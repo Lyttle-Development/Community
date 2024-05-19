@@ -20,7 +20,11 @@ export function Header({ mobile }: HeaderProps) {
   };
 
   return (
-    <Component.Container>
+    <Component.Container
+      className={`${styles['header-container']} ${
+        mobile && styles['header-container--mobile']
+      }`}
+    >
       <header
         className={`${styles.header} ${mobile && styles['header--mobile']}`}
       >
