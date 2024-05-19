@@ -1,12 +1,21 @@
 @use '../../styles/variables.scss' as v;
 
+.header-container {
+  transition: width 0.8s ease-in-out;
+  position: fixed;
+  width: 100%;
+  width: -webkit-fill-available;
+  background-color: v.$color-background;
+  z-index: 100;
+}
+
 .header {
   display: flex;
-  padding: 3rem 0 2.5rem;
+  padding: 2rem 0 .5rem;
   justify-content: space-between;
 
   &.header--mobile {
-    padding: 1rem 0 2rem;
+    padding: 1rem 0 .5rem;
   }
 
   .navigation--mobile {

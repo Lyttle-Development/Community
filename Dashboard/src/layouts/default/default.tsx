@@ -40,7 +40,7 @@ export function Default({ children }: DefaultProps) {
             <main
               className={`${styles.main} ${
                 snackbarActive && 'snackbar--active'
-              }`}
+              } ${mobile && styles['main--mobile']}`}
             >
               {children}
             </main>
