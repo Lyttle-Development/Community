@@ -2,7 +2,7 @@
 FROM node:20.12.0
 
 # Set the working directory in the container
-WORKDIR /community-v3
+WORKDIR /usr/src/community-v3
 
 # Copy the current directory contents into the container at /community-v3/Dashboard
 COPY . .
@@ -10,7 +10,7 @@ COPY . .
 # Install dependencies using npm ci
 RUN npm ci
 
-WORKDIR /community-v3/Dashboard
+WORKDIR /usr/src/community-v3/Dashboard
 
 # Build the application
 RUN npm run docker:setup

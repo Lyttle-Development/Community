@@ -12,10 +12,6 @@
     "dev:debug": "nest start --debug --watch",
     "deploy": "npm run build",
     "docker:setup": "npm run build",
-    "docker:service:api:main": "cp services/main/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
-    "docker:service:api:beta": "cp services/beta/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
-    "docker:service:api:alpha": "cp services/alpha/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
-    "docker:service:api:dev": "cp services/dev/application.docker.community-v3.api.service /etc/systemd/system/application.docker.community-v3.api.service && nano /etc/systemd/system/application.docker.community-v3.api.service",
     "npm:update": "npm update --save"
   },
   "engines": {
