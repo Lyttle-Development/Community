@@ -137,10 +137,10 @@ export class GuildStatResolvedService {
     );
 
     return result.reduce((acc, curr) => {
-      const oldValue = acc[curr.key] ?? 0;
+      const oldValue = acc[curr.key] || 0;
       return {
         ...acc,
-        [curr.key]: oldValue + curr?.valueInt ?? 0,
+        [curr.key]: oldValue + curr?.valueInt || 0,
       };
     }, {});
   }

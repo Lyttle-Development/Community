@@ -315,7 +315,7 @@ async function getUsersState<T>(
     | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables,
 ): Promise<[string, string]> {
   // Get the points difference
-  let pointsDiff = db_User1.points - db_User2.points ?? 0;
+  let pointsDiff = db_User1.points - db_User2.points || 0;
   // If the points difference is negative
   pointsDiff = pointsDiff < 0 ? pointsDiff * -1 : pointsDiff;
   // Get the levels difference
