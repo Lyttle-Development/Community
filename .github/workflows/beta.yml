@@ -66,33 +66,33 @@ jobs:
         run: |
           docker push ghcr.io/lyttle-development/community.v3.dashboard:beta
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - docker-build-api
-      - docker-build-client
-      - docker-build-dashboard
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18.x ]
-
-    steps:
-      - name: Deploy BETA to FR001
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.FR001_HOST }}
-          username: ${{ secrets.FR001_USERNAME }}
-          password: ${{ secrets.FR001_PASSWORD }}
-          script: |
-            sudo systemctl restart application.docker.community-v3.api.service &
-            sudo systemctl restart application.docker.community-v3.client.service &
-      - name: Deploy BETA to DE001
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DE001_HOST }}
-          username: ${{ secrets.DE001_USERNAME }}
-          password: ${{ secrets.DE001_PASSWORD }}
-          script: |
-            sudo systemctl restart application.docker.community-v3.dashboard.service &
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs:
+#      - docker-build-api
+#      - docker-build-client
+#      - docker-build-dashboard
+#
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        node-version: [ 18.x ]
+#
+#    steps:
+#      - name: Deploy BETA to FR001
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.FR001_HOST }}
+#          username: ${{ secrets.FR001_USERNAME }}
+#          password: ${{ secrets.FR001_PASSWORD }}
+#          script: |
+#            sudo systemctl restart application.docker.community-v3.api.service &
+#            sudo systemctl restart application.docker.community-v3.client.service &
+#      - name: Deploy BETA to DE001
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.DE001_HOST }}
+#          username: ${{ secrets.DE001_USERNAME }}
+#          password: ${{ secrets.DE001_PASSWORD }}
+#          script: |
+#            sudo systemctl restart application.docker.community-v3.dashboard.service &
