@@ -82,8 +82,8 @@ export async function getLevelsCommand(
   xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
-  const getUser1: User = interaction.options.get('member', false).user;
-  const getUser2: User = interaction.options.get('other-member', false).user;
+  const getUser1: User = interaction.options.get('member', false)?.user;
+  const getUser2: User = interaction.options.get('other-member', false)?.user;
 
   // Get user 1, taking user 2, if no user 1 was specified.
   const user1: User = getUser1 ?? getUser2;
