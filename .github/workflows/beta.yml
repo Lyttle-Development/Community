@@ -77,7 +77,7 @@ jobs:
           server: "${{ secrets.CAPROVER_SERVER }}"
           app: "${{ secrets.CAPROVER_APP_NAME_API }}"
           token: "${{ secrets.CAPROVER_APP_TOKEN_API }}"
-          image: "docker push ghcr.io/lyttle-development/community.v3.api:beta"
+          image: "ghcr.io/lyttle-development/community.v3.api:beta"
 
       - name: Deploy Image to CapRover
         uses: caprover/deploy-from-github@v1.1.2
