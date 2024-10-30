@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "start": "next start -H 0.0.0.0  -p 3000",
+    "start": "next start -p 3000",
     "dev:start": "npx rimraf ./.next && next dev -p 8080",
     "deploy": "npm run build",
     "docker:setup": "npm run build",
@@ -34,6 +34,7 @@
     "react-transition-group": "^4.4.5",
     "remark-gfm": "^4.0.0",
     "sass": "^1.80.5",
+    "sharp": "^0.33.5",
     "typescript": "5.4.2"
   },
   "devDependencies": {
