@@ -1,11 +1,13 @@
 import styles from './main-nav-item.module.scss';
 import { Component } from '@lyttledev-dashboard/components';
+import { Icons } from '@lyttledev-dashboard/components/icon';
 
 export interface MainNavItemProps {
   href?: string;
   onClick?: () => void;
   children: React.ReactNode;
   route?: string;
+  locked?: boolean;
 }
 
 export function MainNavItem({
@@ -13,6 +15,7 @@ export function MainNavItem({
   onClick,
   children,
   route,
+  locked = false,
 }: MainNavItemProps) {
   route = route ?? href;
   return (
@@ -24,6 +27,12 @@ export function MainNavItem({
       classNameActive={styles['main-menu-item--active']}
     >
       {children}
+      {locked && (
+        <Component.Icon
+          className={styles.lock}
+          icon={Icons.LOCK}
+        ></Component.Icon>
+      )}
     </Component.Link>
   );
 }

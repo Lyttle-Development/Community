@@ -34,19 +34,19 @@ export function Default({ children }: DefaultProps) {
         } ${startup ? 'startup' : 'no-startup'}`}
       >
         <Component.MainNav mobile={mobile} />
-        <Layout.Transition>
-          <section className={'default-layout__content'}>
-            <Component.Header mobile={mobile} />
+        <section className={'default-layout__content'}>
+          <Component.Header mobile={mobile} />
+          <Layout.Transition>
             <main
               className={`${styles.main} ${
                 snackbarActive && 'snackbar--active'
-              }`}
+              } ${mobile && styles['main--mobile']}`}
             >
               {children}
             </main>
-            <Component.Snackbar />
-          </section>
-        </Layout.Transition>
+          </Layout.Transition>
+          <Component.Snackbar />
+        </section>
       </div>
     </Layout.Base>
   );

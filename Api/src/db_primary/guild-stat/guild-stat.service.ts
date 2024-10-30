@@ -52,4 +52,8 @@ export class GuildStatService {
       },
     });
   }
+
+  async getGeneralStats(): Promise<GuildStat> {
+    return await this.findOne('0', 'stats', -1);
+  }
 }

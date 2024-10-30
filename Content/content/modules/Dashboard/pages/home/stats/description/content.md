@@ -1,0 +1,1 @@
+All values are based on an estimate for every day. The actual values may vary.

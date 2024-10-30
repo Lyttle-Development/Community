@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "npm:update": "npm update --save"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
+  "volta": {
+    "node": "20.17.0"
+  },
   "engines": {
-    "node": "20.12.0"
+    "node": "20.17.0"
   },
   "author": "",
   "license": "ISC",
@@ -27,19 +31,19 @@
     "Database"
   ],
   "dependencies": {
-    "@lyttledev/api": "file:Api",
-    "@lyttledev/client": "file:Client",
-    "@lyttledev/content": "file:Content/app",
+    "@lyttledev/api": "^1.0.0",
+    "@lyttledev/client": "^1.0.0",
+    "@lyttledev/content": "^1.0.0",
     "@lyttledev/dashboard": "file:Dashboard",
-    "@lyttledev/database": "file:Database"
+    "@lyttledev/database": "^1.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
     "concurrently": "^8.2.2",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.2.5"
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3"
   }
 }

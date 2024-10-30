@@ -3,7 +3,7 @@ name: BETA Workflow
 on:
   push:
     branches:
-      - alpha
+      - beta
 
 jobs:
   docker-build-api:
@@ -23,8 +23,7 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.api:beta -f Api/Dockerfile .
 
       - name: Push API Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.api:beta
+        run: docker push ghcr.io/lyttle-development/community.v3.api:beta
 
   docker-build-client:
     runs-on: ubuntu-latest
@@ -43,8 +42,7 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.client:beta -f Client/Dockerfile .
 
       - name: Push Client Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.client:beta
+        run: docker push ghcr.io/lyttle-development/community.v3.client:beta
 
   docker-build-dashboard:
     runs-on: ubuntu-latest
@@ -63,8 +61,7 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:beta -f Dashboard/Dockerfile .
 
       - name: Push Dashboard Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.dashboard:beta
+        run: docker push ghcr.io/lyttle-development/community.v3.dashboard:beta
 
   deploy:
     runs-on: ubuntu-latest
@@ -73,26 +70,27 @@ jobs:
       - docker-build-client
       - docker-build-dashboard
 
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - name: Deploy BETA to FR001
-        uses: appleboy/ssh-action@master
+      - name: Deploy Image to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
         with:
-          host: ${{ secrets.FR001_HOST }}
-          username: ${{ secrets.FR001_USERNAME }}
-          password: ${{ secrets.FR001_PASSWORD }}
-          script: |
-            sudo systemctl restart application.docker.community-v3.api.service
-            sudo systemctl restart application.docker.community-v3.client.service
-      - name: Deploy BETA to DE001
-        uses: appleboy/ssh-action@master
+          server: "${{ secrets.CAPROVER_SERVER }}"
+          app: "${{ secrets.CAPROVER_APP_NAME_API }}"
+          token: "${{ secrets.CAPROVER_APP_TOKEN_API }}"
+          image: "docker push ghcr.io/lyttle-development/community.v3.api:beta"
+
+      - name: Deploy Image to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
         with:
-          host: ${{ secrets.DE001_HOST }}
-          username: ${{ secrets.DE001_USERNAME }}
-          password: ${{ secrets.DE001_PASSWORD }}
-          script: |
-            sudo systemctl restart application.docker.community-v3.dashboard.service
+          server: "${{ secrets.CAPROVER_SERVER }}"
+          app: "${{ secrets.CAPROVER_APP_NAME_CLIENT }}"
+          token: "${{ secrets.CAPROVER_APP_TOKEN_CLIENT }}"
+          image: "ghcr.io/lyttle-development/community.v3.client:beta"
+
+      - name: Deploy Image to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
+        with:
+          server: "${{ secrets.CAPROVER_SERVER }}"
+          app: "${{ secrets.CAPROVER_APP_NAME_DASHBOARD }}"
+          token: "${{ secrets.CAPROVER_APP_TOKEN_DASHBOARD }}"
+          image: "ghcr.io/lyttle-development/community.v3.dashboard:beta"

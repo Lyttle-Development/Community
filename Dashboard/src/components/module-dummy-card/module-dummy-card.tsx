@@ -1,8 +1,8 @@
 import { Component } from '@lyttledev-dashboard/components';
 import styles from './module-dummy-card.module.scss';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
-import { IconButtonIcons } from '@lyttledev-dashboard/components/icon-button';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
+import { Icons } from '@lyttledev-dashboard/components/icon';
 
 export function ModuleDummyCard() {
   const cardInners = (
@@ -27,7 +27,7 @@ export function ModuleDummyCard() {
             mock={true}
           />
           <Component.IconButton
-            icon={IconButtonIcons.cog}
+            icon={Icons.COG}
             className={styles['cog']}
             disabled={true}
             mock={true}

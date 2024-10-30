@@ -1,19 +1,23 @@
 import styles from './avatar.module.scss';
-import { useApp } from '@lyttledev-dashboard/contexts/App.context';
-import Image from 'next/image';
 import { Component } from '@lyttledev-dashboard/components';
+import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
 export function Avatar() {
-  // TODO: Get real avatar url? or out of user object.
-  const app = useApp() as any;
-  const avatarUrl = app?.avatarUrl ?? '/media/images/placeholder.png';
+  const selectedUser = useUser();
   return (
     <article className={styles.container}>
       <Component.Link href="profile" className={styles.link}>
-        <Image
+        <Component.Image
           className={styles.avatar}
-          src={avatarUrl}
-          alt="Avatar"
+          src={
+            selectedUser?.avatar
+              ? 'https://cdn.discordapp.com/avatars/' +
+                selectedUser?.id +
+                '/' +
+                selectedUser?.avatar
+              : '/media/images/placeholder.png'
+          }
+          alt={`Avatar of server ${selectedUser?.username}.`}
           width={100}
           height={100}
         />

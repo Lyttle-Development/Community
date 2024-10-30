@@ -372,6 +372,41 @@ export const ModuleMarkdown = {
           content: 'Your community, our duty!',
           documentation: '',
         },
+        stats: {
+          description: {
+            content:
+              'All values are based on an estimate for every day. The actual values may vary.',
+            documentation: '',
+          },
+          'jobs-in-use': {
+            content: 'Queue Jobs In Use',
+            documentation: '',
+          },
+          'rate-limit-total-checks': {
+            content: 'Rate Limit Checks',
+            documentation: '',
+          },
+          'times-events-triggered-since-last-restart': {
+            content: 'Events Triggered',
+            documentation: '',
+          },
+          title: {
+            content: 'Some stats:',
+            documentation: '',
+          },
+          'total-guilds': {
+            content: 'Guilds',
+            documentation: '',
+          },
+          'total-points-given-since-last-restart': {
+            content: 'EXP Given',
+            documentation: '',
+          },
+          'total-queues': {
+            content: 'Items Queued',
+            documentation: '',
+          },
+        },
         title: {
           content: 'Home',
           documentation: '',

@@ -3,7 +3,6 @@ import {
   changeKeys,
 } from '@lyttledev-dashboard/components/imports';
 import { getMessage } from '@lyttledev-dashboard/utils';
-import Image from 'next/image';
 import styles from './server-card.module.scss';
 import { Component, componentsPrefix } from '@lyttledev-dashboard/components';
 import { SCSSPrimaryColors } from '@lyttledev-dashboard/styles';
@@ -67,7 +66,7 @@ export function ServerCard({
   if (!setup) {
     return (
       <article className={styles.card}>
-        <Image
+        <Component.Image
           className={styles.avatar}
           src={icon}
           alt={`Avatar of the ${name} server`}
@@ -92,8 +91,8 @@ export function ServerCard({
       : active ?? false;
 
   return (
-    <Component.Link href={`/dashboard/${id}`} className={styles.card}>
-      <Image
+    <Component.Link href={`/servers/${id}`} className={styles.card}>
+      <Component.Image
         className={styles.avatar}
         src={icon}
         alt={`Avatar of the ${name} server`}

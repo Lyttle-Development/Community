@@ -70,6 +70,14 @@ export * as ModuleConfigDashboardPagesHomeAddButton from '../../content/modules/
 export * as ModuleConfigDashboardPagesHomeJoinButton from '../../content/modules/Dashboard/pages/home/join-button/config';
 export * as ModuleConfigDashboardPagesHomeLandingDescription from '../../content/modules/Dashboard/pages/home/landing-description/config';
 export * as ModuleConfigDashboardPagesHomeLandingTitle from '../../content/modules/Dashboard/pages/home/landing-title/config';
+export * as ModuleConfigDashboardPagesHomeStatsDescription from '../../content/modules/Dashboard/pages/home/stats/description/config';
+export * as ModuleConfigDashboardPagesHomeStatsJobsInUse from '../../content/modules/Dashboard/pages/home/stats/jobs-in-use/config';
+export * as ModuleConfigDashboardPagesHomeStatsRateLimitTotalChecks from '../../content/modules/Dashboard/pages/home/stats/rate-limit-total-checks/config';
+export * as ModuleConfigDashboardPagesHomeStatsTimesEventsTriggeredSinceLastRestart from '../../content/modules/Dashboard/pages/home/stats/times-events-triggered-since-last-restart/config';
+export * as ModuleConfigDashboardPagesHomeStatsTitle from '../../content/modules/Dashboard/pages/home/stats/title/config';
+export * as ModuleConfigDashboardPagesHomeStatsTotalGuilds from '../../content/modules/Dashboard/pages/home/stats/total-guilds/config';
+export * as ModuleConfigDashboardPagesHomeStatsTotalPointsGivenSinceLastRestart from '../../content/modules/Dashboard/pages/home/stats/total-points-given-since-last-restart/config';
+export * as ModuleConfigDashboardPagesHomeStatsTotalQueues from '../../content/modules/Dashboard/pages/home/stats/total-queues/config';
 export * as ModuleConfigDashboardPagesHomeTitle from '../../content/modules/Dashboard/pages/home/title/config';
 export * as ModuleConfigDashboardPagesLoginBackButton from '../../content/modules/Dashboard/pages/login/back-button/config';
 export * as ModuleConfigDashboardPagesLoginLandingDescription from '../../content/modules/Dashboard/pages/login/landing-description/config';

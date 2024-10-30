@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useApp } from '@lyttledev-dashboard/contexts/App.context';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useUser } from '@lyttledev-dashboard/hooks/useUser';
 
 interface SelectedGuild {
@@ -84,9 +83,11 @@ export function MainNav({ mobile }: MainNavProps) {
         <nav>
           <ul>
             <MainNavItem href={'/'}>{labelHome}</MainNavItem>
-            <MainNavItem href={'/dashboard'}>{labelDashboard}</MainNavItem>
-            {/* // Currently disabled, will be added in the future! // */}
-            {/* <MainNavItem href={'/profile'}>{labelProfile}</MainNavItem>*/}
+            {!selectedUser || !selectedUser?.id ? (
+              <MainNavItem href={'/servers'} locked={true}>
+                {labelDashboard}
+              </MainNavItem>
+            ) : null}
           </ul>
           <article className={'main-nav__profile'}>
             <section
@@ -94,7 +95,7 @@ export function MainNav({ mobile }: MainNavProps) {
                 (!selectedUser || !selectedUser?.id) && styles.hide
               }`}
             >
-              <Image
+              <Component.Image
                 className={styles.avatar}
                 src={
                   selectedUser?.avatar
@@ -118,6 +119,10 @@ export function MainNav({ mobile }: MainNavProps) {
               <MainNavItem href={'/profile'} route={'/profile'}>
                 {labelProfile}
               </MainNavItem>
+
+              {!selectedUser || !selectedUser?.id ? null : (
+                <MainNavItem href={'/servers'}>{labelDashboard}</MainNavItem>
+              )}
             </ul>
           </article>
           <article className={'main-nav__guild'}>
@@ -133,7 +138,7 @@ export function MainNav({ mobile }: MainNavProps) {
                 styles.hide
               } main-nav__guild__item`}
             >
-              <Image
+              <Component.Image
                 className={styles.avatar}
                 src={selectedGuild?.avatar || '/media/images/placeholder.png'}
                 alt={`Avatar of server ${selectedGuild.name}.`}
@@ -156,14 +161,14 @@ export function MainNav({ mobile }: MainNavProps) {
               } server-menu`}
             >
               <MainNavItem
-                href={`/dashboard/${realGuildId}`}
-                route={'/dashboard/[guild_id]'}
+                href={`/servers/${realGuildId}`}
+                route={'/servers/[guild_id]'}
               >
                 {labelOverview}
               </MainNavItem>
               <MainNavItem
-                href={`/dashboard/${realGuildId}/modules`}
-                route={'/dashboard/[guild_id]/modules'}
+                href={`/servers/${realGuildId}/modules`}
+                route={'/servers/[guild_id]/modules'}
               >
                 {labelModules}
               </MainNavItem>

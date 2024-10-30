@@ -4,6 +4,9 @@ import type { INestApplication } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import * as process from 'process';
 
+export const DashboardDomain = 'community.lyttledevelopment.com';
+export const DashboardURL = `https://${DashboardDomain}`;
+
 async function bootstrap(): Promise<void> {
   const app: INestApplication = await NestFactory.create(AppModule);
 
@@ -14,7 +17,7 @@ async function bootstrap(): Promise<void> {
     });
   } else {
     app.enableCors({
-      origin: 'https://community.lyttledev.com',
+      origin: DashboardURL,
       credentials: true,
     });
   }
