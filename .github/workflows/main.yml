@@ -23,8 +23,7 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.api:main -f Api/Dockerfile .
 
       - name: Push API Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.api:main
+        run: docker push ghcr.io/lyttle-development/community.v3.api:main
 
   docker-build-client:
     runs-on: ubuntu-latest
@@ -43,8 +42,7 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.client:main -f Client/Dockerfile .
 
       - name: Push Client Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.client:main
+        run: docker push ghcr.io/lyttle-development/community.v3.client:main
 
   docker-build-dashboard:
     runs-on: ubuntu-latest
@@ -63,5 +61,4 @@ jobs:
         run: docker build -t ghcr.io/lyttle-development/community.v3.dashboard:main -f Dashboard/Dockerfile .
 
       - name: Push Dashboard Docker image to GitHub Container Registry
-        run: |
-          docker push ghcr.io/lyttle-development/community.v3.dashboard:main
+        run: docker push ghcr.io/lyttle-development/community.v3.dashboard:main

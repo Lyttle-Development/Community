@@ -82,8 +82,8 @@ export async function getLevelsCommand(
   xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
-  const getUser1: User = interaction.options.get('member', false).user;
-  const getUser2: User = interaction.options.get('other-member', false).user;
+  const getUser1: User = interaction.options.get('member', false)?.user;
+  const getUser2: User = interaction.options.get('other-member', false)?.user;
 
   // Get user 1, taking user 2, if no user 1 was specified.
   const user1: User = getUser1 ?? getUser2;
@@ -315,7 +315,7 @@ async function getUsersState<T>(
     | ModuleConfigActivityLevelsCommandsGetLevelsOthersBehind.Variables,
 ): Promise<[string, string]> {
   // Get the points difference
-  let pointsDiff = db_User1.points - db_User2.points ?? 0;
+  let pointsDiff = db_User1.points - db_User2.points || 0;
   // If the points difference is negative
   pointsDiff = pointsDiff < 0 ? pointsDiff * -1 : pointsDiff;
   // Get the levels difference

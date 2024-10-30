@@ -1,5 +1,6 @@
 import { components, remarkPlugins } from './markdown.config';
 import ReactMarkdown from 'react-markdown';
+import styles from './markdown.module.scss';
 
 export interface MarkdownProps {
   children?: string;
@@ -12,7 +13,11 @@ export const Markdown = ({ children, content, className }: MarkdownProps) => {
   const markdownContent: string = children || content || '';
 
   // Join all props
-  const props = { options: { components, remarkPlugins, className } };
+  const props = {
+    components,
+    remarkPlugins,
+    className: `${styles.markdown} ${className}`,
+  };
 
   // Return markdown JSX.Element
   return <ReactMarkdown {...props}>{markdownContent}</ReactMarkdown>;
