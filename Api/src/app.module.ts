@@ -46,9 +46,12 @@ import { ServerUserLevelModule } from './db_migration/server-user-level/server-u
 import { ServerVoiceGrowthModule } from './db_migration/server-voice-growth/server-voice-growth.module';
 import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth-child/server-voice-growth-child.module';
 import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-activity/server-user-daily-activity.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [
+    TerminusModule,
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
@@ -110,7 +113,7 @@ import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-
     ServerVoiceGrowthModule,
     ServerVoiceGrowthChildModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthController],
   providers: [
     DiscordOauthStrategy,
     {
