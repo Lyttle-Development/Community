@@ -12,10 +12,10 @@
     "url": "git+https://github.com/Lyttle-Development/Community.git"
   },
   "volta": {
-    "node": "20.17.0"
+    "node": "22.11.0"
   },
   "engines": {
-    "node": "20.17.0"
+    "node": "22.11.0"
   },
   "author": "",
   "license": "ISC",
