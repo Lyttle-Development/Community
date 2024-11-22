@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:22.11.0-alpine
+FROM node:22.11.0
 
 # Set the working directory in the container
 WORKDIR /usr/src/community-v3
@@ -20,3 +20,7 @@ EXPOSE 3000
 
 # Command to run your application
 CMD ["npm", "start"]
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1

@@ -46,6 +46,10 @@ import { ServerUserLevelModule } from './db_migration/server-user-level/server-u
 import { ServerVoiceGrowthModule } from './db_migration/server-voice-growth/server-voice-growth.module';
 import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth-child/server-voice-growth-child.module';
 import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-activity/server-user-daily-activity.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from './health.controller';
+import { HttpModule } from '@nestjs/axios';
+import { ApiController } from './api.controller';
 
 @Module({
   imports: [
@@ -73,6 +77,10 @@ import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-
       name: 'migration',
       useFactory: () => migrationDatabaseConfig,
     }),
+
+    // Global
+    TerminusModule,
+    HttpModule,
 
     // Primary database
     GuildModule,
@@ -110,7 +118,7 @@ import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-
     ServerVoiceGrowthModule,
     ServerVoiceGrowthChildModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ApiController, HealthController],
   providers: [
     DiscordOauthStrategy,
     {

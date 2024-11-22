@@ -3,6 +3,8 @@ import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import * as fs from 'fs';
 import { createExtensions } from './utils/extensions';
 import { LogType } from './types';
+import { createHealthServer } from './api/health';
+import process from 'process';
 
 createExtensions();
 
@@ -82,3 +84,9 @@ export const bootdate = new Date();
 initQueue();
 
 export default client;
+
+const PORT = process.env.API_PORT || 3000;
+const healthServer = createHealthServer();
+healthServer.listen(PORT, () => {
+  console.log(`Health check server is running on port ${PORT}`);
+});
