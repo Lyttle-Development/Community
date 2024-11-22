@@ -48,10 +48,11 @@ import { ServerVoiceGrowthChildModule } from './db_migration/server-voice-growth
 import { ServerUserDailyActivityModule } from './db_migration/server-user-daily-activity/server-user-daily-activity.module';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health.controller';
+import { HttpModule } from '@nestjs/axios';
+import { ApiController } from './api.controller';
 
 @Module({
   imports: [
-    TerminusModule,
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
@@ -76,6 +77,10 @@ import { HealthController } from './health.controller';
       name: 'migration',
       useFactory: () => migrationDatabaseConfig,
     }),
+
+    // Global
+    TerminusModule,
+    HttpModule,
 
     // Primary database
     GuildModule,
@@ -113,7 +118,7 @@ import { HealthController } from './health.controller';
     ServerVoiceGrowthModule,
     ServerVoiceGrowthChildModule,
   ],
-  controllers: [AppController, HealthController],
+  controllers: [AppController, ApiController, HealthController],
   providers: [
     DiscordOauthStrategy,
     {
