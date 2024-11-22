@@ -21,10 +21,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.17.6",
     "nodemon": "^3.1.7"
   }
 }
