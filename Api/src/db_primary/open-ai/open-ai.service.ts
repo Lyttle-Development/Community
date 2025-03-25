@@ -28,7 +28,8 @@ export class OpenAiService {
 
   async createRecommendation(prompt, maxTokens = 100): Promise<string | null> {
     const result = await this.openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      // model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages: prompt,
       max_tokens: maxTokens,
     });
@@ -47,9 +48,8 @@ export class OpenAiService {
     if (guildStatOpenAiRecommendation) {
       return guildStatOpenAiRecommendation.value;
     }
-    const newAiRecommendation = await this.createRecommendationWithGuildStat(
-      guildId,
-    );
+    const newAiRecommendation =
+      await this.createRecommendationWithGuildStat(guildId);
     console.log('newAiRecommendation', newAiRecommendation);
     if (newAiRecommendation) {
       await this.guildStatService.createOrUpdate(
@@ -67,9 +67,8 @@ export class OpenAiService {
   ): Promise<string | null> {
     const guildStatStaffMembers: number =
       await this.guildStatResolvedService.getStaffMembers(guildId);
-    const guildStatBots: number = await this.guildStatResolvedService.getBots(
-      guildId,
-    );
+    const guildStatBots: number =
+      await this.guildStatResolvedService.getBots(guildId);
     const guildStatTextChannels: number =
       await this.guildStatResolvedService.getTextChannels(guildId);
     const guildStatVoiceChannels: number =
@@ -84,10 +83,7 @@ export class OpenAiService {
       {
         role: 'system',
         content:
-          'Your a discord bot trying to summarize in a few sentences, how to improve the server.\n' +
-          'Rules:\n' +
-          '- One continues text\n' +
-          '- No bullet points\n',
+          'You are a Discord bot that summarizes server statistics to help improve user engagement and community health. When presenting data, ensure clarity and usefulness by providing actionable insights. You are communicating with the server admin or moderator who is familiar with basic Discord management.',
       },
       {
         role: 'user',
