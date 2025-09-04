@@ -26,12 +26,16 @@ export default function Document() {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
-        {/* Add umami */}
-        <script
-          defer
-          src="https://umami.app.lyttle.dev/script.js"
-          data-website-id={process.env.UMAMI_WEBSITE_ID}
-        />
+        {
+          // Add Umami (only if the environment variable is set)
+          process.env.UMAMI_WEBSITE_ID && (
+            <script
+              defer
+              src="https://umami.app.lyttle.dev/script.js"
+              data-website-id={process.env.UMAMI_WEBSITE_ID}
+            />
+          )
+        }
 
         <style>
           {`
