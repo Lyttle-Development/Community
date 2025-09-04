@@ -1,5 +1,5 @@
 import {
-  CommandInteraction,
+  ChatInputCommandInteraction, CommandInteraction,
   ContextMenuCommandInteraction,
   EmbedBuilder,
   SlashCommandBuilder,
@@ -77,13 +77,13 @@ export const getLevelsCommandData = {
  */
 export async function getLevelsCommand(
   guildMember: GuildMember,
-  interaction: CommandInteraction,
+  interaction: ChatInputCommandInteraction,
 ) {
   xpCommandsRanAfterLastRestart++;
   await interaction.deferReply({ ephemeral: true });
   // Get the users from the interaction
-  const getUser1: User = interaction.options.get('member', false)?.user;
-  const getUser2: User = interaction.options.get('other-member', false)?.user;
+  const getUser1: User | null = interaction.options.getUser('member', false);
+  const getUser2: User | null = interaction.options.getUser('other-member', false);
 
   // Get user 1, taking user 2, if no user 1 was specified.
   const user1: User = getUser1 ?? getUser2;
@@ -116,7 +116,7 @@ export async function getLevelsCommand(
  */
 async function getLevelsCommandFailed(
   guildMember: GuildMember,
-  interaction: CommandInteraction,
+  interaction: ContextMenuCommandInteraction | ChatInputCommandInteraction,
 ) {
   // Get the guild id from the guild member
   const { guildId } = guildMember;
@@ -228,7 +228,7 @@ async function getMessageAndMemberDb<
  */
 async function getOwnLevel(
   guildMember: GuildMember,
-  interaction: CommandInteraction,
+  interaction: ContextMenuCommandInteraction | ChatInputCommandInteraction,
 ) {
   // Get guild id from guild member
   const { guildId } = guildMember;
@@ -264,7 +264,7 @@ async function getOwnLevel(
  */
 async function getOtherLevel(
   guildMember: GuildMember,
-  interaction: CommandInteraction,
+  interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
   user: User,
 ) {
   // Get guild id from guild member
@@ -382,7 +382,7 @@ async function getUserState(
  */
 async function getOthersLevel(
   guildMember: GuildMember,
-  interaction: CommandInteraction,
+  interaction: ContextMenuCommandInteraction | ChatInputCommandInteraction,
   user1: User,
   user2: User,
 ) {
