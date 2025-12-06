@@ -13,30 +13,30 @@
     "npm:update": "npm update --save"
   },
   "volta": {
-    "node": "22.19.0"
+    "node": "24.11.1"
   },
   "engines": {
-    "node": "22.19.0"
+    "node": "24.11.1"
   },
   "dependencies": {
     "@apollo/client": "^3.14.0",
-    "@types/node": "^20.19.13",
-    "@types/react": "^18.3.24",
+    "@types/node": "^20.19.25",
+    "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
     "diff": "^5.2.0",
-    "discord.js": "^14.22.1",
+    "discord.js": "^14.25.1",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.32",
     "gsap": "^3.13.0",
-    "next": "^14.2.32",
+    "next": "^14.2.33",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.1.0",
     "react-transition-group": "^4.4.5",
     "remark-gfm": "^4.0.1",
-    "sass": "^1.92.0",
+    "sass": "^1.94.2",
     "sharp": "^0.33.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/diff": "^5.2.3",
