@@ -20,30 +20,30 @@
     "npm:update": "npm update --save"
   },
   "volta": {
-    "node": "22.11.0"
+    "node": "24.11.1"
   },
   "engines": {
-    "node": "22.11.0"
+    "node": "24.11.1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "discord.js": "^14.18.0",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.1"
+    "discord.js": "^14.25.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^20.17.27",
+    "@types/node": "^20.19.25",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.2.5",
-    "prettier": "^3.5.3",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.7.4",
     "prisma": "^5.22.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.9.3"
   }
 }
