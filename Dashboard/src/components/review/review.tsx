@@ -8,7 +8,8 @@ import { changeKeysValuesArray } from '@lyttledev-dashboard/components/review';
 import { ChangeObject } from '@lyttledev-dashboard/contexts/app-hooks';
 import { reviewBuilder } from '@lyttledev-dashboard/components/review/review.builder';
 import { useEffect, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/router';
 
 export interface ReviewProps {
@@ -67,9 +68,9 @@ export function Review() {
   // Submit the changes
   const submitChanges = async () => {
     // Execute the mutation
-    const { errors } = await mutate();
+    const { error } = await mutate();
     // If there are errors, return (thus not resetting the changes)
-    if (errors) return;
+    if (error) return;
     // Reset the changes
     app?.resetChanges();
     // Redirect to the modules page

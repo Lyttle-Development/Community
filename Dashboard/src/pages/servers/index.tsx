@@ -4,7 +4,8 @@ import { pagesPrefix } from '@lyttledev-dashboard/pages';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useEffect } from 'react';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 
 const DashboardQuery = gql`
@@ -19,7 +20,8 @@ function Page() {
   const authorized = useAuth();
   const title = usePage(pagesPrefix + 'dashboard.title');
   const msgNoServers = getMessage(pagesPrefix + 'dashboard.no-servers');
-  const [fetch, { data }] = useLazyQuery(DashboardQuery);
+  const [fetch, { data: _data }] = useLazyQuery(DashboardQuery);
+  const data = _data as any;
 
   useEffect(() => {
     if (authorized) {

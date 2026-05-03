@@ -3,7 +3,7 @@ import { ModuleMarkdownItem } from '../types/ModuleMarkdown';
 import markdown from '../../generated/ModuleMarkdown';
 
 export function getModuleMarkdownItem(path: string): ModuleMarkdownItem {
-  const res = path.split('.').reduce((acc, cur) => acc[cur], markdown);
+  const res = path.split('.').reduce((acc, cur) => (acc as any)[cur], markdown as any) as any;
   if (!res || typeof res !== 'object') {
     throw new Error(
       `Was looking for content: "${path}", but no object was found!`,

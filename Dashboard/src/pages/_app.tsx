@@ -5,7 +5,7 @@ import './../styles/reset.scss';
 import './../styles/defaults.scss';
 import './../styles/global.scss';
 import { AppProvider } from '@lyttledev-dashboard/contexts/App.context';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import { apolloClient } from '@lyttledev-dashboard/lib/apollo-client';
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -7,7 +7,8 @@ import { getBirthdaysConfig } from '@lyttledev-dashboard/pages/servers/[guild_id
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { pagesPrefix } from '@lyttledev-dashboard/pages';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { getDynamicVoiceConfig } from '@lyttledev-dashboard/pages/servers/[guild_id]/module/dynamic-voice';
 import { getVoiceTopicsConfig } from '@lyttledev-dashboard/pages/servers/[guild_id]/module/voice-topics';
@@ -47,7 +48,8 @@ function Page() {
   const title = usePage(pagesPrefix + 'modules.title');
   const [modules, setModules] = useState<CardModules>([]);
 
-  const [fetch, { data, refetch }] = useLazyQuery(modulesQuery);
+  const [fetch, { data: _data, refetch }] = useLazyQuery(modulesQuery);
+  const data = _data as any;
 
   useEffect(() => {
     if (!authorized) return;
