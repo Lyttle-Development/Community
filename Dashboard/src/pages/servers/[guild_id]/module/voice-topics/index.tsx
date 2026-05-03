@@ -12,7 +12,8 @@ import { CardSettings } from '@lyttledev-dashboard/components/settings';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { Component } from '@lyttledev-dashboard/components';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client/react';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { getChannelOptions } from '@lyttledev-dashboard/utils/get-channel-options';
@@ -122,7 +123,8 @@ function Page() {
   const guildId = useGuild();
   const title = usePage(pagesPrefix + 'module.levels.title');
   const [settings, setSettings] = useState<CardSettings | null>(null);
-  const [fetch, { data }] = useLazyQuery(voiceTopicsQuery);
+  const [fetch, { data: _data }] = useLazyQuery(voiceTopicsQuery);
+  const data = _data as any;
   const [createVoiceTopicMessage] = useMutation(createVoiceTopicsMutation);
 
   const [message, setMessage] = useState<string | null>(null);

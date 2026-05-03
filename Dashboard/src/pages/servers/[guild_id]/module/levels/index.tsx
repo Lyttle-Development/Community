@@ -13,7 +13,8 @@ import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { ContentConfigs } from '@lyttledev-dashboard/utils/get-config';
 import { CreateSettingCard } from '@lyttledev-dashboard/components/setting-card';
 import { changeKeys } from '@lyttledev-dashboard/components/review';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
 import { findTranslation } from '@lyttledev-dashboard/utils/find-translation';
@@ -233,7 +234,8 @@ function Page() {
   const guildId = useGuild();
   const [settings, setSettings] = useState<CardSettings | null>(null);
   const title = usePage(pagesPrefix + 'module.levels.title');
-  const [fetch, { data }] = useLazyQuery(levelsQuery);
+  const [fetch, { data: _data }] = useLazyQuery(levelsQuery);
+  const data = _data as any;
 
   useEffect(() => {
     if (!authorized || !guildId) return;

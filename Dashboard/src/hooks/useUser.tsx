@@ -1,4 +1,5 @@
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { useEffect, useState } from 'react';
 
 export interface DiscordUser {
@@ -36,8 +37,8 @@ export function useUser(): DiscordUser | null {
   const [fetch, { data }] = useLazyQuery(getDiscordUserQuery);
 
   useEffect(() => {
-    if (data?.discord?.user) {
-      setSelectedUser(data.discord.user as DiscordUser);
+    if ((data as any)?.discord?.user) {
+      setSelectedUser((data as any).discord.user as DiscordUser);
     } else {
       void fetch();
     }
