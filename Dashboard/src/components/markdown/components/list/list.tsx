@@ -6,7 +6,7 @@ export interface ListProps {
   ordered?: boolean;
 }
 
-export const List = ({ children, ordered }: ListProps): JSX.Element => {
+export const List = ({ children, ordered }: ListProps): React.JSX.Element => {
   return (
     <>
       {ordered ? (

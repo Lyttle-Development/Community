@@ -3,8 +3,9 @@ import { Discord } from './entities/discord.entity';
 import { GuildService } from '../guild/guild.service';
 import { Guild } from '../guild/entities/guild.entity';
 import {
-  APIChannel,
   APIGuild,
+  APIGuildChannel,
+  GuildChannelType,
   RESTAPIPartialCurrentUserGuild,
   RESTGetAPICurrentUserGuildsResult,
   RESTGetAPIGuildChannelsResult,
@@ -125,7 +126,7 @@ export class DiscordService {
     if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter(
-      (channel: APIChannel) => channel.type === 4,
+      (channel: APIGuildChannel<GuildChannelType>) => channel.type === 4,
     ) as RESTGetAPIGuildChannelsResult;
   }
 
@@ -138,7 +139,7 @@ export class DiscordService {
     if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter(
-      (channel: APIChannel) => channel.type === 0,
+      (channel: APIGuildChannel<GuildChannelType>) => channel.type === 0,
     ) as RESTGetAPIGuildChannelsResult;
   }
 
@@ -151,7 +152,7 @@ export class DiscordService {
     if (!guildChannels || !Array.isArray(guildChannels)) return null;
 
     return guildChannels.filter(
-      (channel: APIChannel) => channel.type === 2,
+      (channel: APIGuildChannel<GuildChannelType>) => channel.type === 2,
     ) as RESTGetAPIGuildChannelsResult;
   }
 

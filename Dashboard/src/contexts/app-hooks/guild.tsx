@@ -1,6 +1,7 @@
 import { storage } from '@lyttledev-dashboard/utils';
 import React, { useEffect, useState } from 'react';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { Changes } from '@lyttledev-dashboard/contexts/app-hooks/changes';
 import { useAppAuth } from '@lyttledev-dashboard/contexts/app-hooks/auth';
 
@@ -49,7 +50,7 @@ export function useGuild(
   const [fetch, { data: guildData }] = useLazyQuery(GuildQuery);
 
   useEffect(() => {
-    const guild = guildData?.guild?.discord?.guild ?? null;
+    const guild = (guildData as any)?.guild?.discord?.guild ?? null;
     if (!guild) return;
     const _guild = {
       id: guild?.id || null,

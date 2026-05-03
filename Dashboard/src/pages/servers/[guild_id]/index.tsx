@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import { getMessage } from '@lyttledev-dashboard/utils';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { useGuild } from '@lyttledev-dashboard/hooks/useGuild';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 import { getModulesEnabled } from '@lyttledev-dashboard/utils/modules-enabled';
 import { Constants } from '@lyttledev-dashboard/constants';
 
@@ -59,10 +60,14 @@ function Page() {
   const msgEvents = getMessage(pfx + 'events');
   const msgActivity = getMessage(pfx + 'activity');
 
-  const [fetch, { data }] = useLazyQuery(GuildQuery);
-  const [fetchOpenAi, { data: dataOpenAi }] = useLazyQuery(OpenAiQuery, {
-    onError: () => setDisableTip(true),
-  });
+  const [fetch, { data: _data }] = useLazyQuery(GuildQuery);
+  const [fetchOpenAi, { data: _dataOpenAi, error: openAiError }] = useLazyQuery(OpenAiQuery);
+  const data = _data as any;
+  const dataOpenAi = _dataOpenAi as any;
+
+  useEffect(() => {
+    if (openAiError) setDisableTip(true);
+  }, [openAiError]);
 
   useEffect(() => {
     if (!guildId) return;
