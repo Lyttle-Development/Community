@@ -17,13 +17,13 @@
     "deploy": "npm run prisma:generate && npm run prisma:deploy && npm run build && npm run update-commands",
     "docker:setup": "npm run prisma:generate && npm run build",
     "docker:build": "docker build -t community-v3-client .",
-    "npm:update": "npm update --save"
+    "update": "npm update --save && npx npm-check-updates -u && npm install"
   },
   "volta": {
-    "node": "24.11.1"
+    "node": "24.15.0"
   },
   "engines": {
-    "node": "24.11.1"
+    "node": "24.15.0"
   },
   "author": "",
   "license": "ISC",
