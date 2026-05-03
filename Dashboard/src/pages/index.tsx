@@ -5,7 +5,8 @@ import { dashboardPrefix, getMessage } from '@lyttledev-dashboard/utils';
 import { ButtonColors } from '@lyttledev-dashboard/components/button';
 import { usePage } from '@lyttledev-dashboard/hooks/usePage';
 import { Constants } from '@lyttledev-dashboard/constants';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { StatsCardColors } from '@lyttledev-dashboard/components/stats-card';
 import { getTotal } from '@lyttledev-dashboard/utils/get-total';
 import { getTotalChange } from '@lyttledev-dashboard/utils/get-total-change';
@@ -35,8 +36,8 @@ function Page() {
 
   const { data } = useQuery(GeneralStatsQuery);
 
-  const stats: Stats = data?.getGeneralStats?.value
-    ? JSON.parse(data?.getGeneralStats?.value)
+  const stats: Stats = (data as any)?.getGeneralStats?.value
+    ? JSON.parse((data as any)?.getGeneralStats?.value)
     : null;
 
   const openInvite = () => {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@lyttledev-dashboard/hooks/useAuth';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client/react';
 
 const guildsQuery = gql`
   query guilds {
@@ -34,12 +35,12 @@ export function useUserGuilds() {
   useEffect(() => {
     if (!data) return;
 
-    const _ownedGuilds = data?.discord?.userGuilds?.filter(
+    const _ownedGuilds = (data as any)?.discord?.userGuilds?.filter(
       (guild: any) => guild.owner === true,
     );
     setOwnedGuilds(_ownedGuilds);
 
-    const _moderateGuilds = data?.discord?.userGuilds?.filter(
+    const _moderateGuilds = (data as any)?.discord?.userGuilds?.filter(
       // Not owner and has admin perms
       (guild: any) =>
         guild.owner === false && (guild.permissions & 0x8) === 0x8,
